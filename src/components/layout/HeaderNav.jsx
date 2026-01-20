@@ -3,6 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, User } from 'lucide-react';
 import Button from '../ui/Button';
 import Container from './Container';
+import { CiUser } from 'react-icons/ci';
 
 const HeaderNav = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -25,7 +26,7 @@ const HeaderNav = () => {
     <div className="bg-nav-bg border-b border-gray-200 shadow-sm">
       <Container>
         {/* Desktop Navigation */}
-        <div className="hidden items-center justify-between py-3 md:flex">
+        <div className="hidden items-center justify-between py-2 md:flex">
           {/* Navigation Links */}
           <nav className="flex items-center gap-6">
             {navigation.map((item) => (
@@ -45,11 +46,11 @@ const HeaderNav = () => {
 
           {/* Right Actions */}
           <div className="flex items-center gap-3">
-            <Button variant="secondary" className="rounded-md">
+            <Button variant="secondary" size="xs" className="rounded-md text-xs py-1.5">
               My Orders
             </Button>
-            <button className="rounded-full border border-gray-300 p-2 hover:bg-gray-100">
-              <User className="text-secondary-text h-5 w-5" />
+            <button className=" p-2 hover:bg-gray-100">
+              <CiUser  className="text-secondary-text h-5 lg:w-7 lg:h-7 w-5" />
             </button>
           </div>
         </div>

@@ -5,9 +5,9 @@ import Button from '../ui/Button';
 import Container from '../layout/Container';
 const HeaderTop = () => {
   return (
-    <div className="bg-white ">
+    <div className="bg-white py-2">
       <Container>
-        <div className="mx-auto flex h-23 items-center justify-between ">
+        <div className="mx-auto flex h-15 items-center justify-between ">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-2">
           <img src="/logo.svg" alt="ESSA HUB Logo" className="h-25 w-25" />
@@ -27,7 +27,7 @@ const HeaderTop = () => {
         </div>
 
         {/* Right Actions */}
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3 lg:gap-9">
           {/* Location Selector - Hidden on mobile */}
           <button className="hidden items-center gap-2 rounded-md px-3 py-2 text-sm text-btn-primary hover:bg-gray-100 md:flex">
             <MapPin className="h-4 w-4" />
@@ -36,10 +36,10 @@ const HeaderTop = () => {
 
           {/* Auth Buttons */}
           <div className="flex items-center gap-2 lg:gap-3">
-            <Button variant="outline" className="rounded-md bg-btn-primary text-white">
+            <Button variant="primary" size='lg' className="rounded-md text-">
               Sign IN
             </Button>
-            <Button variant="secondary" className="rounded-md">
+            <Button variant="secondary" size='lg' className="rounded-md lg:text-base">
               Sign UP
             </Button>
           </div>
