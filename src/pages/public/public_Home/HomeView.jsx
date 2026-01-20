@@ -18,6 +18,8 @@ import {
 } from 'lucide-react';
 import Hero from './components/Hero';
 import HowItWorks from './components/HowItWorks';
+import CoreFeatures from './components/CoreFeatures';
+import InjurySupportHub from './components/InjurySupportHub';
 
 const HomeView = () => {
 
@@ -27,6 +29,8 @@ const HomeView = () => {
     <div className=" " >
       <Hero/>
       <HowItWorks/>
+      <CoreFeatures/>
+      <InjurySupportHub/>
     </div>
   );
 };
