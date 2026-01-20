@@ -24,16 +24,6 @@
   --text-6xl: 60px;
   --text-7xl: 72px;
 
-  /* Font Weights */
-  --font-thin: 100;
-  --font-extralight: 200;
-  --font-light: 300;
-  --font-normal: 400;
-  --font-medium: 500;
-  --font-semibold: 600;
-  --font-bold: 700;
-  --font-extrabold: 800;
-  --font-black: 900;
 
   /* ------ */
   /* COLORS */
@@ -51,7 +41,9 @@
   /* Text Colors */
   --text-color-heading: #1f1f1f;
   --text-color-title: #0d263c;
+  --text-color-subtitle: #101010;
   --text-color-btn: #1C1C1C;
+  --text-color-description: #3B3B3B;
   
   --color-secondary-text: #656565;
   --text-color-navigation: #495572;
@@ -90,43 +82,6 @@
     font-family: var(--font-primary);
   }
 
-  h1 {
-    font-size: var(--text-6xl);
-    font-weight: var(--font-bold);
-    color: var(--text-color-heading);
-  }
-
-  h2 {
-    font-size: var(--text-4xl);
-    font-weight: var(--font-semibold);
-    color: var(--text-color-title);
-  }
-
-  h3 {
-    font-size: var(--text-2xl);
-    font-weight: var(--font-medium);
-    color: var(--text-color-title);
-  }
-
-  h4 {
-    font-size: var(--text-xl);
-    font-weight: var(--font-medium);
-    color: var(--text-color-title);
-  }
-
-  h5 {
-    font-size: var(--text-lg);
-    font-weight: var(--font-medium);
-    color: var(--text-color-title);
-  }
-
-  p {
-    font-size: var(--text-base);
-    font-family: var(--font-primary);
-    font-weight: var(--font-normal);
-    color: var(--text-color-paragraph);
-    line-height: 1.6;
-  }
 
   /* ----- */
   /* LINKS */
@@ -167,6 +122,8 @@
   html {
     scroll-behavior: smooth;
   }
+
+
 
   /* ===== Custom Scrollbar ===== */
 
@@ -220,6 +177,22 @@
 /* COMPONENTS           */
 /* ==================== */
 @layer components {
+
+  .herosubtitle {
+    @apply text-white/90 text-[20px] text-center;
+  }
+  .sectiontitle{
+    @apply font-semibold lg:text-[40px] font-secondary text-[#313131];
+  }
+  
+  .subtitle {
+    @apply font-semibold text-[22px] lg:text-[28px];
+    color: var(--text-color-subtitle);
+  }
+  .description {
+    @apply text-base leading-relaxed;
+    color: var(--text-color-description);
+  }
   /* BUTTONS */
   .btn-primary {
     @apply rounded-lg px-5 py-2.5 font-semibold text-white;

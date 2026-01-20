@@ -17,6 +17,7 @@ import {
   Package,
 } from 'lucide-react';
 import Hero from './components/Hero';
+import HowItWorks from './components/HowItWorks';
 
 const HomeView = () => {
 
@@ -24,10 +25,8 @@ const HomeView = () => {
 
   return (
     <div className=" " >
-      {/* Hero Section */}
       <Hero/>
-
-     
+      <HowItWorks/>
     </div>
   );
 };
