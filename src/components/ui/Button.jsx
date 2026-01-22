@@ -2,21 +2,13 @@
 const Button = ({
   children,
   variant = "primary",
-  size = "md",
   className = "",
   ...props
 }) => {
 
 
   const base =
-    "inline-flex items-center justify-center font-medium transition focus:outline-none";
-
-  // Size styles (ONLY spacing + text)
-  const sizes = {
-    xs: "px-3 py-1",
-    sm: "px-4 py-1.5",
-    lg: "px-5 py-2",
-  };
+    "inline-flex items-center lg:px-4 py-2 px-3 lg:py-2 justify-center font-medium transition focus:outline-none";
 
   // Color / variant styles
   const variants = {
@@ -28,7 +20,7 @@ const Button = ({
 
   return (
     <button
-      className={`${base} ${sizes[size]} ${variants[variant]} ${className}`}
+      className={`${base} ${variants[variant]} ${className}`}
       {...props}
     >
       {children}

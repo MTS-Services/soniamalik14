@@ -36,10 +36,10 @@ const HeaderTop = () => {
 
           {/* Auth Buttons */}
           <div className="flex items-center gap-2 lg:gap-3">
-            <Button variant="primary" size='lg' className="rounded-md text-">
+            <Button variant="primary" className="rounded-md text-">
               Sign IN
             </Button>
-            <Button variant="secondary" size='lg' className="rounded-md lg:text-base">
+            <Button variant="secondary" className="rounded-md lg:text-base">
               Sign UP
             </Button>
           </div>

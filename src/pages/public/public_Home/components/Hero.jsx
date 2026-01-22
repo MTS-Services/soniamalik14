@@ -6,7 +6,7 @@ const Hero = () => {
   return (
     <div
       style={{ backgroundImage: "url('/herobg.png')" }}
-      className="relative flex h-200 items-center justify-center bg-cover bg-center"
+      className="relative flex  w-auto lg:h-200 items-center justify-center bg-cover bg-center"
     >
       {/* overlay */}
       <div className="absolute inset-0 z-0 bg-black opacity-10"></div>
@@ -16,8 +16,8 @@ const Hero = () => {
           <p className='herosubtitle'>A platform built for women in sport — whatever level you're starting at.</p>
           {/* action btns */}
           <div className='flex justify-center items-center gap-4 flex-col lg:flex-row'>
-            <Button className='rounded-md' size='sm'>Explore Sports Near You</Button>
-            <Button className='rounded-md text-btn font-medium' variant='outline' size='sm'>Join the ESSA Hub Community</Button>
+            <Button className='rounded-md'>Explore Sports Near You</Button>
+            <Button className='rounded-md hidden sm:block text-btn font-medium' variant='outline'>Join the ESSA Hub Community</Button>
           </div>
           <p className='herosubtitle'>Women-focused services, support and connection - all around sport</p>
         </div>

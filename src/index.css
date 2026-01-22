@@ -180,10 +180,10 @@
 @layer components {
 
   .herosubtitle {
-    @apply text-white/90 text-[20px] text-center;
+    @apply text-white/90 text-base lg:text-[20px] text-center;
   }
   .sectiontitle{
-    @apply font-semibold lg:text-[40px] font-secondary text-[#313131];
+    @apply font-semibold lg:text-[40px] text-[32px] font-secondary text-[#313131];
   }
   
   .subtitle {
@@ -194,6 +194,12 @@
     @apply text-base leading-relaxed;
     color: var(--text-color-description);
   }
+
+  /* cta section */
+  .cta-title {
+    @apply font-semibold lg:text-[40px] lg:text-left text-center text-3xl font-secondary text-white;
+  }
+
   /* BUTTONS */
   .btn-primary {
     @apply rounded-lg px-5 py-2.5 font-semibold text-white;

@@ -6,8 +6,8 @@ const HowItWorks = () => {
     return (
         <div className='py-20'>
             <Container>
-                <div className='flex w-full justify-between items-center gap-8'>
-                    <div className='col-span-6 space-y-6'>
+                <div className='flex lg:flex-row flex-col w-full justify-between items-center gap-8'>
+                    <div className=' space-y-6'>
                         <Title>How It Works</Title>
                         <div className='space-y-5 max-w-xl'>
                             <div className='space-y-1.5'>
@@ -25,7 +25,7 @@ const HowItWorks = () => {
                         </div>
                     </div>
                     {/* image */}
-                    <div className='col-span-6'>
+                    <div className=''>
                         <img src="howitworks.png" alt="how it works" />
                     </div>
                     
