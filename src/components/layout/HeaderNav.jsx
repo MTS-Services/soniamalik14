@@ -1,12 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, User } from 'lucide-react';
+import { User } from 'lucide-react';
 import Button from '../ui/Button';
 import Container from './Container';
 import { CiUser } from 'react-icons/ci';
 
-const HeaderNav = () => {
-  const [isOpen, setIsOpen] = useState(false);
+const HeaderNav = ({ isMenuOpen, setIsMenuOpen }) => {
   const location = useLocation();
 
   const navigation = [
@@ -55,26 +54,15 @@ const HeaderNav = () => {
           </div>
         </div>
 
-        {/* Mobile Navigation Header */}
-        <div className="flex items-center justify-between py-3 md:hidden">
-          <span className="text-sm font-semibold text-btn">Menu</span>
-          <button
-            onClick={() => setIsOpen(!isOpen)}
-            className="hover:text-btn-primary text-btn focus:outline-none"
-          >
-            {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-          </button>
-        </div>
-
         {/* Mobile Navigation Menu */}
-        {isOpen && (
+        {isMenuOpen && (
           <div className="border-t border-gray-200 pb-4 md:hidden">
             <nav className="flex flex-col space-y-1 pt-2">
               {navigation.map((item) => (
                 <Link
                   key={item.name}
                   to={item.href}
-                  onClick={() => setIsOpen(false)}
+                  onClick={() => setIsMenuOpen(false)}
                   className={`rounded-md px-3 py-2.5 text-sm lg:text-base font-medium transition-colors ${
                     isActive(item.href)
                       ? 'bg-secondary text-btn-primary'
