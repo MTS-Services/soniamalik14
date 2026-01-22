@@ -57,10 +57,10 @@ const HeaderNav = () => {
 
         {/* Mobile Navigation Header */}
         <div className="flex items-center justify-between py-3 md:hidden">
-          <span className="text-sm font-semibold text-[#1C1C1C]">Menu</span>
+          <span className="text-sm font-semibold text-btn">Menu</span>
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="hover:text-btn-primary text-[#1C1C1C] focus:outline-none"
+            className="hover:text-btn-primary text-btn focus:outline-none"
           >
             {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
           </button>
