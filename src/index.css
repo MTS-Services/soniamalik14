@@ -180,10 +180,10 @@
 @layer components {
 
   .herosubtitle {
-    @apply text-white/90 text-[20px] text-center;
+    @apply text-white/90 text-base lg:text-[20px] text-center;
   }
   .sectiontitle{
-    @apply font-semibold lg:text-[40px] text-3xl font-secondary text-[#313131];
+    @apply font-semibold lg:text-[40px] text-[32px] font-secondary text-[#313131];
   }
   
   .subtitle {
