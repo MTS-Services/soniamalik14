@@ -197,7 +197,7 @@
 
   /* cta section */
   .cta-title {
-    @apply font-semibold lg:text-[40px] lg:text-left text-center text-3xl font-secondary text-white;
+    @apply font-semibold lg:text-[42px] lg:text-left text-center text-3xl font-secondary text-white;
   }
 
   /* BUTTONS */
