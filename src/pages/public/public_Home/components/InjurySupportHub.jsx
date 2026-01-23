@@ -9,7 +9,7 @@ const InjurySupportHub = () => {
       className="bg-cover bg-center flex items-center justify-center py-20"
     >
       <Container>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div className="flex lg:flex-row flex-col gap-12 justify-between items-center">
           {/* Left Side - Image Card */}
           <div className="flex justify-center lg:justify-start">
             <div className="relative">
@@ -27,7 +27,7 @@ const InjurySupportHub = () => {
               Injury Support Hub
             </h2>
             
-            <p className="description text-lg mb-8 max-w-xl">
+            <p className="description text-lg mb-8 max-w-2xl">
               From prevention to recovery. Connect with trusted physio partners and find easy-to-follow recovery tips tailored for female athletes.
             </p>
 
