@@ -183,21 +183,21 @@
     @apply text-white/90 text-base lg:text-[20px] text-center;
   }
   .sectiontitle{
-    @apply font-semibold lg:text-[40px] text-[32px] font-secondary text-[#313131];
+    @apply font-semibold lg:text-[40px] text-[32px] leading-tight lg:leading-relaxed font-secondary text-[#313131];
   }
   
   .subtitle {
-    @apply font-semibold text-[22px] lg:text-[28px];
+    @apply font-semibold text-[22px] lg:text-[28px] leading-tight lg:leading-relaxed;
     color: var(--text-color-subtitle);
   }
   .description {
-    @apply text-base leading-relaxed;
+    @apply text-base leading-tight lg:leading-relaxed;
     color: var(--text-color-description);
   }
 
   /* cta section */
   .cta-title {
-    @apply font-semibold lg:text-[42px] lg:text-left text-center text-3xl font-secondary text-white;
+    @apply font-semibold lg:text-[42px] lg:text-left text-center leading-tight text-3xl font-secondary text-white;
   }
 
   /* BUTTONS */

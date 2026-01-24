@@ -43,7 +43,7 @@ const HeaderTop = ({ onMenuClick, isMenuOpen }) => {
 
         {/* Mobile Search Dropdown */}
         {isSearchOpen && (
-          <div className="md:hidden pb-3">
+          <div className="md:hidden py-2">
             <div className="relative">
               <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-secondary-text" />
               <input

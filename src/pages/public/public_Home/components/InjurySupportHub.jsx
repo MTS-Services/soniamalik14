@@ -6,7 +6,7 @@ const InjurySupportHub = () => {
   return (
     <section 
       style={{ backgroundImage: "url('/Content.png')" }}
-      className="bg-cover bg-center flex items-center justify-center py-20"
+      className="bg-cover bg-center flex items-center justify-center py-10"
     >
       <Container>
         <div className="flex lg:flex-row flex-col gap-12 justify-between items-center">
@@ -23,11 +23,11 @@ const InjurySupportHub = () => {
 
           {/* Right Side - Content */}
           <div className="text-center lg:text-left">
-            <h2 className="sectiontitle mb-6">
+            <h2 className="sectiontitle mb-2 lg:mb-3">
               Injury Support Hub
             </h2>
             
-            <p className="description text-lg mb-8 max-w-2xl">
+            <p className="description text-lg mb-6 max-w-2xl">
               From prevention to recovery. Connect with trusted physio partners and find easy-to-follow recovery tips tailored for female athletes.
             </p>
 

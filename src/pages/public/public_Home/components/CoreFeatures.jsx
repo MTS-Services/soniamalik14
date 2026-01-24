@@ -6,18 +6,18 @@ import { coreFeatures } from '../../../../config/coreFeatures';
 
 const CoreFeatures = () => {
   return (
-    <section className="py-20 bg-gradient-to-b from-gray-50 to-white">
+    <section className="py-10 lg:py-16 bg-linear-to-b from-gray-50 to-white">
       <Container>
         {/* Section Header */}
         <SectionHeader
           title="Everything you need to play"
           description="A ecosystem designed specifically for the needs of female athletes."
           align="left"
-          className="mb-6"
+          className="mb-4 lg:mb-6"
         />
 
         {/* Features Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-5">
           {coreFeatures.map((feature) => (
             <FeatureCard
               key={feature.id}
