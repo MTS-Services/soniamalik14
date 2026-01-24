@@ -12,12 +12,12 @@ const HeaderTop = ({ onMenuClick, isMenuOpen }) => {
     <div className="bg-white py-2">
       <Container>
         {/* Mobile Header: [Menu + Search] --- Logo (centered) --- [User] */}
-        <div className="flex md:hidden items-center justify-between py-2">
+        <div className="flex lg:hidden items-center justify-between py-1 ">
           {/* Left: Menu & Search together */}
           <div className="flex items-center gap-1">
             <button 
               onClick={onMenuClick}
-              className="p-2 hover:bg-gray-100 rounded-md"
+              className="p-2 -ml-2 hover:bg-gray-100 rounded-md"
             >
               {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </button>
@@ -36,7 +36,7 @@ const HeaderTop = ({ onMenuClick, isMenuOpen }) => {
           </Link>
 
           {/* Right: User */}
-          <button className="p-2 hover:bg-gray-100 rounded-md">
+          <button className="p-2 -mr-2 hover:bg-gray-100 rounded-md">
             <CiUser className="h-6 w-6" />
           </button>
         </div>
@@ -56,7 +56,7 @@ const HeaderTop = ({ onMenuClick, isMenuOpen }) => {
         )}
 
         {/* Desktop Header */}
-        <div className="hidden md:flex h-15 items-center justify-between">
+        <div className="hidden lg:flex h-15 items-center justify-between">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2">
             <img src="/logo.svg" alt="ESSA HUB Logo" className="h-25 w-25" />

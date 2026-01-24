@@ -25,7 +25,7 @@ const HeaderNav = ({ isMenuOpen, setIsMenuOpen }) => {
     <div className="bg-nav-bg border-b border-gray-200 shadow-sm">
       <Container>
         {/* Desktop Navigation */}
-        <div className="hidden items-center justify-between py-2 md:flex">
+        <div className="hidden items-center justify-between py-2 lg:flex">
           {/* Navigation Links */}
           <nav className="flex items-center gap-6">
             {navigation.map((item) => (
@@ -56,7 +56,7 @@ const HeaderNav = ({ isMenuOpen, setIsMenuOpen }) => {
 
         {/* Mobile Navigation Menu */}
         {isMenuOpen && (
-          <div className="border-t border-gray-200 pb-4 md:hidden">
+          <div className="border-t border-gray-200 pb-4 lg:hidden">
             <nav className="flex flex-col space-y-1 pt-2">
               {navigation.map((item) => (
                 <Link

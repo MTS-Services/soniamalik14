@@ -6,8 +6,8 @@ const HowItWorks = () => {
     return (
         <div className='py-20'>
             <Container>
-                <div className='flex lg:flex-row flex-col w-full justify-between items-center gap-8'>
-                    <div className=' space-y-6'>
+                <div className='flex lg:flex-row flex-col w-full justify-between lg:items-center gap-8'>
+                    <div className='space-y-6'>
                         <Title>How It Works</Title>
                         <div className='space-y-5 max-w-xl'>
                             <div className='space-y-1.5'>
