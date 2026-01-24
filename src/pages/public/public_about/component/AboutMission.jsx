@@ -2,11 +2,10 @@ import React from 'react';
 import Container from '../../../../components/layout/Container';
 import SectionHeader from '../../../../components/ui/SectionHeader';
 import Button from '../../../../components/ui/Button';
-import Card from '../../../../components/ui/Card';
 
 const AboutMission = () => {
     return (
-        <section className="py-16">
+        <section className="py-10 lg:py-16">
             <Container>
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
                     {/* Left: Text */}
