@@ -18,7 +18,7 @@ const SectionHeader = ({
       {subtitle}
       
       {title && (
-        <h2 className="sectiontitle mb-2 lg:mb-3">
+        <h2 className="sectiontitle mb-2">
           {title}
         </h2>
       )}

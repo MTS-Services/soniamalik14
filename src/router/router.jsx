@@ -6,6 +6,7 @@ import AboutView from '../pages/public/public_about/AboutView';
 
 import NotFound from '../pages/error/NotFound';
 import DiscoverView from '../pages/public/public_discover/DiscoverView';
+import CommunityView from '../pages/public/public_community/CommunityView';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -13,6 +14,7 @@ const router = createBrowserRouter(
       <Route index element={<HomeView />} />
       <Route path="about" element={<AboutView />} />
       <Route path="discover" element={<DiscoverView />} />
+      <Route path="community" element={<CommunityView />} />
       <Route path="*" element={<NotFound />} />
     </Route>
   )
