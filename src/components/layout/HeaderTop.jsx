@@ -1,12 +1,20 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Search, MapPin, Menu, X } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
+import { Search, MapPin, Menu, X, LogOut } from 'lucide-react';
 import { CiUser } from 'react-icons/ci';
 import Button from '../ui/Button';
 import Container from '../layout/Container';
+import { useAuth } from '../../context/AuthContext';
 
 const HeaderTop = ({ onMenuClick, isMenuOpen }) => {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const { isAuthenticated, user, logout } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    navigate('/');
+  };
 
   return (
     <div className="bg-white py-2">
@@ -83,14 +91,29 @@ const HeaderTop = ({ onMenuClick, isMenuOpen }) => {
             </button>
 
             {/* Auth Buttons */}
-            <div className="flex items-center gap-2 lg:gap-3">
-              <Button variant="primary" className="rounded-md">
-                Sign IN
-              </Button>
-              <Button variant="secondary" className="rounded-md lg:text-base">
-                Sign UP
-              </Button>
-            </div>
+            {!isAuthenticated ? (
+              <div className="flex items-center gap-2 lg:gap-3">
+                <Link to="/signin">
+                  <Button variant="primary" className="rounded-md">
+                    Sign IN
+                  </Button>
+                </Link>
+                <Button variant="secondary" className="rounded-md lg:text-base">
+                  Sign UP
+                </Button>
+              </div>
+            ) : (
+              <div className="flex items-center gap-3">
+                <span className="text-sm text-gray-700">Welcome, <strong>{user?.name}</strong></span>
+                <button
+                  onClick={handleLogout}
+                  className="flex items-center gap-2 rounded-md px-3 py-2 text-sm text-btn-primary hover:bg-gray-100"
+                >
+                  <LogOut className="h-4 w-4" />
+                  <span>Logout</span>
+                </button>
+              </div>
+            )}
           </div>
         </div>
       </Container>

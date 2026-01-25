@@ -1,9 +1,13 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import Card from '../../../../components/ui/Card';
 import Button from '../../../../components/ui/Button';
 import { MapPin, Calendar, Clock, Lock } from 'lucide-react';
+import { useAuth } from '../../../../context/AuthContext';
 
 const DiscoverCard = ({ item }) => {
+  const { isAuthenticated } = useAuth();
+
   return (
     <Card className="p-4 h-full flex flex-col justify-between" hover>
       <div>
@@ -30,16 +34,28 @@ const DiscoverCard = ({ item }) => {
           <div className="flex items-center gap-2"><Clock className="w-4 h-4 text-[#363636]" /> <span className="text-sm">{item.time}</span></div>
         </div>
 
-        <div className="bg-secondary rounded-md p-4 text-center text-sm mb-3">
-          <div className="flex flex-col items-center justify-center gap-2">
-            <Lock className="w-6 h-6 text-[#0B544E]" />
-            <span className="font-medium text-cardTitle">Login to see contact details & ability requirements</span>
+        {!isAuthenticated && (
+          <div className="bg-secondary rounded-md p-4 text-center text-sm mb-3">
+            <div className="flex flex-col items-center justify-center gap-2">
+              <Lock className="w-6 h-6 text-[#0B544E]" />
+              <span className="font-medium text-[#06322E]">Login to see contact details & ability requirements</span>
+            </div>
           </div>
-        </div>
+        )}
       </div>
 
       <div className="mt-2">
-        <Button variant="primary" className="w-full rounded-full bg-[#0F766E] text-white hover:bg-[#0d655d]">Login to view</Button>
+        {!isAuthenticated ? (
+          <Link to="/signin">
+            <Button variant="primary" className="w-full rounded-full bg-[#0F766E] text-white hover:bg-[#0d655d]">
+              Login to view
+            </Button>
+          </Link>
+        ) : (
+          <Button variant="primary" className="w-full rounded-full bg-[#0F766E] text-white hover:bg-[#0d655d]">
+            View Details
+          </Button>
+        )}
       </div>
     </Card>
   );
