@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Container from '../../../../components/layout/Container';
 import SectionHeader from '../../../../components/ui/SectionHeader';
 import CategorySidebar from './CategorySidebar';
 import Button from '../../../../components/ui/Button';
 import { FiSend } from 'react-icons/fi';
+import NewDiscussionModal from './NewDiscussionModal';
 
 const CommunityDetails = () => {
     const [isLoggedIn] = useState(true);
     const [reply, setReply] = useState('');
+    const [showNewDiscussion, setShowNewDiscussion] = useState(false);
 
     const topic = {
         id: 1,
@@ -32,12 +35,14 @@ Whether you are a beginner learning the basics or an experienced player refining
         setReply('');
     };
 
+    const navigate = useNavigate();
+
     return (
         <div className="min-h-screen bg-gray-50 py-4 lg:py-8">
             <Container>
                 {/* Mobile: stacked layout */}
                 <div className="space-y-3 mb-4 lg:hidden">
-                    <button className="flex items-center gap-2 text-sm text-btn-primary hover:underline">
+                    <button onClick={() => navigate('/community')} className="flex items-center gap-2 text-sm text-btn-primary hover:underline">
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
                         </svg>
@@ -50,14 +55,14 @@ Whether you are a beginner learning the basics or an experienced player refining
                             description="Connect, chat, and support each other."
                             align="left"
                         />
-                        <Button variant="primary" className="rounded-md shrink-0">New Discussion</Button>
+                        <Button variant="primary" className="rounded-md shrink-0" onClick={() => setShowNewDiscussion(true)}>New Discussion</Button>
                     </div>
                 </div>
 
                 {/* Desktop: Back and Button at top, Header below */}
                 <div className="hidden lg:block mb-6">
                     <div className="flex items-center justify-between mb-4">
-                        <button className="flex items-center gap-2 text-sm text-btn-primary hover:underline">
+                        <button onClick={() => navigate('/community')} className="flex items-center gap-2 text-sm text-btn-primary hover:underline">
                             <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
                             </svg>
@@ -71,7 +76,7 @@ Whether you are a beginner learning the basics or an experienced player refining
                         description="Connect, chat, and support each other."
                         align="left"
                     />
-                    <Button variant="primary" className="rounded-md">New Discussion</Button>
+                    <Button variant="primary" className="rounded-md" onClick={() => setShowNewDiscussion(true)}>New Discussion</Button>
                     </div>
                 </div>
 
@@ -131,6 +136,14 @@ Whether you are a beginner learning the basics or an experienced player refining
                     </div>
                 </div>
             </Container>
+            <NewDiscussionModal
+                open={showNewDiscussion}
+                onClose={() => setShowNewDiscussion(false)}
+                onSubmit={(data) => {
+                    // placeholder: handle new thread creation (send to API or state)
+                    console.log('New thread submitted', data);
+                }}
+            />
         </div>
     );
 };
