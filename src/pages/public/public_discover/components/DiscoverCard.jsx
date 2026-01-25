@@ -38,7 +38,7 @@ const DiscoverCard = ({ item }) => {
           <div className="bg-secondary rounded-md p-4 text-center text-sm mb-3">
             <div className="flex flex-col items-center justify-center gap-2">
               <Lock className="w-6 h-6 text-[#0B544E]" />
-              <span className="font-medium text-[#06322E]">Login to see contact details & ability requirements</span>
+              <span className="font-medium text-cardTitle">Login to see contact details & ability requirements</span>
             </div>
           </div>
         )}
@@ -47,12 +47,12 @@ const DiscoverCard = ({ item }) => {
       <div className="mt-2">
         {!isAuthenticated ? (
           <Link to="/signin">
-            <Button variant="primary" className="w-full rounded-full bg-[#0F766E] text-white hover:bg-[#0d655d]">
+            <Button variant="primary" className="w-full rounded-full bg-btn-primary text-white hover:bg-[#0d655d]">
               Login to view
             </Button>
           </Link>
         ) : (
-          <Button variant="primary" className="w-full rounded-full bg-[#0F766E] text-white hover:bg-[#0d655d]">
+          <Button variant="primary" className="w-full rounded-full bg-btn-primary text-white hover:bg-[#0d655d]">
             View Details
           </Button>
         )}
