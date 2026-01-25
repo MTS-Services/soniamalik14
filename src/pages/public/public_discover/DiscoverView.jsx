@@ -58,7 +58,7 @@ const DiscoverView = () => {
               </p>
               <button 
                 onClick={() => setFilter('All')}
-                className="text-[#0F766E] hover:text-[#0d655d] font-medium text-sm"
+                className="text-btn-primary hover:text-[#0d655d] font-medium text-sm"
               >
                 Clear filters
               </button>
