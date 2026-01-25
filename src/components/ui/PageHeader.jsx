@@ -64,15 +64,15 @@ const PageHeader = ({
   return (
     <div className={`w-full bg-transparent ${className}`}>
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-        <div className="flex-shrink min-w-0">
+        <div className="shrink min-w-0">
           {title && <h1 className="text-2xl md:text-3xl lg:text-[40px] font-bold text-subtitle">{title}</h1>}
           {description && <p className="text-base md:text-lg text-[#585858] mt-1 md:mt-2.5">{description}</p>}
         </div>
 
-        <div className="flex items-center gap-2 sm:gap-3 w-full md:w-auto">
+        <div className="flex sm:items-center sm:flex-row flex-col gap-2 sm:gap-3 w-full md:w-auto">
           {showSearch && (
-            <div className="flex items-center bg-white rounded-lg px-3 sm:px-4 py-2.5 border border-[#5EA39E] flex-[2] md:flex-initial md:min-w-[300px]">
-              <Search className="w-4 h-4 text-[#5EA39E] flex-shrink-0" />
+            <div className="flex items-center bg-white rounded-lg px-3 sm:px-4 py-2 lg:py-2.5 border border-[#5EA39E] flex-2 md:flex-initial md:min-w-75">
+              <Search className="w-4 h-4 text-[#5EA39E] shrink-0" />
               <input
                 type="search"
                 value={q}
@@ -89,7 +89,7 @@ const PageHeader = ({
 
           {ctaText && (
             ctaHref ? (
-              <Link to={ctaHref} className="inline-flex items-center justify-center gap-1.5 bg-[#0F766E] hover:bg-[#0d655d] text-white px-3 sm:px-5 py-2.5 rounded-lg text-xs sm:text-sm font-medium whitespace-nowrap flex-1 md:flex-initial transition-colors">
+              <Link to={ctaHref} className="inline-flex items-center justify-center gap-1.5 bg-btn-primary hover:bg-[#0d655d] text-white px-3 sm:px-5 py-2.5 rounded-lg text-xs sm:text-sm font-medium whitespace-nowrap flex-1 md:flex-initial transition-colors">
                 <Plus className="w-4 h-4 shrink-0" />
                 {ctaText}
               </Link>
@@ -97,7 +97,7 @@ const PageHeader = ({
               <button 
                 type="button" 
                 onClick={onCtaClick}
-                className="inline-flex items-center justify-center gap-1.5 bg-[#0F766E] hover:bg-[#0d655d] text-white px-3 sm:px-5 py-2.5 rounded-lg text-xs sm:text-sm font-medium whitespace-nowrap flex-[1] md:flex-initial transition-colors"
+                className="inline-flex items-center justify-center gap-1.5 bg-btn-primary hover:bg-[#0d655d] text-white px-3 sm:px-5 py-2.5 rounded-lg text-xs sm:text-sm font-medium whitespace-nowrap flex-1 md:flex-initial transition-colors"
               >
                 <Plus className="w-4 h-4 shrink-0" />
                 {ctaText}
