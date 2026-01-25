@@ -27,7 +27,7 @@ const FooterLayout = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Enter email address"
-                className="bg-secondary w-full rounded px-6 py-2.5 lg:py-4 pr-32 focus:ring-2 focus:ring-teal-600 focus:outline-none lg:w-125"
+                className="bg-secondary w-full rounded px-6 py-2.5 lg:py-4 pr-32 focus:ring-2 focus:ring-btn-primary focus:outline-none lg:w-125"
                 required
               />
               <button
@@ -59,29 +59,29 @@ const FooterLayout = () => {
                 <h3 className="mb-4 text-lg font-semibold text-gray-900">Collections</h3>
                 <ul className="lg:space-y-3 space-y-1">
                   <li>
-                    <Link to="/" className="text-gray-600 transition hover:text-teal-600">
+                    <Link to="/" className="text-gray-600 transition hover:text-btn-primary">
                       Home
                     </Link>
                   </li>
                   <li>
-                    <Link to="/teams" className="text-gray-600 transition hover:text-teal-600">
+                    <Link to="/teams" className="text-gray-600 transition hover:text-btn-primary">
                       Find Teams
                     </Link>
                   </li>
                   <li>
-                    <Link to="/community" className="text-gray-600 transition hover:text-teal-600">
+                    <Link to="/community" className="text-gray-600 transition hover:text-btn-primary">
                       Community
                     </Link>
                   </li>
                   <li>
-                    <Link to="/events" className="text-gray-600 transition hover:text-teal-600">
+                    <Link to="/events" className="text-gray-600 transition hover:text-btn-primary">
                       Events
                     </Link>
                   </li>
                   <li>
                     <Link
                       to="/marketplace"
-                      className="text-gray-600 transition hover:text-teal-600"
+                      className="text-gray-600 transition hover:text-btn-primary"
                     >
                       Marketplace
                     </Link>
@@ -89,7 +89,7 @@ const FooterLayout = () => {
                   <li>
                     <Link
                       to="/confidence-zone"
-                      className="text-gray-600 transition hover:text-teal-600"
+                      className="text-gray-600 transition hover:text-btn-primary"
                     >
                       Confidence Zone
                     </Link>
@@ -102,19 +102,19 @@ const FooterLayout = () => {
                 <h3 className="mb-4 text-lg font-semibold text-gray-900">Quick Links</h3>
                 <ul className="lg:space-y-3 space-y-1">
                   <li>
-                    <Link to="/privacy" className="text-gray-600 transition hover:text-teal-600">
+                    <Link to="/privacy" className="text-gray-600 transition hover:text-btn-primary">
                       Privacy Policy
                     </Link>
                   </li>
                   <li>
-                    <Link to="/terms" className="text-gray-600 transition hover:text-teal-600">
+                    <Link to="/terms" className="text-gray-600 transition hover:text-btn-primary">
                       Terms of use
                     </Link>
                   </li>
                   <li>
                     <Link
                       to="/safeguarding"
-                      className="text-gray-600 transition hover:text-teal-600"
+                      className="text-gray-600 transition hover:text-btn-primary"
                     >
                       Safeguarding
                     </Link>
@@ -135,7 +135,7 @@ const FooterLayout = () => {
                   href="https://facebook.com"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-gray-600 transition hover:text-teal-600"
+                  className="text-gray-600 transition hover:text-btn-primary"
                   aria-label="Facebook"
                 >
                   <Facebook className="h-5 w-5" />
@@ -144,7 +144,7 @@ const FooterLayout = () => {
                   href="https://instagram.com"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-gray-600 transition hover:text-teal-600"
+                  className="text-gray-600 transition hover:text-btn-primary"
                   aria-label="Instagram"
                 >
                   <Instagram className="h-5 w-5" />
@@ -153,7 +153,7 @@ const FooterLayout = () => {
                   href="https://linkedin.com"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-gray-600 transition hover:text-teal-600"
+                  className="text-gray-600 transition hover:text-btn-primary"
                   aria-label="LinkedIn"
                 >
                   <Linkedin className="h-5 w-5" />
@@ -162,7 +162,7 @@ const FooterLayout = () => {
                   href="https://youtube.com"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-gray-600 transition hover:text-teal-600"
+                  className="text-gray-600 transition hover:text-btn-primary"
                   aria-label="YouTube"
                 >
                   <Youtube className="h-5 w-5" />

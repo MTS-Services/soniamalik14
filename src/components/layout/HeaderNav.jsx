@@ -28,7 +28,10 @@ const HeaderNav = ({ isMenuOpen, setIsMenuOpen }) => {
     { name: 'News', href: '/news' },
   ];
 
-  const isActive = (path) => location.pathname === path;
+  const isActive = (path) => {
+    if (path === '/') return location.pathname === '/';
+    return location.pathname.startsWith(path);
+  };
 
   return (
     <div className="bg-nav-bg border-b border-gray-200 shadow-sm">
