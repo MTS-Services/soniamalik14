@@ -191,7 +191,7 @@
     color: var(--text-color-subtitle);
   }
   .description {
-    @apply text-base leading-tight lg:leading-relaxed;
+    @apply text-lg leading-tight lg:leading-relaxed;
     color: var(--text-color-description);
   }
 

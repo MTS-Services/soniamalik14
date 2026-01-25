@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Container from '../../../components/layout/Container';
-import SectionHeader from '../../../components/ui/SectionHeader';
+import PageHeader from '../../../components/ui/PageHeader';
 import DiscoverCard from './components/DiscoverCard';
 import Filters from './components/Filters';
 import Pagination from './components/Pagination';
@@ -23,10 +23,10 @@ const DiscoverView = () => {
   const filtered = sample.filter((s) => filter === 'All' || s.type.toLowerCase() === filter.toLowerCase());
 
   return (
-    <section className="py-8">
+    <section className="py-6 md:py-8 lg:py-12">
       <Container>
         <div className="mb-6">
-          <SectionHeader
+          <PageHeader
             title="Find Your Sport"
             description="Browse clubs, casual sessions, and expert services."
           />
