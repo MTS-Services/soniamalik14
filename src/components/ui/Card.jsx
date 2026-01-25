@@ -19,7 +19,7 @@ const Card = ({
   };
 
   const hoverStyles = hover 
-    ? 'hover:shadow-xl hover:border-teal-100 transition-all duration-300' 
+      ? 'hover:shadow-xl hover:border-btn-primary transition-all duration-300' 
     : '';
 
   return (

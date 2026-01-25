@@ -1,21 +1,21 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const ForumTopicCard = ({ topic, isLoggedIn = false }) => {
   const { author, title, description, replies, avatar } = topic;
 
   return (
-    <div className="bg-white border border-gray-200 rounded-lg p-5 hover:shadow-sm transition-shadow">
+    <Link to={`/community/${topic.id}`} className="block">
+      <div className="bg-white border border-gray-200 rounded-lg p-5 hover:shadow-sm transition-shadow">
       {/* Author Badge */}
-      <div className="flex items-center gap-2 mb-3">
-        {isLoggedIn && avatar && (
-          <img
-            src={avatar}
-            alt={author}
-            className="w-6 h-6 rounded-full object-cover"
-          />
-        )}
-        <span className="inline-block text-gray-700 text-xs py-1 rounded">
-          Rējní Edwards
+      <div className="flex items-center gap-3 mb-3">
+        <img
+          src={ '/images/login/image_2.jpg'}
+          alt={author}
+          className="w-8 h-8 rounded-full object-cover"
+        />
+        <span className="inline-block text-sm text-gray-600">
+          {author}
         </span>
       </div>
 
@@ -36,7 +36,8 @@ const ForumTopicCard = ({ topic, isLoggedIn = false }) => {
         </svg>
         <span>{replies} Reply</span>
       </div>
-    </div>
+      </div>
+    </Link>
   );
 };
 
