@@ -5,17 +5,20 @@ import SmoothScroll from '../../utils/SmoothScroll.jsx';
 
 const RootLayout = () => {
   return (
-    <SmoothScroll>
-      <header>
+    <>
         <NavbarLayout />
-      </header>
-      <main>
-        <Outlet />
-      </main>
+      
+
+      <SmoothScroll>
+        <main>
+          <Outlet />
+        </main>
+      </SmoothScroll>
+
       <footer>
         <FooterLayout />
       </footer>
-    </SmoothScroll>
+    </>
   );
 };
 

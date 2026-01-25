@@ -6,7 +6,7 @@ import 'lenis/dist/lenis.css';
 const SmoothScroll = ({ children, root = true, className = '' }) => {
   const lenisOptions = useMemo(() => ({
     lerp: 0.3,
-    duration: 1.5,
+    duration: 2,
     smoothWheel: true,
     smoothTouch: false,
     wheelMultiplier: 1,

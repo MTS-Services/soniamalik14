@@ -10,14 +10,14 @@ const Hero = () => {
     >
       {/* overlay */}
       <div className="absolute inset-0 z-0 bg-black opacity-10"></div>
-      <Container className="relative z-10">
-        <div className='space-y-3.5'>
+      <Container className="relative z-10 py-10 lg:py-0">
+        <div className='space-y-3.5 flex flex-col justify-center items-center text-center'>
           <HeroTitle>Women. Sport. Community</HeroTitle>
           <p className='herosubtitle'>A platform built for women in sport — whatever level you're starting at.</p>
           {/* action btns */}
           <div className='flex justify-center items-center gap-4 flex-col lg:flex-row'>
             <Button className='rounded-md'>Explore Sports Near You</Button>
-            <Button className='rounded-md hidden sm:block text-btn font-medium' variant='outline'>Join the ESSA Hub Community</Button>
+            <Button className='rounded-md hidden! text-btn font-medium' variant='outline'>Join the ESSA Hub Community</Button>
           </div>
           <p className='herosubtitle'>Women-focused services, support and connection - all around sport</p>
         </div>

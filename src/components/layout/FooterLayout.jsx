@@ -17,9 +17,9 @@ const FooterLayout = () => {
   return (
     <footer className=" bg-white">
       {/* Newsletter Section */}
-      <div className="bg-white py-12">
+      <div className="bg-white py-5 lg:py-10">
         <Container>
-          <div className="flex flex-col items-center justify-between gap-6 border-b border-gray-300 pb-13 lg:flex-row">
+          <div className="flex flex-col items-center justify-between gap-6 border-b border-gray-300 pb-3 lg:pb-12 lg:flex-row">
             <Title>Subscribe Our Newsletters</Title>
             <form onSubmit={handleSubscribe} className="relative w-full lg:w-auto">
               <input
@@ -27,12 +27,12 @@ const FooterLayout = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Enter email address"
-                className="bg-secondary w-full rounded px-6 py-4 pr-32 focus:ring-2 focus:ring-teal-600 focus:outline-none lg:w-125"
+                className="bg-secondary w-full rounded px-6 py-2.5 lg:py-4 pr-32 focus:ring-2 focus:ring-teal-600 focus:outline-none lg:w-125"
                 required
               />
               <button
                 type="submit"
-                className="absolute top-1/2 right-2 -translate-y-1/2 rounded-md bg-white px-6 py-2 font-medium text-gray-900 transition hover:bg-gray-50"
+                className="absolute top-1/2 right-2 -translate-y-1/2 rounded-md bg-white px-3 lg:px-6 py-1 lg:py-2 font-medium text-gray-900 transition hover:bg-gray-50 text-sm lg:text-base"
               >
                 Subscribe
               </button>
@@ -42,13 +42,13 @@ const FooterLayout = () => {
       </div>
 
       {/* Main Footer */}
-      <div className="py-6">
+      <div className="py-2 lg:py-6">
         <Container className={''}>
-          <div className="flex lg:flex-row flex-col lg:justify-between gap-8 ">
+          <div className="flex lg:flex-row flex-col lg:justify-between gap-5 lg:gap-6 ">
             {/* Brand Section */}
-            <div className="">
+            <div className="mb-3">
               <img src="/footerLogo.png" alt="Essa Hub" className="mb-4 h-10" />
-              <p className="max-w-md leading-relaxed text-gray-600">
+              <p className="max-w-md leading-tight lg:leading-relaxed text-gray-600">
                 We believe in creating a harmonious balance between beauty, nature, and well-being
               </p>
             </div>
@@ -57,7 +57,7 @@ const FooterLayout = () => {
             <div className='flex justify-between items-start gap-15'>
               <div className="">
                 <h3 className="mb-4 text-lg font-semibold text-gray-900">Collections</h3>
-                <ul className="space-y-3">
+                <ul className="lg:space-y-3 space-y-1">
                   <li>
                     <Link to="/" className="text-gray-600 transition hover:text-teal-600">
                       Home
@@ -100,7 +100,7 @@ const FooterLayout = () => {
               {/* Quick Links */}
               <div className="">
                 <h3 className="mb-4 text-lg font-semibold text-gray-900">Quick Links</h3>
-                <ul className="space-y-3">
+                <ul className="lg:space-y-3 space-y-1">
                   <li>
                     <Link to="/privacy" className="text-gray-600 transition hover:text-teal-600">
                       Privacy Policy
@@ -125,7 +125,7 @@ const FooterLayout = () => {
           </div>
 
           {/* Bottom Section - Copyright and Social Media */}
-          <div className="mt-12 pt-8">
+          <div className="mt-5 lg:mt-10 pt-8">
             <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
               <p className="text-gray-600">2025 Essa hub</p>
 
