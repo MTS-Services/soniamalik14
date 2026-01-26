@@ -13,6 +13,7 @@ import DashboardHeader from '../../../components/ui/DashboardHeader';
 import Table from '../../../components/ui/Table';
 import TablePagination from '../../../components/ui/TablePagination';
 import Button from '../../../components/ui/Button';
+import StatsCard from '../../../components/ui/StatsCard';
 
 const AdminIndex = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -156,31 +157,29 @@ const AdminIndex = () => {
       <DashboardHeader
         title="Dashboard"
         subtitle="Track loan progress here. You almost reach a goal"
+        right={
+          <div className="flex items-center gap-3">
+            <select className="rounded-lg border border-gray-300 px-3 py-1.5 text-sm text-gray-600">
+              <option>Last 30 days</option>
+              <option>Last 7 days</option>
+              <option>Year to date</option>
+            </select>
+            <Button variant="primary">Create Report</Button>
+          </div>
+        }
       />
 
       {/* Stats Grid */}
       <div className="mb-8 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
         {stats.map((stat, index) => (
-          <div key={index} className="rounded-lg bg-white p-6 shadow-sm">
-            <div className="mb-4 flex items-center justify-between">
-              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gray-100">
-                {stat.icon}
-              </div>
-              <div className="flex items-center gap-1 text-sm text-green-600">
-                <span>{stat.change}</span>
-                <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"
-                  />
-                </svg>
-              </div>
-            </div>
-            <div className="mb-1 text-sm text-gray-500">{stat.label}</div>
-            <div className="text-2xl font-bold text-gray-900">{stat.value}</div>
-          </div>
+          <StatsCard
+            key={index}
+            icon={stat.icon}
+            label={stat.label}
+            value={stat.value}
+            change={stat.change}
+            positive={stat.positive}
+          />
         ))}
       </div>
 
