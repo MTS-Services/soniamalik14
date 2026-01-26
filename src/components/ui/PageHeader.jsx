@@ -65,7 +65,7 @@ const PageHeader = ({
     <div className={`w-full bg-transparent ${className}`}>
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div className="shrink min-w-0">
-          {title && <h1 className="text-2xl md:text-3xl lg:text-[40px] font-bold text-subtitle">{title}</h1>}
+          {title && <h1 className="text-3xl lg:text-[40px] font-bold text-subtitle">{title}</h1>}
           {description && <p className="text-base md:text-lg text-[#585858] mt-1 md:mt-2.5">{description}</p>}
         </div>
 
