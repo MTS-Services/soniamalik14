@@ -49,6 +49,12 @@
   --color-secondary-text: #656565;
   --text-color-navigation: #495572;
 
+
+  /* dashboard all colors */
+  --color-dashboardTitle:#161616;
+  --color-dashboardProgress:#394C6B;
+  --color-dashboardPending:#E99F00;
+
   /* Component Colors */
   --color-nav-bg: #fafdfd;
   --color-btn-primary: #0F766E;

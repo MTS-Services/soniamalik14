@@ -8,11 +8,14 @@ This document maps the main reusable components in the project and where to find
   - `Button.jsx` — generic button used across pages.
   - `CallToAction.jsx` — CTA block used in landing sections.
   - `Card.jsx` — simple card wrapper for items.
+  - `DashboardHeader.jsx` — dashboard page header with title and subtitle.
   - `FeatureCard.jsx` — specialized card for feature lists.
   - `HeroTitle.jsx` — hero section title component.
   - `PageHeader.jsx` — page header with title and optional actions.
   - `Pagination.jsx` — reusable pagination control.
   - `SectionHeader.jsx` — small header for sections.
+  - `Table.jsx` — reusable table component with customizable columns and rows.
+  - `TablePagination.jsx` — pagination for tables with prev/next navigation.
   - `Title.jsx` — simple heading component.
   - `UnderConstruction.jsx` — placeholder component for unfinished pages.
 
