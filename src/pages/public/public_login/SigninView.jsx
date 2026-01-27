@@ -47,7 +47,7 @@ const LoginView = () => {
       } else {
         setError(result.message);
       }
-    }, 500); // Small delay for better UX
+    }, 500); 
   };
 
   return (
@@ -95,7 +95,7 @@ const LoginView = () => {
                 value={formData.email}
                 onChange={handleChange}
                 placeholder="admin@essahub.com"
-                className="w-full px-4 py-3 bg-white border border-[#5EA39E] rounded-lg outline-none focus:ring-2 focus:ring-btn-primary transition-all text-sm text-gray-700 placeholder-[#747474]"
+                className="w-full px-4 py-3 bg-loginInput rounded-lg outline-none focus:ring-2 focus:ring-btn-primary transition-all text-sm text-gray-700 placeholder-[#747474]"
                 required
               />
             </div>
@@ -113,7 +113,7 @@ const LoginView = () => {
                   value={formData.password}
                   onChange={handleChange}
                   placeholder="•••• •••• ••••"
-                  className="w-full px-4 py-3 pr-12 bg-white border border-[#5EA39E] rounded-lg outline-none focus:ring-2 focus:ring-btn-primary transition-all text-sm text-gray-700 placeholder-[#747474]"
+                  className="w-full px-4 py-3 pr-12 bg-loginInput rounded-lg outline-none focus:ring-2 focus:ring-btn-primary transition-all text-sm text-gray-700 placeholder-[#747474]"
                   required
                 />
                 <button

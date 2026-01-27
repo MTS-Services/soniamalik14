@@ -19,9 +19,10 @@ import RequireAuth from '../components/auth/RequireAuth.jsx';
 import { ROLES } from '../context/AuthContext.jsx';
 
 // Dashboard Pages
-import AdminIndex from '../pages/dashboards/admin/AdminIndex.jsx';
 import ProviderIndex from '../pages/dashboards/provider/ProviderIndex.jsx';
 import CoachIndex from '../pages/dashboards/coach/CoachIndex.jsx';
+import Event from '../pages/dashboards/admin/event/Event.jsx';
+import AdminIndex from '../pages/dashboards/admin/adminIndex/AdminIndex.jsx';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -52,7 +53,7 @@ const router = createBrowserRouter(
         }
       >
         <Route index element={<AdminIndex />} />
-        <Route path="event" element={<UnderConstruction />} />
+        <Route path="event" element={<Event />} />
         <Route path="event-details" element={<UnderConstruction />} />
         <Route path="product-request" element={<UnderConstruction />} />
         <Route path="order" element={<UnderConstruction />} />

@@ -9,11 +9,11 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from 'recharts';
-import DashboardHeader from '../../../components/ui/DashboardHeader';
-import Table from '../../../components/ui/Table';
-import TablePagination from '../../../components/ui/TablePagination';
-import Button from '../../../components/ui/Button';
-import StatsCard from '../../../components/ui/StatsCard';
+import DashboardHeader from '../../../../components/ui/DashboardHeader';
+import Table from '../../../../components/ui/Table';
+import TablePagination from '../../../../components/ui/TablePagination';
+import Button from '../../../../components/ui/Button';
+import StatsCard from '../../../../components/ui/StatsCard';
 
 const AdminIndex = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -152,7 +152,7 @@ const AdminIndex = () => {
   );
 
   return (
-    <div className="flex-1 overflow-auto bg-gray-50 p-8">
+    <div className="flex-1 overflow-auto bg-gray-50 dashboardPy dashboardSpaceY">
       {/* Header */}
       <DashboardHeader
         title="Dashboard"
@@ -170,7 +170,7 @@ const AdminIndex = () => {
       />
 
       {/* Stats Grid */}
-      <div className="mb-8 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
+      <div className="dashboardStatsGrid">
         {stats.map((stat, index) => (
           <StatsCard
             key={index}
@@ -184,7 +184,7 @@ const AdminIndex = () => {
       </div>
 
       {/* Revenue Overview and Event Request */}
-      <div className="mb-8 grid grid-cols-1 gap-6 lg:grid-cols-3">
+      <div className="grid grid-cols-1 gap-3 lg:gap-6 lg:grid-cols-3">
         {/* Revenue Overview */}
         <div className="rounded-lg bg-white p-6 shadow-sm lg:col-span-2">
           <div className="mb-6 flex items-center justify-between">
@@ -256,7 +256,7 @@ const AdminIndex = () => {
       {/* Payout Request Table */}
       <div className="bg-gray-50">
         <div className="">
-          <DashboardHeader title="Payout Request" className="mb-4" />
+          <DashboardHeader title="Payout Request" className="" />
           <div className='border border-gray-100 rounded-md'>
             <Table columns={tableColumns} data={payoutRequests} renderRow={renderTableRow} />
           <TablePagination

@@ -2,12 +2,12 @@ import React from 'react';
 
 const StatsCard = ({ icon, label, value, change, positive = true, className = '' }) => {
   return (
-    <div className={`rounded-lg bg-white p-6 shadow-sm ${className}`}>
+    <div className={`rounded-lg bg-white p-6 shadow-md ${className}`}>
       <div className="mb-4 flex items-center justify-between">
         <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gray-100">
           {icon}
         </div>
-        <div className={`flex items-center gap-1 text-sm ${positive ? 'text-green-600' : 'text-red-600'}`}>
+        <div className={`flex items-center gap-1 text-sm ${positive ? 'text-btn-primary' : 'text-red-600'}`}>
           <span>{change}</span>
           <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path

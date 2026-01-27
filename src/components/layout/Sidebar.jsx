@@ -123,7 +123,7 @@ const Sidebar = ({ isOpen, onClose }) => {
             {/* Sidebar */}
             <aside className={`
                 fixed lg:static inset-y-0 left-0 z-50
-                w-64 h-screen bg-white border-r border-gray-200 flex flex-col
+                w-63 h-screen bg-white border-r border-gray-200 flex flex-col
                 transform transition-transform duration-300 ease-in-out
                 ${isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
             `}>
@@ -134,12 +134,7 @@ const Sidebar = ({ isOpen, onClose }) => {
                 >
                     <X className="w-5 h-5 text-gray-600" />
                 </button>
-            {/* Role Title */}
-            {/* {roleTitle && (
-                <div className="px-5 py-3 border-b border-gray-100">
-                    <p className="text-xs font-medium text-gray-500 uppercase tracking-wider">{roleTitle}</p>
-                </div>
-            )} */}
+            
             
             {/* Logo */}
             <div className="flex items-center px-5">
@@ -155,7 +150,7 @@ const Sidebar = ({ isOpen, onClose }) => {
                             end={item.id === 'dashboard'}
                             onClick={handleNavClick}
                             className={({ isActive }) =>
-                                `w-full flex items-center gap-3 font-medium text-sm px-4 py-3 rounded-none ${
+                                `w-full flex items-center gap-3 font-medium text-sm px-5 py-3 rounded-none ${
                                     isActive ? 'bg-btn-primary text-white' : 'text-sidebarLink hover:bg-gray-50'
                                 }`
                             }
