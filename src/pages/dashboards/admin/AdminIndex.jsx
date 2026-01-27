@@ -134,13 +134,13 @@ const AdminIndex = () => {
 
   const renderTableRow = (request) => (
     <>
-      <td className="px-4 py-4 text-sm text-gray-900">{request.name}</td>
-      <td className="px-4 py-4 text-sm text-gray-600">{request.phone}</td>
-      <td className="px-4 py-4 text-sm text-gray-600">{request.email}</td>
-      <td className="px-4 py-4 text-sm text-gray-600">{request.account}</td>
-      <td className="px-4 py-4">
+      <td className="px-4 py-4 text-sm">{request.name}</td>
+      <td className="px-4 py-4 text-sm">{request.phone}</td>
+      <td className="px-4 py-4 text-sm">{request.email}</td>
+      <td className="px-4 py-4 text-sm">{request.account}</td>
+      <td className="px-4 py-4  ">
         <button
-          className={`inline-flex items-center gap-2 rounded-md px-4 py-2 text-sm font-medium transition-colors ${getStatusColor(
+          className={`inline-flex items-center gap-2 w-full rounded-md px-4 py-2 text-sm font-medium transition-colors ${getStatusColor(
             request.status
           )}`}
         >
@@ -255,9 +255,10 @@ const AdminIndex = () => {
 
       {/* Payout Request Table */}
       <div className="bg-gray-50">
-        <div className="p-6">
+        <div className="">
           <DashboardHeader title="Payout Request" className="mb-4" />
-          <Table columns={tableColumns} data={payoutRequests} renderRow={renderTableRow} />
+          <div className='border border-gray-100 rounded-md'>
+            <Table columns={tableColumns} data={payoutRequests} renderRow={renderTableRow} />
           <TablePagination
             currentPage={currentPage}
             totalPages={1}
@@ -265,6 +266,7 @@ const AdminIndex = () => {
             resultsPerPage={payoutRequests.length}
             onPageChange={setCurrentPage}
           />
+          </div>
         </div>
       </div>
     </div>

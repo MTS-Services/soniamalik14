@@ -15,6 +15,7 @@ import {
     BarChart3,
     UserPlus,
     Heart,
+    X,
 } from 'lucide-react';
 import { useAuth, ROLES } from '../../context/AuthContext';
 
@@ -89,7 +90,7 @@ const getRoleTitle = (role) => {
     }
 };
 
-const Sidebar = () => {
+const Sidebar = ({ isOpen, onClose }) => {
     const { user, logout } = useAuth();
     const navigate = useNavigate();
     
@@ -102,8 +103,37 @@ const Sidebar = () => {
         navigate('/signin');
     };
 
+    const handleNavClick = () => {
+        // Close sidebar on mobile when a nav item is clicked
+        if (window.innerWidth < 1024) {
+            onClose?.();
+        }
+    };
+
     return (
-        <aside className="w-64 h-screen bg-white border-r border-gray-200 flex flex-col">
+        <>
+            {/* Overlay for mobile */}
+            {isOpen && (
+                <div 
+                    className="fixed inset-0 bg-black/50 z-40 lg:hidden transition-opacity"
+                    onClick={onClose}
+                />
+            )}
+            
+            {/* Sidebar */}
+            <aside className={`
+                fixed lg:static inset-y-0 left-0 z-50
+                w-64 h-screen bg-white border-r border-gray-200 flex flex-col
+                transform transition-transform duration-300 ease-in-out
+                ${isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
+            `}>
+                {/* Close button for mobile */}
+                <button 
+                    onClick={onClose}
+                    className="lg:hidden absolute top-4 right-4 p-1 hover:bg-gray-100 rounded-full"
+                >
+                    <X className="w-5 h-5 text-gray-600" />
+                </button>
             {/* Role Title */}
             {/* {roleTitle && (
                 <div className="px-5 py-3 border-b border-gray-100">
@@ -123,6 +153,7 @@ const Sidebar = () => {
                         <NavLink
                             to={item.path}
                             end={item.id === 'dashboard'}
+                            onClick={handleNavClick}
                             className={({ isActive }) =>
                                 `w-full flex items-center gap-3 font-medium text-sm px-4 py-3 rounded-none ${
                                     isActive ? 'bg-btn-primary text-white' : 'text-sidebarLink hover:bg-gray-50'
@@ -147,6 +178,7 @@ const Sidebar = () => {
                 </button>
             </div>
         </aside>
+        </>
     );
 };
 

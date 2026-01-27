@@ -44,7 +44,7 @@ const NewsView = () => {
     ];
 
     return (
-        <Container className="py-8">
+        <Container className="py-6 lg:py-8">
             <div className="">
                 <Title>Latest News</Title>
                 <div className="mt-4 lg:mt-6">

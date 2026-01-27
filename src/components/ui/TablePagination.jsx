@@ -13,18 +13,18 @@ const TablePagination = ({
   const endResult = Math.min(currentPage * resultsPerPage, totalResults);
 
   return (
-    <div className="flex items-center justify-between mt-6">
+    <div className=" bg-white border-gray-100 border-t px-6 py-4 rounded-b-lg flex items-center justify-between">
       {showResultsText && (
-        <p className="text-sm text-gray-500">
+        <p className="text-sm text-cardTitle">
           Showing {startResult} to {endResult} of {totalResults} results
         </p>
       )}
-      <div className="flex gap-2">
+      <div className="flex gap-3">
         <Button
           variant="outline"
           onClick={() => onPageChange(currentPage - 1)}
           disabled={currentPage === 1}
-          className="px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          className="bg-white border border-cardTitle text-cardTitle rounded-xl px-4 py-0.5 text-sm font-medium hover:bg-cardTitle/5 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
         >
           Previous
         </Button>
@@ -32,7 +32,7 @@ const TablePagination = ({
           variant="outline"
           onClick={() => onPageChange(currentPage + 1)}
           disabled={currentPage === totalPages}
-          className="px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          className="bg-white border border-cardTitle text-cardTitle rounded-xl px-4 py-0.5 text-sm font-medium hover:bg-cardTitle/5 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
         >
           Next
         </Button>

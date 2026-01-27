@@ -35,7 +35,7 @@ const MarketPlace = () => {
   const paged = filtered.slice((page - 1) * perPage, page * perPage);
 
   return (
-    <section className="py-6 md:py-8 lg:py-12 min-h-screen bg-gray-50">
+    <section className="py-6 lg:py-8 min-h-screen bg-gray-50">
       <Container>
         <div className="mb-6">
           <PageHeader
