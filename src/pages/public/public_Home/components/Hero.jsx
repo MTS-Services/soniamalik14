@@ -17,7 +17,10 @@ const Hero = () => {
           {/* action btns */}
           <div className='flex justify-center items-center gap-4 flex-col lg:flex-row'>
             <Button className='rounded-md'>Explore Sports Near You</Button>
-            <Button className='rounded-md hidden! text-btn font-medium' variant='outline'>Join the ESSA Hub Community</Button>
+            <div className='hidden lg:flex'>
+              
+            <Button className='rounded-md  text-btn font-medium' variant='outline'>Join the ESSA Hub Community</Button>
+            </div>
           </div>
           <p className='herosubtitle'>Women-focused services, support and connection - all around sport</p>
         </div>

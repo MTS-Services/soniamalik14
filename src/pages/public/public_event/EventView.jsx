@@ -25,7 +25,7 @@ const EventView = () => {
     const paged = sampleEvents.slice((page - 1) * perPage, page * perPage);
 
     return (
-        <div className="min-h-screen bg-gray-50 py-8">
+        <div className="min-h-screen bg-gray-50 py-6 lg:py-8">
             <Container>
                 <div className="flex items-start justify-between gap-6">
                 </div>

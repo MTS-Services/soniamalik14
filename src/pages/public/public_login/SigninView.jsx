@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Eye, EyeOff } from 'lucide-react';
-import { useAuth } from '../../../context/AuthContext';
+import { useAuth, ROLES } from '../../../context/AuthContext';
 
 const LoginView = () => {
   const navigate = useNavigate();
   const { login } = useAuth();
   const [formData, setFormData] = useState({
-    username: '',
+    email: '',
     password: '',
   });
   const [error, setError] = useState('');
@@ -24,24 +24,36 @@ const LoginView = () => {
     setLoading(true);
     setError('');
 
-    // Demo login
-    const result = login(formData.username, formData.password);
+    // Role-based login
+    const result = login(formData.email, formData.password);
     
     setTimeout(() => {
       setLoading(false);
       if (result.success) {
-        // Redirect to home or dashboard after successful login
-        navigate('/');
+        // Redirect based on role
+        switch (result.role) {
+          case ROLES.ADMIN:
+            navigate('/admin');
+            break;
+          case ROLES.PROVIDER:
+            navigate('/provider');
+            break;
+          case ROLES.COACH:
+            navigate('/coach');
+            break;
+          default:
+            navigate('/');
+        }
       } else {
         setError(result.message);
       }
-    }, 500); // Small delay for better UX
+    }, 500); 
   };
 
   return (
     <div className="min-h-screen flex">
       {/* Left Side - Login Form */}
-      <div className="w-full lg:w-1/2 flex items-center justify-center px-6 py-12 bg-[#E7F1F1]">
+      <div className="w-full lg:w-1/2 flex items-center justify-center px-6 py-12 bg-secondary">
         <div className="w-full max-w-md">
           <div className="mb-8">
             <h1 className="text-3xl md:text-4xl font-bold text-[#282828] mb-2">
@@ -61,25 +73,29 @@ const LoginView = () => {
             )}
 
             {/* Demo Credentials Info */}
-            <div className="bg-blue-50 border border-blue-200 text-blue-600 px-4 py-3 rounded-lg text-sm">
-              <p className="font-medium mb-1">Demo Login Credentials:</p>
-              <p>Username: <strong>player</strong></p>
-              <p>Password: <strong>demo123</strong></p>
+            <div className="bg-blue-50 border border-blue-200 text-blue-700 px-4 py-3 rounded-lg text-sm">
+              <p className="font-semibold mb-2">Demo Credentials (Password: demo123)</p>
+              <div className="space-y-1 text-xs">
+                <p><strong>Admin:</strong> admin@essahub.com</p>
+                <p><strong>Provider:</strong> provider@essahub.com</p>
+                <p><strong>Coach:</strong> coach@essahub.com</p>
+                <p><strong>User:</strong> user@essahub.com (no dashboard)</p>
+              </div>
             </div>
 
-            {/* Username Field */}
+            {/* Email Field */}
             <div>
-              <label htmlFor="username" className="block text-[#282828] font-medium mb-2 text-sm">
-                Username
+              <label htmlFor="email" className="block text-[#282828] font-medium mb-2 text-sm">
+                Email
               </label>
               <input
-                type="text"
-                id="username"
-                name="username"
-                value={formData.username}
+                type="email"
+                id="email"
+                name="email"
+                value={formData.email}
                 onChange={handleChange}
-                placeholder="Player"
-                className="w-full px-4 py-3 bg-white border border-[#5EA39E] rounded-lg outline-none focus:ring-2 focus:ring-[#0F766E] transition-all text-sm text-gray-700 placeholder-[#747474]"
+                placeholder="admin@essahub.com"
+                className="w-full px-4 py-3 bg-loginInput rounded-lg outline-none focus:ring-2 focus:ring-btn-primary transition-all text-sm text-gray-700 placeholder-[#747474]"
                 required
               />
             </div>
@@ -97,13 +113,13 @@ const LoginView = () => {
                   value={formData.password}
                   onChange={handleChange}
                   placeholder="•••• •••• ••••"
-                  className="w-full px-4 py-3 pr-12 bg-white border border-[#5EA39E] rounded-lg outline-none focus:ring-2 focus:ring-[#0F766E] transition-all text-sm text-gray-700 placeholder-[#747474]"
+                  className="w-full px-4 py-3 pr-12 bg-loginInput rounded-lg outline-none focus:ring-2 focus:ring-btn-primary transition-all text-sm text-gray-700 placeholder-[#747474]"
                   required
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-[#747474] hover:text-[#0F766E] transition-colors"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-[#747474] hover:text-btn-primary transition-colors"
                 >
                   {showPassword ? (
                     <EyeOff className="w-5 h-5" />
@@ -115,7 +131,7 @@ const LoginView = () => {
               <div className="mt-2 text-right">
                 <Link 
                   to="/forgot-password" 
-                  className="text-sm text-[#0F766E] hover:text-[#0d655d] font-medium"
+                  className="text-sm text-btn-primary hover:text-[#0d655d] font-medium"
                 >
                   Forgot Password?
                 </Link>
@@ -126,7 +142,7 @@ const LoginView = () => {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-[#0F766E] hover:bg-[#0d655d] text-white py-3 rounded-lg font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full bg-btn-primary hover:bg-[#0d655d] text-white py-3 rounded-lg font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {loading ? 'Logging in...' : 'Log In'}
             </button>
@@ -136,7 +152,7 @@ const LoginView = () => {
               <p className="text-sm text-[#363636] mb-3">Don't have account</p>
               <Link
                 to="/signup"
-                className="block w-full border-2 border-[#0F766E] text-[#0F766E] hover:bg-[#0F766E] hover:text-white py-3 rounded-lg font-medium transition-all"
+                className="block w-full border-2 border-btn-primary text-btn-primary hover:bg-btn-primary hover:text-white py-3 rounded-lg font-medium transition-all"
               >
                 CREATE ACCOUNT
               </Link>
