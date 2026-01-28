@@ -16,6 +16,11 @@ A modern, production-ready React + Redux + Tailwind CSS boilerplate with best pr
 - **Responsive Design** - Mobile-first responsive components
 - **TypeScript Ready** - Pre-configured for TypeScript projects
 
+## 🧭 Developer resources
+
+- Developer guide (for new/junior team members): docs/DEVELOPER_GUIDE.md
+- Components index (where reusable UI lives): docs/COMPONENTS.md
+
 ## 🚀 Quick Start
 
 ### Prerequisites
