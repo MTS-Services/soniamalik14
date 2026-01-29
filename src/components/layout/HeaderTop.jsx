@@ -104,14 +104,14 @@ const HeaderTop = ({ onMenuClick, isMenuOpen }) => {
               </div>
             ) : (
               <div className="flex items-center gap-3">
-                <span className="text-sm text-gray-700">Welcome, <strong>{user?.name}</strong></span>
+                {/* <span className="text-sm text-gray-700">Welcome, <strong>{user?.name}</strong></span>
                 <button
                   onClick={handleLogout}
                   className="flex items-center gap-2 rounded-md px-3 py-2 text-sm text-btn-primary hover:bg-gray-100"
                 >
                   <LogOut className="h-4 w-4" />
                   <span>Logout</span>
-                </button>
+                </button> */}
               </div>
             )}
           </div>

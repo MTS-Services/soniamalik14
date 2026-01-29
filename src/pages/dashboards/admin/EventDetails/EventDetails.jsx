@@ -45,7 +45,7 @@ const EventDetails = () => {
       <td className="px-4 py-4 text-base">{event.role}</td>
       <td className="px-4 py-4 text-base">{event.sport}</td>
       <td className="px-4 py-4 text-base">{event.date}</td>
-      <td className="px-4 py-4 text-base font-medium text-[#0F766E]">{event.joined}</td>
+      <td className="px-4 py-4 text-base font-medium text-btn-primary">{event.joined}</td>
       <td className="px-4 py-4 text-left">
         <button
           title="View Event"
@@ -75,7 +75,7 @@ const EventDetails = () => {
         <p><span className="font-medium">Date:</span> {event.date}</p>
       </div>
 
-      <div className="text-sm font-medium text-[#0F766E]">
+      <div className="text-sm font-medium text-btn-primary">
         Joined: {event.joined}
       </div>
     </div>
