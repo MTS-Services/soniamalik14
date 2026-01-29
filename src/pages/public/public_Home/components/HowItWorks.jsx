@@ -45,7 +45,7 @@ const HowItWorks = () => {
             return (
               <div
                 key={s.id}
-                className={`flex flex-col lg:items-center ${flipped ? 'lg:flex-row-reverse lg:justify-between' : 'lg:flex-row lg:justify-between'}`}
+                className={`flex flex-col lg:items-center ${flipped ? 'md:flex-row-reverse md:justify-between' : 'md:flex-row md:justify-between'}`}
               >
                 {/* Image column - only image, centered vertically */}
                 <div className="w-full lg:w-1/2 flex items-center">
