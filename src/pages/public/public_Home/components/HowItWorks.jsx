@@ -33,7 +33,7 @@ const HowItWorks = () => {
     <section className="bg-white py-10 lg:py-16">
       <Container>
         <div className="mb-16 flex flex-col justify-center items-center text-center">
-          <Title>How It Works</Title>
+          <Title>How ESSA Hub Works</Title>
           <p className="description max-w-2xl">
             Create your profile, explore women-only sports, and join activities that suit you.
           </p>
