@@ -23,6 +23,9 @@ import ProviderIndex from '../pages/dashboards/provider/ProviderIndex.jsx';
 import CoachIndex from '../pages/dashboards/coach/CoachIndex.jsx';
 import Event from '../pages/dashboards/admin/event/Event.jsx';
 import AdminIndex from '../pages/dashboards/admin/adminIndex/AdminIndex.jsx';
+import EventDetails from '../pages/dashboards/admin/EventDetails/EventDetails.jsx';
+import ProductRequested from '../pages/dashboards/admin/ProductRequested/ProductRequested.jsx';
+import OrderList from '../pages/dashboards/admin/OrderList/OrderList.jsx';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -54,9 +57,9 @@ const router = createBrowserRouter(
       >
         <Route index element={<AdminIndex />} />
         <Route path="event" element={<Event />} />
-        <Route path="event-details" element={<UnderConstruction />} />
-        <Route path="product-request" element={<UnderConstruction />} />
-        <Route path="order" element={<UnderConstruction />} />
+        <Route path="event-details" element={<EventDetails />} />
+        <Route path="product-request" element={<ProductRequested />} />
+        <Route path="order" element={<OrderList />} />
         <Route path="thread" element={<UnderConstruction />} />
         <Route path="club" element={<UnderConstruction />} />
         <Route path="service" element={<UnderConstruction />} />

@@ -31,7 +31,7 @@ Whether you are a beginner learning the basics or an experienced player refining
 
     const handleSend = () => {
         if (!reply.trim()) return;
-        // placeholder: add send logic
+        // placeholder: add send logi
         setReply('');
     };
 
