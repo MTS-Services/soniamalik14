@@ -6,7 +6,7 @@ import { coreFeatures } from '../../../../config/coreFeatures';
 
 const CoreFeatures = () => {
   return (
-    <section className="py-10 lg:py-16 bg-linear-to-b from-gray-50 to-white">
+    <section className="py-10 lg:pt-16 lg:pb-20 bg-linear-to-b from-gray-50 to-white">
       <Container>
         {/* Section Header */}
         <SectionHeader
@@ -17,7 +17,7 @@ const CoreFeatures = () => {
         />
 
         {/* Features Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-5">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 lg:gap-5">
           {coreFeatures.map((feature) => (
             <FeatureCard
               key={feature.id}

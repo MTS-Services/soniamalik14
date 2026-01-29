@@ -59,7 +59,7 @@ const HeaderNav = ({ isMenuOpen, setIsMenuOpen }) => {
           <div className="flex items-center gap-3">
             {isAuthenticated && (
               <>
-                <span className="text-sm text-gray-600">Welcome, {user?.name}</span>
+                {/* <span className="text-sm text-gray-600">Welcome, {user?.name}</span> */}
                 <Button variant="secondary" size="xs" className="rounded-md text-xs py-1.5">
                   My Orders
                 </Button>
@@ -106,9 +106,9 @@ const HeaderNav = ({ isMenuOpen, setIsMenuOpen }) => {
               <div className="flex flex-col gap-2 pt-3">
                 {isAuthenticated ? (
                   <>
-                    <div className="px-3 py-2 text-sm text-gray-600">
+                    {/* <div className="px-3 py-2 text-sm text-gray-600">
                       Welcome, {user?.name}
-                    </div>
+                    </div> */}
                     <Button variant="secondary" className="w-full rounded-md">
                       My Orders
                     </Button>
