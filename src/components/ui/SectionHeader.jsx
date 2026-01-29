@@ -14,11 +14,11 @@ const SectionHeader = ({
   };
 
   return (
-    <div className={`max-w-3xl ${alignmentClasses[align]} ${className}`}>
+    <div className={`max-w-4xl ${alignmentClasses[align]} ${className}`}>
       {subtitle}
       
       {title && (
-        <h2 className="sectiontitle mb-2">
+        <h2 className="sectiontitle mb-2 tracking-tight">
           {title}
         </h2>
       )}
