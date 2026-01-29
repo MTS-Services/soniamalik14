@@ -1,0 +1,27 @@
+import React from 'react';
+
+const NewsHero = ({ article }) => {
+  return (
+    <div className="w-full">
+      <div className="w-full h-64 lg:h-120 rounded-md bg-gray-100 overflow-hidden">
+        <img src={article.image} alt={article.title} className="w-full h-full object-cover" />
+      </div>
+
+      <div className="mt-4 w-full grid grid-cols-1 md:grid-cols-3 justify-
+      
+      
+      gap-4 items-start lg:items-center">
+        <div className="md:col-span-1">
+          <p className="text-sm text-secondary-text">{article.date}</p>
+          <h3 className="font-semibold text-lg md:text-xl mt-2 text-title leading-tight">{article.title}</h3>
+        </div>
+
+        <div className="md:col-span-2 text-sm text-color-secondary-text description max-w-xl">
+          {article.excerpt}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default NewsHero;
