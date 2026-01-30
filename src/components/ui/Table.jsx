@@ -6,14 +6,22 @@ const Table = ({ columns, data, renderRow, className = '' }) => {
       <table className="w-full">
         <thead className="bg-secondary">
           <tr>
-            {columns.map((column, index) => (
-              <th
-                key={index}
-                className="text-left text-sm e text-tableTh font-medium uppercase px-4 py-3"
-              >
-                {column}
-              </th>
-            ))}
+            {columns.map((column, index) => {
+              const header = React.isValidElement(column)
+                ? column
+                : (typeof column === 'object' && column !== null && 'label' in column)
+                ? column.label
+                : column;
+
+              return (
+                <th
+                  key={index}
+                  className="text-left text-sm e text-tableTh font-medium uppercase px-4 py-3"
+                >
+                  {header}
+                </th>
+              );
+            })}
           </tr>
         </thead>
         <tbody className="bg-white">

@@ -12,9 +12,9 @@ const ProductDetails = ({ product, onBack }) => {
         {/* Back Button */}
         <button
           onClick={onBack}
-          className="flex items-center gap-2 text-gray-700 hover:text-gray-900  transition-colors py-2 pb-2 px-4"
+          className="flex items-center gap-2 text-[#0F766E]  transition-colors py-2 pb-2 px-4"
         >
-          <ArrowLeft className="w-6 h-6" />
+          <ArrowLeft className="w-6 h-6 " />
           <span className="text-sm font-medium">Back</span>
         </button>
 
