@@ -19,7 +19,7 @@ import {
 } from 'lucide-react';
 import { useAuth, ROLES } from '../../context/AuthContext';
 
-// Menu items configuration per role
+// Menu items configuration
 const getMenuItems = (role, basePath) => {
     const adminMenu = [
         { id: 'dashboard', label: 'Dashboard', icon: <LayoutDashboard className="w-5 h-5" />, path: `${basePath}` },
