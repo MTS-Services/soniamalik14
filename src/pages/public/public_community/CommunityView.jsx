@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../../context/AuthContext';
 import CategorySidebar from './components/CategorySidebar';
 import ForumTopicCard from './components/ForumTopicCard';
 import Button from '../../../components/ui/Button';
@@ -7,7 +9,8 @@ import Container from '../../../components/layout/Container';
 import SectionHeader from '../../../components/ui/SectionHeader';
 
 const CommunityView = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const { isAuthenticated } = useAuth();
+  const navigate = useNavigate();
   const [activeCategory, setActiveCategory] = useState('All Discussion');
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -102,9 +105,9 @@ const CommunityView = () => {
           <Button
             variant="primary"
             className="rounded-md mt-4 sm:mt-0 w-full sm:w-auto"
-            onClick={() => setIsLoggedIn(!isLoggedIn)}
+            onClick={() => (isAuthenticated ? navigate('/community/new') : navigate('/signin'))}
           >
-            {isLoggedIn ? 'Post a thread' : 'Log in To Post'}
+            {isAuthenticated ? 'Post a thread' : 'Log in To Post'}
           </Button>
         </div>
 
@@ -125,7 +128,7 @@ const CommunityView = () => {
                 <ForumTopicCard
                   key={topic.id}
                   topic={topic}
-                  isLoggedIn={isLoggedIn}
+                  isLoggedIn={isAuthenticated}
                 />
               ))}
             </div>
