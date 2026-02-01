@@ -1,0 +1,62 @@
+import React from 'react';
+import { Link } from 'react-router-dom';
+import Card from '../../../../components/ui/Card';
+import Button from '../../../../components/ui/Button';
+import { MapPin, Calendar, Lock } from 'lucide-react';
+
+const EventCard = ({ event }) => {
+  const isAuthenticated = false; // This should come from auth context
+
+  return (
+    <Card className="p-4 h-full flex flex-col justify-between" hover>
+      <div>
+        <div className="relative">
+          <div className="absolute top-3 left-3 bg-secondary text-btn-primary rounded-md px-3 py-1.5 text-sm font-semibold">{event.tag}</div>
+          <div className="h-40 sm:h-48 lg:h-64 bg-gray-200 rounded-md mb-4 overflow-hidden flex items-center justify-center">
+            {event.image ? (
+              <img src={event.image} alt={event.title} className="w-full h-full object-cover rounded-md" />
+            ) : (
+              <div className="text-gray-400">Image</div>
+            )}
+          </div>
+        </div>
+
+        <h3 className="text-[#282828] font-semibold text-lg mb-2">{event.title}</h3>
+
+        <div className="text-sm text-[#363636] mb-1 flex items-center gap-2">
+          <MapPin className="w-4 h-4 text-[#363636]" />
+          <span className="text-sm">{event.location}</span>
+        </div>
+
+        <div className="text-sm text-[#363636] mb-3 flex items-start gap-2">
+          <div className="flex items-center gap-2"><Calendar className="w-4 h-4 text-[#363636]" /> <span className="text-sm">{event.date}</span></div>
+        </div>
+
+        {!isAuthenticated && (
+          <div className="bg-secondary rounded-md p-4 text-center text-sm mb-3">
+            <div className="flex flex-col items-center justify-center gap-2">
+              <Lock className="w-6 h-6 text-[#0B544E]" />
+              <span className="font-medium text-cardTitle">Login to see contact details & ability requirements</span>
+            </div>
+          </div>
+        )}
+      </div>
+
+      <div className="mt-2">
+        {!isAuthenticated ? (
+          <Link to="/signin">
+            <Button variant="primary" className="w-full rounded-full bg-btn-primary text-white hover:bg-[#0d655d]">
+              Login to view
+            </Button>
+          </Link>
+        ) : (
+          <Button variant="primary" className="w-full rounded-full bg-btn-primary text-white hover:bg-[#0d655d]">
+            View Details
+          </Button>
+        )}
+      </div>
+    </Card>
+  );
+};
+
+export default EventCard;

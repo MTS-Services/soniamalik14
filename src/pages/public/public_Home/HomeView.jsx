@@ -21,6 +21,7 @@ import HowItWorks from './components/HowItWorks';
 import CoreFeatures from './components/CoreFeatures';
 import InjurySupportHub from './components/InjurySupportHub';
 import JoinCta from './components/JoinCta';
+import GetInvolved from './components/GetInvolved';
 
 const HomeView = () => {
 
@@ -29,6 +30,7 @@ const HomeView = () => {
   return (
     <div className=" " >
       <Hero/>
+      <GetInvolved/>
       <HowItWorks/>
       <CoreFeatures/>
       <InjurySupportHub/>

@@ -23,7 +23,7 @@ const DiscoverView = () => {
   const filtered = sample.filter((s) => filter === 'All' || s.type.toLowerCase() === filter.toLowerCase());
 
   return (
-    <section className="py-6 md:py-8 lg:py-12">
+    <section className="py-6 lg:py-8">
       <Container>
         <div className="mb-6">
           <PageHeader
@@ -58,7 +58,7 @@ const DiscoverView = () => {
               </p>
               <button 
                 onClick={() => setFilter('All')}
-                className="text-[#0F766E] hover:text-[#0d655d] font-medium text-sm"
+                className="text-btn-primary hover:text-[#0d655d] font-medium text-sm"
               >
                 Clear filters
               </button>
