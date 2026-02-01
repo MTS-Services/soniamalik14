@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { X, Calendar, Clock, Upload } from 'lucide-react';
 import Button from './Button';
 
-const EventModal = ({ isOpen, onClose }) => {
+const EventModal = ({ isOpen, onClose, initialData = null, mode = 'create' }) => {
     const [formData, setFormData] = useState({
         eventTitle: '',
         sportType: '',
@@ -24,6 +24,56 @@ const EventModal = ({ isOpen, onClose }) => {
         organizerEmail: '',
         image: null,
     });
+
+    // Update form data when initialData changes (for edit mode)
+    useEffect(() => {
+        if (initialData && mode === 'edit') {
+            setFormData({
+                eventTitle: initialData.title || '',
+                sportType: initialData.sportType || '',
+                eventType: initialData.type || 'Training',
+                description: initialData.description || '',
+                startDate: initialData.startDate || initialData.date || '',
+                endDate: initialData.endDate || '',
+                startTime: initialData.startTime || '',
+                endTime: initialData.endTime || '',
+                venueName: initialData.venueName || '',
+                city: initialData.city || '',
+                fullAddress: initialData.location || '',
+                googleMapLinks: initialData.googleMapLinks || '',
+                minAge: initialData.minAge || '18',
+                maxParticipant: initialData.maxParticipant || '20',
+                skillLevel: initialData.skillLevel || 'Beginner',
+                organizerName: initialData.organizerName || '',
+                organizerPhone: initialData.organizerPhone || '',
+                organizerEmail: initialData.organizerEmail || '',
+                image: initialData.image || null,
+            });
+        } else if (mode === 'create') {
+            // Reset form for create mode
+            setFormData({
+                eventTitle: '',
+                sportType: '',
+                eventType: 'Training',
+                description: '',
+                startDate: '',
+                endDate: '',
+                startTime: '',
+                endTime: '',
+                venueName: '',
+                city: '',
+                fullAddress: '',
+                googleMapLinks: '',
+                minAge: '18',
+                maxParticipant: '20',
+                skillLevel: 'Beginner',
+                organizerName: '',
+                organizerPhone: '',
+                organizerEmail: '',
+                image: null,
+            });
+        }
+    }, [initialData, mode, isOpen]);
 
     const [errors, setErrors] = useState({});
 
@@ -67,7 +117,9 @@ const EventModal = ({ isOpen, onClose }) => {
             <div className="bg-white rounded-lg shadow-xl w-full max-w-lg mx-4 sm:mx-6 flex flex-col max-h-[80vh]">
                 {/* Sticky Header */}
                 <div className="flex items-center justify-between p-4 border-b border-gray-200 sticky top-0 bg-white rounded-t-lg z-10">
-                    <h2 className="text-xl font-semibold text-gray-900">Event Identity</h2>
+                    <h2 className="text-xl font-semibold text-gray-900">
+                        {mode === 'edit' ? 'Edit Event' : 'Event Identity'}
+                    </h2>
                     <button
                         onClick={onClose}
                         className="text-[#000000] bg-[#D9D9D9] rounded-full p-1 transition-colors"
@@ -371,7 +423,7 @@ const EventModal = ({ isOpen, onClose }) => {
                         variant="primary"
                         className="w-full rounded-lg py-3"
                     >
-                        Submit For Approval
+                        {mode === 'edit' ? 'Update Event' : 'Submit For Approval'}
                     </Button>
                 </div>
             </div>
