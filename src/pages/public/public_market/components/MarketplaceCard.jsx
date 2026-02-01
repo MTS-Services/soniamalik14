@@ -34,6 +34,9 @@ const MarketplaceCard = ({ item }) => {
           <Link to={`/marketplace/${item.id}`} state={{ item }} className="flex-1">
             <Button variant="primary" className="w-full rounded-lg">Buy Now</Button>
           </Link>
+          <button className="flex-1">
+            <Button variant="outline" className="w-full rounded-lg">Add To Cart</Button>
+          </button>
         </div>
       </div>
     </Card>

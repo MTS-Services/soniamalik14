@@ -2,6 +2,8 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useLocation, useParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import Container from '../../../components/layout/Container';
+import MarketplaceCard from './components/MarketplaceCard';
+import { sampleItems } from './MarketPlace';
 
 const MarketplaceDetails = () => {
   const { id } = useParams();
@@ -39,7 +41,7 @@ const MarketplaceDetails = () => {
   }, [selected]);
 
   return (
-    <div className="min-h-screen bg-[#F8FAFC]">
+    <div className=" bg-[#F8FAFC]">
       <Container>
         <div className="py-6">
           <button
@@ -54,7 +56,7 @@ const MarketplaceDetails = () => {
             <div className="lg:col-span-7">
               <div className="lg:flex lg:items-start lg:gap-6">
                 {/* Vertical thumbnails for md+ */}
-                <div className="hidden md:flex md:flex-col md:gap-4 md:w-24 lg:w-28">
+                <div className="hidden lg:flex lg:flex-col lg:gap-4 lg:w-24 lg:w-28">
                   {images.map((src, i) => (
                     <button
                       key={i}
@@ -75,7 +77,7 @@ const MarketplaceDetails = () => {
                   </div>
 
                   {/* Mobile thumbnails with arrows */}
-                  <div className="mt-4 md:hidden flex items-center gap-3">
+                  <div className="mt-4 lg:hidden flex items-center gap-3">
                     <button
                       onClick={prevImage}
                       aria-label="Previous"
@@ -137,6 +139,16 @@ const MarketplaceDetails = () => {
                   </div>
                 </div>
               </div>
+            </div>
+          </div>
+
+          {/* Suggested for you */}
+          <div className="mt-12">
+            <h2 className="mb-6 text-xl md:text-2xl lg:text-3xl font-bold text-[#1D1D1D]">Suggested for you</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg  lg:grid-cols-3 xl:grid-cols-4 gap-6">
+              {sampleItems.slice(0, 8).map((it) => (
+                <MarketplaceCard key={it.id} item={it} />
+              ))}
             </div>
           </div>
         </div>
