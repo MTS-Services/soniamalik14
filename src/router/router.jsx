@@ -11,6 +11,7 @@ import CommunityDetails from '../pages/public/public_community/components/Commun
 import NotFound from '../pages/error/NotFound';
 import Unauthorized from '../pages/error/Unauthorized';
 import EventView from '../pages/public/public_event/EventView.jsx';
+import EventDetailsPage from '../pages/public/public_event/EventDetails.jsx';
 import MarketPlace from '../pages/public/public_market/MarketPlace.jsx';
 import ServiceView from '../pages/public/public_service/ServiceView.jsx';
 import UnderConstruction from '../components/ui/UnderConstruction.jsx';
@@ -42,6 +43,7 @@ const router = createBrowserRouter(
         <Route path="community" element={<CommunityView />} />
         <Route path="community/:id" element={<CommunityDetails />} />
         <Route path="events" element={<EventView />} />
+        <Route path="events/:id" element={<EventDetailsPage />} />
         <Route path="marketplace" element={<MarketPlace />} />
         <Route path="services" element={<ServiceView />} />
         <Route path="news" element={<NewsView />} />

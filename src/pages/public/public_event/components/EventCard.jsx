@@ -1,11 +1,12 @@
 import React from 'react';
+import { useAuth } from '../../../../context/AuthContext';
 import { Link } from 'react-router-dom';
 import Card from '../../../../components/ui/Card';
 import Button from '../../../../components/ui/Button';
 import { MapPin, Calendar, Lock } from 'lucide-react';
 
 const EventCard = ({ event }) => {
-  const isAuthenticated = false; // This should come from auth context
+  const { isAuthenticated } = useAuth();
 
   return (
     <Card className="p-4 h-full flex flex-col justify-between" hover>
@@ -45,14 +46,16 @@ const EventCard = ({ event }) => {
       <div className="mt-2">
         {!isAuthenticated ? (
           <Link to="/signin">
-            <Button variant="primary" className="w-full rounded-full bg-btn-primary text-white hover:bg-[#0d655d]">
+            <Button variant="primary" className="w-full rounded-md bg-btn-primary text-white hover:bg-[#0d655d]">
               Login to view
             </Button>
           </Link>
         ) : (
-          <Button variant="primary" className="w-full rounded-full bg-btn-primary text-white hover:bg-[#0d655d]">
-            View Details
-          </Button>
+          <Link to={`/events/${event.id}`} state={{ event }}>
+            <Button variant="primary" className="w-full rounded-md bg-btn-primary text-white hover:bg-[#0d655d]">
+              View Details
+            </Button>
+          </Link>
         )}
       </div>
     </Card>
