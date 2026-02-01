@@ -3,6 +3,7 @@ import PageHeader from '../../../../components/ui/PageHeader';
 import CoachFilter from '../components/CoachFilter';
 import EventCard from '../../../../components/ui/EventCard';
 import Pagination from '../../../../components/ui/Pagination';
+import EventModal from '../../../../components/ui/EventModal';
 
 const CoachEvent = () => {
     const events = [
@@ -90,16 +91,17 @@ const CoachEvent = () => {
 
     const [page, setPage] = useState(1);
     const [filter, setFilter] = useState({ status: 'All', query: '' });
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const perPage = 9;
 
     const handleEdit = (item) => {
         console.log('Edit', item);
-        
+
     };
 
     const handleDelete = (item) => {
         console.log('Delete', item);
-        
+
     };
 
     const applyFilters = (list) => {
@@ -123,7 +125,7 @@ const CoachEvent = () => {
     return (
         <div className="dashboardPy dashboardSpaceY">
             <div className='mb-6'>
-                <PageHeader title="Coach Events" description="Host matches, training sessions, trials, and community events for your club." ctaText="Create Event" />
+                <PageHeader title="Coach Events" description="Host matches, training sessions, trials, and community events for your club." ctaText="Create Event" onCtaClick={() => setIsModalOpen(true)} />
             </div>
 
             <div>
@@ -145,6 +147,7 @@ const CoachEvent = () => {
                 <Pagination page={page} total={totalPages} onChange={(p) => setPage(p)} />
             </div>
 
+            <EventModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
         </div>
     );
 };
