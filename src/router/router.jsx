@@ -26,6 +26,7 @@ import AdminIndex from '../pages/dashboards/admin/adminIndex/AdminIndex.jsx';
 import EventDetails from '../pages/dashboards/admin/EventDetails/EventDetails.jsx';
 import ProductRequested from '../pages/dashboards/admin/ProductRequested/ProductRequested.jsx';
 import OrderList from '../pages/dashboards/admin/OrderList/OrderList.jsx';
+import CoachEvent from '../pages/dashboards/coach/event/CoachEvent.jsx';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -93,7 +94,7 @@ const router = createBrowserRouter(
         }
       >
         <Route index element={<CoachIndex />} />
-        <Route path="event" element={<UnderConstruction />} />
+        <Route path="event" element={<CoachEvent/>} />
         <Route path="event-analytics" element={<UnderConstruction />} />
         <Route path="thread" element={<UnderConstruction />} />
         <Route path="recruitment" element={<UnderConstruction />} />

@@ -11,7 +11,7 @@ const CoachIndex = () => {
     <div className="dashboardPy dashboardSpaceY">
       {/* Profile header */}
       <Card className="flex flex-col lg:flex-row items-center justify-between gap-4 p-6">
-        <div className="flex items-center gap-4">
+        <div className="flex flex-col lg:flex-row items-center gap-4">
           <img
             src="/coachindex.jpg"
             alt="coach"
@@ -28,9 +28,9 @@ const CoachIndex = () => {
           </div>
         </div>
 
-        <div className="self-stretch lg:self-auto flex items-center justify-end">
-          <Link to="#" className="ml-2">
-            <Button className="px-4 py-2 rounded-lg" variant="primary">Edit Profile</Button>
+        <div className="self-stretch lg:self-auto flex items-center justify-end w-full lg:w-auto">
+          <Link to="#" className="w-full lg:w-auto lg:ml-2">
+            <Button className="w-full lg:w-auto px-4 py-2 rounded-lg" variant="primary">Edit Profile</Button>
           </Link>
         </div>
       </Card>
@@ -49,11 +49,11 @@ const CoachIndex = () => {
               title: 'U16 Goalkeeper Wanted',
               applicants: 12,
               status: 'Active'
-            },{
+            }, {
               title: 'Senior Midfielder - Trial Days',
               applicants: 45,
               status: 'Active'
-            },{
+            }, {
               title: 'Assistant Coach (Volunteer)',
               applicants: 3,
               status: 'Pending'
@@ -94,7 +94,7 @@ const CoachIndex = () => {
                 </div>
 
                 <div>
-                  <Button variant="outline" className="px-4 py-2">See Details</Button>
+                  <Button variant="outline" className=" px-2 md:px-4 py-2">See Details</Button>
                 </div>
               </div>
             ))}
