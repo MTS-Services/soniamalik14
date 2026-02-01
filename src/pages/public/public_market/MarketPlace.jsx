@@ -5,7 +5,7 @@ import MarketplaceCard from './components/MarketplaceCard';
 import AddProductModal from './components/AddProductModal';
 import Pagination from '../../../components/ui/Pagination';
 
-const sampleItems = [
+export const sampleItems = [
   { id: 1, title: "Women's Cricket Bat", description: 'High-quality bat for women players. Used but well maintained. Sell or swap available.', price: 200, condition: 'New', image: '/player1.png' },
   { id: 2, title: 'Pro Football Boots for Women', description: 'Comfortable and durable football boots designed for women. Brand new condition.', price: 120, condition: 'New', image: '/player2.png' },
   { id: 3, title: 'Lightweight Tennis Racket', description: 'Easy-grip, lightweight racket perfect for beginners to intermediate players. Swap option open.', price: 200, condition: 'New', image: '/player3.jpg' },

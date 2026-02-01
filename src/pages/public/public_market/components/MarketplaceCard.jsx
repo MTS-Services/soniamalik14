@@ -1,6 +1,7 @@
 import React from 'react';
 import Card from '../../../../components/ui/Card';
 import Button from '../../../../components/ui/Button';
+import { Link } from 'react-router-dom';
 import { Tag } from 'lucide-react';
 
 const MarketplaceCard = ({ item }) => {
@@ -29,7 +30,14 @@ const MarketplaceCard = ({ item }) => {
         <h3 className="text-[#282828] font-semibold text-base mb-1 line-clamp-1">{item.title}</h3>
         <p className="text-sm text-[#585858] mb-3 line-clamp-2 flex-1">{item.description}</p>
         <div className="text-lg font-bold text-[#282828] mb-3">${item.price.toFixed(2)}</div>
-        <Button variant="primary" className="w-full rounded-lg">Buy Now</Button>
+        <div className="mt-2 flex gap-2">
+          <Link to={`/marketplace/${item.id}`} state={{ item }} className="flex-1">
+            <Button variant="primary" className="w-full rounded-lg">Buy Now</Button>
+          </Link>
+          <button className="flex-1">
+            <Button variant="outline" className="w-full rounded-lg">Add To Cart</Button>
+          </button>
+        </div>
       </div>
     </Card>
   );

@@ -40,7 +40,7 @@ const EventView = () => {
                             <Search className="w-4 h-4 text-[#5EA39E] shrink-0" />
                             <input type="search" placeholder="Search by event name or location" className="ml-2 w-full outline-none text-sm text-gray-700 placeholder-[#747474]" />
                         </div>
-                        <button onClick={() => setShowFilters(true)} className="bg-white border border-gray-200 rounded-lg p-2 w-10 h-10 flex items-center justify-center">
+                        <button onClick={() => setShowFilters(true)} className="bg-white border border-gray-200 rounded-lg p-2 w-10 h-10 flex items-center justify-center lg:hidden">
                             <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-gray-600" viewBox="0 0 24 24" fill="none">
                                 <path stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" d="M3 5h18M6 12h12M10 19h4"/>
                             </svg>
@@ -65,7 +65,9 @@ const EventView = () => {
 
                     <div className="grid grid-cols-1 lg:grid-cols-4 gap-3 lg:gap-6 mt-3 lg:mt-6">
                     <div className="hidden lg:block lg:col-span-1">
-                        <EventFilters />
+                        <div className="sticky top-40">
+                            <EventFilters />
+                        </div>
                     </div>
 
                     <div className="lg:col-span-3">
