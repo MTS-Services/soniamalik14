@@ -62,11 +62,11 @@ const DiscoverDetails = () => {
 
           {/* Two Images Side by Side */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6 md:mb-8">
-            <div className="h-48 md:h-full rounded-md overflow-hidden">
+            <div className="h-48 md:h-72 rounded-md overflow-hidden">
               <img src={item.image2 || item.image} alt="Club" className="w-full h-full object-cover" />
             </div>
             <div></div>
-            <div className="h-48 md:h-full rounded-md overflow-hidden">
+            <div className="h-48 md:h-72 rounded-md overflow-hidden">
               <img src={item.image3 || item.image} alt="Club" className="w-full h-full object-cover" />
             </div>
           </div>
@@ -74,44 +74,44 @@ const DiscoverDetails = () => {
           {/* Main Content Grid */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
             {/* Left Content - Club Details */}
-            <div className="lg:col-span-2 space-y-6">
+            <div className="lg:col-span-2 space-y-5">
               {/* Club Name & Type */}
               <div>
-                <h1 className="text-2xl md:text-3xl font-bold text-[#1D1D1D] mb-1">
-                  <span className="font-semibold">Club Name:</span> {item.title}
-                </h1>
-                <p className="text-base text-[#323232] mb-2">
-                  <span className="font-semibold">Club Type:</span> {item.type}
+                <p className="font-normal text-[#1D1D1D] text-2xl">
+                  <span className="font-semibold ">Club Name:</span> {item.title || 'No information available'}
                 </p>
-                <div className="flex items-start gap-2 text-[#323232]">
+                <p className="text-base font-normal text-[#1D1D1D] mt-1">
+                  <span className="font-semibold ">Club Type:</span> {item.type || 'No information available'}
+                </p>
+                <div className="flex items-start gap-2 text-[#1D1D1D] mt-1">
                   <MapPin className="w-4 h-4 mt-1 flex-shrink-0" />
-                  <span className="text-sm">{item.location}</span>
+                  <span className="text-base font-normal">{item.location || 'No information available'}</span>
                 </div>
               </div>
 
               {/* Training Details */}
-              <div className="space-y-2 text-[#323232]">
-                <p className="text-sm md:text-base">
-                  <span className="font-semibold text-[#1D1D1D]">Training Days:</span> {item.day}
+              <div className="space-y-1">
+                <p className="text-base font-normal text-[#1D1D1D]">
+                  <span className="font-semibold">Training Days:</span> {item.day || 'No information available'}
                 </p>
-                <p className="text-sm md:text-base">
-                  <span className="font-semibold text-[#1D1D1D]">Training Time:</span> {item.time}
+                <p className="text-base font-normal text-[#1D1D1D]">
+                  <span className="font-semibold">Training Time:</span> {item.time || 'No information available'}
                 </p>
-                <p className="text-sm md:text-base">
-                  <span className="font-semibold text-[#1D1D1D]">Home Ground:</span> {item.homeGround}
+                <p className="text-base font-normal text-[#1D1D1D]">
+                  <span className="font-semibold">Home Ground:</span> {item.homeGround || 'No information available'}
                 </p>
               </div>
 
               {/* About the Club */}
               <div>
-                <h2 className="text-xl md:text-2xl font-bold text-[#1D1D1D] mb-3">About the Club</h2>
-                <p className="text-sm md:text-base text-[#323232] leading-relaxed">{item.about}</p>
+                <h2 className="text-lg font-bold text-[#1D1D1D] mb-2">About the Club</h2>
+                <p className="text-base font-normal text-[#1D1D1D] leading-relaxed">{item.about || 'No information available'}</p>
               </div>
 
               {/* We Are Looking For */}
               <div>
-                <h3 className="text-lg md:text-xl font-bold text-[#1D1D1D] mb-2">We Are Looking For:</h3>
-                <ul className="list-disc pl-5 space-y-1 text-sm md:text-base text-[#323232]">
+                <h3 className="text-lg font-bold text-[#1D1D1D] mb-2">We Are Looking For:</h3>
+                <ul className="list-disc pl-5 space-y-1 text-base font-normal text-[#1D1D1D]">
                   <li>Midfielder</li>
                   <li>Defender</li>
                   <li>Goalkeeper</li>
@@ -120,44 +120,44 @@ const DiscoverDetails = () => {
 
               {/* Skill Level */}
               <div>
-                <h3 className="text-lg md:text-xl font-bold text-[#1D1D1D] mb-2">Skill Level:</h3>
-                <p className="text-sm md:text-base text-[#323232]">{item.level}</p>
+                <h3 className="text-lg font-bold text-[#1D1D1D] mb-1">Skill Level:</h3>
+                <p className="text-base font-normal text-[#1D1D1D]">{item.level || 'No information available'}</p>
               </div>
 
               {/* Age Group */}
               <div>
-                <h3 className="text-lg md:text-xl font-bold text-[#1D1D1D] mb-2">Age Group:</h3>
-                <p className="text-sm md:text-base text-[#323232]">{item.ageGroup}</p>
+                <h3 className="text-lg font-bold text-[#1D1D1D] mb-1">Age Group:</h3>
+                <p className="text-base font-normal text-[#1D1D1D]">{item.ageGroup || 'No information available'}</p>
               </div>
 
               {/* Experience Required */}
               <div>
-                <h3 className="text-lg md:text-xl font-bold text-[#1D1D1D] mb-2">Experience Required:</h3>
-                <p className="text-sm md:text-base text-[#323232]">{item.experienceRequired}</p>
+                <h3 className="text-lg font-bold text-[#1D1D1D] mb-1">Experience Required:</h3>
+                <p className="text-base font-normal text-[#1D1D1D]">{item.experienceRequired || 'No information available'}</p>
               </div>
 
               {/* Training Frequency */}
               <div>
-                <h3 className="text-lg md:text-xl font-bold text-[#1D1D1D] mb-2">Training Frequency:</h3>
-                <p className="text-sm md:text-base text-[#323232]">{item.trainingFrequency}</p>
+                <h3 className="text-lg font-bold text-[#1D1D1D] mb-1">Training Frequency:</h3>
+                <p className="text-base font-normal text-[#1D1D1D]">{item.trainingFrequency || 'No information available'}</p>
               </div>
 
               {/* Match Schedule */}
               <div>
-                <h3 className="text-lg md:text-xl font-bold text-[#1D1D1D] mb-2">Match Schedule:</h3>
-                <p className="text-sm md:text-base text-[#323232]">{item.matchSchedule}</p>
+                <h3 className="text-lg font-bold text-[#1D1D1D] mb-1">Match Schedule:</h3>
+                <p className="text-base font-normal text-[#1D1D1D]">{item.matchSchedule || 'No information available'}</p>
               </div>
 
               {/* Season Duration */}
               <div>
-                <h3 className="text-lg md:text-xl font-bold text-[#1D1D1D] mb-2">Season Duration:</h3>
-                <p className="text-sm md:text-base text-[#323232]">{item.seasonDuration}</p>
+                <h3 className="text-lg font-bold text-[#1D1D1D] mb-1">Season Duration:</h3>
+                <p className="text-base font-normal text-[#1D1D1D]">{item.seasonDuration || 'No information available'}</p>
               </div>
 
               {/* What We Offer */}
               <div>
-                <h3 className="text-lg md:text-xl font-bold text-[#1D1D1D] mb-2">What We Offer</h3>
-                <ul className="list-disc pl-5 space-y-1 text-sm md:text-base text-[#323232]">
+                <h3 className="text-lg font-bold text-[#1D1D1D] mb-2">What We Offer</h3>
+                <ul className="list-disc pl-5 space-y-1 text-base font-normal text-[#1D1D1D]">
                   <li>Professional coaching</li>
                   <li>Regular match exposure</li>
                   <li>Safe & women-only environment</li>
@@ -168,55 +168,55 @@ const DiscoverDetails = () => {
 
               {/* Head Coach */}
               <div>
-                <h3 className="text-lg md:text-xl font-bold text-[#1D1D1D] mb-2">Head Coach:</h3>
-                <p className="text-sm md:text-base text-[#323232]">{item.headCoach}</p>
+                <h3 className="text-lg font-bold text-[#1D1D1D] mb-1">Head Coach:</h3>
+                <p className="text-base font-normal text-[#1D1D1D]">{item.headCoach || 'No information available'}</p>
               </div>
 
               {/* Coaching Style */}
               <div>
-                <h3 className="text-lg md:text-xl font-bold text-[#1D1D1D] mb-2">Coaching Style:</h3>
-                <p className="text-sm md:text-base text-[#323232]">{item.coachingStyle}</p>
+                <h3 className="text-lg font-bold text-[#1D1D1D] mb-1">Coaching Style:</h3>
+                <p className="text-base font-normal text-[#1D1D1D]">{item.coachingStyle || 'No information available'}</p>
               </div>
 
               {/* Trial Required */}
               <div>
-                <h3 className="text-lg md:text-xl font-bold text-[#1D1D1D] mb-2">Trial Required:</h3>
-                <p className="text-sm md:text-base text-[#323232]">{item.trialRequired}</p>
+                <h3 className="text-lg font-bold text-[#1D1D1D] mb-1">Trial Required:</h3>
+                <p className="text-base font-normal text-[#1D1D1D]">{item.trialRequired || 'No information available'}</p>
               </div>
 
               {/* Trial Date */}
               <div>
-                <h3 className="text-lg md:text-xl font-bold text-[#1D1D1D] mb-2">Trial Date:</h3>
-                <p className="text-sm md:text-base text-[#323232]">{item.trialDate}</p>
+                <h3 className="text-lg font-bold text-[#1D1D1D] mb-1">Trial Date:</h3>
+                <p className="text-base font-normal text-[#1D1D1D]">{item.trialDate || 'No information available'}</p>
               </div>
 
               {/* Trial Time */}
               <div>
-                <h3 className="text-lg md:text-xl font-bold text-[#1D1D1D] mb-2">Trial Time:</h3>
-                <p className="text-sm md:text-base text-[#323232]">{item.trialTime}</p>
+                <h3 className="text-lg font-bold text-[#1D1D1D] mb-1">Trial Time:</h3>
+                <p className="text-base font-normal text-[#1D1D1D]">{item.trialTime || 'No information available'}</p>
               </div>
 
               {/* Trial Location */}
               <div>
-                <h3 className="text-lg md:text-xl font-bold text-[#1D1D1D] mb-2">Trial Location:</h3>
-                <p className="text-sm md:text-base text-[#323232]">{item.trialLocation}</p>
+                <h3 className="text-lg font-bold text-[#1D1D1D] mb-1">Trial Location:</h3>
+                <p className="text-base font-normal text-[#1D1D1D]">{item.trialLocation || 'No information available'}</p>
               </div>
 
               {/* Posted By */}
               <div>
-                <h3 className="text-lg md:text-xl font-bold text-[#1D1D1D] mb-2">Posted By:</h3>
-                <p className="text-sm md:text-base text-[#323232]">{item.postedBy}</p>
+                <h3 className="text-lg font-bold text-[#1D1D1D] mb-1">Posted By:</h3>
+                <p className="text-base font-normal text-[#1D1D1D]">{item.postedBy || 'No information available'}</p>
               </div>
 
               {/* Contact Details */}
               <div>
-                <h3 className="text-lg md:text-xl font-bold text-[#1D1D1D] mb-2">Contact Email:</h3>
-                <p className="text-sm md:text-base text-[#323232]">{item.contactEmail}</p>
+                <h3 className="text-lg font-bold text-[#1D1D1D] mb-1">Contact Email:</h3>
+                <p className="text-base font-normal text-[#1D1D1D]">{item.contactEmail || 'No information available'}</p>
               </div>
 
               <div>
-                <h3 className="text-lg md:text-xl font-bold text-[#1D1D1D] mb-2">Phone:</h3>
-                <p className="text-sm md:text-base text-[#323232]">{item.phone}</p>
+                <h3 className="text-lg font-bold text-[#1D1D1D] mb-1">Phone:</h3>
+                <p className="text-base font-normal text-[#1D1D1D]">{item.phone || 'No information available'}</p>
               </div>
             </div>
 

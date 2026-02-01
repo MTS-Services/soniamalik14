@@ -52,7 +52,7 @@ const DiscoverCard = ({ item }) => {
             </Button>
           </Link>
         ) : (
-          <Link to={`/discover/${item.id}`} state={{ item }}>
+          <Link to={`/discover/${item.type}/${item.id}`} state={{ item }}>
             <Button variant="primary" className="w-full rounded-full bg-btn-primary text-white hover:bg-[#0d655d]">
               View Details
             </Button>

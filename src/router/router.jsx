@@ -38,7 +38,7 @@ const router = createBrowserRouter(
         <Route index element={<HomeView />} />
         <Route path="about" element={<AboutView />} />
         <Route path="discover" element={<DiscoverView />} />
-        <Route path="discover/:id" element={<DiscoverDetails />} />
+        <Route path="discover/:type/:id" element={<DiscoverDetails />} />
         <Route path="community" element={<CommunityView />} />
         <Route path="community/:id" element={<CommunityDetails />} />
         <Route path="events" element={<EventView />} />
