@@ -52,9 +52,11 @@ const DiscoverCard = ({ item }) => {
             </Button>
           </Link>
         ) : (
-          <Button variant="primary" className="w-full rounded-full bg-btn-primary text-white hover:bg-[#0d655d]">
-            View Details
-          </Button>
+          <Link to={`/discover/${item.id}`} state={{ item }}>
+            <Button variant="primary" className="w-full rounded-full bg-btn-primary text-white hover:bg-[#0d655d]">
+              View Details
+            </Button>
+          </Link>
         )}
       </div>
     </Card>

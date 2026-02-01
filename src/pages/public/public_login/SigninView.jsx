@@ -85,6 +85,7 @@ const LoginView = () => {
                 <p><strong>Admin:</strong> admin@essahub.com</p>
                 <p><strong>Provider:</strong> provider@essahub.com</p>
                 <p><strong>Coach:</strong> coach@essahub.com</p>
+                <p><strong>User:</strong> user@essahub.com</p>
               </div>
             </div>
 
@@ -182,14 +183,14 @@ const LoginView = () => {
               </div>
               <div className="rounded-[100px] overflow-hidden h-64 bg-gray-200">
                 <img 
-                  src="/public/images/login/image_2.jpg" 
+                  src="/images/login/image_2.jpg" 
                   alt="Player" 
                   className="w-full h-full object-cover"
                 />
               </div>
               <div className="rounded-[100px] overflow-hidden h-56 bg-gray-100 border-2 border-[#5EA39E]">
                 <img 
-                  src="/public/images/login/image_3.jpg" 
+                  src="/images/login/image_3.jpg" 
                   alt="Player" 
                   className="w-full h-full object-cover"
                 />
@@ -200,21 +201,21 @@ const LoginView = () => {
             <div className="flex flex-col gap-4">
               <div className="rounded-[100px] overflow-hidden h-72 bg-gray-200">
                 <img 
-                  src="/public/images/login/image_4.jpg" 
+                  src="/images/login/image_4.jpg" 
                   alt="Player" 
                   className="w-full h-full object-cover"
                 />
               </div>
               <div className="rounded-[100px] overflow-hidden h-68 bg-gray-200">
                 <img 
-                  src="/public/images/login/image_5.jpg" 
+                  src="/images/login/image_5.jpg" 
                   alt="Player" 
                   className="w-full h-full object-cover"
                 />
               </div>
               <div className="rounded-[100px] overflow-hidden h-72 bg-gray-200">
                 <img 
-                  src="/public/images/login/image_6.jpg" 
+                  src="/images/login/image_6.jpg" 
                   alt="Player" 
                   className="w-full h-full object-cover"
                 />
@@ -225,21 +226,21 @@ const LoginView = () => {
             <div className="flex flex-col gap-4 pt-16">
               <div className="rounded-[100px] overflow-hidden h-56 bg-gray-200">
                 <img 
-                  src="/public/images/login/image_7.jpg" 
+                  src="/images/login/image_7.jpg" 
                   alt="Player" 
                   className="w-full h-full object-cover"
                 />
               </div>
               <div className="rounded-[100px] overflow-hidden h-64 bg-gray-200">
                 <img 
-                  src="/public/images/login/image_8.jpg" 
+                  src="/images/login/image_8.jpg" 
                   alt="Player" 
                   className="w-full h-full object-cover"
                 />
               </div>
               <div className="rounded-[100px] overflow-hidden h-84 bg-gray-100 border-2 border-[#5EA39E]">
                 <img 
-                  src="/public/images/login/image_9.jpg" 
+                  src="/images/login/image_9.jpg" 
                   alt="Player" 
                   className="w-full h-full object-cover"
                 />
