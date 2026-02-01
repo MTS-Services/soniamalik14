@@ -9,15 +9,15 @@ const CoachEvent = () => {
     const events = [
         {
             id: 1,
-            image: 'https://i.ibb.co/bjNWBQ7y/Frame-2147226117.png',
-            title: "Women's Football Friendly Match Day",
+            image: 'https://i.ibb.co.com/GvY67RzW/womanfootball.webp',
+            title: "Women's Football Friendly Match Day Community Sports Ground",
             date: '4 Dec 2025',
             location: '1901 Thornridge Cir. Shiloh',
             status: 'Approved',
         },
         {
             id: 2,
-            image: 'https://i.ibb.co/bjNWBQ7y/Frame-2147226117.png',
+            image: 'https://i.ibb.co.com/GvY67RzW/womanfootball.webp',
             title: "Junior Training Session",
             date: '10 Jan 2026',
             location: 'Community Sports Ground',
@@ -25,7 +25,7 @@ const CoachEvent = () => {
         },
         {
             id: 3,
-            image: 'https://i.ibb.co.com/bjNWBQ7y/Frame-2147226117.png',
+            image: 'https://i.ibb.co.com/GvY67RzW/womanfootball.webp',
             title: "Open Trial Morning",
             date: '21 Oct 2025',
             location: 'Northside Stadium',
@@ -33,7 +33,7 @@ const CoachEvent = () => {
         },
         {
             id: 4,
-            image: 'https://i.ibb.co.com/bjNWBQ7y/Frame-2147226117.png',
+            image: 'https://i.ibb.co.com/GvY67RzW/womanfootball.webp',
             title: "Community Coaching Clinic",
             date: '15 Nov 2025',
             location: 'Green Park',
@@ -41,7 +41,7 @@ const CoachEvent = () => {
         },
         {
             id: 5,
-            image: 'https://i.ibb.co.com/bjNWBQ7y/Frame-2147226117.png',
+            image: 'https://i.ibb.co.com/GvY67RzW/womanfootball.webp',
             title: "Weekend Match Series",
             date: '2 Feb 2026',
             location: 'Eastfield Arena',
@@ -49,7 +49,7 @@ const CoachEvent = () => {
         },
         {
             id: 6,
-            image: 'https://i.ibb.co.com/bjNWBQ7y/Frame-2147226117.png',
+            image: 'https://i.ibb.co.com/GvY67RzW/womanfootball.webp',
             title: "Skills & Drills Camp",
             date: '12 Mar 2026',
             location: 'Riverside Pitch',
@@ -57,7 +57,7 @@ const CoachEvent = () => {
         },
         {
             id: 7,
-            image: 'https://i.ibb.co.com/bjNWBQ7y/Frame-2147226117.png',
+            image: 'https://i.ibb.co.com/GvY67RzW/womanfootball.webp',
             title: "Skills & Drills Camp",
             date: '12 Mar 2026',
             location: 'Riverside Pitch',
@@ -65,7 +65,7 @@ const CoachEvent = () => {
         },
         {
             id: 8,
-            image: 'https://i.ibb.co.com/bjNWBQ7y/Frame-2147226117.png',
+            image: 'https://i.ibb.co.com/GvY67RzW/womanfootball.webp',
             title: "Skills & Drills Camp",
             date: '12 Mar 2026',
             location: 'Riverside Pitch',
@@ -73,7 +73,7 @@ const CoachEvent = () => {
         },
         {
             id: 9,
-            image: 'https://i.ibb.co.com/bjNWBQ7y/Frame-2147226117.png',
+            image: 'https://i.ibb.co.com/GvY67RzW/womanfootball.webp',
             title: "Skills & Drills Camp",
             date: '12 Mar 2026',
             location: 'Riverside Pitch',
@@ -81,9 +81,9 @@ const CoachEvent = () => {
         },
         {
             id: 10,
-            image: 'https://i.ibb.co.com/bjNWBQ7y/Frame-2147226117.png',
+            image: 'https://i.ibb.co.com/GvY67RzW/womanfootball.webp',
             title: "Skills & Drills Camp",
-            date: '12 Mar 2026',
+            day: '12 Mar 2026',
             location: 'Riverside Pitch',
             status: 'Pending',
         },
@@ -133,7 +133,7 @@ const CoachEvent = () => {
             </div>
 
             <div className="pt-4">
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2  gap-6 xl:grid-cols-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-3  gap-6 2xl:grid-cols-4">
                     {paged.map((e) => (
                         <EventCard
                             key={e.id}
