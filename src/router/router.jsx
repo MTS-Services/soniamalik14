@@ -13,6 +13,7 @@ import Unauthorized from '../pages/error/Unauthorized';
 import EventView from '../pages/public/public_event/EventView.jsx';
 import EventDetailsPage from '../pages/public/public_event/EventDetails.jsx';
 import MarketPlace from '../pages/public/public_market/MarketPlace.jsx';
+import MarketplaceDetails from '../pages/public/public_market/MarketplaceDetails.jsx';
 import ServiceView from '../pages/public/public_service/ServiceView.jsx';
 import UnderConstruction from '../components/ui/UnderConstruction.jsx';
 import NewsView from '../pages/public/public_news/NewsView';
@@ -45,6 +46,7 @@ const router = createBrowserRouter(
         <Route path="events" element={<EventView />} />
         <Route path="events/:id" element={<EventDetailsPage />} />
         <Route path="marketplace" element={<MarketPlace />} />
+        <Route path="marketplace/:id" element={<MarketplaceDetails />} />
         <Route path="services" element={<ServiceView />} />
         <Route path="news" element={<NewsView />} />
         <Route path="*" element={<NotFound />} />
