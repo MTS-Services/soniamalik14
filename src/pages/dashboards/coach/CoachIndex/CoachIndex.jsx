@@ -1,12 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Card from '../../../../components/ui/Card';
 import Button from '../../../../components/ui/Button';
 import { IoLocationOutline } from 'react-icons/io5';
 import PageHeader from '../../../../components/ui/PageHeader';
 import SectionHeader from '../../../../components/ui/SectionHeader';
+import CreateRecruitmentModal from '../../../../components/ui/CreateRecruitmentModal';
+import EventModal from '../../../../components/ui/EventModal';
 
 const CoachIndex = () => {
+  const [isPostModalOpen, setIsPostModalOpen] = useState(false);
+  const [isEventModalOpen, setIsEventModalOpen] = useState(false);
   return (
     <div className="dashboardPy dashboardSpaceY">
       {/* Profile header */}
@@ -41,7 +45,7 @@ const CoachIndex = () => {
         <Card className="p-6">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-xl font-semibold">Recruitment Ads</h3>
-            <Link to="#" className="text-btn-primary font-medium">+ Post New</Link>
+            <button onClick={() => setIsPostModalOpen(true)} className="text-btn-primary font-medium">+ Post New</button>
           </div>
 
           <div className="space-y-4">
@@ -74,9 +78,9 @@ const CoachIndex = () => {
 
         {/* Your Events */}
         <Card className="p-6">
-          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center justify-between mb-4">
             <h3 className="text-xl font-semibold">Your Events</h3>
-            <Link to="#" className="text-btn-primary font-medium">+ Create Event</Link>
+            <button onClick={() => setIsEventModalOpen(true)} className="text-btn-primary font-medium">+ Create Event</button>
           </div>
 
           <div className="space-y-4">
@@ -101,6 +105,9 @@ const CoachIndex = () => {
           </div>
         </Card>
       </div>
+
+      <CreateRecruitmentModal isOpen={isPostModalOpen} onClose={() => setIsPostModalOpen(false)} />
+      <EventModal isOpen={isEventModalOpen} onClose={() => setIsEventModalOpen(false)} mode="create" />
     </div>
   );
 };
