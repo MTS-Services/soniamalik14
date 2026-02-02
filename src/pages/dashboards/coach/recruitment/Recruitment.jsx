@@ -1,54 +1,49 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
 import RecruitmentCard from './RecruitmentCard';
 import PageHeader from '../../../../components/ui/PageHeader';
 import Pagination from '../../../../components/ui/Pagination';
-
-const makeSample = (count = 15) => {
-    const tags = ['CLUB', 'Training', 'Sessions', 'TRIAL'];
-    const titles = [
-        'Woking Warriors FC',
-        'Beginner Basics Boot Camp',
-        'Weekly 5-a-Side Session',
-        'City Strikers Trials',
-        'Elite Goalkeeper Clinic',
-        'Women Veteran Outreach',
-        'Speed & Agility Workshop',
-        'Summer Development Camp'
-    ];
-
-    return Array.from({ length: count }).map((_, i) => ({
-        id: i + 1,
-        tag: tags[i % tags.length],
-        title: titles[i % titles.length] + (i >= titles.length ? ` ${i + 1}` : ''),
-        location: '2972 Westheimer Rd. Santa Ana, Illinois 85486',
-        days: i % 2 === 0 ? 'Monday, Wednesday' : 'Tuesday, Thursday',
-        time: i % 3 === 0 ? '18:00 - 20:00' : '19:00 - 21:00'
-    }));
-}
+import { fetchRecruitments, selectRecruitments } from '../../../../features/recruitment/recruitmentSlice';
+import CreateRecruitmentModal from '../../../../components/ui/CreateRecruitmentModal';
 
 const Recruitment = () => {
-    const [items, setItems] = useState(() => makeSample(15));
+    const dispatch = useDispatch();
+    const items = useSelector(selectRecruitments);
+    const loading = useSelector((s) => s.recruitment.loading);
+    const error = useSelector((s) => s.recruitment.error);
+
     const [page, setPage] = useState(1);
     const perPage = 9;
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    useEffect(() => {
+        if (items.length === 0) {
+            dispatch(fetchRecruitments());
+        }
+    }, [dispatch, items.length]);
+
+    const [selectedItem, setSelectedItem] = useState(null);
 
     const handleEdit = (it) => {
-        // placeholder: open edit modal or navigate to edit page
-        console.log('edit', it.id);
+        // open modal with existing item for editing
+        setSelectedItem(it);
+        setIsModalOpen(true);
     };
 
     const handleDelete = (it) => {
-        setItems((s) => s.filter((x) => x.id !== it.id));
-        const totalAfter = items.length - 1;
-        const totalPagesAfter = Math.max(1, Math.ceil(totalAfter / perPage));
-        if (page > totalPagesAfter) setPage(totalPagesAfter);
+        // TODO: implement Redux delete action
+        console.log('delete', it.id);
     };
 
     const totalPages = Math.max(1, Math.ceil(items.length / perPage));
 
+    if (loading) return <div className="dashboardPy">Loading recruitments...</div>;
+    if (error) return <div className="dashboardPy text-red-600">Error: {error}</div>;
+
     return (
         <div className="dashboardPy">
             <div className='mb-6'>
-                <PageHeader title="Create a Recruitment" ctaText="Create New Recruitment" />
+                <PageHeader title="Create a Recruitment" ctaText="Create New Recruitment" onCtaClick={() => setIsModalOpen(true)} />
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-6">
@@ -58,6 +53,14 @@ const Recruitment = () => {
             </div>
 
             <Pagination page={page} total={totalPages} onChange={(p) => setPage(p)} />
+
+            {/* Create/Edit Recruitment Modal (separate component) */}
+            <CreateRecruitmentModal
+                isOpen={isModalOpen}
+                onClose={() => { setIsModalOpen(false); setSelectedItem(null); }}
+                initialData={selectedItem}
+                mode={selectedItem ? 'edit' : 'create'}
+            />
         </div>
     )
 }
