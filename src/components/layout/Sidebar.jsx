@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, NavLink, useNavigate } from 'react-router-dom';
+import { Link, NavLink, useNavigate, useLocation } from 'react-router-dom';
 import {
     LayoutDashboard,
     Calendar,
@@ -93,10 +93,11 @@ const getRoleTitle = (role) => {
 const Sidebar = ({ isOpen, onClose }) => {
     const { user, logout } = useAuth();
     const navigate = useNavigate();
-    
+
     const basePath = getBasePath(user?.role);
     const menuItems = getMenuItems(user?.role, basePath);
     const roleTitle = getRoleTitle(user?.role);
+    const location = useLocation();
 
     const handleLogout = () => {
         logout();
@@ -114,12 +115,12 @@ const Sidebar = ({ isOpen, onClose }) => {
         <>
             {/* Overlay for mobile */}
             {isOpen && (
-                <div 
+                <div
                     className="fixed inset-0 bg-black/50 z-40 lg:hidden transition-opacity"
                     onClick={onClose}
                 />
             )}
-            
+
             {/* Sidebar */}
             <aside className={`
                 fixed lg:static inset-y-0 left-0 z-50
@@ -128,51 +129,61 @@ const Sidebar = ({ isOpen, onClose }) => {
                 ${isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
             `}>
                 {/* Close button for mobile */}
-                <button 
+                <button
                     onClick={onClose}
                     className="lg:hidden absolute top-4 right-4 p-1 hover:bg-gray-100 rounded-full"
                 >
                     <X className="w-5 h-5 text-gray-600" />
                 </button>
-            
-            
-            {/* Logo */}
-            <div className="flex items-center px-5">
-                <img src="/logo.svg" alt="Logo" className="w-30 h-auto pb-5 pt-2.5" />
-            </div>
 
-            {/* Menu */}
-            <nav className="flex-1 pb-4 overflow-y-auto">
-                {menuItems.map((item) => (
-                    <div key={item.id}>
-                        <NavLink
-                            to={item.path}
-                            end={item.id === 'dashboard'}
-                            onClick={handleNavClick}
-                            className={({ isActive }) =>
-                                `w-full flex items-center gap-3 font-medium text-sm px-5 py-3 rounded-none ${
-                                    isActive ? 'bg-btn-primary text-white' : 'text-sidebarLink hover:bg-gray-50'
-                                }`
-                            }
-                        >
-                            <span className="flex items-center">{item.icon}</span>
-                            <span className="text-sm font-medium">{item.label}</span>
-                        </NavLink>
-                    </div>
-                ))}
-            </nav>
 
-            {/* Logout */}
-            <div className="border-t border-gray-200 px-4 py-3">
-                <button
-                    onClick={handleLogout}
-                    className="w-full flex items-center gap-3 px-4 py-3 text-btn-primary hover:bg-gray-50 rounded-none"
-                >
-                    <LogOut className="w-5 h-5" />
-                    <span className="text-sm font-medium">Log Out</span>
-                </button>
-            </div>
-        </aside>
+                {/* Logo */}
+                <div className="flex items-center px-5">
+                    <img src="/logo.svg" alt="Logo" className="w-30 h-auto pb-5 pt-2.5" />
+                </div>
+
+                {/* Menu */}
+                <nav className="flex-1 pb-4 overflow-y-auto">
+                    {menuItems.map((item) => (
+                        <div key={item.id}>
+                            <NavLink
+                                to={item.path}
+                                end={item.id === 'dashboard' || item.id === 'event'}
+                                onClick={handleNavClick}
+                                className={({ isActive }) => {
+                                    // Make Event (or Event Analytics) appear active when viewing a specific event detail route (/coach/event/:id)
+                                    const isEventDetailsRoute = location.pathname.startsWith(`${basePath}/event/`);
+                                    const from = location.state?.from;
+                                    let extraActive = false;
+                                    if (isEventDetailsRoute) {
+                                        // if navigated from analytics, highlight Event Analytics
+                                        if (from === 'analytics' && item.id === 'event-analytics') extraActive = true;
+                                        // if navigated from event page (or direct URL with no state), highlight Event
+                                        if ((from === 'event' || from == null) && item.id === 'event') extraActive = true;
+                                    }
+                                    const active = isActive || extraActive;
+                                    return `w-full flex items-center gap-3 font-medium text-sm px-5 py-3 rounded-none ${active ? 'bg-btn-primary text-white' : 'text-sidebarLink hover:bg-gray-50'
+                                        }`;
+                                }}
+                            >
+                                <span className="flex items-center">{item.icon}</span>
+                                <span className="text-sm font-medium">{item.label}</span>
+                            </NavLink>
+                        </div>
+                    ))}
+                </nav>
+
+                {/* Logout */}
+                <div className="border-t border-gray-200 px-4 py-3">
+                    <button
+                        onClick={handleLogout}
+                        className="w-full flex items-center gap-3 px-4 py-3 text-btn-primary hover:bg-gray-50 rounded-none"
+                    >
+                        <LogOut className="w-5 h-5" />
+                        <span className="text-sm font-medium">Log Out</span>
+                    </button>
+                </div>
+            </aside>
         </>
     );
 };

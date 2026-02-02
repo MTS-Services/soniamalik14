@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Table from '../../../../components/ui/Table';
 import TablePagination from '../../../../components/ui/TablePagination';
 import { Eye } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { fetchEventAnalytics } from '../../../../features/events/eventsAPI';
 import { selectEventAnalytics, selectAnalyticsLoading, selectAnalyticsError } from '../../../../features/events/eventsSlice';
 
@@ -93,9 +94,13 @@ const EventAnalytics = () => {
                     <span className="text-btn-primary font-medium">{event.joined}</span>
                 </td>
                 <td className="px-4 py-4">
-                    <button className="text-gray-600 hover:text-btn-primary transition-colors">
+                    <Link
+                        to={`/coach/event/${event.id}`}
+                        state={{ item: event, from: 'analytics' }}
+                        className="text-gray-600 hover:text-btn-primary transition-colors inline-flex items-center"
+                    >
                         <Eye className="w-5 h-5" />
-                    </button>
+                    </Link>
                 </td>
             </>
         );

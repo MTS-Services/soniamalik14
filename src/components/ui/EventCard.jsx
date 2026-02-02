@@ -34,7 +34,7 @@ const EventCard = ({ item = {}, editLink, onEdit, onDelete, className = '' }) =>
 
     return (
         <>
-            <Link to={`/coach/event/${item.id}`} state={{ item }} className="block">
+            <Link to={`/coach/event/${item.id}`} state={{ item, from: 'event' }} className="block">
                 <Card
                     className={`p-4 h-full flex flex-col  justify-between rounded-lg border !border-[#B5D5D2] bg-white ${className}`}
                 >

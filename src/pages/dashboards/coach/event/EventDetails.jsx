@@ -1,14 +1,22 @@
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams, useLocation, Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import { MapPin, Calendar, Clock, Phone, Mail, ArrowLeft } from 'lucide-react';
+import { fetchEvents } from '../../../../features/events/eventsAPI';
+import { selectAllEvents } from '../../../../features/events/eventsSlice';
 
 const EventDetails = () => {
     const { id } = useParams();
     const { state } = useLocation();
 
-    // Default data structure matching the image content
-    const item = state?.item || {
+    // We'll try to use the passed state item first; if it lacks details, try to load from Redux store by id.
+    const dispatch = useDispatch();
+    const eventsList = useSelector(selectAllEvents) || [];
+    const [itemData, setItemData] = useState(state?.item || null);
+    const [loading, setLoading] = useState(false);
+
+    const fallback = {
         id,
         title: "Women's Open Football Training Camp",
         image: 'https://i.ibb.co/bjNWBQ7y/Frame-2147226117.png',
@@ -34,11 +42,62 @@ const EventDetails = () => {
         },
     };
 
+    // If the passed state item doesn't include full details (e.g., no description), try to find in store or fetch
+    useEffect(() => {
+        const hasFull = (obj) => obj && (obj.description || obj.time || obj.venue);
+
+        if (state?.item && hasFull(state.item)) {
+            setItemData(state.item);
+            return;
+        }
+
+        // try to find in store
+        const found = eventsList.find((e) => String(e.id) === String(id));
+        if (found) {
+            setItemData(found);
+            return;
+        }
+
+        // otherwise dispatch fetch and wait
+        const load = async () => {
+            setLoading(true);
+            try {
+                await dispatch(fetchEvents());
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        if (eventsList.length === 0) {
+            load();
+        }
+    }, [state, eventsList, id, dispatch]);
+
+    // if events list updates (after fetch) and itemData still empty, try to pick up the item
+    useEffect(() => {
+        if (!itemData) {
+            const found = eventsList.find((e) => String(e.id) === String(id));
+            if (found) setItemData(found);
+        }
+    }, [eventsList, id, itemData]);
+
+    const item = itemData || fallback;
+
+    if (loading) {
+        return (
+            <div className="dashboardPy dashboardSpaceY text-gray-800">
+                <div className="text-center py-20 text-gray-600">Loading event...</div>
+            </div>
+        );
+    }
+
+    const backTarget = state?.from === 'analytics' ? '/coach/event-analytics' : '/coach/event';
+
     return (
         <div className=" dashboardPy dashboardSpaceY  text-gray-800">
             {/* Back Button */}
             <div className="mb-4">
-                <Link to="/coach/event" className="inline-flex items-center text-sm font-medium text-teal-600 hover:text-teal-700">
+                <Link to={backTarget} className="inline-flex items-center text-sm font-medium text-teal-600 hover:text-teal-700">
                     <ArrowLeft className="w-4 h-4 mr-1" /> Back
                 </Link>
             </div>
