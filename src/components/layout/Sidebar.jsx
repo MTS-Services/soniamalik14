@@ -1,4 +1,4 @@
- import React from 'react';
+import React from 'react';
 import { Link, NavLink, useNavigate, useLocation } from 'react-router-dom';
 import {
     LayoutDashboard,
@@ -153,6 +153,7 @@ const Sidebar = ({ isOpen, onClose }) => {
                                 className={({ isActive }) => {
                                     // Make Event (or Event Analytics) appear active when viewing a specific event detail route (/coach/event/:id)
                                     const isEventDetailsRoute = location.pathname.startsWith(`${basePath}/event/`);
+                                    const isSettingsRoute = location.pathname.startsWith(`${basePath}/settings`) || location.pathname.startsWith(`${basePath}/profile`) || location.pathname.startsWith(`${basePath}/edit-profile`);
                                     const from = location.state?.from;
                                     let extraActive = false;
                                     if (isEventDetailsRoute) {
@@ -161,6 +162,8 @@ const Sidebar = ({ isOpen, onClose }) => {
                                         // if navigated from event page (or direct URL with no state), highlight Event
                                         if ((from === 'event' || from == null) && item.id === 'event') extraActive = true;
                                     }
+                                    // Keep Dashboard highlighted when viewing related profile/settings pages
+                                    if (isSettingsRoute && item.id === 'dashboard') extraActive = true;
                                     const active = isActive || extraActive;
                                     return `w-full flex items-center gap-3 font-medium text-sm px-5 py-3 rounded-none ${active ? 'bg-btn-primary text-white' : 'text-sidebarLink hover:bg-gray-50'
                                         }`;

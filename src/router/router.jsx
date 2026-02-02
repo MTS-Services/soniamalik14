@@ -36,6 +36,7 @@ import Thread from '../pages/dashboards/coach/thread/Thread.jsx';
 import ThreadDetails from '../pages/dashboards/coach/thread/ThreadDetails.jsx';
 import Recruitment from '../pages/dashboards/coach/recruitment/Recruitment.jsx';
 import RecruitmentDetails from '../pages/dashboards/coach/recruitment/RecruitmentDetails.jsx';
+import EditProfile from '../pages/dashboards/coach/coachIndex/EditProfile.jsx';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -113,6 +114,7 @@ const router = createBrowserRouter(
         <Route path="thread/:id" element={<ThreadDetails />} />
         <Route path="recruitment" element={<Recruitment />} />
         <Route path="recruitment/:id" element={<RecruitmentDetails />} />
+        <Route path="settings" element={<EditProfile />} />
       </Route>
     </>
   )
