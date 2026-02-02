@@ -66,7 +66,7 @@ const router = createBrowserRouter(
         <Route path="services/:id" element={<ServiceDetails />} />
         <Route path="news" element={<NewsView />} />
         <Route path="news/:id" element={<NewsDetails />} />
-        
+
         <Route path="*" element={<NotFound />} />
       </Route>
 
