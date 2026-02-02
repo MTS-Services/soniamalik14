@@ -32,11 +32,8 @@ const MarketplaceCard = ({ item }) => {
         <div className="text-lg font-bold text-[#282828] mb-3">${item.price.toFixed(2)}</div>
         <div className="mt-2 flex gap-2">
           <Link to={`/marketplace/${item.id}`} state={{ item }} className="flex-1">
-            <Button variant="primary" className="w-full rounded-lg">Buy Now</Button>
+            <Button variant="primary" className="w-full rounded-lg">View Details</Button>
           </Link>
-          <button className="flex-1">
-            <Button variant="outline" className="w-full rounded-lg">Add To Cart</Button>
-          </button>
         </div>
       </div>
     </Card>

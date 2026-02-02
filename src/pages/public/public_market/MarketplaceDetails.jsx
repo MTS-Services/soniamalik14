@@ -10,7 +10,11 @@ const MarketplaceDetails = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const item = location.state?.item || {
+  // Prefer the item passed via navigation state, otherwise look up by id in the sample list.
+  const stateItem = location.state?.item;
+  const foundItem = sampleItems.find((it) => String(it.id) === String(id));
+
+  const fallback = {
     id,
     title: "Women's Cricket Kit - Used",
     images: [
@@ -24,7 +28,15 @@ const MarketplaceDetails = () => {
     seller: 'R2A Store',
   };
 
-  const images = (item.images && item.images.length) ? item.images : item.image ? [item.image] : ['/images/productDetails/image1.png'];
+  const item = stateItem || foundItem || fallback;
+
+  // Build an images array: use `images` if provided, otherwise if a single `image` exists
+  // duplicate it a few times so thumbnails show multiple variants on the details page.
+  const images = (item.images && item.images.length)
+    ? item.images
+    : item.image
+      ? Array.from({ length: 4 }, () => item.image)
+      : Array.from({ length: 4 }, () => '/images/productDetails/image1.png');
 
   const [selected, setSelected] = useState(0);
   const thumbsContainerRef = useRef(null);
@@ -128,7 +140,12 @@ const MarketplaceDetails = () => {
                     <button className="h-9 w-9 rounded border text-lg">+</button>
                   </div>
 
-                  <button className="ml-4 rounded-md bg-btn-primary px-6 py-2.5 text-white">Buy Now</button>
+                  <button
+                    onClick={() => navigate('/checkout', { state: { item } })}
+                    className="ml-4 rounded-md bg-btn-primary px-6 py-2.5 text-white"
+                  >
+                    Buy Now
+                  </button>
                 </div>
 
                 <div className="mt-6 flex items-center gap-3">
@@ -146,9 +163,12 @@ const MarketplaceDetails = () => {
           <div className="mt-12">
             <h2 className="mb-6 text-xl md:text-2xl lg:text-3xl font-bold text-[#1D1D1D]">Suggested for you</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg  lg:grid-cols-3 xl:grid-cols-4 gap-6">
-              {sampleItems.slice(0, 8).map((it) => (
-                <MarketplaceCard key={it.id} item={it} />
-              ))}
+              {sampleItems
+                .filter((it) => String(it.id) !== String(item.id))
+                .slice(0, 8)
+                .map((it) => (
+                  <MarketplaceCard key={it.id} item={it} />
+                ))}
             </div>
           </div>
         </div>

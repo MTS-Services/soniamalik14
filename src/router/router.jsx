@@ -14,10 +14,15 @@ import EventView from '../pages/public/public_event/EventView.jsx';
 import EventDetailsPage from '../pages/public/public_event/EventDetails.jsx';
 import MarketPlace from '../pages/public/public_market/MarketPlace.jsx';
 import MarketplaceDetails from '../pages/public/public_market/MarketplaceDetails.jsx';
+import Checkout from '../pages/public/public_market/Checkout.jsx';
+import OrderConfirmed from '../pages/public/public_market/OrderConfirmed.jsx';
 import ServiceView from '../pages/public/public_service/ServiceView.jsx';
+import ServiceDetails from '../pages/public/public_service/ServiceDetails.jsx';
 import UnderConstruction from '../components/ui/UnderConstruction.jsx';
 import NewsView from '../pages/public/public_news/NewsView';
+import NewsDetails from '../pages/public/public_news/NewsDetails.jsx';
 import DashboardLayout from '../components/layout/DashboardLayout.jsx';
+import DashboardOverview from '../pages/dashboards/DashboardOverview.jsx';
 import RequireAuth from '../components/auth/RequireAuth.jsx';
 import { ROLES } from '../context/AuthContext.jsx';
 
@@ -55,9 +60,19 @@ const router = createBrowserRouter(
         <Route path="events/:id" element={<EventDetailsPage />} />
         <Route path="marketplace" element={<MarketPlace />} />
         <Route path="marketplace/:id" element={<MarketplaceDetails />} />
+        <Route path="checkout" element={<Checkout />} />
+        <Route path="order-confirmed" element={<OrderConfirmed />} />
         <Route path="services" element={<ServiceView />} />
+        <Route path="services/:id" element={<ServiceDetails />} />
         <Route path="news" element={<NewsView />} />
+        <Route path="news/:id" element={<NewsDetails />} />
+        
         <Route path="*" element={<NotFound />} />
+      </Route>
+
+      {/* Public Dashboard (no landing header) */}
+      <Route path="/dashboard" element={<DashboardLayout />}>
+        <Route index element={<DashboardOverview />} />
       </Route>
 
       {/* Admin Dashboard - Protected */}

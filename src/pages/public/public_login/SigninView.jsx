@@ -31,24 +31,22 @@ const LoginView = () => {
     setTimeout(() => {
       setLoading(false);
       if (result.success) {
-        // Redirect based on role
-        switch (result.role) {
-          case ROLES.ADMIN:
-            navigate('/admin');
-            break;
-          case ROLES.PROVIDER:
-            navigate('/provider');
-            break;
-          case ROLES.COACH:
-            navigate('/coach');
-            break;
-          default:
-            navigate('/');
+        // Redirect: regular `user` -> home, other roles -> their dashboards
+        if (result.role === ROLES.USER) {
+          navigate('/');
+        } else if (result.role === ROLES.ADMIN) {
+          navigate('/admin');
+        } else if (result.role === ROLES.PROVIDER) {
+          navigate('/provider');
+        } else if (result.role === ROLES.COACH) {
+          navigate('/coach');
+        } else {
+          navigate('/dashboard');
         }
       } else {
         setError(result.message);
       }
-    }, 500); 
+    }, 500);
   };
 
   return (

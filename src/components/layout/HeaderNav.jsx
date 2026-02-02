@@ -4,7 +4,7 @@ import { User, LogOut } from 'lucide-react';
 import Button from '../ui/Button';
 import Container from './Container';
 import { CiUser } from 'react-icons/ci';
-import { useAuth } from '../../context/AuthContext';
+import { useAuth, ROLES } from '../../context/AuthContext';
 
 const HeaderNav = ({ isMenuOpen, setIsMenuOpen }) => {
   const location = useLocation();
@@ -31,6 +31,31 @@ const HeaderNav = ({ isMenuOpen, setIsMenuOpen }) => {
   const isActive = (path) => {
     if (path === '/') return location.pathname === '/';
     return location.pathname.startsWith(path);
+  };
+
+  const getBasePath = (role) => {
+    switch (role) {
+      case ROLES.ADMIN:
+        return '/admin';
+      case ROLES.PROVIDER:
+        return '/provider';
+      case ROLES.COACH:
+        return '/coach';
+      default:
+        return '/dashboard';
+    }
+  };
+
+  const handleProfileClick = () => {
+    if (!isAuthenticated) {
+      navigate('/signin');
+      setIsMenuOpen(false);
+      return;
+    }
+
+    const path = getBasePath(user?.role);
+    navigate(path);
+    setIsMenuOpen(false);
   };
 
   return (
@@ -79,7 +104,7 @@ const HeaderNav = ({ isMenuOpen, setIsMenuOpen }) => {
                 </Button>
               </Link>
             )}
-            <button className="p-2 hover:bg-gray-100 rounded-md">
+            <button onClick={handleProfileClick} className="p-2 hover:bg-gray-100 rounded-md">
               <CiUser className="text-secondary-text h-5 lg:w-7 lg:h-7 w-5" />
             </button>
           </div>
