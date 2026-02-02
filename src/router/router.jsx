@@ -22,6 +22,7 @@ import UnderConstruction from '../components/ui/UnderConstruction.jsx';
 import NewsView from '../pages/public/public_news/NewsView';
 import NewsDetails from '../pages/public/public_news/NewsDetails.jsx';
 import DashboardLayout from '../components/layout/DashboardLayout.jsx';
+import DashboardOverview from '../pages/dashboards/DashboardOverview.jsx';
 import RequireAuth from '../components/auth/RequireAuth.jsx';
 import { ROLES } from '../context/AuthContext.jsx';
 
@@ -60,7 +61,13 @@ const router = createBrowserRouter(
         <Route path="services/:id" element={<ServiceDetails />} />
         <Route path="news" element={<NewsView />} />
         <Route path="news/:id" element={<NewsDetails />} />
+        
         <Route path="*" element={<NotFound />} />
+      </Route>
+
+      {/* Public Dashboard (no landing header) */}
+      <Route path="/dashboard" element={<DashboardLayout />}>
+        <Route index element={<DashboardOverview />} />
       </Route>
 
       {/* Admin Dashboard - Protected */}
