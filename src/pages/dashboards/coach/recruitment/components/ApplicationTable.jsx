@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { Eye } from 'lucide-react';
+import { Cross, Eye, X } from 'lucide-react';
 import Table from '../../../../../components/ui/Table';
 import TablePagination from '../../../../../components/ui/TablePagination';
 
@@ -34,12 +34,21 @@ const ApplicationTable = ({ applicants = [], resultsPerPage = 9 }) => {
       <td className="px-4 py-4 text-gray-600">{a.date}</td>
       <td className="px-4 py-4 text-gray-600">{a.position}</td>
       <td className="px-4 py-4">
-        <button type="button" title="View applicant" className="p-2 rounded-md text-gray-600 hover:text-gray-900">
+        <button
+          type="button"
+          title="View applicant"
+          className="p-2 rounded-md text-gray-600 hover:text-gray-900"
+          onClick={() => { setSelectedApplicant(a); setModalOpen(true); }}
+        >
           <Eye className="w-5 h-5" />
         </button>
       </td>
     </>
   );
+
+  // Modal state
+  const [modalOpen, setModalOpen] = useState(false);
+  const [selectedApplicant, setSelectedApplicant] = useState(null);
 
   return (
     <div>
@@ -54,6 +63,40 @@ const ApplicationTable = ({ applicants = [], resultsPerPage = 9 }) => {
           onPageChange={(p) => setCurrentPage(p)}
         />
       </div>
+
+      {/* Applicant Details Modal */}
+      {modalOpen && selectedApplicant && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center">
+          <div className="absolute inset-0 bg-black/50" onClick={() => setModalOpen(false)} />
+          <div className="relative bg-white rounded-xl w-full max-w-xl mx-4 p-6 shadow-lg">
+            <button
+              type="button"
+              aria-label="Close"
+              onClick={() => setModalOpen(false)}
+              className="absolute top-3 right-3 rounded-full bg-[#D9D9D9] p-2 hover:bg-gray-200"
+            >
+              <X className="w-4 h-4 text-black" />
+            </button>
+
+            <h3 className="text-lg font-semibold mb-4">Applicant Details</h3>
+
+            <div className="space-y-2">
+              <div className="font-medium">{selectedApplicant.name}</div>
+              <div className="text-sm text-gray-600">{selectedApplicant.phone}</div>
+              <div className="text-sm text-gray-600">{selectedApplicant.email}</div>
+              <div className="text-sm text-gray-600">{selectedApplicant.position || '—'}</div>
+            </div>
+
+            <div className="mt-4 text-sm text-gray-700">
+              {selectedApplicant.description || selectedApplicant.bio || selectedApplicant.coverLetter || (
+                <p>
+                  I am a passionate women athlete who loves playing sports and being part of a team. I enjoy improving my skills, staying active, and competing in a positive and supportive environment.
+                </p>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
