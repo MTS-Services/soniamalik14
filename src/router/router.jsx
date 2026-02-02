@@ -41,7 +41,7 @@ import Thread from '../pages/dashboards/coach/thread/Thread.jsx';
 import ThreadDetails from '../pages/dashboards/coach/thread/ThreadDetails.jsx';
 import Recruitment from '../pages/dashboards/coach/recruitment/Recruitment.jsx';
 import RecruitmentDetails from '../pages/dashboards/coach/recruitment/RecruitmentDetails.jsx';
-import EditProfile from '../pages/dashboards/coach/coachIndex/EditProfile.jsx';
+import EditProfile from '../pages/dashboards/coach/CoachIndex/EditProfile.jsx';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
