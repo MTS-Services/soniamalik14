@@ -1,3 +1,3 @@
-import CoachIndex from './CoachIndex/CoachIndex.jsx';
+import CoachIndex from './coachIndex/CoachIndex.jsx';
 
 export default CoachIndex;

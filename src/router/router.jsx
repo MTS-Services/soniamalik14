@@ -30,14 +30,17 @@ import AdminIndex from '../pages/dashboards/admin/adminIndex/AdminIndex.jsx';
 import EventDetails from '../pages/dashboards/admin/EventDetails/EventDetails.jsx';
 import ProductRequested from '../pages/dashboards/admin/ProductRequested/ProductRequested.jsx';
 import OrderList from '../pages/dashboards/admin/OrderList/OrderList.jsx';
+import CoachEvent from '../pages/dashboards/coach/event/CoachEvent.jsx';
+import CoachEventDetails from '../pages/dashboards/coach/event/EventDetails.jsx';
+import EventAnalytics from '../pages/dashboards/coach/eventAnalytics/EventAnalytics.jsx';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
       <Route path="/signin" element={<SigninView />} />
       <Route path="/unauthorized" element={<Unauthorized />} />
-      
-      <Route path="/" element={<RootLayout/>}>
+
+      <Route path="/" element={<RootLayout />}>
         <Route index element={<HomeView />} />
         <Route path="about" element={<AboutView />} />
         <Route path="discover" element={<DiscoverView />} />
@@ -101,8 +104,9 @@ const router = createBrowserRouter(
         }
       >
         <Route index element={<CoachIndex />} />
-        <Route path="event" element={<UnderConstruction />} />
-        <Route path="event-analytics" element={<UnderConstruction />} />
+        <Route path="event" element={<CoachEvent />} />
+        <Route path="event/:id" element={<CoachEventDetails />} />
+        <Route path="event-analytics" element={<EventAnalytics />} />
         <Route path="thread" element={<UnderConstruction />} />
         <Route path="recruitment" element={<UnderConstruction />} />
       </Route>
