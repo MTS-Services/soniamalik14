@@ -1,9 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import Table from '../../../../components/ui/Table';
 import TablePagination from '../../../../components/ui/TablePagination';
 import { Eye } from 'lucide-react';
+import { fetchEventAnalytics } from '../../../../features/events/eventsAPI';
+import { selectEventAnalytics, selectAnalyticsLoading, selectAnalyticsError } from '../../../../features/events/eventsSlice';
 
 const EventAnalytics = () => {
+    const dispatch = useDispatch();
+    const allEvents = useSelector(selectEventAnalytics);
+    const loading = useSelector(selectAnalyticsLoading);
+    const error = useSelector(selectAnalyticsError);
+
     const [activeTab, setActiveTab] = useState('all');
     const [currentPage, setCurrentPage] = useState(1);
     const resultsPerPage = 6;
@@ -16,67 +24,22 @@ const EventAnalytics = () => {
         { id: 'cancel', label: 'Cancel Event' },
     ];
 
-    // Sample data
-    const allEvents = [
-        {
-            title: "Women's Football Trial",
-            type: 'Trial',
-            organizer: 'Surrey Lions FC',
-            sport: 'Football',
-            date: '12 Mar 26',
-            status: 'Approved',
-            joined: 100,
-        },
-        {
-            title: 'Girls Cricket Camp',
-            type: 'Training',
-            organizer: 'London Warriors',
-            sport: 'Cricket',
-            date: '12 Mar 26',
-            status: 'Pending',
-            joined: 200,
-        },
-        {
-            title: 'Women Physio Workshop',
-            type: 'Workshop',
-            organizer: 'FitHeal Clinic',
-            sport: 'Football',
-            date: '12 Mar 26',
-            status: 'Approved',
-            joined: 300,
-        },
-        {
-            title: 'Netball Skills Day',
-            type: 'Training',
-            organizer: 'Queens Netball',
-            sport: 'Netball',
-            date: '12 Mar 26',
-            status: 'Cancelled',
-            joined: 400,
-        },
-        {
-            title: 'Mental Health Session',
-            type: 'Workshop',
-            organizer: 'MindStrong',
-            sport: 'Multi',
-            date: '12 Mar 26',
-            status: 'Approved',
-            joined: 500,
-        },
-        {
-            title: 'Netball Skills Day',
-            type: 'Training',
-            organizer: 'Queens Netball',
-            sport: 'Football',
-            date: '12 Mar 26',
-            status: 'Pending',
-            joined: 600,
-        },
-    ];
+    // Fetch event analytics on component mount
+    useEffect(() => {
+        dispatch(fetchEventAnalytics());
+    }, [dispatch]);
 
     const columns = ['Event Title', 'Type', 'Organizer', 'Sport', 'Date', 'Status', 'Joined', 'Action'];
 
-    const filteredEvents = allEvents; // Filter based on activeTab if needed
+    // Filter based on activeTab
+    const filteredEvents = allEvents.filter(event => {
+        if (activeTab === 'all') return true;
+        if (activeTab === 'complete') return event.isComplete;
+        if (activeTab === 'upcoming') return event.isUpcoming;
+        if (activeTab === 'pending') return event.isPending;
+        if (activeTab === 'cancel') return event.isCancelled;
+        return true;
+    });
     const totalResults = filteredEvents.length;
     const totalPages = Math.ceil(totalResults / resultsPerPage);
 
@@ -107,6 +70,11 @@ const EventAnalytics = () => {
             return ' text-gray-600 ';
         };
 
+        // Format date if it's in ISO format
+        const formattedDate = event.date && event.date.includes('-')
+            ? new Date(event.date).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: '2-digit' })
+            : event.date;
+
         return (
             <>
                 <td className="px-4 py-4">
@@ -115,7 +83,7 @@ const EventAnalytics = () => {
                 <td className="px-4 py-4 text-cardTitle">{event.type}</td>
                 <td className="px-4 py-4 text-cardTitle">{event.organizer}</td>
                 <td className="px-4 py-4 text-cardTitle">{event.sport}</td>
-                <td className="px-4 py-4 text-cardTitle">{event.date}</td>
+                <td className="px-4 py-4 text-cardTitle">{formattedDate}</td>
                 <td className="px-4 py-4">
                     <span className={`rounded-md px-3 py-1 text-sm font-medium ${getStatusStyle(event.status)}`}>
                         {event.status}
@@ -157,23 +125,38 @@ const EventAnalytics = () => {
             </div>
 
             {/* Event Details Section */}
-            <div className="
-      ">
-                <div className=" py-4 ">
+            <div className="">
+                <div className="py-4">
                     <h2 className="text-xl font-bold text-gray-900">Event Details</h2>
                 </div>
 
-                {/* Table */}
-                <Table columns={columns} data={paginatedEvents} renderRow={renderRow} />
+                {loading && (
+                    <div className="text-center py-8">
+                        <div className="text-gray-600">Loading analytics...</div>
+                    </div>
+                )}
 
-                {/* Pagination */}
-                <TablePagination
-                    currentPage={currentPage}
-                    totalPages={totalPages}
-                    totalResults={totalResults}
-                    resultsPerPage={resultsPerPage}
-                    onPageChange={handlePageChange}
-                />
+                {error && (
+                    <div className="text-center py-8">
+                        <div className="text-red-600">Error: {error}</div>
+                    </div>
+                )}
+
+                {!loading && !error && (
+                    <>
+                        {/* Table */}
+                        <Table columns={columns} data={paginatedEvents} renderRow={renderRow} />
+
+                        {/* Pagination */}
+                        <TablePagination
+                            currentPage={currentPage}
+                            totalPages={totalPages}
+                            totalResults={totalResults}
+                            resultsPerPage={resultsPerPage}
+                            onPageChange={handlePageChange}
+                        />
+                    </>
+                )}
             </div>
         </div>
     );
