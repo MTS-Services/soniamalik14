@@ -4,17 +4,25 @@ import RootLayout from '../components/layout/RootLayout.jsx';
 import HomeView from '../pages/public/public_Home/HomeView';
 import AboutView from '../pages/public/public_about/AboutView';
 import DiscoverView from '../pages/public/public_discover/DiscoverView';
+import DiscoverDetails from '../pages/public/public_discover/DiscoverDetails';
 import SigninView from '../pages/public/public_login/SigninView.jsx';
 import CommunityView from '../pages/public/public_community/CommunityView';
 import CommunityDetails from '../pages/public/public_community/components/CommunityDetails';
 import NotFound from '../pages/error/NotFound';
 import Unauthorized from '../pages/error/Unauthorized';
 import EventView from '../pages/public/public_event/EventView.jsx';
+import EventDetailsPage from '../pages/public/public_event/EventDetails.jsx';
 import MarketPlace from '../pages/public/public_market/MarketPlace.jsx';
+import MarketplaceDetails from '../pages/public/public_market/MarketplaceDetails.jsx';
+import Checkout from '../pages/public/public_market/Checkout.jsx';
+import OrderConfirmed from '../pages/public/public_market/OrderConfirmed.jsx';
 import ServiceView from '../pages/public/public_service/ServiceView.jsx';
+import ServiceDetails from '../pages/public/public_service/ServiceDetails.jsx';
 import UnderConstruction from '../components/ui/UnderConstruction.jsx';
 import NewsView from '../pages/public/public_news/NewsView';
+import NewsDetails from '../pages/public/public_news/NewsDetails.jsx';
 import DashboardLayout from '../components/layout/DashboardLayout.jsx';
+import DashboardOverview from '../pages/dashboards/DashboardOverview.jsx';
 import RequireAuth from '../components/auth/RequireAuth.jsx';
 import { ROLES } from '../context/AuthContext.jsx';
 
@@ -26,24 +34,45 @@ import AdminIndex from '../pages/dashboards/admin/adminIndex/AdminIndex.jsx';
 import EventDetails from '../pages/dashboards/admin/EventDetails/EventDetails.jsx';
 import ProductRequested from '../pages/dashboards/admin/ProductRequested/ProductRequested.jsx';
 import OrderList from '../pages/dashboards/admin/OrderList/OrderList.jsx';
+import CoachEvent from '../pages/dashboards/coach/event/CoachEvent.jsx';
+import CoachEventDetails from '../pages/dashboards/coach/event/EventDetails.jsx';
+import EventAnalytics from '../pages/dashboards/coach/eventAnalytics/EventAnalytics.jsx';
+import Thread from '../pages/dashboards/coach/thread/Thread.jsx';
+import ThreadDetails from '../pages/dashboards/coach/thread/ThreadDetails.jsx';
+import Recruitment from '../pages/dashboards/coach/recruitment/Recruitment.jsx';
+import RecruitmentDetails from '../pages/dashboards/coach/recruitment/RecruitmentDetails.jsx';
+import EditProfile from '../pages/dashboards/coach/coachIndex/EditProfile.jsx';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
       <Route path="/signin" element={<SigninView />} />
       <Route path="/unauthorized" element={<Unauthorized />} />
-      
-      <Route path="/" element={<RootLayout/>}>
+
+      <Route path="/" element={<RootLayout />}>
         <Route index element={<HomeView />} />
         <Route path="about" element={<AboutView />} />
         <Route path="discover" element={<DiscoverView />} />
+        <Route path="discover/:type/:id" element={<DiscoverDetails />} />
         <Route path="community" element={<CommunityView />} />
         <Route path="community/:id" element={<CommunityDetails />} />
         <Route path="events" element={<EventView />} />
+        <Route path="events/:id" element={<EventDetailsPage />} />
         <Route path="marketplace" element={<MarketPlace />} />
+        <Route path="marketplace/:id" element={<MarketplaceDetails />} />
+        <Route path="checkout" element={<Checkout />} />
+        <Route path="order-confirmed" element={<OrderConfirmed />} />
         <Route path="services" element={<ServiceView />} />
+        <Route path="services/:id" element={<ServiceDetails />} />
         <Route path="news" element={<NewsView />} />
+        <Route path="news/:id" element={<NewsDetails />} />
+        
         <Route path="*" element={<NotFound />} />
+      </Route>
+
+      {/* Public Dashboard (no landing header) */}
+      <Route path="/dashboard" element={<DashboardLayout />}>
+        <Route index element={<DashboardOverview />} />
       </Route>
 
       {/* Admin Dashboard - Protected */}
@@ -93,10 +122,14 @@ const router = createBrowserRouter(
         }
       >
         <Route index element={<CoachIndex />} />
-        <Route path="event" element={<UnderConstruction />} />
-        <Route path="event-analytics" element={<UnderConstruction />} />
-        <Route path="thread" element={<UnderConstruction />} />
-        <Route path="recruitment" element={<UnderConstruction />} />
+        <Route path="event" element={<CoachEvent />} />
+        <Route path="event/:id" element={<CoachEventDetails />} />
+        <Route path="event-analytics" element={<EventAnalytics />} />
+        <Route path="thread" element={<Thread />} />
+        <Route path="thread/:id" element={<ThreadDetails />} />
+        <Route path="recruitment" element={<Recruitment />} />
+        <Route path="recruitment/:id" element={<RecruitmentDetails />} />
+        <Route path="settings" element={<EditProfile />} />
       </Route>
     </>
   )

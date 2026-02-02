@@ -93,7 +93,9 @@
     font-family: var(--font-primary);
   }
 
-
+.scroll-touch {
+  -webkit-overflow-scrolling: touch;
+}
   /* ----- */
   /* LINKS */
   /* ----- */

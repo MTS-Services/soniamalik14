@@ -5,19 +5,19 @@ import MarketplaceCard from './components/MarketplaceCard';
 import AddProductModal from './components/AddProductModal';
 import Pagination from '../../../components/ui/Pagination';
 
-const sampleItems = [
-  { id: 1, title: "Women's Cricket Bat", description: 'High-quality bat for women players. Used but well maintained. Sell or swap available.', price: 200, condition: 'New', image: '/player1.png' },
-  { id: 2, title: 'Pro Football Boots for Women', description: 'Comfortable and durable football boots designed for women. Brand new condition.', price: 120, condition: 'New', image: '/player2.png' },
-  { id: 3, title: 'Lightweight Tennis Racket', description: 'Easy-grip, lightweight racket perfect for beginners to intermediate players. Swap option open.', price: 200, condition: 'New', image: '/player3.jpg' },
-  { id: 4, title: 'Rugby Training Gear for Women', description: 'Reliable training gear suitable for women athletes. Used, strong and long-lasting.', price: 20, condition: 'Used', image: '/player1.png' },
-  { id: 5, title: "Women's Cricket Kit – Used", description: 'Complete cricket kit for women players. Good condition, ideal for practice sessions.', price: 20, condition: 'Used', image: '/player2.png' },
-  { id: 6, title: "Elite Women's Football Studs", description: 'High-performance studs with strong grip and comfort. Lightly used.', price: 20, condition: 'Used', image: '/player3.jpg' },
-  { id: 7, title: "Elite Women's Football Studs", description: 'High-performance studs with strong grip and comfort. Lightly used.', price: 20, condition: 'Used', image: '/player1.png' },
-  { id: 8, title: "Elite Women's Football Studs", description: 'High-performance studs with strong grip and comfort. Lightly used.', price: 20, condition: 'Used', image: '/player2.png' },
-  { id: 9, title: "Elite Women's Football Studs", description: 'High-performance studs with strong grip and comfort. Lightly used.', price: 20, condition: 'Used', image: '/player3.jpg' },
-  { id: 10, title: "Elite Women's Football Studs", description: 'High-performance studs with strong grip and comfort. Lightly used.', price: 20, condition: 'Used', image: '/player1.png' },
-  { id: 11, title: "Elite Women's Football Studs", description: 'High-performance studs with strong grip and comfort. Lightly used.', price: 20, condition: 'Used', image: '/player2.png' },
-  { id: 12, title: "Elite Women's Football Studs", description: 'High-performance studs with strong grip and comfort. Lightly used.', price: 20, condition: 'Used', image: '/player3.jpg' },
+export const sampleItems = [
+  { id: 1, title: "Women's Cricket Bat", description: 'High-quality bat for women players. Used but well maintained. Sell or swap available.', price: 200, condition: 'New', image: '/images/marketplace/image_1.jpg' },
+  { id: 2, title: 'Pro Football Boots for Women', description: 'Comfortable and durable football boots designed for women. Brand new condition.', price: 120, condition: 'New', image: '/images/marketplace/image_3.jpg' },
+  { id: 3, title: 'Lightweight Tennis Racket', description: 'Easy-grip, lightweight racket perfect for beginners to intermediate players. Swap option open.', price: 200, condition: 'New', image: '/images/marketplace/image_4.jpg' },
+  { id: 4, title: 'Rugby Training Gear for Women', description: 'Reliable training gear suitable for women athletes. Used, strong and long-lasting.', price: 20, condition: 'Used', image: '/images/marketplace/image_5.png' },
+  { id: 5, title: "Women's Cricket Kit – Used", description: 'Complete cricket kit for women players. Good condition, ideal for practice sessions.', price: 20, condition: 'Used', image: '/images/marketplace/image_1.jpg' },
+  { id: 6, title: "Elite Women's Football Studs", description: 'High-performance studs with strong grip and comfort. Lightly used.', price: 20, condition: 'Used', image: '/images/marketplace/image_5.png' },
+  { id: 7, title: "Elite Women's Football Studs", description: 'High-performance studs with strong grip and comfort. Lightly used.', price: 20, condition: 'Used', image: '/images/marketplace/image_3.jpg' },
+  { id: 8, title: "Elite Women's Football Studs", description: 'High-performance studs with strong grip and comfort. Lightly used.', price: 20, condition: 'Used', image: '/images/marketplace/image_4.jpg' },
+  { id: 9, title: "Elite Women's Football Studs", description: 'High-performance studs with strong grip and comfort. Lightly used.', price: 20, condition: 'Used', image: '/images/marketplace/image_5.png' },
+  { id: 10, title: "Elite Women's Football Studs", description: 'High-performance studs with strong grip and comfort. Lightly used.', price: 20, condition: 'Used', image: '/images/marketplace/image_1.jpg' },
+  { id: 11, title: "Elite Women's Football Studs", description: 'High-performance studs with strong grip and comfort. Lightly used.', price: 20, condition: 'Used', image: '/images/marketplace/image_5.png' },
+  { id: 12, title: "Elite Women's Football Studs", description: 'High-performance studs with strong grip and comfort. Lightly used.', price: 20, condition: 'Used', image: '/images/marketplace/image_3.jpg' },
 ];
 
 const MarketPlace = () => {

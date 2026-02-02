@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Container from '../../../components/layout/Container';
 import PageHeader from '../../../components/ui/PageHeader';
-import DiscoverCard from '../public_discover/components/DiscoverCard';
+import ServiceCard from './components/ServiceCard';
 import ServiceFilters from './components/ServiceFilters';
 import Pagination from '../../../components/ui/Pagination';
 
@@ -13,7 +13,11 @@ const sample = Array.from({ length: 9 }).map((_, i) => ({
     time: '09:00 - 17:00',
     location: 'Local provider — contact for details',
     summary: 'Login to see contact details & pricing',
-    image: ['/player1.png', '/player2.png', '/player3.jpg'][i % 3],
+    image: [
+        'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=500&auto=format&fit=crop', // Physiotherapy
+        'https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=500&auto=format&fit=crop', // Nutrition
+        'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=500&auto=format&fit=crop'  // Mental Health
+    ][i % 3],
 }));
 
 const ServiceView = () => {
@@ -37,7 +41,7 @@ const ServiceView = () => {
                     <>
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                             {filtered.map((item) => (
-                                <DiscoverCard key={item.id} item={item} />
+                                <ServiceCard key={item.id} item={item} />
                             ))}
                         </div>
 

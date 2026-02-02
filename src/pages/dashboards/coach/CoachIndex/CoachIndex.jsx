@@ -1,17 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Card from '../../../../components/ui/Card';
 import Button from '../../../../components/ui/Button';
 import { IoLocationOutline } from 'react-icons/io5';
 import PageHeader from '../../../../components/ui/PageHeader';
 import SectionHeader from '../../../../components/ui/SectionHeader';
+import CreateRecruitmentModal from '../../../../components/ui/CreateRecruitmentModal';
+import EventModal from '../../../../components/ui/EventModal';
 
 const CoachIndex = () => {
+  const [isPostModalOpen, setIsPostModalOpen] = useState(false);
+  const [isEventModalOpen, setIsEventModalOpen] = useState(false);
   return (
     <div className="dashboardPy dashboardSpaceY">
       {/* Profile header */}
       <Card className="flex flex-col lg:flex-row items-center justify-between gap-4 p-6">
-        <div className="flex items-center gap-4">
+        <div className="flex flex-col lg:flex-row items-center gap-4">
           <img
             src="/coachindex.jpg"
             alt="coach"
@@ -28,9 +32,9 @@ const CoachIndex = () => {
           </div>
         </div>
 
-        <div className="self-stretch lg:self-auto flex items-center justify-end">
-          <Link to="#" className="ml-2">
-            <Button className="px-4 py-2 rounded-lg" variant="primary">Edit Profile</Button>
+        <div className="self-stretch lg:self-auto flex items-center justify-end w-full lg:w-auto">
+          <Link to="/coach/settings" className="w-full lg:w-auto lg:ml-2">
+            <Button className="w-full lg:w-auto px-4 py-2 rounded-lg" variant="primary">Edit Profile</Button>
           </Link>
         </div>
       </Card>
@@ -41,7 +45,7 @@ const CoachIndex = () => {
         <Card className="p-6">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-xl font-semibold">Recruitment Ads</h3>
-            <Link to="#" className="text-btn-primary font-medium">+ Post New</Link>
+            <button onClick={() => setIsPostModalOpen(true)} className="text-btn-primary font-medium">+ Post New</button>
           </div>
 
           <div className="space-y-4">
@@ -49,11 +53,11 @@ const CoachIndex = () => {
               title: 'U16 Goalkeeper Wanted',
               applicants: 12,
               status: 'Active'
-            },{
+            }, {
               title: 'Senior Midfielder - Trial Days',
               applicants: 45,
               status: 'Active'
-            },{
+            }, {
               title: 'Assistant Coach (Volunteer)',
               applicants: 3,
               status: 'Pending'
@@ -65,7 +69,7 @@ const CoachIndex = () => {
                   <Link to="#" className="text-btn-primary text-sm mt-2 inline-block">View Listing</Link>
                 </div>
                 <div className="text-sm">
-                  <span className={`px-3 py-1 rounded-full text-xs ${ad.status === 'Active' ? 'bg-emerald-100 text-emerald-700' : 'bg-amber-100 text-amber-700'}`}>{ad.status}</span>
+                  <span className={`px-3 py-1 rounded-full text-xs ${ad.status === 'Active' ? 'bg-[#E7F1F1] text-[#0F766E]' : 'bg-[#FFDAB9] text-[#FF7700]'}`}>{ad.status}</span>
                 </div>
               </div>
             ))}
@@ -76,31 +80,36 @@ const CoachIndex = () => {
         <Card className="p-6">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-xl font-semibold">Your Events</h3>
-            <Link to="#" className="text-btn-primary font-medium">+ Create Event</Link>
+            <button onClick={() => setIsEventModalOpen(true)} className="text-btn-primary font-medium">+ Create Event</button>
           </div>
 
           <div className="space-y-4">
             {Array.from({ length: 4 }).map((_, i) => (
-              <div key={i} className="flex items-center justify-between bg-white border border-gray-100 rounded-lg p-4">
-                <div className="flex items-center gap-4">
+              <div key={i} className="flex flex-col lg:flex-row items-start lg:items-center justify-between bg-white border border-gray-100 rounded-lg p-4">
+                <div className="flex items-center gap-4 flex-1">
                   <div className="text-center bg-gray-50 rounded-lg w-14 h-14 flex flex-col items-center justify-center">
-                    <div className="text-xs">OCT</div>
-                    <div className="font-semibold">21</div>
+                    <div className="text-sm text-[#676767]">OCT</div>
+                    <div className="font-semibold !text-[#0F766E]">21</div>
                   </div>
                   <div>
                     <h4 className="font-medium">Open Trial Morning</h4>
-                    <p className="text-sm text-amber-600 mt-1">{i < 2 ? 'Approved' : 'Pending'}</p>
+                    <p className={`text-sm mt-1 ${i < 2 ? 'text-[#0F766E]' : 'text-[#FF7700]'}`}>
+                      {i < 2 ? 'Approved' : 'Pending'}
+                    </p>
                   </div>
                 </div>
 
-                <div>
-                  <Button variant="outline" className="px-4 py-2">See Details</Button>
+                <div className="w-full lg:w-auto mt-3 lg:mt-0">
+                  <Button variant="outline" className="w-full lg:w-auto !bg-[#0F766E] !text-white rounded-lg px-2 md:px-4 py-2">See Details</Button>
                 </div>
               </div>
             ))}
           </div>
         </Card>
       </div>
+
+      <CreateRecruitmentModal isOpen={isPostModalOpen} onClose={() => setIsPostModalOpen(false)} />
+      <EventModal isOpen={isEventModalOpen} onClose={() => setIsEventModalOpen(false)} mode="create" />
     </div>
   );
 };
