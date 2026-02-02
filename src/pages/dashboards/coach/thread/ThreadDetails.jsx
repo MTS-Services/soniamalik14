@@ -41,7 +41,7 @@ export default function ThreadDetails() {
                     <h3 className="text-lg font-semibold mb-4">Reply</h3>
                     <div className="space-y-4">
                         {replies.map((r) => (
-                            <div key={r.id} className="bg-gray-50 border border-gray-100 rounded p-4">
+                            <div key={r.id} className="bg-[#F4F4F4] border border-gray-100 rounded p-4">
                                 <div className="text-xs font-medium text-gray-500 mb-2">{r.author}</div>
                                 <div className="text-sm text-gray-700">{r.content}</div>
                             </div>
