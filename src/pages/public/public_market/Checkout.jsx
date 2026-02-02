@@ -15,7 +15,34 @@ const Checkout = () => {
 
   const subtotal = (item.price || 0) * quantity;
   const shipping = subtotal > 0 ? 20 : 0;
-  const total = subtotal + shipping;
+  const tax = subtotal * 0.1; // 10% tax
+  const total = subtotal + shipping + tax;
+
+  const handlePlaceOrder = () => {
+    // Generate order number and date
+    const orderNumber = '#' + Math.floor(10000 + Math.random() * 90000);
+    const orderDate = new Date().toLocaleDateString('en-US', { 
+      year: 'numeric', 
+      month: 'short', 
+      day: 'numeric' 
+    });
+
+    // Navigate to order confirmed page with order data
+    navigate('/order-confirmed', {
+      state: {
+        orderNumber,
+        orderDate,
+        customerEmail: 'customer@gmail.com', // Replace with actual form data if needed
+        item,
+        quantity,
+        subtotal,
+        shipping,
+        tax,
+        total,
+        paymentMethod: 'Online Payment'
+      }
+    });
+  };
 
   return (
     <div className="bg-[#F8FAFC] py-8 min-h-screen">
@@ -148,20 +175,24 @@ const Checkout = () => {
                   <div>Sub-total</div>
                   <div>${subtotal.toFixed(2)}</div>
                 </div>
-                <div className="mb-4 flex justify-between text-sm">
+                <div className="mb-2 flex justify-between text-sm">
                   <div>Shipping</div>
                   <div>${shipping.toFixed(2)}</div>
+                </div>
+                <div className="mb-4 flex justify-between text-sm">
+                  <div>Tax</div>
+                  <div>${tax.toFixed(2)}</div>
                 </div>
                 <div className="mb-4 flex justify-between text-lg font-bold">
                   <div>Total</div>
                   <div>${total.toFixed(2)} USD</div>
                 </div>
 
-                <button onClick={() => alert('Place order - implement checkout flow')} className="bg-btn-primary mb-3 flex w-full items-center justify-center gap-2 rounded py-3 text-white">
+                <button onClick={handlePlaceOrder} className="bg-btn-primary mb-3 flex w-full items-center justify-center gap-2 rounded py-3 text-white hover:opacity-90 transition-opacity">
                   <span>PLACE ORDER</span>
                   <span className="text-sm">→</span>
                 </button>
-                <button onClick={() => navigate(-1)} className="w-full rounded border border-gray-200 py-2">BACK</button>
+                <button onClick={() => navigate(-1)} className="w-full rounded border border-gray-200 py-2 hover:bg-gray-50 transition-colors">BACK</button>
               </div>
             </aside>
           </div>
