@@ -22,7 +22,6 @@ import UnderConstruction from '../components/ui/UnderConstruction.jsx';
 import NewsView from '../pages/public/public_news/NewsView';
 import NewsDetails from '../pages/public/public_news/NewsDetails.jsx';
 import DashboardLayout from '../components/layout/DashboardLayout.jsx';
-import DashboardOverview from '../pages/dashboards/DashboardOverview.jsx';
 import RequireAuth from '../components/auth/RequireAuth.jsx';
 import { ROLES } from '../context/AuthContext.jsx';
 
@@ -37,6 +36,10 @@ import OrderList from '../pages/dashboards/admin/OrderList/OrderList.jsx';
 import CoachEvent from '../pages/dashboards/coach/event/CoachEvent.jsx';
 import CoachEventDetails from '../pages/dashboards/coach/event/EventDetails.jsx';
 import EventAnalytics from '../pages/dashboards/coach/eventAnalytics/EventAnalytics.jsx';
+
+// User Dashboard Pages
+import DashboardOverview from '../pages/dashboards/user/dashboardOverview/DashboardOverview.jsx';
+import ManageProducts from '../pages/dashboards/user/ManageProducts/ManageProducts.jsx';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -68,6 +71,7 @@ const router = createBrowserRouter(
       {/* Public Dashboard (no landing header) */}
       <Route path="/dashboard" element={<DashboardLayout />}>
         <Route index element={<DashboardOverview />} />
+        <Route path="/dashboard/product" element={<ManageProducts />} />
       </Route>
 
       {/* Admin Dashboard - Protected */}

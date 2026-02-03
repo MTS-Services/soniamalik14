@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { FiCalendar, FiChevronDown, FiPackage, FiDollarSign, FiShoppingCart } from 'react-icons/fi';
-import Container from '../../components/layout/Container';
-import Card from '../../components/ui/Card';
-import Chat from '../../components/ui/Chat';
-import SalesChart from '../../components/ui/SalesChart';
+import Container from '../../../../components/layout/Container';
+import Card from '../../../../components/ui/Card';
+import Chat from '../../../../components/ui/Chat';
+import SalesChart from '../../../../components/ui/SalesChart';
 
 const StatCard = ({ title, value, subtitle, Icon }) => {
   const trimmed = subtitle ? subtitle.trim() : '';
@@ -49,20 +49,20 @@ const DashboardOverview = () => {
     <section className="px-4 md:px-6 lg:px-8 py-6 lg:py-8">
         <div className="mx-auto">
           <div className="mb-6 flex flex-col md:flex-row md:items-start md:justify-between">
-            <div>
-              <h2 className="text-xl md:text-2xl font-semibold text-[#111827]">Dashboard Overview</h2>
-              <p className="text-sm md:text-base text-gray-500">Monitor your customer service performance</p>
+            <div className="w-full md:w-auto">
+              <h2 className="text-xl md:text-2xl lg:text-3xl font-bold text-dashboardTitle]">Dashboard Overview</h2>
+              <p className="text-sm md:text-base mt-1 text-[#5B5B5B]">Monitor your customer service performance</p>
             </div>
 
-            <div className="mt-3 md:mt-0 text-left md:text-right">
-              <div className="text-sm md:text-base text-gray-500 mb-2">{`Last ${range} days overview`}</div>
-              <div className="relative inline-block">
-                <FiCalendar className="absolute left-2 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-500 pointer-events-none" aria-hidden />
+            <div className="mt-3 md:mt-0 text-left md:text-right w-full md:w-auto">
+              <div className="text-sm md:text-base text-[#5B5B5B] mb-2">{`Last ${range} days overview`}</div>
+              <div className="relative inline-block w-full md:w-auto">
+                <FiCalendar className="absolute left-2 top-1/2 -translate-y-1/2 h-4 w-4 text-[#5B5B5B] pointer-events-none" aria-hidden />
 
                 <select
                   value={range}
                   onChange={(e) => setRange(e.target.value)}
-                  className="block w-full sm:w-auto pl-9 pr-8 py-2 bg-white border border-gray-200 rounded-md shadow-sm text-sm text-gray-700 appearance-none"
+                  className="block w-full md:w-auto pl-9 pr-8 py-2 bg-white border border-gray-200 rounded-md shadow-sm text-sm text-gray-700 appearance-none"
                   aria-label="Select date range"
                 >
                   <option value="7">Last 7 days</option>
