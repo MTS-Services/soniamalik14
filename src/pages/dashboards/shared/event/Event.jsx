@@ -48,6 +48,7 @@ const Event = ({ filterComponent: FilterComponent, detailsRoute = '/coach/event'
 
     useEffect(() => {
         // reset to first page when filter changes
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setPage(1);
     }, [filter]);
 

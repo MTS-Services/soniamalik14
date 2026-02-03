@@ -58,7 +58,7 @@ const EventAnalytics = ({ baseRoute = '/coach' }) => {
         setCurrentPage(1); // Reset to first page when tab changes
     };
 
-    const renderRow = (event, index) => {
+    const renderRow = (event) => {
         const getStatusStyle = (status) => {
             const statusLower = status.toLowerCase();
             if (statusLower === 'approved') {

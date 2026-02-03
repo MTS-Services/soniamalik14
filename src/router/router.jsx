@@ -45,6 +45,7 @@ import ThreadDetails from '../pages/dashboards/coach/thread/ThreadDetails.jsx';
 import Recruitment from '../pages/dashboards/coach/recruitment/Recruitment.jsx';
 import RecruitmentDetails from '../pages/dashboards/coach/recruitment/RecruitmentDetails.jsx';
 import EditProfile from '../pages/dashboards/coach/coachIndex/EditProfile.jsx';
+import ProviderService from '../pages/dashboards/provider/service/ProviderService.jsx';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -113,7 +114,7 @@ const router = createBrowserRouter(
         <Route path="event/:id" element={<ProviderEventDetails />} />
         <Route path="event-analytics" element={<ProviderEventAnalytics />} />
         <Route path="thread" element={<UnderConstruction />} />
-        <Route path="service" element={<UnderConstruction />} />
+        <Route path="service" element={<ProviderService />} />
         <Route path="service-analytics" element={<UnderConstruction />} />
       </Route>
 
