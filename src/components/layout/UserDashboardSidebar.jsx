@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { Home, Box, ShoppingCart, DollarSign, User, LogOut } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 
@@ -23,7 +23,9 @@ const UserDashboardSidebar = ({ isOpen, onClose }) => {
   return (
     <aside className={`fixed lg:static inset-y-0 left-0 z-50 w-64 h-screen bg-white border-r border-gray-200 flex flex-col ${isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'} transition-transform`}>
       <div className="px-6 pt-6 pb-4">
-        <img src="/logo.svg" alt="Logo" className="w-32 h-auto" />
+        <Link to="/">
+          <img src="/logo.svg" alt="Logo" className="w-32 h-auto" />
+        </Link>
       </div>
 
       <nav className="flex-1 px-4 py-4 space-y-1">
