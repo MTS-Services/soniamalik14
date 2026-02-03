@@ -1,8 +1,15 @@
 import React, { useState } from 'react'
 import { FiCalendar, FiChevronDown, FiDollarSign, FiClock, FiCheckCircle } from 'react-icons/fi'
+import WithdrawModal from './components/WithdrawModal'
+import ConfirmWithdrawalModal from './components/ConfirmWithdrawalModal'
+import SuccessModal from './components/SuccessModal'
 
 export default function Finances() {
   const [selectedPeriod, setSelectedPeriod] = useState('30')
+  const [showWithdrawModal, setShowWithdrawModal] = useState(false)
+  const [showConfirmModal, setShowConfirmModal] = useState(false)
+  const [showSuccessModal, setShowSuccessModal] = useState(false)
+  const [withdrawalData, setWithdrawalData] = useState({ amount: '', method: '' })
 
   const stats = [
     {
@@ -47,6 +54,26 @@ export default function Finances() {
   const pageSize = 6
   const totalPages = Math.max(1, Math.ceil(withdrawalHistory.length / pageSize))
   const pageData = withdrawalHistory.slice((page - 1) * pageSize, page * pageSize)
+
+  const handleWithdrawClick = () => {
+    setShowWithdrawModal(true)
+  }
+
+  const handleWithdrawConfirm = (amount, method) => {
+    setWithdrawalData({ amount, method })
+    setShowWithdrawModal(false)
+    setShowConfirmModal(true)
+  }
+
+  const handleFinalConfirm = () => {
+    setShowConfirmModal(false)
+    setShowSuccessModal(true)
+  }
+
+  const handleCloseSuccess = () => {
+    setShowSuccessModal(false)
+    setWithdrawalData({ amount: '', method: '' })
+  }
 
   return (
     <div className="min-h-screen bg-transparent">
@@ -124,7 +151,10 @@ export default function Finances() {
             <div>
               <p className="text-sm text-teal-600 mb-2">Available Balance</p>
               <h4 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">$12,450</h4>
-              <button className="w-full bg-teal-700 hover:bg-teal-800 text-white font-medium py-2.5 md:py-3 px-4 rounded-lg transition-colors duration-200">
+              <button 
+                onClick={handleWithdrawClick}
+                className="w-full bg-teal-700 hover:bg-teal-800 text-white font-medium py-2.5 md:py-3 px-4 rounded-lg transition-colors duration-200"
+              >
                 Withdraw Funds
               </button>
             </div>
@@ -234,6 +264,28 @@ export default function Finances() {
                 Next
               </button>
             </div>
+
+      {/* Modals */}
+      <WithdrawModal
+        isOpen={showWithdrawModal}
+        onClose={() => setShowWithdrawModal(false)}
+        onConfirm={handleWithdrawConfirm}
+        availableBalance="12,450.00"
+      />
+
+      <ConfirmWithdrawalModal
+        isOpen={showConfirmModal}
+        onClose={() => setShowConfirmModal(false)}
+        onConfirm={handleFinalConfirm}
+        amount={withdrawalData.amount}
+        method={withdrawalData.method}
+      />
+
+      <SuccessModal
+        isOpen={showSuccessModal}
+        onClose={handleCloseSuccess}
+        amount={withdrawalData.amount}
+      />
           </div>
         </div>
       </div>

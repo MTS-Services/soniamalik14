@@ -40,8 +40,8 @@ import EventAnalytics from '../pages/dashboards/coach/eventAnalytics/EventAnalyt
 // User Dashboard Pages
 import DashboardOverview from '../pages/dashboards/user/dashboardOverview/DashboardOverview.jsx';
 import ManageProducts from '../pages/dashboards/user/ManageProducts/ManageProducts.jsx';
-import UserOrderList from '../pages/dashboards/user/OrderList.jsx';
-import Finances from '../pages/dashboards/user/Finances.jsx';
+import UserOrderList from '../pages/dashboards/user/order/OrderList.jsx';
+import Finances from '../pages/dashboards/user/finances/Finances.jsx';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
