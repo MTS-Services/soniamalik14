@@ -40,6 +40,7 @@ import EventAnalytics from '../pages/dashboards/coach/eventAnalytics/EventAnalyt
 // User Dashboard Pages
 import DashboardOverview from '../pages/dashboards/user/dashboardOverview/DashboardOverview.jsx';
 import ManageProducts from '../pages/dashboards/user/ManageProducts/ManageProducts.jsx';
+import UserOrderList from '../pages/dashboards/user/OrderList.jsx';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -72,6 +73,7 @@ const router = createBrowserRouter(
       <Route path="/dashboard" element={<DashboardLayout />}>
         <Route index element={<DashboardOverview />} />
         <Route path="/dashboard/product" element={<ManageProducts />} />
+        <Route path="/dashboard/orders" element={<UserOrderList />} />
       </Route>
 
       {/* Admin Dashboard - Protected */}
