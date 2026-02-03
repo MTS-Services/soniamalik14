@@ -1,7 +1,7 @@
 import React from 'react'
 import { FiTag } from 'react-icons/fi'
 
-export default function ProductCard({ item }) {
+export default function ProductCard({ item, onEdit, onDelete }) {
   return (
     <div className="bg-white rounded-lg border shadow-sm overflow-hidden" style={{ borderColor: '#E6F7F4' }}>
       <div className="p-3">
@@ -28,8 +28,8 @@ export default function ProductCard({ item }) {
         </div>
 
         <div className="grid grid-cols-2 gap-3">
-          <button className="w-full py-2 rounded-md text-white text-sm" style={{ background: '#0F766E' }}>Edit</button>
-          <button className="w-full py-2 rounded-md text-white text-sm" style={{ background: '#10B394' }}>Delete</button>
+          <button onClick={() => onEdit && onEdit(item)} className="w-full py-2 rounded-md text-white text-sm" style={{ background: '#0F766E' }}>Edit</button>
+          <button onClick={() => onDelete && onDelete(item)} className="w-full py-2 rounded-md text-white text-sm" style={{ background: '#10B394' }}>Delete</button>
         </div>
       </div>
     </div>
