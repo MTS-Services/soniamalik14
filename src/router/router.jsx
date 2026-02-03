@@ -48,6 +48,8 @@ import EditProfile from '../pages/dashboards/coach/coachIndex/EditProfile.jsx';
 import ProviderService from '../pages/dashboards/provider/service/ProviderService.jsx';
 import ProviderServiceDetails from '../pages/dashboards/provider/service/ServiceDetails.jsx';
 import ServiceAnalytics from '../pages/dashboards/provider/serviceAnalytics/ServiceAnalytics.jsx';
+import ProviderThread from '../pages/dashboards/provider/thread/ProviderThread.jsx';
+import ProviderThreadDetails from '../pages/dashboards/provider/thread/ProviderThreadDetails.jsx';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -115,7 +117,8 @@ const router = createBrowserRouter(
         <Route path="event" element={<ProviderEvent />} />
         <Route path="event/:id" element={<ProviderEventDetails />} />
         <Route path="event-analytics" element={<ProviderEventAnalytics />} />
-        <Route path="thread" element={<UnderConstruction />} />
+        <Route path="thread" element={<ProviderThread />} />
+        <Route path="thread/:id" element={<ProviderThreadDetails />} />
         <Route path="service" element={<ProviderService />} />
         <Route path="service/:id" element={<ProviderServiceDetails />} />
         <Route path="service-analytics" element={<ServiceAnalytics />} />
