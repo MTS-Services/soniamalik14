@@ -28,6 +28,9 @@ import { ROLES } from '../context/AuthContext.jsx';
 
 // Dashboard Pages
 import ProviderIndex from '../pages/dashboards/provider/ProviderIndex.jsx';
+import ProviderEvent from '../pages/dashboards/provider/event/ProviderEvent.jsx';
+import ProviderEventDetails from '../pages/dashboards/provider/event/EventDetails.jsx';
+import ProviderEventAnalytics from '../pages/dashboards/provider/eventAnalytics/EventAnalytics.jsx';
 import CoachIndex from '../pages/dashboards/coach/CoachIndex.jsx';
 import Event from '../pages/dashboards/admin/event/Event.jsx';
 import AdminIndex from '../pages/dashboards/admin/adminIndex/AdminIndex.jsx';
@@ -66,7 +69,7 @@ const router = createBrowserRouter(
         <Route path="services/:id" element={<ServiceDetails />} />
         <Route path="news" element={<NewsView />} />
         <Route path="news/:id" element={<NewsDetails />} />
-        
+
         <Route path="*" element={<NotFound />} />
       </Route>
 
@@ -106,7 +109,9 @@ const router = createBrowserRouter(
         }
       >
         <Route index element={<ProviderIndex />} />
-        <Route path="event-analytics" element={<UnderConstruction />} />
+        <Route path="event" element={<ProviderEvent />} />
+        <Route path="event/:id" element={<ProviderEventDetails />} />
+        <Route path="event-analytics" element={<ProviderEventAnalytics />} />
         <Route path="thread" element={<UnderConstruction />} />
         <Route path="service" element={<UnderConstruction />} />
         <Route path="service-analytics" element={<UnderConstruction />} />

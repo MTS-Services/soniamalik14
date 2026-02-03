@@ -7,7 +7,7 @@ import { FiEdit, FiTrash2 } from 'react-icons/fi';
 import EventModal from './EventModal';
 import DeleteConfirmationModal from './DeleteConfirmationModal';
 
-const EventCard = ({ item = {}, editLink, onEdit, onDelete, className = '' }) => {
+const EventCard = ({ item = {}, editLink, onEdit, onDelete, className = '', detailsRoute = '/coach/event' }) => {
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
@@ -34,7 +34,7 @@ const EventCard = ({ item = {}, editLink, onEdit, onDelete, className = '' }) =>
 
     return (
         <>
-            <Link to={`/coach/event/${item.id}`} state={{ item, from: 'event' }} className="block">
+            <Link to={`${detailsRoute}/${item.id}`} state={{ item, from: 'event' }} className="block">
                 <Card
                     className={`p-4 h-full flex flex-col  justify-between rounded-lg border !border-[#B5D5D2] bg-white ${className}`}
                 >
