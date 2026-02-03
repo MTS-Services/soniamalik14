@@ -14,6 +14,23 @@ const sample = Array.from({ length: 9 }).map((_, i) => ({
       location: '2972 Wetherden Rd, Santa Ana, Illinois 85486',
       summary: 'Login to see contact details & ability requirements',
       image: ['/player1.png', '/player2.png', '/player3.jpg'][i % 3],
+      about: 'Woking Warriors FC is a women-focused football club committed to developing talent, teamwork, and confidence. We provide a supportive environment for players to grow both on and off the field.',
+      homeGround: 'Woking Community Football Stadium',
+      level: 'Beginner to Intermediate',
+      ageGroup: '16+ Years',
+      experienceRequired: 'Basic football knowledge preferred (not mandatory)',
+      trainingFrequency: '2 days per week',
+      matchSchedule: 'Weekend matches & friendly games',
+      seasonDuration: '6 months',
+      headCoach: 'Sarah Williams',
+      coachingStyle: 'Fitness-focused, tactical & player-friendly',
+      trialRequired: 'Yes',
+      trialDate: '15 September 2025',
+      trialTime: '6:30 PM',
+      trialLocation: 'Woking Community Football Stadium',
+      postedBy: 'Woking Warriors FC (Club Owner)',
+      contactEmail: 'info@wokingwarriorsfc.com',
+      phone: '+1 234 567 890',
 }));
 
 const DiscoverView = () => {

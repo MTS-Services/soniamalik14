@@ -256,9 +256,9 @@ const ActiveData = [
   );
 
   return (
-    <div className="flex-1 overflow-auto bg-gray-50 dashboardPy dashboardSpaceY">
+    <div className="flex-1 overflow-auto bg-gray-50 ">
       {/* Event Section */}
-      <div>
+      <div className=''>
         <DashboardHeader title="Active Sessions" />
         <div className="border border-gray-100 rounded-md">
           <Table columns={ActiveColumns} data={activePageData} renderRow={renderEventRow} />
@@ -273,8 +273,12 @@ const ActiveData = [
       </div>
 
       {/* Event List Section */}
-      <div>
-        <DashboardHeader title="Recruitment Posts" />
+      <div >
+        <div className='pt-6 pb-2'>
+
+
+        <DashboardHeader title="Recruitment Posts " />
+        </div>
         <div className="border border-gray-100 rounded-md">
           <Table columns={RecruitmentColumns} data={recruitmentPageData} renderRow={renderEventListRow} />
           <TablePagination

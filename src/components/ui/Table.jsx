@@ -2,7 +2,7 @@ import React from 'react';
 
 const Table = ({ columns, data, renderRow, className = '' }) => {
   return (
-    <div className={`overflow-x-auto ${className}`}>
+    <div className={`overflow-x-auto rounded-lg ${className}`}>
       <table className="w-full">
         <thead className="bg-secondary">
           <tr>

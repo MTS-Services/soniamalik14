@@ -14,7 +14,7 @@ const EventFilters = () => {
       <Card className="p-3">
         <div className="flex items-center justify-between mb-3">
           <div className="font-semibold">Filters</div>
-          <div className="text-btn-primary">☰</div>
+          {/* <div className="text-btn-primary">☰</div> */}
         </div>
         <input placeholder="Search by city/area" className="w-full bg-gray-100 rounded-md p-2 text-sm" />
       </Card>

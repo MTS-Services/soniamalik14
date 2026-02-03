@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Eye, EyeOff } from 'lucide-react';
 import { useAuth, ROLES } from '../../../context/AuthContext';
+import { FaArrowLeft } from 'react-icons/fa';
 
 const LoginView = () => {
   const navigate = useNavigate();
@@ -30,24 +31,22 @@ const LoginView = () => {
     setTimeout(() => {
       setLoading(false);
       if (result.success) {
-        // Redirect based on role
-        switch (result.role) {
-          case ROLES.ADMIN:
-            navigate('/admin');
-            break;
-          case ROLES.PROVIDER:
-            navigate('/provider');
-            break;
-          case ROLES.COACH:
-            navigate('/coach');
-            break;
-          default:
-            navigate('/');
+        // Redirect: regular `user` -> home, other roles -> their dashboards
+        if (result.role === ROLES.USER) {
+          navigate('/');
+        } else if (result.role === ROLES.ADMIN) {
+          navigate('/admin');
+        } else if (result.role === ROLES.PROVIDER) {
+          navigate('/provider');
+        } else if (result.role === ROLES.COACH) {
+          navigate('/coach');
+        } else {
+          navigate('/dashboard');
         }
       } else {
         setError(result.message);
       }
-    }, 500); 
+    }, 500);
   };
 
   return (
@@ -56,6 +55,11 @@ const LoginView = () => {
       <div className="w-full lg:w-1/2 flex items-center justify-center px-6 py-12 bg-secondary">
         <div className="w-full max-w-md">
           <div className="mb-8">
+            <div className="mb-4">
+              <Link to="/" className="inline-flex items-center text-sm gap-1 text-btn-primary hover:text-[#0d655d] font-medium">
+                <FaArrowLeft /> Back to Home
+              </Link>
+            </div>
             <h1 className="text-3xl md:text-4xl font-bold text-[#282828] mb-2">
               Welcome Back
             </h1>
@@ -79,7 +83,7 @@ const LoginView = () => {
                 <p><strong>Admin:</strong> admin@essahub.com</p>
                 <p><strong>Provider:</strong> provider@essahub.com</p>
                 <p><strong>Coach:</strong> coach@essahub.com</p>
-                <p><strong>User:</strong> user@essahub.com (no dashboard)</p>
+                <p><strong>User:</strong> user@essahub.com</p>
               </div>
             </div>
 
@@ -177,14 +181,14 @@ const LoginView = () => {
               </div>
               <div className="rounded-[100px] overflow-hidden h-64 bg-gray-200">
                 <img 
-                  src="/public/images/login/image_2.jpg" 
+                  src="/images/login/image_2.jpg" 
                   alt="Player" 
                   className="w-full h-full object-cover"
                 />
               </div>
               <div className="rounded-[100px] overflow-hidden h-56 bg-gray-100 border-2 border-[#5EA39E]">
                 <img 
-                  src="/public/images/login/image_3.jpg" 
+                  src="/images/login/image_3.jpg" 
                   alt="Player" 
                   className="w-full h-full object-cover"
                 />
@@ -195,21 +199,21 @@ const LoginView = () => {
             <div className="flex flex-col gap-4">
               <div className="rounded-[100px] overflow-hidden h-72 bg-gray-200">
                 <img 
-                  src="/public/images/login/image_4.jpg" 
+                  src="/images/login/image_4.jpg" 
                   alt="Player" 
                   className="w-full h-full object-cover"
                 />
               </div>
               <div className="rounded-[100px] overflow-hidden h-68 bg-gray-200">
                 <img 
-                  src="/public/images/login/image_5.jpg" 
+                  src="/images/login/image_5.jpg" 
                   alt="Player" 
                   className="w-full h-full object-cover"
                 />
               </div>
               <div className="rounded-[100px] overflow-hidden h-72 bg-gray-200">
                 <img 
-                  src="/public/images/login/image_6.jpg" 
+                  src="/images/login/image_6.jpg" 
                   alt="Player" 
                   className="w-full h-full object-cover"
                 />
@@ -220,21 +224,21 @@ const LoginView = () => {
             <div className="flex flex-col gap-4 pt-16">
               <div className="rounded-[100px] overflow-hidden h-56 bg-gray-200">
                 <img 
-                  src="/public/images/login/image_7.jpg" 
+                  src="/images/login/image_7.jpg" 
                   alt="Player" 
                   className="w-full h-full object-cover"
                 />
               </div>
               <div className="rounded-[100px] overflow-hidden h-64 bg-gray-200">
                 <img 
-                  src="/public/images/login/image_8.jpg" 
+                  src="/images/login/image_8.jpg" 
                   alt="Player" 
                   className="w-full h-full object-cover"
                 />
               </div>
               <div className="rounded-[100px] overflow-hidden h-84 bg-gray-100 border-2 border-[#5EA39E]">
                 <img 
-                  src="/public/images/login/image_9.jpg" 
+                  src="/images/login/image_9.jpg" 
                   alt="Player" 
                   className="w-full h-full object-cover"
                 />

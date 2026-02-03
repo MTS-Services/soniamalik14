@@ -1,0 +1,54 @@
+import React from 'react';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { Home, Box, ShoppingCart, DollarSign, User, LogOut } from 'lucide-react';
+import { useAuth } from '../../context/AuthContext';
+
+const items = [
+  { id: 'dashboard', label: 'Dashboard', icon: <Home className="w-5 h-5" />, path: '/dashboard' },
+  { id: 'product', label: 'Product', icon: <Box className="w-5 h-5" />, path: '/dashboard/product' },
+  { id: 'orders', label: 'Orders', icon: <ShoppingCart className="w-5 h-5" />, path: '/dashboard/orders' },
+  { id: 'finances', label: 'Finances', icon: <DollarSign className="w-5 h-5" />, path: '/dashboard/finances' },
+  { id: 'account', label: 'Account', icon: <User className="w-5 h-5" />, path: '/dashboard/account' },
+];
+
+const UserDashboardSidebar = ({ isOpen, onClose }) => {
+  const { logout, user } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    navigate('/');
+  };
+
+  return (
+    <aside className={`fixed lg:static inset-y-0 left-0 z-50 w-64 h-screen bg-white border-r border-gray-200 flex flex-col ${isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'} transition-transform`}>
+      <div className="px-6 pt-6 pb-4">
+        <img src="/logo.svg" alt="Logo" className="w-32 h-auto" />
+      </div>
+
+      <nav className="flex-1 px-4 py-4 space-y-1">
+        {items.map((it) => (
+          <NavLink
+            key={it.id}
+            to={it.path}
+            className={({ isActive }) =>
+              `w-full flex items-center gap-3 font-medium text-sm px-4 py-3 rounded-md ${isActive ? 'bg-btn-primary text-white' : 'text-sidebarLink hover:bg-gray-50'}`
+            }
+          >
+            <span className="flex items-center">{it.icon}</span>
+            <span>{it.label}</span>
+          </NavLink>
+        ))}
+      </nav>
+
+      <div className="px-4 py-4 border-t border-gray-200">
+        <button onClick={handleLogout} className="w-full flex items-center gap-3 text-btn-primary px-4 py-3 hover:bg-gray-50 rounded-md">
+          <LogOut className="w-5 h-5" />
+          <span className="text-sm font-medium">Log Out</span>
+        </button>
+      </div>
+    </aside>
+  );
+};
+
+export default UserDashboardSidebar;

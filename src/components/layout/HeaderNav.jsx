@@ -4,7 +4,7 @@ import { User, LogOut } from 'lucide-react';
 import Button from '../ui/Button';
 import Container from './Container';
 import { CiUser } from 'react-icons/ci';
-import { useAuth } from '../../context/AuthContext';
+import { useAuth, ROLES } from '../../context/AuthContext';
 
 const HeaderNav = ({ isMenuOpen, setIsMenuOpen }) => {
   const location = useLocation();
@@ -33,6 +33,31 @@ const HeaderNav = ({ isMenuOpen, setIsMenuOpen }) => {
     return location.pathname.startsWith(path);
   };
 
+  const getBasePath = (role) => {
+    switch (role) {
+      case ROLES.ADMIN:
+        return '/admin';
+      case ROLES.PROVIDER:
+        return '/provider';
+      case ROLES.COACH:
+        return '/coach';
+      default:
+        return '/dashboard';
+    }
+  };
+
+  const handleProfileClick = () => {
+    if (!isAuthenticated) {
+      navigate('/signin');
+      setIsMenuOpen(false);
+      return;
+    }
+
+    const path = getBasePath(user?.role);
+    navigate(path);
+    setIsMenuOpen(false);
+  };
+
   return (
     <div className="bg-nav-bg border-b border-gray-200 shadow-sm">
       <Container>
@@ -59,7 +84,7 @@ const HeaderNav = ({ isMenuOpen, setIsMenuOpen }) => {
           <div className="flex items-center gap-3">
             {isAuthenticated && (
               <>
-                <span className="text-sm text-gray-600">Welcome, {user?.name}</span>
+                {/* <span className="text-sm text-gray-600">Welcome, {user?.name}</span> */}
                 <Button variant="secondary" size="xs" className="rounded-md text-xs py-1.5">
                   My Orders
                 </Button>
@@ -79,7 +104,7 @@ const HeaderNav = ({ isMenuOpen, setIsMenuOpen }) => {
                 </Button>
               </Link>
             )}
-            <button className="p-2 hover:bg-gray-100 rounded-md">
+            <button onClick={handleProfileClick} className="p-2 hover:bg-gray-100 rounded-md">
               <CiUser className="text-secondary-text h-5 lg:w-7 lg:h-7 w-5" />
             </button>
           </div>
@@ -106,9 +131,9 @@ const HeaderNav = ({ isMenuOpen, setIsMenuOpen }) => {
               <div className="flex flex-col gap-2 pt-3">
                 {isAuthenticated ? (
                   <>
-                    <div className="px-3 py-2 text-sm text-gray-600">
+                    {/* <div className="px-3 py-2 text-sm text-gray-600">
                       Welcome, {user?.name}
-                    </div>
+                    </div> */}
                     <Button variant="secondary" className="w-full rounded-md">
                       My Orders
                     </Button>

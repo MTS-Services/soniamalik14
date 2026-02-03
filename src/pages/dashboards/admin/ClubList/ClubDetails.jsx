@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ArrowLeft, ChevronLeft, X } from 'lucide-react';
+import { ArrowLeft, ChevronLeft, MapPin, X } from 'lucide-react';
 import ClubListDetailsc from './ClubListDetailsc';
 
 export default function ClubDetails({ product, onBack }) {
@@ -11,7 +11,7 @@ export default function ClubDetails({ product, onBack }) {
     clubOwner: 'Dinah Freetzel',
     motto: 'Building champions through community sport',
     founded: '2019',
-    yearRegistration: '© 2019 Taunting Co. Sunset Hills-Connectorad 75004',
+    yearRegistration: '2118 Thornridge Cir. Syracuse, Connecticut 35624',
     ownerName: 'Logan Kibler',
     email: 'logan@loganemail.com',
     phone: '+88 7735 882024',
@@ -34,7 +34,7 @@ export default function ClubDetails({ product, onBack }) {
     parking: 'Available',
     medicalSupport: 'On-site',
     description:
-      'Royal Strikers Cricket Club is a professional sports club focused on developing young and talented players in both cricket and football. The club provides modern facilities, experienced coaching, and competitive platforms for athletes to reach their full potential.',
+      'Royal Strikers Cricket Club is a professional sports club focused on developing young and talented players in both cricket and football. The club provides modern training facilities, experienced coaches, and competitive match exposure to help athletes reach their full potential.',
   };
 
   // Merge values from `product` (passed from ClubList) with defaults
@@ -71,12 +71,12 @@ export default function ClubDetails({ product, onBack }) {
   const ClubDetailsImg =
     'https://images.unsplash.com/photo-1629977007371-0ba395424741?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8d29tYW4lMjBmb290YmFsbHxlbnwwfHwwfHx8MA%3D%3D';
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen  dashboardPy dashboardSpaceY">
       {/* Header */}
-      <div className="px-6 py-4">
+      <div className=" py-4">
         <button
           onClick={onBack}
-          className="flex items-center gap-2 px-4 py-2 pb-2 text-[#0F766E] transition-colors"
+          className="flex items-center gap-2   text-[#0F766E] transition-colors"
         >
           <ArrowLeft className="h-6 w-6" />
           <span className="text-sm font-medium">Back</span>
@@ -84,7 +84,7 @@ export default function ClubDetails({ product, onBack }) {
       </div>
 
       {/* Club header: logo, name & motto */}
-      <div className="px-6 pb-4">
+      <div className=" pb-2">
         <div className="flex items-center gap-4 rounded-lg m">
           <img
             src={details.logo}
@@ -96,7 +96,7 @@ export default function ClubDetails({ product, onBack }) {
       </div>
 
       {/* Main Content */}
-      <div className="px-6 pb-6">
+      <div className=" pb-6">
         {/* Hero Image */}
         <div className="mb-6 overflow-hidden rounded-lg">
           <img
@@ -122,9 +122,12 @@ export default function ClubDetails({ product, onBack }) {
           </div>
         </div>
 
+
+        <div className='text-[#0F766E] underline pb-2'>See All</div>
+
         {/* Club Info Grid */}
 
-        <div className="mb-6 flex flex-col md:flex-row justify-between gap-6">
+        <div className="mb-6 flex flex-col-reverse md:flex-row justify-between gap-6">
        <div className="space-y-4 md:max-w-2/4">
 
   {/* Basic Club Info */}
@@ -132,9 +135,11 @@ export default function ClubDetails({ product, onBack }) {
   <p className="text-base  text-gray-900"><strong>Club Type :</strong> {details.clubType}</p>
   <p className="text-base  text-gray-900"><strong>Club Game :</strong> {details.clubOwner}</p>
   <p className="text-base  text-gray-900"><strong>Games :</strong> Cricket & Football</p>
-  <p className="text-base  text-gray-900"><strong>Year of Registration :</strong> {details.yearRegistration}</p>
+  <p></p>
+  <p className="text-base  text-gray-900 flex  gap-2"><MapPin /> {details.yearRegistration}</p>
   <p className="text-base  text-gray-900"><strong>Founded :</strong> {details.founded}</p>
-  <p className="text-base  text-gray-900"><strong>Club Description :</strong> {details.description}</p>
+  <p className="text-xl  text-gray-900"><strong>Club Description </strong> </p>
+  <p className='text-base  text-gray-900 pb-2'>{details.description}</p>
 
   {/* Club Stats */}
   <p className="text-base  text-gray-900">Total Members : {details.totalMembers}</p>
@@ -203,7 +208,7 @@ export default function ClubDetails({ product, onBack }) {
 
       {/* Modal for Image */}
       {isModalOpen && (
-        <div className="bg-opacity-75 fixed inset-0 z-50 flex items-center justify-center bg-black p-4">
+        <div className="bg-opacity-75 fixed inset-0 z-50 flex items-center justify-center bg-black py-4">
           <div className="relative w-full max-w-2xl overflow-hidden rounded-lg bg-white">
             <button
               onClick={() => setIsModalOpen(false)}
