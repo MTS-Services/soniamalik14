@@ -106,7 +106,7 @@ const EventDetails = ({ backRoute = '/coach/event' }) => {
             <div className="">
 
                 {/* Hero Image */}
-                <div className="w-full h-64 md:h-[820px] relative rounded-xl overflow-hidden mb-6">
+                <div className="w-full h-64 md:h-[520px] relative rounded-xl overflow-hidden mb-6">
                     <img
                         src={item.image}
                         alt={item.title}
@@ -121,7 +121,7 @@ const EventDetails = ({ backRoute = '/coach/event' }) => {
                         {item.title}
                     </h1>
 
-                    <div className="text-sm text-gray-600 leading-relaxed whitespace-pre-line mb-8">
+                    <div className="text-base md:w-2xl text-gray-600 leading-relaxed whitespace-pre-line mb-8">
                         {item.description}
                     </div>
 

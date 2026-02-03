@@ -46,6 +46,7 @@ import Recruitment from '../pages/dashboards/coach/recruitment/Recruitment.jsx';
 import RecruitmentDetails from '../pages/dashboards/coach/recruitment/RecruitmentDetails.jsx';
 import EditProfile from '../pages/dashboards/coach/coachIndex/EditProfile.jsx';
 import ProviderService from '../pages/dashboards/provider/service/ProviderService.jsx';
+import ProviderServiceDetails from '../pages/dashboards/provider/service/ServiceDetails.jsx';
 import ServiceAnalytics from '../pages/dashboards/provider/serviceAnalytics/ServiceAnalytics.jsx';
 
 const router = createBrowserRouter(
@@ -116,7 +117,8 @@ const router = createBrowserRouter(
         <Route path="event-analytics" element={<ProviderEventAnalytics />} />
         <Route path="thread" element={<UnderConstruction />} />
         <Route path="service" element={<ProviderService />} />
-        <Route path="service-analytics" element={<ServiceAnalytics/>} />
+        <Route path="service/:id" element={<ProviderServiceDetails />} />
+        <Route path="service-analytics" element={<ServiceAnalytics />} />
       </Route>
 
       {/* Coach Dashboard - Protected */}
