@@ -34,7 +34,7 @@ const EventCard = ({ item = {}, editLink, onEdit, onDelete, className = '' }) =>
 
     return (
         <>
-            <Link to={`/coach/event/${item.id}`} state={{ item }} className="block">
+            <Link to={`/coach/event/${item.id}`} state={{ item, from: 'event' }} className="block">
                 <Card
                     className={`p-4 h-full flex flex-col  justify-between rounded-lg border !border-[#B5D5D2] bg-white ${className}`}
                 >
@@ -62,8 +62,12 @@ const EventCard = ({ item = {}, editLink, onEdit, onDelete, className = '' }) =>
                         <div className="text-sm text-[#363636] mb-3 flex items-start gap-2 flex-col">
                             {(() => {
                                 const dateText = item.day || item.date || '';
+                                // Format date if it's in ISO format
+                                const formattedDate = dateText.includes('-')
+                                    ? new Date(dateText).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })
+                                    : dateText;
                                 return (
-                                    <div className="flex items-center gap-2"><Calendar className="w-4 h-4 text-[#363636]" /> <span className="text-sm">{dateText}</span></div>
+                                    <div className="flex items-center gap-2"><Calendar className="w-4 h-4 text-[#363636]" /> <span className="text-sm">{formattedDate}</span></div>
                                 );
                             })()}
                         </div>

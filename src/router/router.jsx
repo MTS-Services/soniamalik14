@@ -36,6 +36,11 @@ import OrderList from '../pages/dashboards/admin/OrderList/OrderList.jsx';
 import CoachEvent from '../pages/dashboards/coach/event/CoachEvent.jsx';
 import CoachEventDetails from '../pages/dashboards/coach/event/EventDetails.jsx';
 import EventAnalytics from '../pages/dashboards/coach/eventAnalytics/EventAnalytics.jsx';
+import Thread from '../pages/dashboards/coach/thread/Thread.jsx';
+import ThreadDetails from '../pages/dashboards/coach/thread/ThreadDetails.jsx';
+import Recruitment from '../pages/dashboards/coach/recruitment/Recruitment.jsx';
+import RecruitmentDetails from '../pages/dashboards/coach/recruitment/RecruitmentDetails.jsx';
+import EditProfile from '../pages/dashboards/coach/coachIndex/EditProfile.jsx';
 
 // User Dashboard Pages
 import DashboardOverview from '../pages/dashboards/user/dashboardOverview/DashboardOverview.jsx';
@@ -130,8 +135,11 @@ const router = createBrowserRouter(
         <Route path="event" element={<CoachEvent />} />
         <Route path="event/:id" element={<CoachEventDetails />} />
         <Route path="event-analytics" element={<EventAnalytics />} />
-        <Route path="thread" element={<UnderConstruction />} />
-        <Route path="recruitment" element={<UnderConstruction />} />
+        <Route path="thread" element={<Thread />} />
+        <Route path="thread/:id" element={<ThreadDetails />} />
+        <Route path="recruitment" element={<Recruitment />} />
+        <Route path="recruitment/:id" element={<RecruitmentDetails />} />
+        <Route path="settings" element={<EditProfile />} />
       </Route>
     </>
   )

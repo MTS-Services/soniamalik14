@@ -1,0 +1,272 @@
+[
+  {
+    "id": 1,
+    "image": "https://i.ibb.co.com/GvY67RzW/womanfootball.webp",
+    "title": "Women's Football Friendly Match Day Community Sports Ground",
+    "date": "2025-12-04",
+    "time": "4:00 PM – 7:00 PM",
+    "location": "1901 Thornridge Cir. Shiloh",
+    "status": "Approved",
+    "description": "This training camp is designed exclusively for women footballers who want to improve their skills, fitness, and overall match performance. The session will focus on technical drills, tactical awareness, team coordination, and physical conditioning in a supportive and competitive environment.",
+    "ageGroup": "16+ Years",
+    "sportType": "Football",
+    "skillLevel": "Beginner to Intermediate",
+    "lastDateToRegister": "2025-11-30",
+    "venue": {
+      "name": "Community Sports Ground",
+      "address": "1901 Thornridge Cir. Shiloh, Hawaii 81063"
+    },
+    "contact": {
+      "phone": "(406) 555-0120",
+      "email": "contact@sportsground.com"
+    },
+    "organizer": {
+      "name": "Rising Queens Football Academy",
+      "avatar": "https://ui-avatars.com/api/?name=Rising+Queens&background=0D8ABC&color=fff"
+    },
+    "joined": 150
+  },
+  {
+    "id": 2,
+    "image": "https://i.ibb.co.com/GvY67RzW/womanfootball.webp",
+    "title": "Junior Training Session",
+    "date": "2026-01-10",
+    "time": "10:00 AM – 1:00 PM",
+    "location": "Community Sports Ground",
+    "status": "Pending",
+    "description": "A comprehensive training session for junior players focusing on fundamental skills, teamwork, and game strategies. Perfect for young athletes looking to develop their abilities in a structured environment.",
+    "ageGroup": "12-16 Years",
+    "sportType": "Football",
+    "skillLevel": "Beginner",
+    "lastDateToRegister": "2026-01-05",
+    "venue": {
+      "name": "Community Sports Ground",
+      "address": "2972 Westheimer Rd. Santa Ana, Illinois 85486"
+    },
+    "contact": {
+      "phone": "(219) 555-0114",
+      "email": "junior@training.com"
+    },
+    "organizer": {
+      "name": "Youth Sports Academy",
+      "avatar": "https://ui-avatars.com/api/?name=Youth+Sports&background=10B981&color=fff"
+    },
+    "joined": 85
+  },
+  {
+    "id": 3,
+    "image": "https://i.ibb.co.com/GvY67RzW/womanfootball.webp",
+    "title": "Open Trial Morning",
+    "date": "2025-10-21",
+    "time": "9:00 AM – 12:00 PM",
+    "location": "Northside Stadium",
+    "status": "Approved",
+    "description": "Open trials for players of all skill levels. Showcase your talent and potentially join our competitive teams. Coaches will evaluate technical skills, tactical awareness, and overall game understanding.",
+    "ageGroup": "18+ Years",
+    "sportType": "Football",
+    "skillLevel": "All Levels",
+    "lastDateToRegister": "2025-10-15",
+    "venue": {
+      "name": "Northside Stadium",
+      "address": "1234 Stadium Way, Northside District, NY 10001"
+    },
+    "contact": {
+      "phone": "(555) 123-4567",
+      "email": "trials@northsidefc.com"
+    },
+    "organizer": {
+      "name": "Northside FC",
+      "avatar": "https://ui-avatars.com/api/?name=Northside+FC&background=EF4444&color=fff"
+    },
+    "joined": 220
+  },
+  {
+    "id": 4,
+    "image": "https://i.ibb.co.com/GvY67RzW/womanfootball.webp",
+    "title": "Community Coaching Clinic",
+    "date": "2025-11-15",
+    "time": "2:00 PM – 5:00 PM",
+    "location": "Green Park",
+    "status": "Pending",
+    "description": "A coaching clinic open to the community focusing on skill development, fitness training, and game strategy. Led by experienced professional coaches with proven track records.",
+    "ageGroup": "14+ Years",
+    "sportType": "Football",
+    "skillLevel": "Intermediate",
+    "lastDateToRegister": "2025-11-10",
+    "venue": {
+      "name": "Green Park Sports Complex",
+      "address": "567 Green Park Ave, Springfield, MA 01103"
+    },
+    "contact": {
+      "phone": "(413) 555-7890",
+      "email": "clinic@greenpark.org"
+    },
+    "organizer": {
+      "name": "Community Sports Foundation",
+      "avatar": "https://ui-avatars.com/api/?name=Community+Sports&background=8B5CF6&color=fff"
+    },
+    "joined": 95
+  },
+  {
+    "id": 5,
+    "image": "https://i.ibb.co.com/GvY67RzW/womanfootball.webp",
+    "title": "Weekend Match Series",
+    "date": "2026-02-02",
+    "time": "1:00 PM – 6:00 PM",
+    "location": "Eastfield Arena",
+    "status": "Approved",
+    "description": "Competitive match series featuring multiple teams across different age groups. Experience real game situations and compete against skilled opponents in a professional setting.",
+    "ageGroup": "16+ Years",
+    "sportType": "Football",
+    "skillLevel": "Advanced",
+    "lastDateToRegister": "2026-01-25",
+    "venue": {
+      "name": "Eastfield Arena",
+      "address": "890 Eastfield Blvd, Downtown, CA 90210"
+    },
+    "contact": {
+      "phone": "(310) 555-2468",
+      "email": "matches@eastfieldarena.com"
+    },
+    "organizer": {
+      "name": "Eastfield Sports League",
+      "avatar": "https://ui-avatars.com/api/?name=Eastfield+Sports&background=F59E0B&color=fff"
+    },
+    "joined": 320
+  },
+  {
+    "id": 6,
+    "image": "https://i.ibb.co.com/GvY67RzW/womanfootball.webp",
+    "title": "Skills & Drills Camp",
+    "date": "2026-03-12",
+    "time": "8:00 AM – 3:00 PM",
+    "location": "Riverside Pitch",
+    "status": "Pending",
+    "description": "Full-day intensive camp focused on skill development through structured drills and practical exercises. Includes individual attention, group sessions, and competitive mini-games.",
+    "ageGroup": "10-18 Years",
+    "sportType": "Football",
+    "skillLevel": "All Levels",
+    "lastDateToRegister": "2026-03-05",
+    "venue": {
+      "name": "Riverside Football Complex",
+      "address": "234 River Rd, Riverside, TX 75001"
+    },
+    "contact": {
+      "phone": "(214) 555-3691",
+      "email": "camp@riversidefc.com"
+    },
+    "organizer": {
+      "name": "Riverside Football Club",
+      "avatar": "https://ui-avatars.com/api/?name=Riverside+FC&background=06B6D4&color=fff"
+    },
+    "joined": 175
+  },
+  {
+    "id": 7,
+    "image": "https://i.ibb.co.com/GvY67RzW/womanfootball.webp",
+    "title": "Advanced Tactical Workshop",
+    "date": "2026-01-22",
+    "time": "5:00 PM – 8:00 PM",
+    "location": "Central Training Ground",
+    "status": "Approved",
+    "description": "Specialized workshop for advanced players focusing on tactical awareness, positioning, and game reading. Learn professional strategies from elite-level coaches.",
+    "ageGroup": "18+ Years",
+    "sportType": "Football",
+    "skillLevel": "Advanced",
+    "lastDateToRegister": "2026-01-18",
+    "venue": {
+      "name": "Central Training Ground",
+      "address": "456 Central Ave, Midtown, FL 33101"
+    },
+    "contact": {
+      "phone": "(305) 555-8024",
+      "email": "workshop@centralfc.com"
+    },
+    "organizer": {
+      "name": "Elite Football Academy",
+      "avatar": "https://ui-avatars.com/api/?name=Elite+Football&background=EC4899&color=fff"
+    },
+    "joined": 65
+  },
+  {
+    "id": 8,
+    "image": "https://i.ibb.co.com/GvY67RzW/womanfootball.webp",
+    "title": "Goalkeeping Masterclass",
+    "date": "2026-02-18",
+    "time": "3:00 PM – 6:00 PM",
+    "location": "Pro Training Center",
+    "status": "Approved",
+    "description": "Exclusive training session for goalkeepers covering shot-stopping, positioning, distribution, and command of the box. Limited spots available for intensive one-on-one coaching.",
+    "ageGroup": "15+ Years",
+    "sportType": "Football",
+    "skillLevel": "Intermediate to Advanced",
+    "lastDateToRegister": "2026-02-12",
+    "venue": {
+      "name": "Pro Training Center",
+      "address": "789 Pro Way, Athletic District, WA 98101"
+    },
+    "contact": {
+      "phone": "(206) 555-4567",
+      "email": "gk@protraining.com"
+    },
+    "organizer": {
+      "name": "Goalkeeper Academy Pro",
+      "avatar": "https://ui-avatars.com/api/?name=GK+Academy&background=3B82F6&color=fff"
+    },
+    "joined": 45
+  },
+  {
+    "id": 9,
+    "image": "https://i.ibb.co.com/GvY67RzW/womanfootball.webp",
+    "title": "Women's Summer League",
+    "date": "2026-06-15",
+    "time": "10:00 AM – 7:00 PM",
+    "location": "Sunfield Complex",
+    "status": "Pending",
+    "description": "Competitive summer league for women's teams featuring weekly matches throughout the season. Professional referees, quality facilities, and championship trophy for winners.",
+    "ageGroup": "18+ Years",
+    "sportType": "Football",
+    "skillLevel": "Intermediate to Advanced",
+    "lastDateToRegister": "2026-06-01",
+    "venue": {
+      "name": "Sunfield Sports Complex",
+      "address": "321 Sunshine Blvd, Coastal City, OR 97001"
+    },
+    "contact": {
+      "phone": "(503) 555-7891",
+      "email": "league@sunfieldsports.com"
+    },
+    "organizer": {
+      "name": "Women's Football League",
+      "avatar": "https://ui-avatars.com/api/?name=Women+Football&background=14B8A6&color=fff"
+    },
+    "joined": 280
+  },
+  {
+    "id": 10,
+    "image": "https://i.ibb.co.com/GvY67RzW/womanfootball.webp",
+    "title": "Youth Development Program",
+    "date": "2026-04-05",
+    "time": "4:00 PM – 7:00 PM",
+    "location": "Academy Training Ground",
+    "status": "Approved",
+    "description": "Long-term development program for talented young players. Comprehensive curriculum covering technical skills, physical conditioning, mental preparation, and nutrition guidance.",
+    "ageGroup": "8-16 Years",
+    "sportType": "Football",
+    "skillLevel": "Beginner to Intermediate",
+    "lastDateToRegister": "2026-03-28",
+    "venue": {
+      "name": "Academy Training Ground",
+      "address": "654 Academy Dr, Education Park, CO 80201"
+    },
+    "contact": {
+      "phone": "(303) 555-9876",
+      "email": "youth@academyfc.com"
+    },
+    "organizer": {
+      "name": "Future Stars Academy",
+      "avatar": "https://ui-avatars.com/api/?name=Future+Stars&background=F97316&color=fff"
+    },
+    "joined": 210
+  }
+]
