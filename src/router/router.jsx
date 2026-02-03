@@ -42,6 +42,7 @@ import DashboardOverview from '../pages/dashboards/user/dashboardOverview/Dashbo
 import ManageProducts from '../pages/dashboards/user/ManageProducts/ManageProducts.jsx';
 import UserOrderList from '../pages/dashboards/user/order/OrderList.jsx';
 import Finances from '../pages/dashboards/user/finances/Finances.jsx';
+import Account from '../pages/dashboards/user/account/Account.jsx';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -76,6 +77,7 @@ const router = createBrowserRouter(
         <Route path="/dashboard/product" element={<ManageProducts />} />
         <Route path="/dashboard/orders" element={<UserOrderList />} />
         <Route path="/dashboard/finances" element={<Finances />} />
+        <Route path="/dashboard/account" element={<Account />} />
       </Route>
 
       {/* Admin Dashboard - Protected */}
