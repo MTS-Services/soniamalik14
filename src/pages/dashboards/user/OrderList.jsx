@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { FiSearch } from 'react-icons/fi'
+import { FiSearch, FiChevronDown } from 'react-icons/fi'
 
 const STATUS = {
   completed: { label: 'Completed', color: '#28A844' },
@@ -45,7 +45,7 @@ export default function OrderList() {
     <section className="p-4 md:p-6 lg:p-8 bg-transparent">
       <div className="mx-auto bg-[#E7F1F1] rounded-lg shadow-sm">
         <div className="p-4 md:p-6 border-b" style={{ borderColor: '#DDEDEB' }}>
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+          <div className="flex flex-col gap-4">
             <div>
               <h2 className="text-xl md:text-2xl font-bold text-black">Order List</h2>
               <p className="text-sm text-[#5B6B69] mt-1">Manage orders placed by customers</p>
@@ -98,11 +98,7 @@ export default function OrderList() {
                           aria-expanded={openStatus === r.id}
                         >
                           <span>{STATUS[r.status].label}</span>
-                          <span className="w-5 h-5 flex items-center justify-center" aria-hidden>
-                            <svg width="20" height="10" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                              <path d="M6 9L12 15L18 9" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                            </svg>
-                          </span>
+                          <FiChevronDown className="w-4 h-4" aria-hidden />
                         </button>
 
                         {openStatus === r.id && (
@@ -154,11 +150,7 @@ export default function OrderList() {
                     aria-expanded={openStatus === r.id}
                   >
                     <span>{STATUS[r.status].label}</span>
-                    <span className="w-5 h-5 flex items-center justify-center" aria-hidden>
-                      <svg width="10" height="6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M6 9L12 15L18 9" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                      </svg>
-                    </span>
+                    <FiChevronDown className="w-4 h-4" aria-hidden />
                   </button>
 
                   {openStatus === r.id && (
