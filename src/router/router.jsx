@@ -58,6 +58,7 @@ import Finances from '../pages/dashboards/user/finances/Finances.jsx';
 import Account from '../pages/dashboards/user/account/Account.jsx';
 import ClubList from '../pages/dashboards/admin/ClubList/ClubList.jsx';
 import ServiceProviderList from '../pages/dashboards/admin/ServiceProviderList/ServiceProviderList.jsx';
+import AdminFinances from '../pages/dashboards/admin/finances/AdminFinances.jsx';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -112,7 +113,7 @@ const router = createBrowserRouter(
         <Route path="thread" element={<Thread />} />
         <Route path="club" element={<ClubList />} />
         <Route path="service" element={<ServiceProviderList />} />
-        <Route path="finances" element={<UnderConstruction />} />
+        <Route path="finances" element={<AdminFinances />} />
         <Route path="role-matrix" element={< UnderConstruction/>} />
       </Route>
 
