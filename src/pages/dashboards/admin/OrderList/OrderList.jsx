@@ -1,10 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import { Eye, ChevronDown } from 'lucide-react';
-import OrderDetails from './Orderdetails';
+import React, { useState, useEffect } from "react";
+import { Eye, ChevronDown } from "lucide-react";
+import OrderDetails from "./OrderDetails";
+import DashboardHeader from "../../../../components/ui/DashboardHeader";
+import Table from "../../../../components/ui/Table";
+import TablePagination from "../../../../components/ui/TablePagination";
+// import React, { useState, useEffect } from 'react';
+// import { Eye, ChevronDown } from 'lucide-react';
+// import OrderDetails from './Orderdetails';
 import Pagination from '../../../../components/ui/Pagination';
-import DashboardHeader from '../../../../components/ui/DashboardHeader';
-import Table from '../../../../components/ui/Table';
-import TablePagination from '../../../../components/ui/TablePagination';
+// import DashboardHeader from '../../../../components/ui/DashboardHeader';
+// import Table from '../../../../components/ui/Table';
+// import TablePagination from '../../../../components/ui/TablePagination';
 
 const OrderList = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -119,37 +125,47 @@ const OrderList = () => {
 
   const renderRow = (order) => (
     <>
-      <td className="px-6 py-4">{order.id}</td>
-      <td className="px-6 py-4">{order.productName}</td>
-      <td className="px-6 py-4">{order.sellerName}</td>
-      <td className="px-6 py-4">{order.price}</td>
-      <td className="px-6 py-4">{order.platformFee}</td>
-      <td className="px-6 py-4">
+      <td className="px-4 py-4">{order.id}</td>
+      <td className="px-4 py-4">{order.productName}</td>
+      <td className="px-4 py-4">{order.sellerName}</td>
+      <td className="px-4 py-4">{order.price}</td>
+      <td className="px-4 py-4">{order.platformFee}</td>
+      <td className="px-4 py-4">
         <div className="flex items-center gap-3">
           <div className="relative" data-dropdown>
-            <button
+            <  button
               onClick={() => toggleRow(order.id)}
-              className={`flex items-center gap-2 rounded-md px-4 py-2 text-base text-white ${order.statusColor}`}
+              aria-expanded={openMenuId === order.id}
+              className={`flex items-center gap-2 px-4 py-2 w-38 h-10 rounded-md text-white text-base transition-all ${order.statusColor} hover:shadow-md`}
             >
               {order.status}
               <ChevronDown
-                className={`transition-transform ${openMenuId === order.id ? 'rotate-180' : ''}`}
+                className={` transition-transform duration-200 ${
+                  openMenuId === order.id ? "rotate-180" : ""
+                }`}
               />
             </button>
 
-            {openMenuId === order.id && (
-              <div className="absolute left-0 z-20 mt-1 w-40 rounded-md border bg-white shadow">
-                {['Pending', 'In Progress', 'Completed'].map((s) => (
-                  <button
-                    key={s}
-                    onClick={() => handleStatusChange(order.id, s)}
-                    className="block w-full px-4 py-2 text-left text-sm hover:bg-gray-100"
-                  >
-                    {s}
-                  </button>
-                ))}
-              </div>
-            )}
+            {/* Always rendered dropdown with smooth animation */}
+            <div
+              role="menu"
+              aria-hidden={openMenuId !== order.id}
+              className={`absolute left-0 mt-1 w-40 bg-white border border-gray-200 rounded-md shadow-lg z-20 transform-gpu transition-all duration-200 ease-out origin-top ${
+                openMenuId === order.id 
+                  ? 'opacity-100 translate-y-0 scale-100 pointer-events-auto' 
+                  : 'opacity-0 -translate-y-1 scale-95 pointer-events-none'
+              }`}
+            >
+              {["Pending", "In Progress", "Completed"].map((s) => (
+                <button
+                  key={s}
+                  onClick={() => handleStatusChange(order.id, s)}
+                  className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors first:rounded-t-md last:rounded-b-md"
+                >
+                  {s}
+                </button>
+              ))}
+            </div>
           </div>
 
           <button onClick={() => setSelectedOrder(order)} className="rounded-md p-2">
@@ -177,31 +193,49 @@ const OrderList = () => {
       <div data-dropdown className="relative">
         <button
           onClick={() => toggleRow(order.id)}
-          className={`flex w-full items-center justify-between rounded-md px-3 py-2 text-white ${order.statusColor}`}
+          aria-expanded={openMenuId === order.id}
+          className={`w-full flex justify-between items-center px-3 py-2 rounded-md text-white transition-all ${order.statusColor} hover:shadow-md`}
         >
           {order.status}
-          <ChevronDown className={`h-4 w-4 ${openMenuId === order.id ? 'rotate-180' : ''}`} />
+          <ChevronDown
+            className={`w-4 h-4 transition-transform duration-200 ${
+              openMenuId === order.id ? "rotate-180" : ""
+            }`}
+          />
         </button>
 
-        {openMenuId === order.id && (
-          <div className="absolute left-0 z-20 mt-1 w-full rounded-md border bg-white shadow">
-            {['Pending', 'In Progress', 'Completed'].map((s) => (
-              <button
-                key={s}
-                onClick={() => handleStatusChange(order.id, s)}
-                className="block w-full px-4 py-2 text-left text-sm hover:bg-gray-100"
-              >
-                {s}
-              </button>
-            ))}
-          </div>
-        )}
+        {/* Always rendered mobile dropdown with smooth animation */}
+        <div
+          role="menu"
+          aria-hidden={openMenuId !== order.id}
+          className={`absolute left-0 mt-1 w-full bg-white border border-gray-200 rounded-md shadow-lg z-20 transform-gpu transition-all duration-200 ease-out origin-top ${
+            openMenuId === order.id 
+              ? 'opacity-100 translate-y-0 scale-100 pointer-events-auto' 
+              : 'opacity-0 -translate-y-1 scale-95 pointer-events-none'
+          }`}
+        >
+          {["Pending", "In Progress", "Completed"].map((s) => (
+            <button
+              key={s}
+              onClick={() => handleStatusChange(order.id, s)}
+              className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors first:rounded-t-md last:rounded-b-md"
+            >
+              {s}
+            </button>
+          ))}
+        </div>
       </div>
     </div>
   );
 
   if (selectedOrder) {
-    return <OrderDetails order={selectedOrder} onClose={() => setSelectedOrder(null)} />;
+    return (
+      <OrderDetails
+        isOpen={true}
+        order={selectedOrder}
+        onClose={() => setSelectedOrder(null)}
+      />
+    );
   }
 
   return (
@@ -220,7 +254,13 @@ const OrderList = () => {
         ))}
       </div>
 
-      <TablePagination page={currentPage} total={totalPages} onChange={setCurrentPage} />
+      <TablePagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        totalResults={orders.length}
+        resultsPerPage={itemsPerPage}
+        onPageChange={setCurrentPage}
+      />
     </div>
   );
 };

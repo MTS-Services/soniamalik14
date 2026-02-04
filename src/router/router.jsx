@@ -56,6 +56,8 @@ import ManageProducts from '../pages/dashboards/user/ManageProducts/ManageProduc
 import UserOrderList from '../pages/dashboards/user/order/OrderList.jsx';
 import Finances from '../pages/dashboards/user/finances/Finances.jsx';
 import Account from '../pages/dashboards/user/account/Account.jsx';
+import ClubList from '../pages/dashboards/admin/ClubList/ClubList.jsx';
+import ServiceProviderList from '../pages/dashboards/admin/ServiceProviderList/ServiceProviderList.jsx';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -107,11 +109,11 @@ const router = createBrowserRouter(
         <Route path="event-details" element={<EventDetails />} />
         <Route path="product-request" element={<ProductRequested />} />
         <Route path="order" element={<OrderList />} />
-        <Route path="thread" element={<UnderConstruction />} />
-        <Route path="club" element={<UnderConstruction />} />
-        <Route path="service" element={<UnderConstruction />} />
+        <Route path="thread" element={<Thread />} />
+        <Route path="club" element={<ClubList />} />
+        <Route path="service" element={<ServiceProviderList />} />
         <Route path="finances" element={<UnderConstruction />} />
-        <Route path="role-matrix" element={<UnderConstruction />} />
+        <Route path="role-matrix" element={< UnderConstruction/>} />
       </Route>
 
       {/* Provider Dashboard - Protected */}

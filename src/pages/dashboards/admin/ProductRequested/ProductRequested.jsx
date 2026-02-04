@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import DashboardHeader from '../../../../components/ui/DashboardHeader';
 import Table from '../../../../components/ui/Table';
 import TablePagination from '../../../../components/ui/TablePagination';
-import { Eye, X, Check } from 'lucide-react';
+import { Eye, X, Check, ChevronDown } from 'lucide-react';
 import ProductCard from '../../../../components/ui/ProductCard';
 import Pagination from '../../../../components/ui/Pagination';
 import ProductDetails from './Productdetails';
@@ -10,6 +10,7 @@ import ProductDetails from './Productdetails';
 const ProductRequested = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedProduct, setSelectedProduct] = useState(null);
+  const [openMenuId, setOpenMenuId] = useState(null);
 
 
 
@@ -21,13 +22,15 @@ const productsData = [
       sellerName: 'Leslie Alexander',
       price: '$120',
       condition: 'Used Product',
-            conditionsUsed:"Football",
+      status: 'Pending',
+      statusColor: 'bg-yellow-500',
+      conditionsUsed: "Football",
 
 
       images: [
-        'https://images.unsplash.com/photo-1624526267942-ab67cb38a25f?w=400&h=300&fit=crop',
-        'https://images.unsplash.com/photo-1461896836934-ffe607ba8211?w=400&h=300&fit=crop',
-        'https://images.unsplash.com/photo-1624526267942-ab67cb38a25f?w=400&h=300&fit=crop',
+        'https://images.unsplash.com/photo-1478851814281-61a21b884e62?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+        'https://images.unsplash.com/photo-1553520488-9b86f35c2320?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+        'https://images.unsplash.com/photo-1569241930870-bfca1f44e78f?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
       ],
       seller: {
         name: 'Leslie Alexander',
@@ -43,7 +46,9 @@ const productsData = [
       sellerName: 'Savannah Nguyen',
       price: '$200',
       condition: 'Used Product',
-            conditionsUsed:"Football",
+      status: 'Approved',
+      statusColor: 'bg-teal-600',
+      conditionsUsed: "Football",
 
       images: [
         'https://images.unsplash.com/photo-1461896836934-ffe607ba8211?w=400&h=300&fit=crop',
@@ -64,7 +69,9 @@ const productsData = [
       sellerName: 'Darrell Steward',
       price: '$300',
       condition: 'Used Product',
-            conditionsUsed:"Football",
+      status: 'Rejected',
+      statusColor: 'bg-red-600',
+      conditionsUsed: "Football",
 
       images: [
         'https://images.unsplash.com/photo-1551958219-acbc608c6377?w=400&h=300&fit=crop',
@@ -85,7 +92,9 @@ const productsData = [
       sellerName: 'Courtney Henry',
       price: '$400',
       condition: 'Used Product',
-            conditionsUsed:"Football",
+      status: 'Pending',
+      statusColor: 'bg-yellow-500',
+      conditionsUsed: "Football",
 
       images: [
         'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400&h=300&fit=crop',
@@ -106,7 +115,9 @@ const productsData = [
       sellerName: 'Dianne Russell',
       price: '$500',
       condition: 'Used Product',
-            conditionsUsed:"Football",
+      status: 'Approved',
+      statusColor: 'bg-teal-600',
+      conditionsUsed: "Football",
 
       images: [
         'https://images.unsplash.com/photo-1461896836934-ffe607ba8211?w=400&h=300&fit=crop',
@@ -127,7 +138,9 @@ const productsData = [
       sellerName: 'Kristin Watson',
       price: '$600',
       condition: 'Used Product',
-            conditionsUsed:"Football",
+      status: 'Pending',
+      statusColor: 'bg-yellow-500',
+      conditionsUsed: "Football",
 
       images: [
         'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400&h=300&fit=crop',
@@ -148,7 +161,9 @@ const productsData = [
       sellerName: 'Floyd Miles',
       price: '$700',
       condition: 'Used Product',
-            conditionsUsed:"Football",
+      status: 'Approved',
+      statusColor: 'bg-teal-600',
+      conditionsUsed: "Football",
 
       images: [
         'https://images.unsplash.com/photo-1617083902624-4ddf8dc0db3c?w=400&h=300&fit=crop',
@@ -169,7 +184,9 @@ const productsData = [
       sellerName: 'Wade Warren',
       price: '$800',
       condition: 'Used Product',
-            conditionsUsed:"Football",
+      status: 'Pending',
+      statusColor: 'bg-yellow-500',
+      conditionsUsed: "Football",
 
       images: [
         'https://images.unsplash.com/photo-1617083902624-4ddf8dc0db3c?w=400&h=300&fit=crop',
@@ -190,7 +207,9 @@ const productsData = [
       sellerName: 'Devon Lane',
       price: '$900',
       condition: 'Used Product',
-            conditionsUsed:"Football",
+      status: 'Rejected',
+      statusColor: 'bg-red-600',
+      conditionsUsed: "Football",
 
       images: [
         'https://images.unsplash.com/photo-1617083902624-4ddf8dc0db3c?w=400&h=300&fit=crop',
@@ -211,6 +230,8 @@ const productsData = [
       sellerName: 'Albert Flores',
       price: '$1000',
       condition: 'Used Product',
+      status: 'Approved',
+      statusColor: 'bg-teal-600',
       
       images: [
         'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400&h=300&fit=crop',
@@ -231,6 +252,8 @@ const productsData = [
       sellerName: 'Ronald Richards',
       price: '$1100',
       condition: 'Used Product',
+      status: 'Pending',
+      statusColor: 'bg-yellow-500',
       images: [
         'https://images.unsplash.com/photo-1617083902624-4ddf8dc0db3c?w=400&h=300&fit=crop',
         'https://images.unsplash.com/photo-1461896836934-ffe607ba8211?w=400&h=300&fit=crop',
@@ -250,7 +273,9 @@ const productsData = [
       sellerName: 'Guy Hawkins',
       price: '$1200',
       condition: 'Used Product',
-      conditionsUsed:"Football",
+      status: 'Approved',
+      statusColor: 'bg-teal-600',
+      conditionsUsed: "Football",
 
       images: [
         'https://images.unsplash.com/photo-1617083902624-4ddf8dc0db3c?w=400&h=300&fit=crop',
@@ -273,7 +298,41 @@ const productsData = [
     currentPage * itemsPerPage
   );
 
-  const columns = ['Product Name', 'Seller Name', 'Price', 'Condition', 'Actions'];
+  const toggleRow = (id) => {
+    setOpenMenuId(prev => (prev === id ? null : id));
+  };
+
+  const mapStatusToColor = (status) => {
+    switch (status) {
+      case 'Approved':
+        return 'bg-teal-600';
+      case 'Pending':
+        return 'bg-yellow-500';
+      case 'Rejected':
+        return 'bg-red-600';
+      default:
+        return 'bg-gray-600';
+    }
+  };
+
+  const handleStatusChange = (productId, newStatus) => {
+    // In a real app, this would make an API call
+    console.log(`Product ${productId} status changed to ${newStatus}`);
+    setOpenMenuId(null);
+  };
+
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (!e.target.closest('[data-dropdown]')) {
+        setOpenMenuId(null);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  const columns = ['Product Name', 'Seller Name', 'Price', 'Condition', 'Status', 'Actions'];
 
   const renderRow = (product) => (
     <>
@@ -281,19 +340,62 @@ const productsData = [
       <td className="px-4 py-3 text-base text-gray-700">{product.sellerName}</td>
       <td className="px-4 py-3 text-base text-gray-700">{product.price}</td>
       <td className="px-4 py-3 text-base text-gray-700">{product.condition}</td>
+      <td className="px-4 py-3">
+        <div className="relative" data-dropdown>
+          <button
+            onClick={() => toggleRow(product.id)}
+            aria-expanded={openMenuId === product.id}
+            className={`flex items-center gap-2 px-4 py-2 rounded-md font-medium text-white text-sm transition-all ${product.statusColor} hover:shadow-md`}
+          >
+            {product.status}
+            <ChevronDown 
+              className={`w-4 h-4 transition-transform duration-200 ${openMenuId === product.id ? 'rotate-180' : ''}`}
+            />
+          </button>
+
+          {/* Dropdown Menu - Always rendered for smooth animation */}
+          <div
+            role="menu"
+            aria-hidden={openMenuId !== product.id}
+            className={`absolute top-full mt-1 left-0 w-40 bg-white border border-gray-200 rounded-md shadow-lg z-10 transform-gpu transition-all duration-200 ease-out origin-top ${
+              openMenuId === product.id 
+                ? 'opacity-100 translate-y-0 scale-100 pointer-events-auto' 
+                : 'opacity-0 -translate-y-1 scale-95 pointer-events-none'
+            }`}
+          >
+            <button onClick={() => handleStatusChange(product.id, 'Pending')} className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors rounded-t-md">
+              Pending
+            </button>
+            <button onClick={() => handleStatusChange(product.id, 'Approved')} className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors border-t border-gray-200">
+              Approved
+            </button>
+            <button onClick={() => handleStatusChange(product.id, 'Rejected')} className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors border-t border-gray-200 rounded-b-md">
+              Rejected
+            </button>
+          </div>
+        </div>
+      </td>
       <td className="px-4 py-3 text-left">
         <div className="flex items-start justify-start gap-2">
           <button 
-          
-          
-           onClick={() => setSelectedProduct(product)}
-          className="rounded-md p-1.5 transition-colors" title="View">
+            onClick={() => setSelectedProduct(product)}
+            className="rounded-md p-1.5 transition-colors" 
+            title="View"
+          >
             <Eye className="h-5 w-5 text-[#000000]" />
           </button>
-          <button className="rounded-md p-1.5 transition-colors" title="Reject">
+          <button 
+            onClick={() => handleStatusChange(product.id, 'Rejected')}
+            className="rounded-md p-1.5 transition-colors" 
+            title="Reject"
+          >
             <X className="h-5 w-5 text-[#EA0C0C]" />
           </button>
-          <button className="rounded-md p-1.5 transition-colors" title="Approve">
+          <button 
+            onClick={() => handleStatusChange(product.id, 'Approved')}
+            className="rounded-md p-1.5 transition-colors" 
+            title="Approve"
+          >
             <Check className="h-5 w-5 text-[#55A946]" />
           </button>
         </div>

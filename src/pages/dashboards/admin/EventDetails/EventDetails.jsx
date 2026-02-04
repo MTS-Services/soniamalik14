@@ -3,6 +3,7 @@ import { Eye } from 'lucide-react';
 import DashboardHeader from '../../../../components/ui/DashboardHeader';
 import Table from '../../../../components/ui/Table';
 import TablePagination from '../../../../components/ui/TablePagination';
+import Pagination from '../../../../components/ui/Pagination';
 
 const EventDetails = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -106,12 +107,8 @@ const EventDetails = () => {
         {paginatedData.map((event, index) => (
           <EventDetailsCard key={index} event={event} />
         ))}
-        <TablePagination
-          currentPage={currentPage}
-          totalPages={totalPages}
-          totalResults={eventDetailsData.length}
-          resultsPerPage={resultsPerPage}
-          onPageChange={setCurrentPage}
+        <Pagination
+          page={currentPage} total={totalPages} onChange={setCurrentPage}
         />
       </div>
     </div>
