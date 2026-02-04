@@ -97,13 +97,13 @@ const HeaderNav = ({ isMenuOpen, setIsMenuOpen }) => {
                 </button>
               </>
             )}
-            {!isAuthenticated && (
+            {/* {!isAuthenticated && (
               <Link to="/signin">
                 <Button variant="primary" size="xs" className="rounded-md text-xs py-1.5">
                   Sign In
                 </Button>
               </Link>
-            )}
+            )} */}
             <button onClick={handleProfileClick} className="p-2 hover:bg-gray-100 rounded-md">
               <CiUser className="text-secondary-text h-5 lg:w-7 lg:h-7 w-5" />
             </button>
