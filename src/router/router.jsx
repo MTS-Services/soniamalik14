@@ -52,7 +52,7 @@ import ProviderThreadDetails from '../pages/dashboards/provider/thread/ProviderT
 
 // User Dashboard Pages
 import DashboardOverview from '../pages/dashboards/user/dashboardOverview/DashboardOverview.jsx';
-import ManageProducts from '../pages/dashboards/user/ManageProducts/ManageProducts.jsx';
+import ManageProducts from '../pages/dashboards/user/manageProducts/ManageProducts.jsx';
 import UserOrderList from '../pages/dashboards/user/order/OrderList.jsx';
 import Finances from '../pages/dashboards/user/finances/Finances.jsx';
 import Account from '../pages/dashboards/user/account/Account.jsx';
