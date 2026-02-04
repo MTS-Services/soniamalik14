@@ -43,7 +43,7 @@ import Thread from '../pages/dashboards/coach/thread/Thread.jsx';
 import ThreadDetails from '../pages/dashboards/coach/thread/ThreadDetails.jsx';
 import Recruitment from '../pages/dashboards/coach/recruitment/Recruitment.jsx';
 import RecruitmentDetails from '../pages/dashboards/coach/recruitment/RecruitmentDetails.jsx';
-import EditProfile from '../pages/dashboards/coach/coachIndex/EditProfile.jsx';
+import EditProfile from '../pages/dashboards/coach/CoachIndex/EditProfile.jsx';
 import ProviderService from '../pages/dashboards/provider/service/ProviderService.jsx';
 import ProviderServiceDetails from '../pages/dashboards/provider/service/ServiceDetails.jsx';
 import ServiceAnalytics from '../pages/dashboards/provider/serviceAnalytics/ServiceAnalytics.jsx';
