@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { FiCalendar, FiChevronDown, FiDollarSign, FiClock, FiCheckCircle } from 'react-icons/fi'
+import { FiCalendar, FiChevronDown, FiDollarSign, FiClock, FiCheckCircle, FiX, FiCheck } from 'react-icons/fi'
 import WithdrawModal from './components/WithdrawModal'
 import ConfirmWithdrawalModal from './components/ConfirmWithdrawalModal'
 import SuccessModal from './components/SuccessModal'
@@ -49,6 +49,24 @@ export default function AdminFinances() {
     { id: 4, dateTime: 'Mar 20, 2019 23:14', amount: '$5,000.00', accountNumber: 'acct_1QH72fB9XkP3L2a1', status: 'Confirmed' },
     { id: 5, dateTime: 'Mar 20, 2019 23:14', amount: '$5,000.00', accountNumber: 'acct_1QH72fB9XkP3L2a1', status: 'Confirmed' },
     { id: 6, dateTime: 'Mar 20, 2019 23:14', amount: '$5,000.00', accountNumber: 'acct_1QH72fB9XkP3L2a1', status: 'Confirmed' },
+  ]
+
+  const payoutRequests = [
+    { id: 1, sellerName: 'Theresa Webb', amount: '$5,000.00', accountNumber: 'acct_1QH72fB9XkP3L2a5', status: 'Pending' },
+    { id: 2, sellerName: 'Kristin Watson', amount: '$5,000.00', accountNumber: 'acct_1QH72fB9XkP3L2a5', status: 'Pending' },
+    { id: 3, sellerName: 'Savannah Nguyen', amount: '$5,000.00', accountNumber: 'acct_1QH72fB9XkP3L2a5', status: 'Pending' },
+    { id: 4, sellerName: 'Esther Howard', amount: '$5,000.00', accountNumber: 'acct_1QH72fB9XkP3L2a5', status: 'Pending' },
+    { id: 5, sellerName: 'Jane Cooper', amount: '$5,000.00', accountNumber: 'acct_1QH72fB9XkP3L2a5', status: 'Pending' },
+    { id: 6, sellerName: 'Kathryn Murphy', amount: '$5,000.00', accountNumber: 'acct_1QH72fB9XkP3L2a5', status: 'Pending' },
+  ]
+
+  const paymentLogs = [
+    { id: 1, date: 'Mar 20, 2019 23:14', sellerName: 'Savannah Nguyen', accountNumber: 'acct_1QH72fB9XkP3L2a5', amount: '$5,000.00', method: 'Stripe', status: 'Completed' },
+    { id: 2, date: 'Mar 20, 2019 23:14', sellerName: 'Devon Lane', accountNumber: 'acct_1QH72fB9XkP3L2a5', amount: '$5,000.00', method: 'Stripe', status: 'Failed' },
+    { id: 3, date: 'Mar 20, 2019 23:14', sellerName: 'Esther Howard', accountNumber: 'acct_1QH72fB9XkP3L2a5', amount: '$5,000.00', method: 'Stripe', status: 'Completed' },
+    { id: 4, date: 'Mar 20, 2019 23:14', sellerName: 'Floyd Miles', accountNumber: 'acct_1QH72fB9XkP3L2a5', amount: '$5,000.00', method: 'Stripe', status: 'Completed' },
+    { id: 5, date: 'Mar 20, 2019 23:14', sellerName: 'Ralph Edwards', accountNumber: 'acct_1QH72fB9XkP3L2a5', amount: '$5,000.00', method: 'Stripe', status: 'Completed' },
+    { id: 6, date: 'Mar 20, 2019 23:14', sellerName: 'Darlene Robertson', accountNumber: 'acct_1QH72fB9XkP3L2a5', amount: '$5,000.00', method: 'Stripe', status: 'Completed' },
   ]
 
   const [page, setPage] = useState(1)
@@ -130,6 +148,9 @@ export default function AdminFinances() {
           </nav>
         </div>
 
+        {/* Earnings Overview Tab Content */}
+        {activeTab === 'earnings' && (
+          <>
         {/* Stats Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 mb-6">
           {stats.map((stat, idx) => (
@@ -290,6 +311,253 @@ export default function AdminFinances() {
                 Next
               </button>
             </div>
+          </div>
+        </div>
+          </>
+        )}
+
+        {/* Payout Requests Tab Content */}
+        {activeTab === 'payouts' && (
+          <div className="bg-white rounded-lg shadow-sm border border-gray-100">
+            <div className="p-5 md:p-6 border-b border-gray-100">
+              <h2 className="text-lg md:text-xl font-bold text-gray-900">Payout Requests</h2>
+            </div>
+
+            {/* Desktop Table */}
+            <div className="hidden md:block overflow-x-auto">
+              <table className="w-full">
+                <thead>
+                  <tr className="bg-[#E7F1F1] border-b border-gray-100">
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">
+                      Seller Name
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">
+                      Amount
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">
+                      Account Number
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">
+                      Status
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">
+                      Action
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="bg-white divide-y divide-gray-100">
+                  {payoutRequests.map((request) => (
+                    <tr key={request.id} className="hover:bg-gray-50 transition-colors">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                        {request.sellerName}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                        {request.amount}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                        {request.accountNumber}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <span className="px-3 py-1 inline-flex text-xs leading-5 font-medium rounded-full bg-[#E7F1F1] text-teal-700">
+                          {request.status}
+                        </span>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <div className="flex items-center gap-3">
+                          <button
+                            className="text-red-600 hover:text-red-800 transition-colors"
+                            title="Reject"
+                          >
+                            <FiX className="w-5 h-5" />
+                          </button>
+                          <button
+                            className="text-green-600 hover:text-green-800 transition-colors"
+                            title="Approve"
+                          >
+                            <FiCheck className="w-5 h-5" />
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            {/* Mobile Cards */}
+            <div className="md:hidden divide-y divide-gray-100">
+              {payoutRequests.map((request) => (
+                <div key={request.id} className="p-4 hover:bg-gray-50 transition-colors">
+                  <div className="flex justify-between items-start mb-3">
+                    <div>
+                      <p className="text-sm font-medium text-gray-900 mb-1">{request.sellerName}</p>
+                      <p className="text-xs text-gray-600">{request.accountNumber}</p>
+                    </div>
+                    <span className="px-3 py-1 inline-flex text-xs leading-5 font-medium rounded-full bg-[#E7F1F1] text-teal-700">
+                      {request.status}
+                    </span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <div className="text-base font-bold text-gray-900">{request.amount}</div>
+                    <div className="flex items-center gap-3">
+                      <button
+                        className="text-red-600 hover:text-red-800 transition-colors"
+                        title="Reject"
+                      >
+                        <FiX className="w-5 h-5" />
+                      </button>
+                      <button
+                        className="text-green-600 hover:text-green-800 transition-colors"
+                        title="Approve"
+                      >
+                        <FiCheck className="w-5 h-5" />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Pagination */}
+            <div className="px-4 md:px-6 py-4 border-t border-gray-100 flex flex-col sm:flex-row items-center justify-between gap-3">
+              <div className="text-sm text-gray-600">
+                Showing 1 to 6 of 6 results
+              </div>
+
+              <div className="flex items-center gap-2">
+                <button
+                  disabled
+                  className="px-4 py-2 text-sm font-medium rounded-lg border bg-gray-50 text-gray-400 border-gray-200 cursor-not-allowed"
+                >
+                  Previous
+                </button>
+
+                <button
+                  disabled
+                  className="px-4 py-2 text-sm font-medium rounded-lg border bg-gray-50 text-gray-400 border-gray-200 cursor-not-allowed"
+                >
+                  Next
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Payment Logs Tab Content */}
+        {activeTab === 'logs' && (
+          <div className="bg-white rounded-lg shadow-sm border border-gray-100">
+            <div className="p-5 md:p-6 border-b border-gray-100">
+              <h2 className="text-lg md:text-xl font-bold text-gray-900">Payment Logs</h2>
+            </div>
+
+            {/* Desktop Table */}
+            <div className="hidden md:block overflow-x-auto">
+              <table className="w-full">
+                <thead>
+                  <tr className="bg-[#E7F1F1] border-b border-gray-100">
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">
+                      Date
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">
+                      Seller Name
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">
+                      Account number
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">
+                      Amount
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">
+                      Method
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">
+                      Status
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="bg-white divide-y divide-gray-100">
+                  {paymentLogs.map((log) => (
+                    <tr key={log.id} className="hover:bg-gray-50 transition-colors">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                        {log.date}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                        {log.sellerName}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                        {log.accountNumber}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                        {log.amount}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                        {log.method}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <span className={`px-3 py-1 inline-flex text-xs leading-5 font-medium rounded-full ${
+                          log.status === 'Completed'
+                            ? 'bg-[#E7F1F1] text-teal-700'
+                            : 'bg-red-100 text-red-700'
+                        }`}>
+                          {log.status}
+                        </span>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            {/* Mobile Cards */}
+            <div className="md:hidden divide-y divide-gray-100">
+              {paymentLogs.map((log) => (
+                <div key={log.id} className="p-4 hover:bg-gray-50 transition-colors">
+                  <div className="flex justify-between items-start mb-3">
+                    <div>
+                      <p className="text-sm font-medium text-gray-900 mb-1">{log.sellerName}</p>
+                      <p className="text-xs text-gray-600 mb-1">{log.date}</p>
+                      <p className="text-xs text-gray-600">{log.accountNumber}</p>
+                    </div>
+                    <span className={`px-3 py-1 inline-flex text-xs leading-5 font-medium rounded-full ${
+                      log.status === 'Completed'
+                        ? 'bg-[#E7F1F1] text-teal-700'
+                        : 'bg-red-100 text-red-700'
+                    }`}>
+                      {log.status}
+                    </span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <div className="text-base font-bold text-gray-900">{log.amount}</div>
+                    <div className="text-xs text-gray-600">{log.method}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Pagination */}
+            <div className="px-4 md:px-6 py-4 border-t border-gray-100 flex flex-col sm:flex-row items-center justify-between gap-3">
+              <div className="text-sm text-gray-600">
+                Showing 1 to 6 of 6 results
+              </div>
+
+              <div className="flex items-center gap-2">
+                <button
+                  disabled
+                  className="px-4 py-2 text-sm font-medium rounded-lg border bg-gray-50 text-gray-400 border-gray-200 cursor-not-allowed"
+                >
+                  Previous
+                </button>
+
+                <button
+                  disabled
+                  className="px-4 py-2 text-sm font-medium rounded-lg border bg-gray-50 text-gray-400 border-gray-200 cursor-not-allowed"
+                >
+                  Next
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
 
       {/* Modals */}
       <WithdrawModal
@@ -312,8 +580,6 @@ export default function AdminFinances() {
         onClose={handleCloseSuccess}
         amount={withdrawalData.amount}
       />
-          </div>
-        </div>
       </div>
     </div>
   )
