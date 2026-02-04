@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Eye, ChevronDown } from "lucide-react";
-import OrderDetails from "./OrderDetails";
+import OrderDetails from "./Orderdetails";
 import DashboardHeader from "../../../../components/ui/DashboardHeader";
 import Table from "../../../../components/ui/Table";
 import TablePagination from "../../../../components/ui/TablePagination";
