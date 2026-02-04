@@ -59,6 +59,7 @@ import Account from '../pages/dashboards/user/account/Account.jsx';
 import ClubList from '../pages/dashboards/admin/ClubList/ClubList.jsx';
 import ServiceProviderList from '../pages/dashboards/admin/ServiceProviderList/ServiceProviderList.jsx';
 import AdminFinances from '../pages/dashboards/admin/finances/AdminFinances.jsx';
+import RoleMatrix from '../pages/dashboards/admin/role_matrix/RoleMatrix.jsx';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -114,7 +115,7 @@ const router = createBrowserRouter(
         <Route path="club" element={<ClubList />} />
         <Route path="service" element={<ServiceProviderList />} />
         <Route path="finances" element={<AdminFinances />} />
-        <Route path="role-matrix" element={< UnderConstruction/>} />
+        <Route path="role-matrix" element={<RoleMatrix />} />
       </Route>
 
       {/* Provider Dashboard - Protected */}
