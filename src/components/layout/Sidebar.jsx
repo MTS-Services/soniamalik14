@@ -153,6 +153,9 @@ const Sidebar = ({ isOpen, onClose }) => {
                                 className={({ isActive }) => {
                                     // Make Event (or Event Analytics) appear active when viewing a specific event detail route (/coach/event/:id)
                                     const isEventDetailsRoute = location.pathname.startsWith(`${basePath}/event/`);
+                                    // Match only the event list route (exact) so event-analytics doesn't collide
+                                    const isEventListRoute = location.pathname === `${basePath}/event`;
+                                    const isProvider = user?.role === ROLES.PROVIDER;
                                     const isSettingsRoute = location.pathname.startsWith(`${basePath}/settings`) || location.pathname.startsWith(`${basePath}/profile`) || location.pathname.startsWith(`${basePath}/edit-profile`);
                                     const from = location.state?.from;
                                     let extraActive = false;
@@ -160,7 +163,12 @@ const Sidebar = ({ isOpen, onClose }) => {
                                         // if navigated from analytics, highlight Event Analytics
                                         if (from === 'analytics' && item.id === 'event-analytics') extraActive = true;
                                         // if navigated from event page (or direct URL with no state), highlight Event
-                                        if ((from === 'event' || from == null) && item.id === 'event') extraActive = true;
+                                        // Treat `dashboard` as event parent only for PROVIDER role (provider uses dashboard as Event)
+                                        if ((from === 'event' || from == null) && (item.id === 'event' || (isProvider && item.id === 'dashboard'))) extraActive = true;
+                                    }
+                                    // Also make the Event/dashboard menu active when viewing the event list route
+                                    if (isEventListRoute && (item.id === 'event' || (isProvider && item.id === 'dashboard'))) {
+                                        extraActive = true;
                                     }
                                     // Keep Dashboard highlighted when viewing related profile/settings pages
                                     if (isSettingsRoute && item.id === 'dashboard') extraActive = true;

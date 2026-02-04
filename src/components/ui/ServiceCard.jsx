@@ -7,7 +7,7 @@ import { FiEdit, FiTrash2 } from 'react-icons/fi';
 import EventModal from './EventModal';
 import DeleteConfirmationModal from './DeleteConfirmationModal';
 
-const EventCard = ({ item = {}, editLink, onEdit, onDelete, className = '', detailsRoute = '/coach/event' }) => {
+const ServiceCard = ({ item = {}, editLink, onEdit, onDelete, className = '' }) => {
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
@@ -16,7 +16,9 @@ const EventCard = ({ item = {}, editLink, onEdit, onDelete, className = '', deta
         e.stopPropagation();
         if (onEdit) {
             onEdit(item);
+            return;
         }
+
         setIsEditModalOpen(true);
     };
 
@@ -27,57 +29,39 @@ const EventCard = ({ item = {}, editLink, onEdit, onDelete, className = '', deta
     };
 
     const handleDeleteConfirm = () => {
-        if (onDelete) {
-            onDelete(item);
-        }
+        if (onDelete) onDelete(item);
     };
 
     return (
         <>
-            <Link to={`${detailsRoute}/${item.id}`} state={{ item, from: 'event' }} className="block">
-                <Card
-                    className={`p-4 h-full flex flex-col  justify-between rounded-lg border !border-[#B5D5D2] bg-white ${className}`}
-                >
-                    <div>
+            <Link to={`/provider/service/${item.id}`} state={{ item, from: 'service' }} className="block">
+                <Card className={`p-4 h-full flex flex-col justify-between rounded-lg !bg-[#E7F1F180]   ${className}`}>
+                    <div className="flex-1">
                         <div className="relative">
-                            {(item.status || item.type) && (() => {
-                                const raw = (item.status || item.type || '').toString();
-                                const key = raw.toLowerCase();
-                                const isPending = key === 'pending';
-                                const badgeClasses = `absolute top-3 left-3 z-10 rounded-md px-3 py-1 text-sm font-medium capitalize ${isPending ? 'bg-[#FFDAB9] text-[#FF7700] border border-[#FFDAB9]' : 'bg-[#E9F7F5] text-[#0F766E] border border-[#B5D5D2]'}`;
-                                return <div className={badgeClasses}>{raw}</div>;
-                            })()}
+                            {item.tag && (
+                                <div className="absolute top-3 left-3 z-10 rounded-md px-3 py-1 text-sm font-medium text-[#0F766E] bg-[#E7F1F1]">{item.tag}</div>
+                            )}
 
-                            <div className="h-44 bg-gray-200 rounded-md mb-4 overflow-hidden flex items-center justify-center">
+                            <div className="h-36 bg-gray-200 rounded-md mb-4 overflow-hidden flex items-center justify-center">
                                 {item.image ? (
-                                    <img src={item.image} alt={item.title} className="w-full h-full object-cover rounded-md" />
+                                    <img src={item.image} alt={item.title} className="w-full h-full  rounded-md" />
                                 ) : (
                                     <div className="text-[#000000] bg-[#D9D9D9] rounded-md p-4">Image</div>
                                 )}
                             </div>
                         </div>
 
-                        <h3 className="text-[#282828] font-semibold text-lg mb-2 min-h-[48px]">{item.title}</h3>
-
-                        <div className="text-sm text-[#363636] mb-3 flex items-start gap-2 flex-col">
-                            {(() => {
-                                const dateText = item.day || item.date || '';
-                                // Format date if it's in ISO format
-                                const formattedDate = dateText.includes('-')
-                                    ? new Date(dateText).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })
-                                    : dateText;
-                                return (
-                                    <div className="flex items-center gap-2"><Calendar className="w-4 h-4 text-[#363636]" /> <span className="text-sm">{formattedDate}</span></div>
-                                );
-                            })()}
-                        </div>
-
-                        <div className="text-sm text-[#363636] mb-1 flex items-center gap-2">
+                        <h3 className="text-[#282828] font-semibold text-lg mb-2 min-h-[56px]">{item.title}</h3>
+                        <div className="text-sm text-[#363636] mb-2 flex items-center gap-2">
                             <MapPin className="w-4 h-4 text-[#363636]" />
-                            <span className="text-sm">{item.location}</span>
+                            <span className="text-sm">{item.location || 'Dhaka'}</span>
                         </div>
-
-
+                        <div className="text-sm text-[#363636] mb-2 flex items-start gap-2 flex-col">
+                            <div className="flex items-center gap-2"><Calendar className="w-4 h-4 text-[#363636]" /> <span className="text-sm">{item.days || '12 March 2026'}</span></div>
+                        </div>
+                        <div className="text-sm text-[#363636] mb-2 flex items-start gap-2 flex-col">
+                            <div className="flex items-center gap-2"><Clock className="w-4 h-4 text-[#363636]" /> <span className="text-sm">{item.time || '4:00 PM – 7:00 PM'}</span></div>
+                        </div>
                     </div>
 
                     <div className="mt-2" onClick={(e) => e.preventDefault()}>
@@ -102,24 +86,19 @@ const EventCard = ({ item = {}, editLink, onEdit, onDelete, className = '', deta
                 </Card>
             </Link>
 
-            {/* Edit Modal */}
-            <EventModal
-                isOpen={isEditModalOpen}
-                onClose={() => setIsEditModalOpen(false)}
-                initialData={item}
-                mode="edit"
-            />
+            {/* Edit Modal (reuse EventModal for quick demo) */}
+            <EventModal isOpen={isEditModalOpen} onClose={() => setIsEditModalOpen(false)} initialData={item} mode="edit" />
 
-            {/* Delete Confirmation Modal */}
+            {/* Delete Confirmation */}
             <DeleteConfirmationModal
                 isOpen={isDeleteModalOpen}
                 onClose={() => setIsDeleteModalOpen(false)}
                 onConfirm={handleDeleteConfirm}
-                title="Delete Event"
+                title="Delete Service"
                 message={`Are you sure you want to delete "${item.title}"? This action cannot be undone.`}
             />
         </>
     );
 };
 
-export default EventCard;
+export default ServiceCard;

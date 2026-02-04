@@ -48,7 +48,7 @@ const CoachIndex = () => {
             <button onClick={() => setIsPostModalOpen(true)} className="text-btn-primary font-medium">+ Post New</button>
           </div>
 
-          <div className="space-y-4">
+          <div className="space-y-7.5">
             {[{
               title: 'U16 Goalkeeper Wanted',
               applicants: 12,
@@ -65,7 +65,7 @@ const CoachIndex = () => {
               <div key={i} className="flex items-center justify-between bg-white border border-gray-100 rounded-lg p-4">
                 <div>
                   <h4 className="font-medium">{ad.title}</h4>
-                  <p className="text-sm text-secondary-text mt-1">{ad.applicants} Applicants</p>
+                  <p className="text-base text-secondary-text mt-1">{ad.applicants} Applicants</p>
                   <Link to="#" className="text-btn-primary text-sm mt-2 inline-block">View Listing</Link>
                 </div>
                 <div className="text-sm">
