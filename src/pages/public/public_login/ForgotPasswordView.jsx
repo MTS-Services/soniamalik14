@@ -16,7 +16,8 @@ const ForgotPasswordView = () => {
     // Simulate API call
     setTimeout(() => {
       setLoading(false);
-      setMessage('If an account exists with this email, you will receive a password reset code.');
+      // Navigate to OTP verification page
+      navigate('/otp-verification');
     }, 1000);
   };
 

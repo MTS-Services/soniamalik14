@@ -8,6 +8,8 @@ import DiscoverDetails from '../pages/public/public_discover/DiscoverDetails';
 import SigninView from '../pages/public/public_login/SigninView.jsx';
 import RegisterView from '../pages/public/public_login/SignUpView.jsx';
 import ForgotPasswordView from '../pages/public/public_login/ForgotPasswordView.jsx';
+import OtpVerificationView from '../pages/public/public_login/OtpVerificationView.jsx';
+import ResetPasswordView from '../pages/public/public_login/ResetPasswordView.jsx';
 import CommunityView from '../pages/public/public_community/CommunityView';
 import CommunityDetails from '../pages/public/public_community/components/CommunityDetails';
 import NotFound from '../pages/error/NotFound';
@@ -70,6 +72,8 @@ const router = createBrowserRouter(
       <Route path="/signin" element={<SigninView />} />
       <Route path="/register" element={<RegisterView />} />
       <Route path="/forgot-password" element={<ForgotPasswordView />} />
+      <Route path="/otp-verification" element={<OtpVerificationView />} />
+      <Route path="/reset-password" element={<ResetPasswordView />} />
       <Route path="/unauthorized" element={<Unauthorized />} />
 
       <Route path="/" element={<RootLayout />}>
