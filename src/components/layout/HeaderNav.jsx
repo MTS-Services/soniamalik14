@@ -96,18 +96,11 @@ const HeaderNav = ({ isMenuOpen, setIsMenuOpen }) => {
                 >
                   <LogOut className="text-secondary-text h-5 w-5" />
                 </button>
+                <button onClick={handleProfileClick} className="p-2 hover:bg-gray-100 rounded-md">
+                  <CiUser className="text-secondary-text h-5 lg:w-7 lg:h-7 w-5" />
+                </button>
               </>
             )}
-            {/* {!isAuthenticated && (
-              <Link to="/signin">
-                <Button variant="primary" size="xs" className="rounded-md text-xs py-1.5">
-                  Sign In
-                </Button>
-              </Link>
-            )} */}
-            <button onClick={handleProfileClick} className="p-2 hover:bg-gray-100 rounded-md">
-              <CiUser className="text-secondary-text h-5 lg:w-7 lg:h-7 w-5" />
-            </button>
           </div>
         </div>
 
