@@ -6,6 +6,7 @@ import AboutView from '../pages/public/public_about/AboutView';
 import DiscoverView from '../pages/public/public_discover/DiscoverView';
 import DiscoverDetails from '../pages/public/public_discover/DiscoverDetails';
 import SigninView from '../pages/public/public_login/SigninView.jsx';
+import RegisterView from '../pages/public/public_login/SignUpView.jsx';
 import CommunityView from '../pages/public/public_community/CommunityView';
 import CommunityDetails from '../pages/public/public_community/components/CommunityDetails';
 import NotFound from '../pages/error/NotFound';
@@ -66,6 +67,7 @@ const router = createBrowserRouter(
   createRoutesFromElements(
     <>
       <Route path="/signin" element={<SigninView />} />
+      <Route path="/register" element={<RegisterView />} />
       <Route path="/unauthorized" element={<Unauthorized />} />
 
       <Route path="/" element={<RootLayout />}>

@@ -195,7 +195,7 @@
     @apply text-white/90 text-base lg:text-[20px] text-center;
   }
   .sectiontitle{
-    @apply font-semibold lg:text-[40px] text-[32px] leading-tight lg:leading-relaxed font-secondary text-[#313131];
+    @apply font-semibold lg:text-[40px] text-[28px] leading-tight lg:leading-relaxed font-secondary text-[#313131];
   }
   
   .subtitle {

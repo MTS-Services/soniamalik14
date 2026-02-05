@@ -98,9 +98,11 @@ const HeaderTop = ({ onMenuClick, isMenuOpen }) => {
                     Sign IN
                   </Button>
                 </Link>
-                <Button variant="secondary" className="rounded-md lg:text-base">
-                  Sign UP
-                </Button>
+                <Link to="/register">
+                  <Button variant="secondary" className="rounded-md lg:text-base">
+                    Sign UP
+                  </Button>
+                </Link>
               </div>
             ) : (
               <div className="flex items-center gap-3">

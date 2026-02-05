@@ -89,7 +89,7 @@ const LoginView = () => {
 
             {/* Email Field */}
             <div>
-              <label htmlFor="email" className="block text-[#282828] font-medium mb-2 text-sm">
+              <label htmlFor="email" className="block text-[#282828] font-medium mb-2 text-sm md:text-base">
                 Email
               </label>
               <input
@@ -106,7 +106,7 @@ const LoginView = () => {
 
             {/* Password Field */}
             <div>
-              <label htmlFor="password" className="block text-[#282828] font-medium mb-2 text-sm">
+              <label htmlFor="password" className="block text-[#282828] font-medium mb-2 text-sm md:text-base">
                 Password
               </label>
               <div className="relative">
