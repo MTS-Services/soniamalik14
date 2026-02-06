@@ -83,7 +83,7 @@ export default function CommunityForumComponent() {
         <div className="flex items-start justify-between mb-8">
           <div>
             <h1 className="text-3xl font-bold text-gray-900 mb-2">Community Forum</h1>
-            <p className="text-gray-600 text-sm">Connect, chat, and support each other.</p>
+            <p className="text-gray-600 text-sm">Connect, chat, and support each o  ther.</p>
           </div>
           <button
             onClick={() => setIsModalOpen(true)}

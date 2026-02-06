@@ -36,8 +36,9 @@ import ProviderEventDetails from '../pages/dashboards/provider/event/EventDetail
 import ProviderEventAnalytics from '../pages/dashboards/provider/eventAnalytics/EventAnalytics.jsx';
 import CoachIndex from '../pages/dashboards/coach/CoachIndex.jsx';
 import Event from '../pages/dashboards/admin/event/Event.jsx';
+import EventSingleDetails from '../pages/dashboards/admin/event/EventSingleDetails.jsx';
 import AdminIndex from '../pages/dashboards/admin/adminIndex/AdminIndex.jsx';
-import EventDetails from '../pages/dashboards/admin/EventDetails/EventDetails.jsx';
+import EventDetails from '../pages/dashboards/admin/EventDetails/AdminEventDetails.jsx';
 import ProductRequested from '../pages/dashboards/admin/ProductRequested/ProductRequested.jsx';
 import OrderList from '../pages/dashboards/admin/OrderList/OrderList.jsx';
 import CoachEvent from '../pages/dashboards/coach/event/CoachEvent.jsx';
@@ -62,6 +63,7 @@ import Finances from '../pages/dashboards/user/finances/Finances.jsx';
 import Account from '../pages/dashboards/user/account/Account.jsx';
 import ClubList from '../pages/dashboards/admin/ClubList/ClubList.jsx';
 import ServiceProviderList from '../pages/dashboards/admin/ServiceProviderList/ServiceProviderList.jsx';
+import ServiceProviderDetails from '../pages/dashboards/admin/ServiceProviderList/ServiceProviderDetails.jsx';
 import AdminFinances from '../pages/dashboards/admin/finances/AdminFinances.jsx';
 import RoleMatrix from '../pages/dashboards/admin/role_matrix/RoleMatrix.jsx';
 import AdminSettings from '../pages/dashboards/admin/settings/Settings.jsx';
@@ -117,12 +119,14 @@ const router = createBrowserRouter(
       >
         <Route index element={<AdminIndex />} />
         <Route path="event" element={<Event />} />
+        <Route path="event/:id" element={<EventSingleDetails />} />
         <Route path="event-details" element={<EventDetails />} />
         <Route path="product-request" element={<ProductRequested />} />
         <Route path="order" element={<OrderList />} />
         <Route path="thread" element={<Thread />} />
         <Route path="club" element={<ClubList />} />
         <Route path="service" element={<ServiceProviderList />} />
+        <Route path="service/:id" element={<ServiceProviderDetails />} />
         <Route path="finances" element={<AdminFinances />} />
         <Route path="role-matrix" element={<RoleMatrix />} />
         <Route path="settings" element={<AdminSettings />} />
