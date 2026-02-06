@@ -36,8 +36,9 @@ import ProviderEventDetails from '../pages/dashboards/provider/event/EventDetail
 import ProviderEventAnalytics from '../pages/dashboards/provider/eventAnalytics/EventAnalytics.jsx';
 import CoachIndex from '../pages/dashboards/coach/CoachIndex.jsx';
 import Event from '../pages/dashboards/admin/event/Event.jsx';
+import EventSingleDetails from '../pages/dashboards/admin/event/EventSingleDetails.jsx';
 import AdminIndex from '../pages/dashboards/admin/adminIndex/AdminIndex.jsx';
-import EventDetails from '../pages/dashboards/admin/EventDetails/EventDetails.jsx';
+import EventDetails from '../pages/dashboards/admin/EventDetails/AdminEventDetails.jsx';
 import ProductRequested from '../pages/dashboards/admin/ProductRequested/ProductRequested.jsx';
 import OrderList from '../pages/dashboards/admin/OrderList/OrderList.jsx';
 import CoachEvent from '../pages/dashboards/coach/event/CoachEvent.jsx';
@@ -118,6 +119,7 @@ const router = createBrowserRouter(
       >
         <Route index element={<AdminIndex />} />
         <Route path="event" element={<Event />} />
+        <Route path="event/:id" element={<EventSingleDetails />} />
         <Route path="event-details" element={<EventDetails />} />
         <Route path="product-request" element={<ProductRequested />} />
         <Route path="order" element={<OrderList />} />
