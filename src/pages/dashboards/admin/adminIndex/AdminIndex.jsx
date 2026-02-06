@@ -151,6 +151,42 @@ const AdminIndex = () => {
     </>
   );
 
+  const renderPayoutCard = (request, index) => (
+    <div key={index} className="bg-white p-4 rounded-lg border border-gray-100 mb-3">
+      <div className="space-y-3">
+        <div className="flex justify-between items-start">
+          <h3 className="font-semibold text-base">{request.name}</h3>
+        </div>
+        
+        <div className="space-y-2 text-sm">
+          <div>
+            <span className="text-gray-500">Phone:</span>
+            <span className="ml-2 font-medium">{request.phone}</span>
+          </div>
+          <div>
+            <span className="text-gray-500">Email:</span>
+            <span className="ml-2 font-medium">{request.email}</span>
+          </div>
+          <div>
+            <span className="text-gray-500">Account Number:</span>
+            <span className="ml-2 font-medium">{request.account}</span>
+          </div>
+        </div>
+        
+        <div className="pt-2">
+          <button
+            className={`inline-flex items-center justify-center gap-2 w-full rounded-md px-4 py-2 text-sm font-medium transition-colors ${getStatusColor(
+              request.status
+            )}`}
+          >
+            {request.status}
+            <ChevronDown className="h-4 w-4" />
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+
   return (
     <div className="flex-1 overflow-auto bg-gray-50 dashboardPy dashboardSpaceY">
       {/* Header */}
@@ -257,15 +293,29 @@ const AdminIndex = () => {
       <div className="bg-gray-50">
         <div className="">
           <DashboardHeader title="Payout Request" className="" />
-          <div className='border border-gray-100 rounded-md'>
+          
+          {/* Mobile Card View */}
+          <div className="md:hidden">
+            {payoutRequests.map((request, index) => renderPayoutCard(request, index))}
+            <TablePagination
+              currentPage={currentPage}
+              totalPages={1}
+              totalResults={payoutRequests.length}
+              resultsPerPage={payoutRequests.length}
+              onPageChange={setCurrentPage}
+            />
+          </div>
+
+          {/* Desktop Table View */}
+          <div className='hidden md:block border border-gray-100 rounded-md'>
             <Table columns={tableColumns} data={payoutRequests} renderRow={renderTableRow} />
-          <TablePagination
-            currentPage={currentPage}
-            totalPages={1}
-            totalResults={payoutRequests.length}
-            resultsPerPage={payoutRequests.length}
-            onPageChange={setCurrentPage}
-          />
+            <TablePagination
+              currentPage={currentPage}
+              totalPages={1}
+              totalResults={payoutRequests.length}
+              resultsPerPage={payoutRequests.length}
+              onPageChange={setCurrentPage}
+            />
           </div>
         </div>
       </div>

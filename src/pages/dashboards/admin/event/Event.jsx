@@ -162,7 +162,7 @@ const Event = () => {
         </span>
       </td>
       <td className="px-4 py-4 text-right">
-        <div className="flex items-center justify-end gap-2">
+        <div className="flex items-center gap-2">
           <button className="p-1.5 hover:bg-gray-100 rounded-md transition-colors">
             <MoreVertical className="w-4 h-4 text-gray-600" />
           </button>
@@ -188,7 +188,7 @@ const Event = () => {
         </span>
       </td>
       <td className="px-4 py-4 text-center">
-        <div className="flex items-center justify-center gap-2">
+        <div className="flex items-center gap-2">
           
           <button className="p-1.5 hover:bg-gray-100 rounded-md transition-colors">
             <MoreVertical className="w-4 h-4 text-gray-600" />
@@ -198,12 +198,71 @@ const Event = () => {
     </>
   );
 
+  const renderEventCard = (event, index) => (
+    <div key={index} className="bg-white p-4 rounded-lg border border-gray-100 mb-3">
+      <div className="space-y-2">
+        <div className="flex justify-between items-start">
+          <h3 className="font-semibold text-base">{event.title}</h3>
+          <button className="p-1.5 hover:bg-gray-100 rounded-md transition-colors">
+            <MoreVertical className="w-4 h-4 text-gray-600" />
+          </button>
+        </div>
+        
+        <div className="grid grid-cols-2 gap-2 text-sm">
+          <div>
+            <span className="text-gray-500">Type:</span>
+            <span className="ml-2 font-medium">{event.type}</span>
+          </div>
+          <div>
+            <span className="text-gray-500">Sport:</span>
+            <span className="ml-2 font-medium">{event.sport}</span>
+          </div>
+          <div className="col-span-2">
+            <span className="text-gray-500">Organizer:</span>
+            <span className="ml-2 font-medium">{event.organizer}</span>
+          </div>
+          <div>
+            <span className="text-gray-500">Role:</span>
+            <span className="ml-2 font-medium">{event.role}</span>
+          </div>
+          <div>
+            <span className="text-gray-500">Date:</span>
+            <span className="ml-2 font-medium">{event.date}</span>
+          </div>
+        </div>
+        
+        <div className="pt-2">
+          <span
+            className="text-sm font-medium"
+            style={{ color: event.status === 'Approved' ? 'var(--color-btn-primary)' : 'var(--color-dashboardPending)' }}
+          >
+            {event.status}
+          </span>
+        </div>
+      </div>
+    </div>
+  );
+
   return (
     <div className="flex-1 overflow-auto bg-gray-50 dashboardPy dashboardSpaceY">
       {/* Event Section */}
       <div>
         <DashboardHeader title="Event" />
-        <div className="border border-gray-100 rounded-md">
+        
+        {/* Mobile Card View */}
+        <div className="md:hidden">
+          {eventData.map((event, index) => renderEventCard(event, index))}
+          <TablePagination
+            currentPage={currentEventPage}
+            totalPages={1}
+            totalResults={eventData.length}
+            resultsPerPage={eventData.length}
+            onPageChange={setCurrentEventPage}
+          />
+        </div>
+
+        {/* Desktop Table View */}
+        <div className="hidden md:block border border-gray-100 rounded-md">
           <Table columns={eventColumns} data={eventData} renderRow={renderEventRow} />
           <TablePagination
             currentPage={currentEventPage}
@@ -218,7 +277,21 @@ const Event = () => {
       {/* Event List Section */}
       <div>
         <DashboardHeader title="Event List" />
-        <div className="border border-gray-100 rounded-md">
+        
+        {/* Mobile Card View */}
+        <div className="md:hidden">
+          {eventListData.map((event, index) => renderEventCard(event, index))}
+          <TablePagination
+            currentPage={currentEventListPage}
+            totalPages={1}
+            totalResults={eventListData.length}
+            resultsPerPage={eventListData.length}
+            onPageChange={setCurrentEventListPage}
+          />
+        </div>
+
+        {/* Desktop Table View */}
+        <div className="hidden md:block border border-gray-100 rounded-md">
           <Table columns={eventColumns} data={eventListData} renderRow={renderEventListRow} />
           <TablePagination
             currentPage={currentEventListPage}

@@ -62,6 +62,7 @@ import Finances from '../pages/dashboards/user/finances/Finances.jsx';
 import Account from '../pages/dashboards/user/account/Account.jsx';
 import ClubList from '../pages/dashboards/admin/ClubList/ClubList.jsx';
 import ServiceProviderList from '../pages/dashboards/admin/ServiceProviderList/ServiceProviderList.jsx';
+import ServiceProviderDetails from '../pages/dashboards/admin/ServiceProviderList/ServiceProviderDetails.jsx';
 import AdminFinances from '../pages/dashboards/admin/finances/AdminFinances.jsx';
 import RoleMatrix from '../pages/dashboards/admin/role_matrix/RoleMatrix.jsx';
 import AdminSettings from '../pages/dashboards/admin/settings/Settings.jsx';
@@ -123,6 +124,7 @@ const router = createBrowserRouter(
         <Route path="thread" element={<Thread />} />
         <Route path="club" element={<ClubList />} />
         <Route path="service" element={<ServiceProviderList />} />
+        <Route path="service/:id" element={<ServiceProviderDetails />} />
         <Route path="finances" element={<AdminFinances />} />
         <Route path="role-matrix" element={<RoleMatrix />} />
         <Route path="settings" element={<AdminSettings />} />

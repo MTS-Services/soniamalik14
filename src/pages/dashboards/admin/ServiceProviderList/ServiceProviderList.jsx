@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { Eye } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import DashboardHeader from '../../../../components/ui/DashboardHeader';
 import TablePagination from '../../../../components/ui/TablePagination';
 import Table from '../../../../components/ui/Table';
 
 export default function ServiceProviderList() {
+  const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
 
   const providers = [
@@ -98,6 +100,7 @@ export default function ServiceProviderList() {
       <td className="px-4 py-4 text-base text-[#674E43]">{provider.phone}</td>
       <td className="px-4 py-4 text-left">
         <button
+          onClick={() => navigate(`/admin/service/${provider.id}`)}
           className="inline-flex items-start justify-start p-2 text-black hover:bg-slate-200 rounded-md transition-colors"
           title="View details"
         >
@@ -107,7 +110,37 @@ export default function ServiceProviderList() {
     </>
   );
 
-
+  const renderProviderCard = (provider, index) => (
+    <div key={index} className="bg-white p-4 rounded-lg border border-gray-100 mb-3">
+      <div className="space-y-3">
+        <div className="flex justify-between items-start">
+          <h3 className="font-semibold text-base text-[#674E43]">{provider.name}</h3>
+          <button
+            onClick={() => navigate(`/admin/service/${provider.id}`)}
+            className="inline-flex items-start justify-start p-2 text-black hover:bg-slate-200 rounded-md transition-colors"
+            title="View details"
+          >
+            <Eye size={20} />
+          </button>
+        </div>
+        
+        <div className="space-y-2 text-sm">
+          <div>
+            <span className="text-gray-500">Owner:</span>
+            <span className="ml-2 font-medium text-[#674E43]">{provider.owner}</span>
+          </div>
+          <div>
+            <span className="text-gray-500">Service:</span>
+            <span className="ml-2 font-medium text-[#674E43]">{provider.service}</span>
+          </div>
+          <div>
+            <span className="text-gray-500">Phone:</span>
+            <span className="ml-2 font-medium text-[#674E43]">{provider.phone}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 p-8">
@@ -116,12 +149,9 @@ export default function ServiceProviderList() {
        
       <DashboardHeader title="Service Provider List" />
 
-        {/* Table Container */}
-        <div className="overflow-x-auto">
-          <Table columns={columns} data={displayedProviders} renderRow={renderProviderRow} />
-        </div>
-
-        {/* Footer with Pagination */}
+        {/* Mobile Card View */}
+        <div className="md:hidden">
+          {displayedProviders.map((provider, index) => renderProviderCard(provider, index))}
           <TablePagination
             currentPage={currentPage}
             totalPages={totalPages}
@@ -129,7 +159,21 @@ export default function ServiceProviderList() {
             resultsPerPage={itemsPerPage}
             onPageChange={setCurrentPage}
           />
-        
+        </div>
+
+        {/* Desktop Table View */}
+        <div className="hidden md:block">
+          <div className="overflow-x-auto">
+            <Table columns={columns} data={displayedProviders} renderRow={renderProviderRow} />
+          </div>
+          <TablePagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            totalResults={providers.length}
+            resultsPerPage={itemsPerPage}
+            onPageChange={setCurrentPage}
+          />
+        </div>
       </div>
     </div>
   );
