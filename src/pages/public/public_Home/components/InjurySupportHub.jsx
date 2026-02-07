@@ -64,7 +64,7 @@ const InjurySupportHub = () => {
     <section className="py-12 lg:py-16">
       <Container>
         <div className="">
-          <div className="rounded-2xl overflow-hidden shadow-lg bg-btn-primary text-white grid grid-cols-1 lg:grid-cols-2">
+          <div className="rounded-2xl overflow-hidden shadow-lg bg-btn-primary text-white grid grid-cols-1 lg:grid-cols-[3fr_2fr]">
             {/* Left: Content */}
             <div className="p-4 lg:p-12">
               <h2 className="text-2xl lg:text-4xl font-bold mb-4">Injury Support Hub</h2>
