@@ -10,14 +10,15 @@ const CoreFeatures = () => {
       <Container>
         {/* Section Header */}
         <SectionHeader
-          title="Everything you need to play"
-          description="A ecosystem designed specifically for the needs of female athletes."
+          title="Everything you need to get involved in sport"
+          description="ESSA Hub brings together sport, community and support for women - whether you're starting for the first time
+or returning after a break."
           align="left"
-          className="mb-4 lg:mb-6"
+          className="mb-4 lg:mb-6 text-xl lg:text-2xl"
         />
 
         {/* Features Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 lg:gap-5">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-3 lg:gap-5">
           {coreFeatures.map((feature) => (
             <FeatureCard
               key={feature.id}

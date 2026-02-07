@@ -12,15 +12,12 @@ const Hero = () => {
       <div className="absolute inset-0 z-0 bg-black opacity-10"></div>
       <Container className="relative z-10 py-10 lg:py-0">
         <div className='space-y-3.5 md:space-y-5 flex flex-col justify-center mt-10 lg:mt-0 items-center text-center'>
-          <HeroTitle>Women. Sport. Community</HeroTitle>
+          <HeroTitle className='whitespace-nowrap md:whitespace-normal'>Women. Sport. Community</HeroTitle>
           <p className='herosubtitle'>A platform built for women in sport — whatever level you're starting at.</p>
           {/* action btns */}
-          <div className='flex justify-center items-center gap-1.5 lg:gap-4 flex-row'>
-            <Button className='rounded-md'>Explore <span className='hidden md:flex'>Sports Near You</span></Button>
-            <div className='flex'>
-              
-            <Button className='rounded-md  text-btn font-medium' variant='outline'>Join the ESSA Hub<span className='hidden md:flex'> Community</span></Button>
-            </div>
+          <div className='flex flex-col md:flex-row items-center justify-center gap-1.5 lg:gap-4 w-full'>
+            <Button className='w-full rounded-md md:w-auto'>Explore Sports Near You</Button>
+            <Button className='w-full rounded-md text-btn font-medium md:w-auto' variant='outline'>Join the ESSA Hub<span className='hidden md:flex'> Community</span></Button>
           </div>
           {/* <p className='herosubtitle hidden sm:flex'>Women-focused services, support and connection - all around sport</p> */}
         </div>
