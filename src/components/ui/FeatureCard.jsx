@@ -16,10 +16,10 @@ const FeatureCard = ({
       </div>
 
       {/* Title */}
-      <h3 className="subtitle text-cardTitle font-semibold text-2xl mb-3">{title}</h3>
+      <h3 className="subtitle text-cardTitle font-semibold text-xl md:text-2xl mb-3">{title}</h3>
       
       {/* Description */}
-      <p className="description">{description}</p>
+      <p className="description md:w-xs">{description}</p>
     </div>
   );
 };

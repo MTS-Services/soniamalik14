@@ -3,13 +3,9 @@ import { MessageSquare, X } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 export default function Thread() {
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [formData, setFormData] = useState({
-        category: 'All Discussion',
-        title: '',
-        description: ''
-    });
+  
 
+    // eslint-disable-next-line no-unused-vars
     const [threads, setThreads] = useState([
         {
             id: 1,
@@ -41,41 +37,8 @@ export default function Thread() {
         }
     ]);
 
-    const handleInputChange = (e) => {
-        const { name, value } = e.target;
-        setFormData(prev => ({
-            ...prev,
-            [name]: value
-        }));
-    };
-
-    const handlePostThread = () => {
-        if (formData.title.trim() && formData.description.trim()) {
-            const newThread = {
-                id: threads.length + 1,
-                author: 'You',
-                title: formData.title,
-                description: formData.description,
-                replies: 0
-            };
-            setThreads([newThread, ...threads]);
-            setFormData({
-                category: 'All Discussion',
-                title: '',
-                description: ''
-            });
-            setIsModalOpen(false);
-        }
-    };
-
-    const handleCloseModal = () => {
-        setIsModalOpen(false);
-        setFormData({
-            category: 'All Discussion',
-            title: '',
-            description: ''
-        });
-    };
+  
+    
 
     return (
         <div className=" dashboardPy dashboardSpaceY">
@@ -86,12 +49,7 @@ export default function Thread() {
                         <h1 className="text-3xl font-bold text-gray-900 mb-2">Community Forum</h1>
                         <p className="text-gray-600 text-sm">Connect, chat, and support each other.</p>
                     </div>
-                    <button
-                        onClick={() => setIsModalOpen(true)}
-                        className="bg-teal-600 hover:bg-teal-700 text-white px-6 py-2 rounded text-sm font-medium transition-colors"
-                    >
-                        Post a thread
-                    </button>
+                   
                 </div>
 
                 {/* Threads List */}
@@ -129,100 +87,9 @@ export default function Thread() {
 
             </div>
 
-            {/* Floating Action Button */}
-            <button
-                onClick={() => setIsModalOpen(true)}
-                className="fixed bottom-6 right-6 bg-teal-600 hover:bg-teal-700 text-white w-14 h-14 rounded-full shadow-lg flex items-center justify-center transition-colors z-40"
-                title="Post a thread"
-            >
-                <MessageSquare size={24} />
-            </button>
+         
 
-            {/* Modal Overlay */}
-            {isModalOpen && (
-                <div className="fixed inset-0 bg-black/60 bg-opacity-50 flex items-center justify-center p-4 z-50">
-                    {/* Modal */}
-                    <div className="bg-white rounded-lg w-full max-w-md relative">
-                        {/* Close Button */}
-                        <button
-                            onClick={handleCloseModal}
-                            className="absolute top-4 right-4 text-gray-400 hover:text-gray-600"
-                        >
-                            <X size={24} />
-                        </button>
-
-                        {/* Modal Header */}
-                        <div className="p-6 border-b border-gray-200">
-                            <h2 className="text-xl font-bold text-gray-900">Start a Discussion</h2>
-                            <p className="text-sm text-gray-600 mt-1">
-                                Ask a question or share something with the community.
-                            </p>
-                        </div>
-
-                        {/* Modal Body */}
-                        <div className="p-6 space-y-5">
-                            {/* Category Dropdown */}
-                            <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-2">
-                                    Category
-                                </label>
-                                <select
-                                    name="category"
-                                    value={formData.category}
-                                    onChange={handleInputChange}
-                                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 bg-white text-gray-700"
-                                >
-                                    <option>All Discussion</option>
-                                    <option>Training Tips</option>
-                                    <option>Match Experience</option>
-                                    <option>Injury Recovery</option>
-                                    <option>Player Recruitment</option>
-                                </select>
-                            </div>
-
-                            {/* Thread Title */}
-                            <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-2">
-                                    Thread Title
-                                </label>
-                                <input
-                                    type="text"
-                                    name="title"
-                                    placeholder="Write title"
-                                    value={formData.title}
-                                    onChange={handleInputChange}
-                                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 text-gray-700 placeholder-gray-400"
-                                />
-                            </div>
-
-                            {/* Description */}
-                            <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-2">
-                                    Description
-                                </label>
-                                <textarea
-                                    name="description"
-                                    placeholder="Write description"
-                                    value={formData.description}
-                                    onChange={handleInputChange}
-                                    rows="4"
-                                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 text-gray-700 placeholder-gray-400 resize-none"
-                                />
-                            </div>
-                        </div>
-
-                        {/* Modal Footer */}
-                        <div className="p-6 border-t border-gray-200">
-                            <button
-                                onClick={handlePostThread}
-                                className="w-full bg-teal-600 hover:bg-teal-700 text-white py-2 rounded-lg font-medium transition-colors"
-                            >
-                                Post a thread
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            )}
+           
         </div>
     );
 }

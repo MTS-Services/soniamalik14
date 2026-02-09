@@ -13,13 +13,13 @@ const TablePagination = ({
   const endResult = Math.min(currentPage * resultsPerPage, totalResults);
 
   return (
-    <div className=" bg-white border-gray-100 border-t px-6 py-4 rounded-b-lg flex items-center justify-between">
+    <div className="bg-white border-gray-100 border-t px-4 py-4 rounded-b-lg flex flex-col sm:flex-row items-center sm:justify-between gap-3">
       {showResultsText && (
-        <p className="text-sm text-cardTitle">
+        <p className="text-sm text-cardTitle text-center sm:text-left w-full sm:w-auto">
           Showing {startResult} to {endResult} of {totalResults} results
         </p>
       )}
-      <div className="flex gap-3">
+      <div className="flex gap-3 w-full sm:w-auto justify-center">
         <Button
           variant="outline"
           onClick={() => onPageChange(currentPage - 1)}
