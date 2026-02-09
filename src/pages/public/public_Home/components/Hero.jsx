@@ -16,8 +16,8 @@ const Hero = () => {
           <p className='herosubtitle'>A platform built for women in sport — whatever level you're starting at.</p>
           {/* action btns */}
           <div className='flex flex-col md:flex-row items-center justify-center gap-1.5 lg:gap-4 w-full'>
-            <Button className='w-full rounded-md md:w-auto'>Explore Sports Near You</Button>
-            <Button className='w-full rounded-md text-btn font-medium md:w-auto' variant='outline'>Join the ESSA Hub<span className='hidden md:flex'> Community</span></Button>
+            <Button className='w-5/6 max-w-xs rounded-md md:w-auto'>Explore Sports Near You</Button>
+            <Button className='w-5/6 max-w-xs rounded-md text-btn font-medium md:w-auto' variant='outline'>Join the ESSA Hub</Button>
           </div>
           {/* <p className='herosubtitle hidden sm:flex'>Women-focused services, support and connection - all around sport</p> */}
         </div>
