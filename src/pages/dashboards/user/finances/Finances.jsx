@@ -3,6 +3,7 @@ import { FiCalendar, FiChevronDown, FiDollarSign, FiClock, FiCheckCircle } from 
 import WithdrawModal from './components/WithdrawModal'
 import ConfirmWithdrawalModal from './components/ConfirmWithdrawalModal'
 import SuccessModal from './components/SuccessModal'
+import TablePagination from '../../../../components/ui/TablePagination'
 
 export default function Finances() {
   const [selectedPeriod, setSelectedPeriod] = useState('30')
@@ -151,7 +152,7 @@ export default function Finances() {
             <div>
               <p className="text-sm text-teal-600 mb-2">Available Balance</p>
               <h4 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">$12,450</h4>
-              <button 
+              <button
                 onClick={handleWithdrawClick}
                 className="w-full bg-teal-700 hover:bg-teal-800 text-white font-medium py-2.5 md:py-3 px-4 rounded-lg transition-colors duration-200"
               >
@@ -218,7 +219,7 @@ export default function Finances() {
                     <p className="text-sm font-medium text-gray-900 mb-1">{item.dateTime}</p>
                     <p className="text-xs text-gray-600">{item.accountNumber}</p>
                   </div>
-                  <span className="px-3 py-1 inline-flex text-xs leading-5 font-medium rounded-full bg-teal-100 text-teal-700">
+                  <span className="px-3 py-1 inline-flex text-xs leading-5 font-medium rounded-full bg-[#E7F1F1] text-[#06322E]">
                     {item.status}
                   </span>
                 </div>
@@ -227,65 +228,37 @@ export default function Finances() {
             ))}
           </div>
 
-          {/* Pagination */}
-          <div className="px-4 md:px-6 py-4 border-t border-gray-100 flex flex-col sm:flex-row items-center justify-between gap-3">
-            <div className="text-sm text-gray-600">
-              Showing {(page - 1) * pageSize + 1} to {Math.min(page * pageSize, withdrawalHistory.length)} of {withdrawalHistory.length} results
-            </div>
+          {/* Pagination (shared component) */}
+          <TablePagination
+            currentPage={page}
+            totalPages={totalPages}
+            totalResults={withdrawalHistory.length}
+            resultsPerPage={pageSize}
+            onPageChange={(p) => setPage(Math.max(1, Math.min(totalPages, p)))}
+          />
 
-            <div className="flex items-center gap-2">
-              <button
-                onClick={() => setPage((p) => Math.max(1, p - 1))}
-                disabled={page === 1}
-                className={`px-4 py-2 text-sm font-medium rounded-lg border transition-colors ${
-                  page === 1
-                    ? 'bg-gray-50 text-gray-400 border-gray-200 cursor-not-allowed'
-                    : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'
-                }`}
-              >
-                Previous
-              </button>
+          <div>
+            {/* Modals */}
+            <WithdrawModal
+              isOpen={showWithdrawModal}
+              onClose={() => setShowWithdrawModal(false)}
+              onConfirm={handleWithdrawConfirm}
+              availableBalance="12,450.00"
+            />
 
-              <div className="flex items-center gap-1">
-                <span className="px-4 py-2 text-sm font-medium text-teal-700 bg-teal-50 border border-teal-200 rounded-lg">
-                  {page}
-                </span>
-              </div>
+            <ConfirmWithdrawalModal
+              isOpen={showConfirmModal}
+              onClose={() => setShowConfirmModal(false)}
+              onConfirm={handleFinalConfirm}
+              amount={withdrawalData.amount}
+              method={withdrawalData.method}
+            />
 
-              <button
-                onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
-                disabled={page === totalPages}
-                className={`px-4 py-2 text-sm font-medium rounded-lg border transition-colors ${
-                  page === totalPages
-                    ? 'bg-gray-50 text-gray-400 border-gray-200 cursor-not-allowed'
-                    : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'
-                }`}
-              >
-                Next
-              </button>
-            </div>
-
-      {/* Modals */}
-      <WithdrawModal
-        isOpen={showWithdrawModal}
-        onClose={() => setShowWithdrawModal(false)}
-        onConfirm={handleWithdrawConfirm}
-        availableBalance="12,450.00"
-      />
-
-      <ConfirmWithdrawalModal
-        isOpen={showConfirmModal}
-        onClose={() => setShowConfirmModal(false)}
-        onConfirm={handleFinalConfirm}
-        amount={withdrawalData.amount}
-        method={withdrawalData.method}
-      />
-
-      <SuccessModal
-        isOpen={showSuccessModal}
-        onClose={handleCloseSuccess}
-        amount={withdrawalData.amount}
-      />
+            <SuccessModal
+              isOpen={showSuccessModal}
+              onClose={handleCloseSuccess}
+              amount={withdrawalData.amount}
+            />
           </div>
         </div>
       </div>

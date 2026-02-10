@@ -6,7 +6,7 @@ const NavbarLayout = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <header className='sticky top-0 w-full z-50'>
+    <header className='relative sticky top-0 w-full z-50'>
       <HeaderTop 
         onMenuClick={() => setIsMenuOpen(!isMenuOpen)} 
         isMenuOpen={isMenuOpen} 

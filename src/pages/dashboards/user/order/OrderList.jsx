@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { FiSearch, FiChevronDown } from 'react-icons/fi'
+import TablePagination from '../../../../components/ui/TablePagination'
+
 
 const STATUS = {
   completed: { label: 'Completed', color: '#28A844' },
@@ -43,20 +45,26 @@ export default function OrderList() {
 
   return (
     <section className="p-4 md:p-6 lg:p-8 bg-transparent">
-      <div className="mx-auto bg-[#E7F1F1] rounded-lg shadow-sm">
+      <div className="mx-auto bg-[#E7F1F1] rounded-lg shadow-sm overflow-hidden">
+        {/* Header Section Updated */}
         <div className="p-4 md:p-6 border-b" style={{ borderColor: '#DDEDEB' }}>
-          <div className="flex flex-col gap-4">
-            <div>
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+            {/* Title & Description */}
+            <div className="flex-shrink-0">
               <h2 className="text-xl md:text-2xl font-bold text-black">Order List</h2>
               <p className="text-sm text-[#5B6B69] mt-1">Manage orders placed by customers</p>
             </div>
 
-            <div className="w-full md:w-1/3">
+            {/* Search Bar - Styled to match image */}
+            <div className="w-full md:max-w-md lg:max-w-lg">
               <label className="relative block">
                 <span className="sr-only">Search</span>
-                <span className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-[#6C8F8B]"><FiSearch /></span>
+                <span className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-[#0F766E] text-lg">
+                  <FiSearch />
+                </span>
                 <input
-                  className="w-full pl-10 pr-3 py-2 rounded-lg bg-white border border-transparent text-sm shadow-sm"
+                  className="w-full pl-10 pr-3 py-2.5 rounded-lg bg-[#B5D5D2] border border-transparent text-sm shadow-sm focus:outline-none focus:ring-1 focus:ring-[#0F766E]"
+
                   placeholder="Search by Product name"
                   value={query}
                   onChange={(e) => { setQuery(e.target.value); setPage(1) }}
@@ -71,13 +79,13 @@ export default function OrderList() {
           <div className="overflow-x-auto">
             <table className="w-full table-auto text-sm">
               <thead>
-                <tr className="text-left" style={{ background: '#DCEFEF' }}>
-                  <th className="px-6 py-3 text-sm text-[#0F766E]">Product Name</th>
-                  <th className="px-6 py-3 text-sm text-[#0F766E]">Ordered By</th>
-                  <th className="px-6 py-3 text-sm text-[#0F766E]">Price</th>
-                  <th className="px-6 py-3 text-sm text-[#0F766E]">Quantity</th>
-                  <th className="px-6 py-3 text-sm text-[#0F766E]">Condition</th>
-                  <th className="px-6 py-3 text-sm text-[#0F766E]">Progress</th>
+                <tr className="text-left bg-[#B5D5D2]" >
+                  <th className="px-6 py-3 text-base text-[#000000] font-medium">Product Name</th>
+                  <th className="px-6 py-3 text-base text-[#000000] font-medium">Ordered By</th>
+                  <th className="px-6 py-3 text-base text-[#000000] font-medium">Price</th>
+                  <th className="px-6 py-3 text-base text-[#000000] font-medium">Quantity</th>
+                  <th className="px-6 py-3 text-base text-[#000000] font-medium">Condition</th>
+                  <th className="px-6 py-3 text-base text-[#000000] font-medium">Progress</th>
                 </tr>
               </thead>
               <tbody>
@@ -103,7 +111,7 @@ export default function OrderList() {
 
                         {openStatus === r.id && (
                           <div className="absolute right-0 mt-2 bg-white rounded-md shadow-lg z-20" style={{ minWidth: '120px' }}>
-                            {['progress','completed'].filter(k => k !== r.status).map(k => (
+                            {['progress', 'completed'].filter(k => k !== r.status).map(k => (
                               <button
                                 key={k}
                                 onClick={() => { setRowsData(prev => prev.map(it => it.id === r.id ? { ...it, status: k } : it)); setOpenStatus(null) }}
@@ -124,7 +132,7 @@ export default function OrderList() {
         {/* Mobile list */}
         <div className="md:hidden p-4 space-y-4">
           {pageData.map((r) => (
-            <div key={r.id} className="border rounded-lg p-3 bg-white">
+            <div key={r.id} className="border border-[#0F766E] rounded-lg p-3 ">
               <div className="flex justify-between items-start">
                 <div>
                   <div className="text-sm font-semibold" style={{ color: '#000000' }}>{r.name}</div>
@@ -155,7 +163,7 @@ export default function OrderList() {
 
                   {openStatus === r.id && (
                     <div className="absolute right-0 mt-2 bg-white rounded-md shadow-lg z-20" style={{ minWidth: '120px' }}>
-                      {['progress','completed'].filter(k => k !== r.status).map(k => (
+                      {['progress', 'completed'].filter(k => k !== r.status).map(k => (
                         <button
                           key={k}
                           onClick={() => { setRowsData(prev => prev.map(it => it.id === r.id ? { ...it, status: k } : it)); setOpenStatus(null) }}
@@ -170,29 +178,17 @@ export default function OrderList() {
           ))}
         </div>
 
-        {/* Footer / Pagination */}
-        <div className="p-4 flex flex-col md:flex-row md:items-center md:justify-between gap-3">
-          <div className="text-sm text-[#0F766E]">Showing { (page - 1) * pageSize + 1 } to { Math.min(page * pageSize, filtered.length) } of {filtered.length} results</div>
-
-          <div className="flex items-center gap-3 ml-auto">
-            <button
-              onClick={() => setPage((p) => Math.max(1, p - 1))}
-              disabled={page === 1}
-              className={`px-4 py-2 rounded border text-sm text-[#0F766E] ${page === 1 ? 'opacity-50 cursor-not-allowed' : ''}`}
-              style={{ borderColor: '#CDEDE6' }}
-            >Previous</button>
-
-            <div className="flex items-center gap-2">
-              <div className="px-3 py-1 rounded text-sm border" style={{ borderColor: '#0F766E', color: '#0F766E' }}>{page}</div>
-              <button
-                onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
-                disabled={page === totalPages}
-                className={`px-4 py-2 rounded border text-sm text-[#0F766E] ${page === totalPages ? 'opacity-50 cursor-not-allowed' : ''}`}
-                style={{ borderColor: '#CDEDE6' }}
-              >Next</button>
-            </div>
-          </div>
-        </div>
+        {/* Footer / Pagination (shared component) */}
+        <TablePagination
+          currentPage={page}
+          totalPages={totalPages}
+          totalResults={filtered.length}
+          resultsPerPage={pageSize}
+          onPageChange={(p) => setPage(Math.max(1, Math.min(totalPages, p)))}
+          wrapperStyle={{ background: '#E7F1F1' }}
+          resultsTextClass={'text-[#0F766E]'}
+          buttonClass={'border-[#0F766E] text-[#0F766E] bg-[#E7F1F1]'}
+        />
       </div>
     </section>
   )

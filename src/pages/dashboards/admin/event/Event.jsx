@@ -179,14 +179,10 @@ const Event = () => {
     }
 
     if (action === 'See Details') {
-      // navigate to event single details page and pass the event object in state
-      // Using index as id for now - replace with actual event.id when available
+    
       navigate(`/admin/event/${event.title.replace(/\s+/g, '-').toLowerCase()}`, { state: { event } });
     }
-    // Add your other action handlers here
-    // For example:
-    // - Navigate to details page
-    // - Update status to Approved
+    
   };
 
   const handleCancelEvent = () => {

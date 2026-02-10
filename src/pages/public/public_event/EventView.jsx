@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+
+import React, { useState, useEffect } from 'react';
 import Container from '../../../components/layout/Container';
 import SectionHeader from '../../../components/ui/SectionHeader';
-import { Search } from 'lucide-react';
+import { Search, X, Filter } from 'lucide-react';
 import EventFilters from './components/EventFilters';
 import EventCard from './components/EventCard';
 import Pagination from '../../../components/ui/Pagination';
@@ -20,64 +21,131 @@ const EventView = () => {
     const [showFilters, setShowFilters] = useState(false);
     const perPage = 9;
 
-    const total = Math.ceil(sampleEvents.length / perPage);
+    useEffect(() => {
+        if (showFilters) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'unset';
+        }
+        return () => {
+            document.body.style.overflow = 'unset';
+        };
+    }, [showFilters]);
 
+    const total = Math.ceil(sampleEvents.length / perPage);
     const paged = sampleEvents.slice((page - 1) * perPage, page * perPage);
 
     return (
         <div className="min-h-screen bg-gray-50 py-6 lg:py-8">
             <Container>
-                <div className="flex items-start justify-between gap-6">
-                </div>
-                    <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-3 lg:mb-6">
-                        <SectionHeader title="Football Events for Women" description="Discover upcoming matches, trials, tournaments, and community events." align="left" />
-                        <div className="w-1/3 hidden lg:block" />
+                {/* Header Section */}
+                <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center mb-6 gap-4">
+                    <div className="flex-1">
+                        <SectionHeader 
+                            title="Football Events for Women" 
+                            description="Discover upcoming matches, trials, tournaments, and community events." 
+                            align="left" 
+                        />
                     </div>
 
-                    {/* Mobile search + filter row */}
-                    <div className="flex items-center gap-3 mb-4">
-                        <div className="flex items-center bg-white rounded-lg px-3 sm:px-4 py-2.5 border border-[#5EA39E] flex-1">
+                    <div className="w-full lg:w-1/3">
+                        {/* Desktop Search */}
+                        <div className="hidden lg:flex items-center bg-white rounded-lg px-4 py-2.5 border border-[#5EA39E]">
                             <Search className="w-4 h-4 text-[#5EA39E] shrink-0" />
-                            <input type="search" placeholder="Search by event name or location" className="ml-2 w-full outline-none text-sm text-gray-700 placeholder-[#747474]" />
+                            <input
+                                type="search"
+                                placeholder="Search by event name or location"
+                                className="ml-3 w-full outline-none text-sm text-gray-700 placeholder-[#747474]"
+                            />
                         </div>
-                        <button onClick={() => setShowFilters(true)} className="bg-white border border-gray-200 rounded-lg p-2 w-10 h-10 flex items-center justify-center lg:hidden">
-                            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-gray-600" viewBox="0 0 24 24" fill="none">
-                                <path stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" d="M3 5h18M6 12h12M10 19h4"/>
-                            </svg>
-                        </button>
-                    </div>
 
-                    {/* Filter modal for mobile */}
-                    {showFilters && (
-                        <div className="fixed inset-0 z-50 flex items-center lg:items-center justify-center">
-                            <div className="absolute inset-0 bg-black/40" onClick={() => setShowFilters(false)} />
-                            <div className="relative lg:w-full w-11/12 max-w-lg bg-white rounded-lg  p-4">
-                                <div className="flex items-center justify-between mb-3">
-                                    <h4 className="font-semibold">Filters</h4>
-                                    <button onClick={() => setShowFilters(false)} className="text-gray-600">✕</button>
-                                </div>
-                                <div>
+                        {/* Mobile Search & Filter Button */}
+                        <div className="lg:hidden flex items-center gap-2 w-full">
+                            <div className="flex items-center bg-white rounded-lg px-3 py-2 border border-[#5EA39E] flex-1">
+                                <Search className="w-4 h-4 text-[#5EA39E] shrink-0" />
+                                <input 
+                                    type="search" 
+                                    placeholder="Search events..." 
+                                    className="ml-2 w-full outline-none text-sm text-gray-700" 
+                                />
+                            </div>
+                            <button 
+                                onClick={() => setShowFilters(true)} 
+                                className="bg-[#5EA39E] text-white rounded-lg p-2.5 flex items-center justify-center shadow-sm"
+                            >
+                                <Filter className="w-5 h-5" />
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Mobile Filter Side-Drawer */}
+                {showFilters && (
+                    <div 
+                        className="fixed inset-0 z-[100] lg:hidden flex justify-end"
+                        onWheel={(e) => e.stopPropagation()} // Stop scroll leakage
+                    >
+                        {/* Overlay Backdrop */}
+                        <div 
+                            className="absolute inset-0 bg-black/50 backdrop-blur-sm" 
+                            onClick={() => setShowFilters(false)} 
+                        />
+                        
+                        {/* Drawer Content */}
+                        <div 
+                            className="relative h-full w-[85%] max-w-sm bg-white shadow-xl flex flex-col"
+                            onClick={(e) => e.stopPropagation()} // Stop click through to backdrop
+                        >
+                            {/* Drawer Header */}
+                            <div className="flex items-center justify-between p-4 border-b shrink-0">
+                                <h4 className="font-bold text-lg text-gray-900">Filters</h4>
+                                <button 
+                                    onClick={() => setShowFilters(false)} 
+                                    className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+                                >
+                                    <X className="w-6 h-6 text-gray-500" />
+                                </button>
+                            </div>
+
+                            {/* Scrollable Filters Body */}
+                            <div className="flex-1 overflow-y-auto overflow-x-hidden p-4">
+                                <div className="pb-24"> {/* Extra padding bottom for the fixed button gap */}
                                     <EventFilters />
                                 </div>
                             </div>
-                        </div>
-                    )}
 
-                    <div className="grid grid-cols-1 lg:grid-cols-4 gap-3 lg:gap-6 mt-3 lg:mt-6">
-                    <div className="hidden lg:block lg:col-span-1">
-                        <div className="sticky top-40">
-                            <EventFilters />
+                            {/* Fixed Bottom Action Button */}
+                            <div className="absolute bottom-0 left-0 right-0 p-4 border-t bg-white shrink-0">
+                                <button 
+                                    onClick={() => setShowFilters(false)}
+                                    className="w-full bg-[#5EA39E] text-white py-3.5 rounded-xl font-bold shadow-lg active:scale-95 transition-transform"
+                                >
+                                    Show Results
+                                </button>
+                            </div>
                         </div>
                     </div>
+                )}
 
+                {/* Content Grid */}
+                <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 mt-6">
+                    {/* Desktop Sidebar */}
+                    <aside className="hidden lg:block lg:col-span-1">
+                        <div className="sticky top-28   ">
+                            <EventFilters />
+                        </div>
+                    </aside>
+
+                    {/* Main Events List */}
                     <div className="lg:col-span-3">
-                        <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-3 lg:gap-6">
+                        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 lg:gap-6">
                             {paged.map((e) => (
                                 <EventCard key={e.id} event={e} />
                             ))}
                         </div>
 
-                        <div className="mt-6">
+                        {/* Pagination Area */}
+                        <div className="mt-10 flex justify-center">
                             <Pagination page={page} total={total} onChange={(p) => setPage(p)} />
                         </div>
                     </div>

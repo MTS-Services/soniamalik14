@@ -9,7 +9,7 @@ const EventCard = ({ event }) => {
   const { isAuthenticated } = useAuth();
 
   return (
-    <Card className="p-4 h-full flex flex-col justify-between" hover>
+    <Card className="p-4 h-full flex flex-col justify-between" style={{ borderColor: '#B5D5D2' }}>
       <div>
         <div className="relative">
           <div className="absolute top-3 left-3 bg-secondary text-btn-primary rounded-md px-3 py-1.5 text-sm font-semibold">{event.tag}</div>
@@ -34,29 +34,28 @@ const EventCard = ({ event }) => {
         </div>
 
         {!isAuthenticated && (
-          <div className="bg-secondary rounded-md p-4 text-center text-sm mb-3">
-            <div className="flex flex-col items-center justify-center gap-2">
-              <Lock className="w-6 h-6 text-[#0B544E]" />
-              <span className="font-medium text-cardTitle">Login to see contact details & ability requirements</span>
+          <div className="bg-[#E7F1F1] rounded-lg p-6 text-center mb-4">
+            <div className="flex flex-col items-center justify-center gap-3">
+              <Lock className="w-6 h-6 text-emerald-700" />
+              <span className="font-medium text-[#0B2F2C]">Login to see contact details & ability requirements</span>
+              <Link to="/signin" className="w-full">
+                <Button variant="primary" className="mx-auto mt-3 w-4/5 rounded-lg bg-btn-primary text-white hover:bg-[#0d655d]">
+                  Login to view
+                </Button>
+              </Link>
             </div>
           </div>
         )}
       </div>
 
       <div className="mt-2">
-        {!isAuthenticated ? (
-          <Link to="/signin">
-            <Button variant="primary" className="w-full rounded-md bg-btn-primary text-white hover:bg-[#0d655d]">
-              Login to view
-            </Button>
-          </Link>
-        ) : (
+        {isAuthenticated ? (
           <Link to={`/events/${event.id}`} state={{ event }}>
             <Button variant="primary" className="w-full rounded-md bg-btn-primary text-white hover:bg-[#0d655d]">
               View Details
             </Button>
           </Link>
-        )}
+        ) : null}
       </div>
     </Card>
   );

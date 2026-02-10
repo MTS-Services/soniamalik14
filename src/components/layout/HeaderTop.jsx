@@ -23,14 +23,14 @@ const HeaderTop = ({ onMenuClick, isMenuOpen }) => {
         <div className="flex lg:hidden items-center justify-between py-1 ">
           {/* Left: Menu & Search together */}
           <div className="flex items-center gap-1">
-            <button 
+            <button
               onClick={onMenuClick}
               className="p-2 -ml-2 hover:bg-gray-100 rounded-md"
             >
               {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </button>
-            
-            <button 
+
+            <button
               onClick={() => setIsSearchOpen(!isSearchOpen)}
               className="p-2 hover:bg-gray-100 rounded-md"
             >
@@ -73,7 +73,7 @@ const HeaderTop = ({ onMenuClick, isMenuOpen }) => {
           {/* Search Bar */}
           <div className="flex-1 max-w-2xl mx-8">
             <div className="relative bg-white shadow">
-              <Search className="absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-900" />
+              <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-900" />
               <input
                 type="search"
                 placeholder="Search for anything..."

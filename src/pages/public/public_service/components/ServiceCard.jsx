@@ -9,7 +9,7 @@ const ServiceCard = ({ item }) => {
   const { isAuthenticated } = useAuth();
 
   return (
-    <Card className="p-4 h-full flex flex-col justify-between" hover>
+    <Card className="p-4 h-full flex flex-col justify-between" style={{ backgroundColor: '#E7F1F180' }}>
       <div>
         <div className="relative">
           <div className="absolute top-0 left-0 m-3 bg-secondary text-btn-primary rounded-full px-3 py-2 text-sm font-semibold">{item.type}</div>
@@ -35,29 +35,28 @@ const ServiceCard = ({ item }) => {
         </div>
 
         {!isAuthenticated && (
-          <div className="bg-secondary rounded-md p-4 text-center text-sm mb-3">
-            <div className="flex flex-col items-center justify-center gap-2">
-              <Lock className="w-6 h-6 text-[#0B544E]" />
-              <span className="font-medium text-cardTitle">Login to see contact details & pricing</span>
+          <div className="bg-[#E7F1F1] rounded-lg p-6 text-center mb-4">
+            <div className="flex flex-col items-center justify-center gap-3">
+              <Lock className="w-6 h-6 text-emerald-700" />
+              <span className="font-medium text-[#0B2F2C]">Login to see contact details & ability requirements</span>
+              <Link to="/signin" className="w-full">
+                <Button variant="primary" className="mx-auto mt-3 w-4/5 rounded-lg bg-btn-primary text-white hover:bg-[#0d655d]">
+                  Login to view
+                </Button>
+              </Link>
             </div>
           </div>
         )}
       </div>
 
       <div className="mt-2">
-        {!isAuthenticated ? (
-          <Link to="/signin">
-            <Button variant="primary" className="w-full rounded-full bg-btn-primary text-white hover:bg-[#0d655d]">
-              Login to view
-            </Button>
-          </Link>
-        ) : (
+        {isAuthenticated ? (
           <Link to={`/services/${item.id}`} state={{ item }}>
-            <Button variant="primary" className="w-full rounded-full bg-btn-primary text-white hover:bg-[#0d655d]">
+            <Button variant="primary" className="w-full rounded-lg bg-btn-primary text-white hover:bg-[#0d655d]">
               View Details
             </Button>
           </Link>
-        )}
+        ) : null}
       </div>
     </Card>
   );

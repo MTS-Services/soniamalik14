@@ -44,28 +44,28 @@ const ServiceDetails = () => {
               </div>
             </div>
 
-            <div className="mt-6 bg-white rounded-md p-6 shadow-sm border border-gray-200">
+            <div className="mt-6 bg-[#E7F1F1] rounded-md p-6 shadow-sm border border-gray-200">
               <h3 className="text-lg font-semibold text-[#000000] mb-4">Contact</h3>
 
               <div className="grid grid-cols-1 md:grid-cols-1 gap-4">
                 <div>
                   <label className="block text-sm text-[#000000] mb-2">Full Name</label>
-                  <input value={fullName} onChange={(e) => setFullName(e.target.value)} placeholder="Player" className="w-full rounded-md border border-gray-200 bg-[#E6F4F1] px-3 py-2 text-sm" />
+                  <input value={fullName} onChange={(e) => setFullName(e.target.value)} placeholder="Player" className="w-full rounded-md border border-gray-200 bg-[#B5D5D2] px-3 py-2 text-sm" />
                 </div>
 
                 <div>
                   <label className="block text-sm text-[#000000] mb-2">Email</label>
-                  <input value={email} onChange={(e) => setEmail(e.target.value)} placeholder="enter your email" className="w-full rounded-md border border-gray-200 bg-[#E6F4F1] px-3 py-2 text-sm" />
+                  <input value={email} onChange={(e) => setEmail(e.target.value)} placeholder="enter your email" className="w-full rounded-md border border-gray-200 bg-[#B5D5D2] px-3 py-2 text-sm" />
                 </div>
 
                 <div>
                   <label className="block text-sm text-[#000000] mb-2">Phone Number</label>
-                  <input value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="enter your phone number" className="w-full rounded-md border border-gray-200 bg-[#E6F4F1] px-3 py-2 text-sm" />
+                  <input value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="enter your phone number" className="w-full rounded-md border border-gray-200 bg-[#B5D5D2] px-3 py-2 text-sm" />
                 </div>
 
                 <div>
                   <label className="block text-sm text-[#000000] mb-2">About Me</label>
-                  <textarea value={about} onChange={(e) => setAbout(e.target.value)} placeholder="write about you" className="w-full rounded-md border border-gray-200 bg-[#E6F4F1] px-3 py-3 text-sm h-28" />
+                  <textarea value={about} onChange={(e) => setAbout(e.target.value)} placeholder="write about you" className="w-full rounded-md border border-gray-200 bg-[#B5D5D2] px-3 py-3 text-sm h-28" />
                 </div>
 
                 <div>

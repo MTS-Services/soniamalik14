@@ -8,14 +8,23 @@ const TablePagination = ({
   resultsPerPage = 10,
   onPageChange,
   showResultsText = true,
+  // optional appearance overrides
+  wrapperClass = '',
+  wrapperStyle = {},
+  resultsTextClass = '',
+  buttonClass = '',
 }) => {
   const startResult = (currentPage - 1) * resultsPerPage + 1;
   const endResult = Math.min(currentPage * resultsPerPage, totalResults);
 
+  const baseWrapper = 'bg-white border-gray-100 border-t px-4 py-4 rounded-b-lg flex flex-col sm:flex-row items-center sm:justify-between gap-3';
+  const baseTextClass = 'text-sm text-cardTitle text-center sm:text-left w-full sm:w-auto';
+  const baseButtonClass = 'bg-white border border-cardTitle text-cardTitle rounded-xl px-4 py-0.5 text-sm font-medium hover:bg-cardTitle/5 transition-colors disabled:opacity-50 disabled:cursor-not-allowed';
+
   return (
-    <div className="bg-white border-gray-100 border-t px-4 py-4 rounded-b-lg flex flex-col sm:flex-row items-center sm:justify-between gap-3">
+    <div className={`${baseWrapper} ${wrapperClass}`} style={wrapperStyle}>
       {showResultsText && (
-        <p className="text-sm text-cardTitle text-center sm:text-left w-full sm:w-auto">
+        <p className={`${baseTextClass} ${resultsTextClass}`}>
           Showing {startResult} to {endResult} of {totalResults} results
         </p>
       )}
@@ -24,7 +33,7 @@ const TablePagination = ({
           variant="outline"
           onClick={() => onPageChange(currentPage - 1)}
           disabled={currentPage === 1}
-          className="bg-white border border-cardTitle text-cardTitle rounded-xl px-4 py-0.5 text-sm font-medium hover:bg-cardTitle/5 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          className={`${baseButtonClass} ${buttonClass}`}
         >
           Previous
         </Button>
@@ -32,7 +41,7 @@ const TablePagination = ({
           variant="outline"
           onClick={() => onPageChange(currentPage + 1)}
           disabled={currentPage === totalPages}
-          className="bg-white border border-cardTitle text-cardTitle rounded-xl px-4 py-0.5 text-sm font-medium hover:bg-cardTitle/5 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          className={`${baseButtonClass} ${buttonClass}`}
         >
           Next
         </Button>

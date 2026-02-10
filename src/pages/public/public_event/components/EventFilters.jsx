@@ -1,21 +1,25 @@
 import React from 'react';
 import Card from '../../../../components/ui/Card';
+import { Filter } from 'lucide-react';
 
 const SectionBox = ({ title, children }) => (
   <div className="mb-4">
     <div className="text-sm font-medium mb-2">{title}</div>
-    <div className="bg-white border border-gray-200 rounded-md p-3">{children}</div>
+    <div className="bg-white border border-[#B5D5D2] rounded-md p-3">{children}</div>
   </div>
 );
 
 const EventFilters = () => {
   return (
     <div className="space-y-4">
-      <Card className="p-3">
+      <Card className="p-3" style={{ borderColor: '#B5D5D2' }}>
         <div className="flex items-center justify-between mb-3">
           <div className="font-semibold">Filters</div>
-          {/* <div className="text-btn-primary">☰</div> */}
+          <div className=""><Filter /></div>
         </div>
+        <label className='pb2 mb-2 block text-base font-medium text-[#1D1D1D]'>
+          City/Area
+        </label>
         <input placeholder="Search by city/area" className="w-full bg-gray-100 rounded-md p-2 text-sm" />
       </Card>
 

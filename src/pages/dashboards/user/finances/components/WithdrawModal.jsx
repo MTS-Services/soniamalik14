@@ -13,8 +13,8 @@ export default function WithdrawModal({ isOpen, onClose, onConfirm, availableBal
   }
 
   return (
-    <div className="fixed inset-0 bg-black/60 bg-opacity-50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-lg shadow-xl w-full max-w-md mx-auto">
+    <div onClick={onClose} className="fixed inset-0 bg-black/60 bg-opacity-50 flex items-center justify-center z-50 p-4">
+      <div onClick={(e) => e.stopPropagation()} className="bg-white rounded-lg shadow-xl w-full max-w-md mx-auto">
         <div className="p-6">
           <h2 className="text-xl font-bold text-gray-900 mb-6">Withdraw Funds</h2>
 

@@ -1,17 +1,27 @@
+import React, { useEffect } from 'react';
 import { X } from 'lucide-react';
+import Button from '../../../../components/ui/Button';
+
 const PRODUCT_PHOTO = '../../../../../public/ProductPhoto.jpg'
 const INVOICE_PHOTO = '/InvoicePhoto.png';
-// const  = '/ProductPhoto.png';
 
 const OrderDetails = ({ order, onClose }) => {
+  useEffect(() => {
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = prev || '';
+    };
+  }, []);
+
   if (!order) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4">
-      <div className="max-h-[90vh] w-full max-w-md overflow-y-auto rounded-lg bg-white">
-        
+    <div onClick={onClose} className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 overflow-hidden">
+      <div onClick={(e) => e.stopPropagation()} className="h-[70vh] w-full max-w-md rounded-lg bg-white flex flex-col overflow-hidden">
+
         {/* Header */}
-        <div className="sticky top-0 flex items-center justify-between border-b border-gray-200 bg-white px-6 py-4">
+        <div className="flex items-center justify-between border-b border-gray-200 bg-white px-6 py-4">
           <h2 className="text-lg font-bold text-gray-900">Order Details</h2>
           <button
             onClick={onClose}
@@ -22,26 +32,22 @@ const OrderDetails = ({ order, onClose }) => {
         </div>
 
         {/* Content */}
-        <div className="space-y-4 px-6 py-4">
+        <div className="space-y-4 px-6 py-4 overflow-y-auto flex-1">
 
           {/* Customer Info */}
           <div className="space-y-3">
             <div>
-              <span  className="text-gray-700 font-medium">Ordered By : </span >
-       
-                {order?.customerName ?? "King Khan"}
-     
+              <span className="text-gray-700 font-medium">Ordered By : </span >
+              {order?.customerName ?? "King Khan"}
             </div>
 
-            <p >
-              <span  className="text-gray-700 font-medium">Address : </span >
-             
-                {order?.address ?? "2972 Westheimer Rd. Santa Ana, Illinois 85486"}
-          
+            <p>
+              <span className="text-gray-700 font-medium">Address : </span >
+              {order?.address ?? "2972 Westheimer Rd. Santa Ana, Illinois 85486"}
             </p>
 
             <div>
-              <span  className="text-gray-700 font-medium">Phone:</span >
+              <span className="text-gray-700 font-medium">Phone:</span >
               <p className="text-gray-900">
                 {order?.phone ?? "(208) 555-0112"}
               </p>
@@ -62,7 +68,7 @@ const OrderDetails = ({ order, onClose }) => {
             </h3>
             <div className="h-48 w-full overflow-hidden rounded-lg bg-gray-200">
               <img
-                src={ PRODUCT_PHOTO}
+                src={PRODUCT_PHOTO}
                 alt="Product"
                 className="h-full w-full object-cover"
               />
@@ -83,6 +89,13 @@ const OrderDetails = ({ order, onClose }) => {
             </div>
           </div>
 
+        </div>
+
+        {/* Footer */}
+        <div className="border-t bg-white px-6 py-3">
+          <div className="flex justify-end">
+            <Button variant="outline" onClick={onClose}>Close</Button>
+          </div>
         </div>
       </div>
     </div>

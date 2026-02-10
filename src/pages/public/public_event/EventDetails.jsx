@@ -57,10 +57,10 @@ const EventDetails = () => {
                 <img src={'/images/detaisPage/01f66c1402399f2a42cf2599119d5d6e1549c7c9.jpg'} alt="thumb1" className="h-full w-full object-cover" />
               </div>
               <div className="h-52 overflow-hidden rounded-md sm:h-52 md:h-full">
-                <img src={'/images/detaisPage/01f66c1402399f2a42cf2599119d5d6e1549c7c9.jpg'}  alt="thumb2" className="h-full w-full object-cover" />
+                <img src={'/images/detaisPage/01f66c1402399f2a42cf2599119d5d6e1549c7c9.jpg'} alt="thumb2" className="h-full w-full object-cover" />
               </div>
               <div className="h-52 overflow-hidden rounded-md sm:h-52 md:h-full">
-                <img src={'/images/detaisPage/01f66c1402399f2a42cf2599119d5d6e1549c7c9.jpg'}  alt="thumb3" className="h-full w-full object-cover" />
+                <img src={'/images/detaisPage/01f66c1402399f2a42cf2599119d5d6e1549c7c9.jpg'} alt="thumb3" className="h-full w-full object-cover" />
               </div>
             </div>
           </div>
@@ -144,16 +144,21 @@ const EventDetails = () => {
               </div>
 
             </div>
-
+            {/**map section */}
             <aside className="md:col-span-2">
-              <div className="rounded-md border border-[#DDEDEB] bg-white p-6 lg:sticky lg:top-40">
-                <div>
+              <div className="rounded-md border border-[#91C0BC] bg-white p-6 lg:sticky lg:top-40">
+
+                <div className='mb-4'>
                   <p className="text-sm font-medium text-[#1D1D1D]">Venue</p>
                   <p className="mt-2 flex items-start gap-2 text-sm text-[#323232]">
                     <MapPin className="mt-1 h-4 w-4 text-[#323232]" />
                     {event.venue ? <span>{event.venue} — </span> : null}
                     <span>{event.locationText}</span>
                   </p>
+                </div>
+                {/* Map image to visually represent location (placeholder image) */}
+                <div className="mb-4 overflow-hidden rounded-md">
+                  <img src={'https://i.ibb.co.com/fY1frBX7/Rectangle-4319.png'} alt="map" className="w-full h-66 object-cover" />
                 </div>
 
                 <div className="mt-4">

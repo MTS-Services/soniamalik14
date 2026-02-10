@@ -15,7 +15,7 @@ const ProductRequested = () => {
 
 
   const itemsPerPage = 6;
-const productsData = [
+  const productsData = [
     {
       id: 1,
       productName: 'Cricket Bat',
@@ -232,7 +232,7 @@ const productsData = [
       condition: 'Used Product',
       status: 'Approved',
       statusColor: 'bg-teal-600',
-      
+
       images: [
         'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400&h=300&fit=crop',
         'https://images.unsplash.com/photo-1461896836934-ffe607ba8211?w=400&h=300&fit=crop',
@@ -332,7 +332,7 @@ const productsData = [
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  const columns = ['Product Name', 'Seller Name', 'Price', 'Condition', 'Status', 'Actions'];
+  const columns = ['Product Name', 'Seller Name', 'Price', 'Condition', 'Actions'];
 
   const renderRow = (product) => (
     <>
@@ -340,60 +340,26 @@ const productsData = [
       <td className="px-4 py-3 text-base text-gray-700">{product.sellerName}</td>
       <td className="px-4 py-3 text-base text-gray-700">{product.price}</td>
       <td className="px-4 py-3 text-base text-gray-700">{product.condition}</td>
-      <td className="px-4 py-3">
-        <div className="relative" data-dropdown>
-          <button
-            onClick={() => toggleRow(product.id)}
-            aria-expanded={openMenuId === product.id}
-            className={`flex items-center gap-2 px-4 py-2 rounded-md font-medium text-white text-sm transition-all ${product.statusColor} hover:shadow-md`}
-          >
-            {product.status}
-            <ChevronDown 
-              className={`w-4 h-4 transition-transform duration-200 ${openMenuId === product.id ? 'rotate-180' : ''}`}
-            />
-          </button>
-
-          {/* Dropdown Menu - Always rendered for smooth animation */}
-          <div
-            role="menu"
-            aria-hidden={openMenuId !== product.id}
-            className={`absolute top-full mt-1 left-0 w-40 bg-white border border-gray-200 rounded-md shadow-lg z-10 transform-gpu transition-all duration-200 ease-out origin-top ${
-              openMenuId === product.id 
-                ? 'opacity-100 translate-y-0 scale-100 pointer-events-auto' 
-                : 'opacity-0 -translate-y-1 scale-95 pointer-events-none'
-            }`}
-          >
-            <button onClick={() => handleStatusChange(product.id, 'Pending')} className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors rounded-t-md">
-              Pending
-            </button>
-            <button onClick={() => handleStatusChange(product.id, 'Approved')} className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors border-t border-gray-200">
-              Approved
-            </button>
-            <button onClick={() => handleStatusChange(product.id, 'Rejected')} className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors border-t border-gray-200 rounded-b-md">
-              Rejected
-            </button>
-          </div>
-        </div>
-      </td>
+      {/* Status column removed per request */}
       <td className="px-4 py-3 text-left">
         <div className="flex items-start justify-start gap-2">
-          <button 
+          <button
             onClick={() => setSelectedProduct(product)}
-            className="rounded-md p-1.5 transition-colors" 
+            className="rounded-md p-1.5 transition-colors"
             title="View"
           >
             <Eye className="h-5 w-5 text-[#000000]" />
           </button>
-          <button 
+          <button
             onClick={() => handleStatusChange(product.id, 'Rejected')}
-            className="rounded-md p-1.5 transition-colors" 
+            className="rounded-md p-1.5 transition-colors"
             title="Reject"
           >
             <X className="h-5 w-5 text-[#EA0C0C]" />
           </button>
-          <button 
+          <button
             onClick={() => handleStatusChange(product.id, 'Approved')}
-            className="rounded-md p-1.5 transition-colors" 
+            className="rounded-md p-1.5 transition-colors"
             title="Approve"
           >
             <Check className="h-5 w-5 text-[#55A946]" />
@@ -402,10 +368,10 @@ const productsData = [
       </td>
     </>
   );
-if (selectedProduct) {
+  if (selectedProduct) {
     return (
-      <ProductDetails 
-        product={selectedProduct} 
+      <ProductDetails
+        product={selectedProduct}
         onBack={() => setSelectedProduct(null)}
       />
     );

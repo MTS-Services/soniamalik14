@@ -36,7 +36,8 @@ const EventCard = ({ item = {}, editLink, onEdit, onDelete, className = '', deta
         <>
             <Link to={`${detailsRoute}/${item.id}`} state={{ item, from: 'event' }} className="block">
                 <Card
-                    className={`p-4 h-full flex flex-col  justify-between rounded-lg border !border-[#B5D5D2] bg-white ${className}`}
+                    className={`p-4 h-full flex flex-col  justify-between rounded-lg border bg-white ${className}`}
+                    style={{ borderColor: '#B5D5D2' }}
                 >
                     <div>
                         <div className="relative">
