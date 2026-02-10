@@ -81,17 +81,17 @@ export default function RoleMatrix() {
         <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">
           Role & Permission Strategy
         </h1>
-        <p className="text-sm md:text-base text-gray-600">
+        <p className="text-base md:text-base lg:w-xl text-gray-600">
           Documentation of the access control layers implemented in Prana Studio. This ensures data security and a focused user experience for each staff role.
         </p>
       </div>
 
       {/* Invite Your Team Section */}
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-5 md:p-6 mb-6">
-        <h2 className="text-lg md:text-xl font-bold text-gray-900 mb-2">
+      <div className="bg-white lg:w-3xl rounded-lg shadow-sm border border-gray-200 p-5 md:p-6 mb-6">
+        <h2 className="text-lg md:text-2xl font-medium text-gray-900 mb-2">
           Invite your team
         </h2>
-        <p className="text-sm md:text-base text-gray-600 mb-4">
+        <p className="text-base md:text-base lg:w-xl text-gray-600 mb-4">
           Easily add new members to a role by entering their email addresses below. Once invited, they'll receive an email with a link to join.
         </p>
 
@@ -101,12 +101,12 @@ export default function RoleMatrix() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="Email Address"
-            className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent text-sm"
+            className="flex-1 px-4 py-2 border bg-[#EDEDED] border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent text-sm"
           />
           <select
             value={selectedRole}
             onChange={(e) => setSelectedRole(e.target.value)}
-            className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent text-sm bg-white min-w-[120px]"
+            className="px-4 py-2 bg-[#EDEDED] border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent text-sm bg-[#EDEDED] min-w-[120px]"
           >
             <option>Admin</option>
             <option>Club Owner</option>

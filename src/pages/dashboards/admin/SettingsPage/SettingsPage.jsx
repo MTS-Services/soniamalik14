@@ -40,14 +40,14 @@ export default function SettingsPage() {
         </div>
 
         {/* Personal Details Card */}
-        <div className="bg-[#91C0BC] rounded-lg p-5">
-          <h2 className="text-2xl font-bold text-gray-900 mb-6">Personal Details</h2>
+        <div className="bg-[#91C0BC] rounded-lg p-6">
+          <h2 className="text-xl font-bold text-gray-800 mb-6">Personal Details</h2>
 
           {/* Form Fields */}
-          <div className="space-y-6 p-4 bg-white rounded-lg shadow-sm">
+          <div className="space-y-4">
             {/* Email Field */}
             <div>
-              <label className="block text-base font-medium text-[#6D5348] mb-2">
+              <label className="block text-sm font-medium text-gray-800 mb-1.5">
                 Email
               </label>
               <input
@@ -55,13 +55,14 @@ export default function SettingsPage() {
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
-                className="w-full px-4 py-3 border-2 border-[#6D5348]  placeholder:text-[#6D5348] rounded focus:outline-none focus:border-teal-600 bg-white"
+                placeholder="alma.lawson@example.com"
+                className="w-full px-4 py-3 bg-gray-50 text-gray-700 placeholder:text-gray-500 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500"
               />
             </div>
 
             {/* Phone Number Field */}
             <div>
-              <label className="block text-base font-medium text-[#6D5348] mb-2">
+              <label className="block text-sm font-medium text-gray-800 mb-1.5">
                 Phone Number
               </label>
               <input
@@ -69,13 +70,14 @@ export default function SettingsPage() {
                 name="phone"
                 value={formData.phone}
                 onChange={handleChange}
-                className="w-full px-4 py-3 border-2 border-[#6D5348] placeholder:text-[#6D5348] rounded focus:outline-none focus:border-teal-600 bg-white"
+                placeholder="0412 345 678"
+                className="w-full px-4 py-3 bg-gray-50 text-gray-700 placeholder:text-gray-500 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500"
               />
             </div>
 
             {/* Old Password Field */}
             <div>
-              <label className="block text-base font-medium text-[#6D5348] mb-2">
+              <label className="block text-sm font-medium text-gray-800 mb-1.5">
                 Old Password
               </label>
               <input
@@ -83,13 +85,14 @@ export default function SettingsPage() {
                 name="oldPassword"
                 value={formData.oldPassword}
                 onChange={handleChange}
-                className="w-full px-4 py-3 border-2 border-[#6D5348] placeholder:text-[#6D5348] rounded focus:outline-none focus:border-teal-600 bg-white"
+                placeholder="******"
+                className="w-full px-4 py-3 bg-gray-50 text-gray-700 placeholder:text-gray-500 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500"
               />
             </div>
 
             {/* New Password Field */}
             <div>
-              <label className="block text-base font-medium text-[#6D5348] mb-2">
+              <label className="block text-sm font-medium text-gray-800 mb-1.5">
                 New Password
               </label>
               <input
@@ -97,22 +100,23 @@ export default function SettingsPage() {
                 name="newPassword"
                 value={formData.newPassword}
                 onChange={handleChange}
-                className="w-full px-4 py-3 border-2 border-[#6D5348] placeholder:text-[#6D5348] rounded focus:outline-none focus:border-teal-600 bg-white"
+                placeholder="******"
+                className="w-full px-4 py-3 bg-gray-50 text-gray-700 placeholder:text-gray-500 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500"
               />
             </div>
 
             {/* Confirm New Password Field */}
             <div>
-              <label className="block text-base font-medium text-[#6D5348] mb-2">
+              <label className="block text-sm font-medium text-gray-800 mb-1.5">
                 Confirm New Password
               </label>
               <input
                 type="password"
                 name="confirmPassword"
                 value={formData.confirmPassword}
-                
                 onChange={handleChange}
-                className="w-full px-4 py-3 border-2 border-[#6D5348] placeholder:text-[#6D5348] rounded focus:outline-none focus:border-teal-600 bg-white"
+                placeholder="******"
+                className="w-full px-4 py-3 bg-gray-50 text-gray-700 placeholder:text-gray-500 rounded-md focus:outline-none focus:ring-2 focus:ring-teal-500"
               />
             </div>
           </div>

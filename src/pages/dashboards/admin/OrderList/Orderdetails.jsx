@@ -2,7 +2,8 @@ import React, { useEffect } from 'react';
 import { X } from 'lucide-react';
 import Button from '../../../../components/ui/Button';
 
-const PRODUCT_PHOTO = '../../../../../public/ProductPhoto.jpg'
+// Use public/ assets via root paths so Vite serves them correctly
+const PRODUCT_PHOTO = '/ProductPhoto.jpg';
 const INVOICE_PHOTO = '/InvoicePhoto.png';
 
 const OrderDetails = ({ order, onClose }) => {
@@ -92,7 +93,7 @@ const OrderDetails = ({ order, onClose }) => {
         </div>
 
         {/* Footer */}
-        <div className="border-t bg-white px-6 py-3">
+        <div className="border-t border-gray-200 bg-white px-6 py-3">
           <div className="flex justify-end">
             <Button variant="outline" onClick={onClose}>Close</Button>
           </div>

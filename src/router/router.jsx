@@ -45,6 +45,8 @@ import CoachEvent from '../pages/dashboards/coach/event/CoachEvent.jsx';
 import CoachEventDetails from '../pages/dashboards/coach/event/EventDetails.jsx';
 import EventAnalytics from '../pages/dashboards/coach/eventAnalytics/EventAnalytics.jsx';
 import Thread from '../pages/dashboards/coach/thread/Thread.jsx';
+import AdminThread from '../pages/dashboards/admin/Thread/Thread.jsx';
+import AdminThreadDetails from '../pages/dashboards/admin/Thread/ThreadDetails.jsx';
 import ThreadDetails from '../pages/dashboards/coach/thread/ThreadDetails.jsx';
 import Recruitment from '../pages/dashboards/coach/recruitment/Recruitment.jsx';
 import RecruitmentDetails from '../pages/dashboards/coach/recruitment/RecruitmentDetails.jsx';
@@ -123,7 +125,8 @@ const router = createBrowserRouter(
         <Route path="event-details" element={<EventDetails />} />
         <Route path="product-request" element={<ProductRequested />} />
         <Route path="order" element={<OrderList />} />
-        <Route path="thread" element={<Thread />} />
+        <Route path="thread" element={<AdminThread />} />
+        <Route path="thread/:id" element={<AdminThreadDetails />} />
         <Route path="club" element={<ClubList />} />
         <Route path="service" element={<ServiceProviderList />} />
         <Route path="service/:id" element={<ServiceProviderDetails />} />

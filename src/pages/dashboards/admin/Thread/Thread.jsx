@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { MessageSquare, X } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 export default function CommunityForumComponent() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -78,7 +79,7 @@ export default function CommunityForumComponent() {
 
   return (
     <div className="min-h-screen bg-gray-100 dashboardPy dashboardSpaceY">
-      <div className="max-w-2xl ">
+      <div className="w-full lg:max-w-2xl ">
         {/* Header Section */}
         <div className="flex items-start justify-between mb-8">
           <div>
@@ -96,9 +97,11 @@ export default function CommunityForumComponent() {
         {/* Threads List */}
         <div className="space-y-4">
           {threads.map((thread) => (
-            <div
+            <Link
               key={thread.id}
-              className="bg-white rounded-lg p-6 hover:shadow-md transition-shadow cursor-pointer"
+              to={`/admin/thread/${thread.id}`}
+              state={{ thread }}
+              className="block bg-white rounded-lg p-6 hover:shadow-md transition-shadow"
             >
               {/* Author */}
               <div className="text-xs font-medium text-gray-500 mb-3">
@@ -120,16 +123,16 @@ export default function CommunityForumComponent() {
                 <MessageSquare size={16} className="mr-2" />
                 <span>{thread.replies} Reply</span>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       </div>
 
       {/* Modal Overlay */}
       {isModalOpen && (
-        <div className="fixed inset-0 bg-black/60 bg-opacity-50 flex items-center justify-center p-4 z-50">
+        <div onClick={handleCloseModal} className="fixed inset-0 bg-black/60 bg-opacity-50 flex items-center justify-center p-4 z-50">
           {/* Modal */}
-          <div className="bg-white rounded-lg w-full max-w-md relative">
+          <div onClick={(e) => e.stopPropagation()} className="bg-white rounded-lg w-full max-w-md relative">
             {/* Close Button */}
             <button
               onClick={handleCloseModal}
@@ -157,7 +160,7 @@ export default function CommunityForumComponent() {
                   name="category"
                   value={formData.category}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 bg-white text-gray-700"
+                  className="w-full px-4 py-2 border bg-[#E3E3E3] border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500  text-gray-700"
                 >
                   <option>All Discussion</option>
                   <option>Training Tips</option>
@@ -169,7 +172,7 @@ export default function CommunityForumComponent() {
 
               {/* Thread Title */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-[#242424] mb-2">
                   Thread Title
                 </label>
                 <input
@@ -178,7 +181,7 @@ export default function CommunityForumComponent() {
                   placeholder="Write title"
                   value={formData.title}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 text-gray-700 placeholder-gray-400"
+                  className="w-full px-4 py-2 border bg-[#E3E3E3] border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 text-[#242424] placeholder-gray-400"
                 />
               </div>
 
@@ -193,9 +196,10 @@ export default function CommunityForumComponent() {
                   value={formData.description}
                   onChange={handleInputChange}
                   rows="4"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 text-gray-700 placeholder-gray-400 resize-none"
+                  className="w-full px-4 py-2 border bg-[#E3E3E3] border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 text-[#242424] placeholder-gray-400 resize-none"
                 />
               </div>
+
             </div>
 
             {/* Modal Footer */}

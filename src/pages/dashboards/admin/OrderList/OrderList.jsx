@@ -175,15 +175,8 @@ const OrderList = () => {
     </div>
   );
 
-  if (selectedOrder) {
-    return (
-      <OrderDetails
-        isOpen={true}
-        order={selectedOrder}
-        onClose={() => setSelectedOrder(null)}
-      />
-    );
-  }
+  // Render the details modal inline so the page stays visible underneath
+  // (OrderDetails handles the overlay). Do not return early.
 
   return (
     <div className="dashboardPy dashboardSpaceY flex-1 bg-gray-50">
@@ -220,6 +213,13 @@ const OrderList = () => {
           onPageChange={setCurrentPage}
         />
       </div>
+
+      {selectedOrder && (
+        <OrderDetails
+          order={selectedOrder}
+          onClose={() => setSelectedOrder(null)}
+        />
+      )}
     </div>
   );
 };
