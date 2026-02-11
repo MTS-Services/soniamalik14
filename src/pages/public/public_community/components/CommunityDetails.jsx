@@ -55,8 +55,9 @@ Whether you are a beginner learning the basics or an experienced player refining
                             description="Connect, chat, and support each other."
                             align="left"
                         />
-                        <Button variant="primary" className="rounded-md shrink-0" onClick={() => setShowNewDiscussion(true)}>New Discussion</Button>
+                        
                     </div>
+                    <Button variant="primary" className="rounded-md shrink-0 w-full" onClick={() => setShowNewDiscussion(true)}>New Discussion</Button>
                 </div>
 
                 {/* Desktop: Back and Button at top, Header below */}
