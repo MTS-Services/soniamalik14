@@ -97,7 +97,7 @@ const EventView = () => {
                             onClick={(e) => e.stopPropagation()} // Stop click through to backdrop
                         >
                             {/* Drawer Header */}
-                            <div className="flex items-center justify-between p-4 border-b shrink-0">
+                            <div className="flex items-center justify-between p-4 border-b border-gray-200 shrink-0">
                                 <h4 className="font-bold text-lg text-gray-900">Filters</h4>
                                 <button 
                                     onClick={() => setShowFilters(false)} 
@@ -115,7 +115,7 @@ const EventView = () => {
                             </div>
 
                             {/* Fixed Bottom Action Button */}
-                            <div className="absolute bottom-0 left-0 right-0 p-4 border-t bg-white shrink-0">
+                            <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-gray-200 bg-white shrink-0">
                                 <button 
                                     onClick={() => setShowFilters(false)}
                                     className="w-full bg-[#5EA39E] text-white py-3.5 rounded-xl font-bold shadow-lg active:scale-95 transition-transform"
@@ -130,7 +130,7 @@ const EventView = () => {
                 {/* Content Grid */}
                 <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 mt-6">
                     {/* Desktop Sidebar */}
-                    <aside className="hidden lg:block lg:col-span-1">
+                    <aside className="hidden lg:block lg:col-span-1 ">
                         <div className="sticky top-28   ">
                             <EventFilters />
                         </div>

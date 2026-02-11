@@ -38,7 +38,7 @@ const FooterLayout = () => {
               />
               <button
                 type="submit"
-                className="absolute top-1/2 right-2 -translate-y-1/2 rounded-md bg-white px-3 lg:px-4 py-1.5 font-medium text-gray-900 transition hover:bg-gray-50 text-sm"
+                className="absolute top-1/2 right-2 -translate-y-1/2 rounded-md bg-white px-3 lg:px-4 py-1.5 md:py-3 font-medium text-gray-900 transition hover:bg-gray-50 text-sm"
               >
                 Subscribe
               </button>
