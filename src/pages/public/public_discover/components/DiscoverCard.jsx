@@ -13,13 +13,13 @@ const DiscoverCard = ({ item }) => {
       className="p-5 h-full flex flex-col justify-between border  rounded-2xl"
       style={{ backgroundColor: '#E7F1F180' }}
     >
-      <div>
+      <div className="flex-1 flex flex-col">
         <div className="relative">
           <div className="absolute top-3 left-3">
             <span className="bg-white text-emerald-700 px-3 py-1 rounded-full text-xs font-semibold shadow-sm">{item.type}</span>
           </div>
 
-          <div className="h-56 bg-gray-200 rounded-lg mb-4 overflow-hidden flex items-center justify-center">
+          <div className="h-44 sm:h-56 bg-gray-200 rounded-lg mb-4 overflow-hidden flex items-center justify-center">
             {item.image ? (
               <img src={item.image} alt={item.title} className="w-full h-full object-cover rounded-lg" />
             ) : (
@@ -29,7 +29,7 @@ const DiscoverCard = ({ item }) => {
         </div>
 
         <h3
-          className="text-[#0B2F2C] font-bold text-2xl mb-3"
+          className="text-[#0B2F2C] font-bold text-xl sm:text-2xl mb-3"
           style={{
             display: '-webkit-box',
             WebkitLineClamp: 2,
@@ -51,7 +51,7 @@ const DiscoverCard = ({ item }) => {
         </div>
 
         {!isAuthenticated && (
-          <div className="bg-[#E7F1F1] rounded-lg p-6 text-center mb-4">
+          <div className="bg-[#E7F1F1] rounded-lg p-6 text-center mt-auto min-h-[110px]">
             <div className="flex flex-col items-center justify-center gap-3">
               <Lock className="w-6 h-6 text-emerald-700" />
               <span className="font-medium text-[#0B2F2C]">Login to see contact details & ability requirements</span>
