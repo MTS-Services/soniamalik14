@@ -38,7 +38,7 @@ const serviceProviders = [
 
 const ServiceProvidersSection = () => {
     return (
-        <section className="py-10 lg:py-16 bg-linear-to-b from-gray-50 to-white">
+        <section className="py-10 lg:py-16 ">
             <Container>
                 <SectionHeader
                     title="For Service Providers"

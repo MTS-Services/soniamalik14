@@ -26,7 +26,7 @@ const steps = [
 
 const HowItWorks = () => {
   return (
-    <section className="py-16 px-6 sm:px-8 bg-white font-sans">
+    <section className="py-16 px-6 sm:px-8  font-sans">
       <div className="max-w-7xl mx-auto">
         {/* Section Header */}
         <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-16">

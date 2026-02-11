@@ -6,7 +6,7 @@ import { coreFeatures } from '../../../../config/coreFeatures';
 
 const CoreFeatures = () => {
   return (
-    <section className="py-10 lg:pt-16 lg:pb-20  bg-linear-to-b from-gray-50 to-white">
+    <section className="py-10 lg:pt-16 lg:pb-20  ">
       <Container>
         {/* Section Header */}
         <SectionHeader
