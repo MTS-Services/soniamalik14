@@ -94,20 +94,17 @@ const HeaderNav = ({ isMenuOpen, setIsMenuOpen }) => {
           <div className="flex items-center gap-3">
             {isAuthenticated && (
               <>
-                {/* <span className="text-sm text-gray-600">Welcome, {user?.name}</span> */}
                 <Button variant="secondary" size="xs" className="rounded-md text-xs py-1.5">
                   My Orders
                 </Button>
-                <button
-                  onClick={handleLogout}
-                  className="p-2 hover:bg-gray-100 rounded-md"
-                  title="Logout"
+                <Button
+                  variant="secondary"
+                  size="xs"
+                  className="rounded-md text-xs py-1.5"
+                  onClick={handleProfileClick}
                 >
-                  <LogOut className="text-secondary-text h-5 w-5" />
-                </button>
-                <button onClick={handleProfileClick} className="p-2 hover:bg-gray-100 rounded-md">
-                  <CiUser className="text-secondary-text h-5 lg:w-7 lg:h-7 w-5" />
-                </button>
+                  Dashboard
+                </Button>
               </>
             )}
           </div>
@@ -123,8 +120,8 @@ const HeaderNav = ({ isMenuOpen, setIsMenuOpen }) => {
                     to={item.href}
                     onClick={() => setIsMenuOpen(false)}
                     className={`rounded-md px-3 py-2.5 text-sm lg:text-base font-medium transition-colors ${isActive(item.href)
-                        ? 'bg-secondary text-btn-primary'
-                        : 'text-navigation hover:bg-gray-100'
+                      ? 'bg-secondary text-btn-primary'
+                      : 'text-navigation hover:bg-gray-100'
                       }`}
                   >
                     {item.name}
@@ -135,6 +132,15 @@ const HeaderNav = ({ isMenuOpen, setIsMenuOpen }) => {
                     <>
                       <Button variant="secondary" className="w-full rounded-md">
                         My Orders
+                      </Button>
+                      <Button
+                        variant="secondary"
+                        className="w-full rounded-md"
+                        onClick={() => {
+                          handleProfileClick();
+                        }}
+                      >
+                        Dashboard
                       </Button>
                       <button
                         onClick={handleLogout}
