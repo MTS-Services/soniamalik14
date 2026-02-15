@@ -21,7 +21,7 @@ const FindYourSport = () => {
                         {tiles.map((t) => (
                             <Link
                                 key={t.id}
-                                to={`/discover?sport=${encodeURIComponent(t.sport)}`}
+                                to={`/find-sport?sport=${encodeURIComponent(t.sport)}`}
                                 className="block w-full rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-200"
                             >
                                 <div className="relative flex flex-col h-full">

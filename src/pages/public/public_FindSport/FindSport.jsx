@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
+import { useLocation } from 'react-router-dom'
 import Container from '../../../components/layout/Container'
 import PageHeader from '../../../components/ui/PageHeader'
 import Filters from '../public_discover/components/Filters'
@@ -11,6 +12,8 @@ import FindSupportModal from './components/FindSupportModal'
 const FindSport = () => {
     const [active, setActive] = useState('All')
     const [postcode, setPostcode] = useState('')
+    const location = useLocation()
+    const listingsRef = useRef(null)
 
     // dummy JSON provided 
     const data = [
@@ -148,10 +151,30 @@ const FindSport = () => {
 
     const [modalOpen, setModalOpen] = React.useState(false)
 
+    // if navigated with ?sport=padel (from home tiles), set active filter and scroll
+    useEffect(() => {
+        const params = new URLSearchParams(location.search)
+        const sport = params.get('sport')
+        if (sport) {
+            const label = sport.charAt(0).toUpperCase() + sport.slice(1)
+            setActive(label)
+            setPage(1)
+            // ensure page shows from top when arriving from homepage tiles
+            setTimeout(() => {
+                try {
+                    window.scrollTo({ top: 0, behavior: 'smooth' })
+                } catch (e) {
+                    // fallback
+                    window.scrollTo(0, 0)
+                }
+            }, 100)
+        }
+    }, [location.search])
+
     return (
         <section className="py-8">
             <Container>
-                <PageHeader title="Find Sport"  />
+                <PageHeader title="Find Sport" />
 
                 <div className="mt-6">
                     <Filters
@@ -166,7 +189,7 @@ const FindSport = () => {
                 <div className="mt-6">
                     {filtered.length > 0 ? (
                         <>
-                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                            <div ref={listingsRef} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                                 {paginated.map((item) => (
                                     <FindSportCard key={item.id} item={item} />
                                 ))}
