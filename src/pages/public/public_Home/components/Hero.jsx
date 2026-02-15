@@ -11,7 +11,7 @@ const Hero = () => {
       {/* overlay */}
       <div className="absolute inset-0 z-0 bg-black opacity-10"></div>
       <Container className="relative z-10 py-10 lg:py-0">
-        <div className='space-y-3.5 md:space-y-5 flex flex-col justify-center mt-10 lg:mt-0 items-center text-center'>
+        <div className='space-y-3.5 md:space-y-5 flex flex-col justify-center mt-28 md:mt-32 lg:mt-80 xl:mt-90 items-center text-center px-4'>
           <HeroTitle className='whitespace-nowrap md:whitespace-normal'>Women. Sport. Community</HeroTitle>
           <p className='herosubtitle'>A platform built for women in sport — whatever level you're starting at.</p>
           {/* action btns */}
