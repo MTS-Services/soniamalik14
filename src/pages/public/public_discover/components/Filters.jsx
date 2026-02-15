@@ -1,8 +1,8 @@
 import React from 'react';
 import Button from '../../../../components/ui/Button';
 
-const Filters = ({ onFilter, active = 'All' }) => {
-  const types = ['All', 'Clubs', 'Sessions', 'Training'];
+const Filters = ({ onFilter, active = 'All', types: propTypes, postcode, onPostcodeChange }) => {
+  const types = propTypes || ['All', 'Clubs', 'Sessions', 'Training'];
 
   return (
     <div className="w-full lg:w-1/2 bg-secondary p-4 rounded-xl">
@@ -10,6 +10,8 @@ const Filters = ({ onFilter, active = 'All' }) => {
         <div className="flex-1 bg-white rounded-lg px-4 py-2.5 shadow-sm border border-gray-200">
           <input
             placeholder="Enter Postcode/City"
+            value={postcode || ''}
+            onChange={(e) => onPostcodeChange && onPostcodeChange(e.target.value)}
             className="w-full bg-transparent outline-none text-sm text-gray-700 placeholder-gray-400"
           />
         </div>

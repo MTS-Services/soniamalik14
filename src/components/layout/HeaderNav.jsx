@@ -21,8 +21,10 @@ const HeaderNav = ({ isMenuOpen, setIsMenuOpen }) => {
 
   const navigation = [
     { name: 'Home', href: '/' },
+
     { name: 'About', href: '/about' },
     { name: 'Discover', href: '/discover' },
+    { name: 'Find Sport', href: '/find-sport' },
     { name: 'Community', href: '/community' },
     { name: 'Events', href: '/events' },
     { name: 'Marketplace', href: '/marketplace' },
@@ -109,60 +111,61 @@ const HeaderNav = ({ isMenuOpen, setIsMenuOpen }) => {
             )}
           </div>
         </div>
-        {/* Mobile Navigation Menu */}
-        {isMenuOpen && (
-          <div className="absolute left-0 right-0 top-full bg-white border-b border-gray-200 pb-4 shadow-xl lg:hidden z-[60]">
-            <Container>
-              <nav className="flex flex-col space-y-1 pt-2">
-                {navigation.map((item) => (
-                  <Link
-                    key={item.name}
-                    to={item.href}
-                    onClick={() => setIsMenuOpen(false)}
-                    className={`rounded-md px-3 py-2.5 text-sm lg:text-base font-medium transition-colors ${isActive(item.href)
-                      ? 'bg-secondary text-btn-primary'
-                      : 'text-navigation hover:bg-gray-100'
-                      }`}
-                  >
-                    {item.name}
-                  </Link>
-                ))}
-                <div className="flex flex-col gap-2 pt-3">
-                  {isAuthenticated ? (
-                    <>
-                      <Button variant="secondary" className="w-full rounded-md">
-                        My Orders
-                      </Button>
-                      <Button
-                        variant="secondary"
-                        className="w-full rounded-md"
-                        onClick={() => {
-                          handleProfileClick();
-                        }}
-                      >
-                        Dashboard
-                      </Button>
-                      <button
-                        onClick={handleLogout}
-                        className="text-red-600 flex items-center justify-center gap-2 rounded-md border border-red-300 px-4 py-2 text-sm font-medium hover:bg-red-50"
-                      >
-                        <LogOut className="h-4 w-4" />
-                        Logout
-                      </button>
-                    </>
-                  ) : (
-                    <Link to="/signin" onClick={() => setIsMenuOpen(false)}>
-                      <Button variant="primary" className="w-full rounded-md">
-                        Sign In
-                      </Button>
-                    </Link>
-                  )}
-                </div>
-              </nav>
-            </Container>
-          </div>
-        )}
       </Container>
+
+      {/* Mobile Navigation Menu (full-width overlay) */}
+      {isMenuOpen && (
+        <div className="absolute left-0 right-0 top-full bg-white border-b border-gray-200 pb-4 shadow-xl lg:hidden z-[60]">
+          <Container>
+            <nav className="flex flex-col space-y-1 pt-2">
+              {navigation.map((item) => (
+                <Link
+                  key={item.name}
+                  to={item.href}
+                  onClick={() => setIsMenuOpen(false)}
+                  className={`rounded-md px-3 py-2.5 text-sm lg:text-base font-medium transition-colors ${isActive(item.href)
+                    ? 'bg-secondary text-btn-primary'
+                    : 'text-navigation hover:bg-gray-100'
+                    }`}
+                >
+                  {item.name}
+                </Link>
+              ))}
+              <div className="flex flex-col gap-2 pt-3">
+                {isAuthenticated ? (
+                  <>
+                    <Button variant="secondary" className="w-full rounded-md">
+                      My Orders
+                    </Button>
+                    <Button
+                      variant="secondary"
+                      className="w-full rounded-md"
+                      onClick={() => {
+                        handleProfileClick();
+                      }}
+                    >
+                      Dashboard
+                    </Button>
+                    <button
+                      onClick={handleLogout}
+                      className="text-red-600 flex items-center justify-center gap-2 rounded-md border border-red-300 px-4 py-2 text-sm font-medium hover:bg-red-50"
+                    >
+                      <LogOut className="h-4 w-4" />
+                      Logout
+                    </button>
+                  </>
+                ) : (
+                  <Link to="/signin" onClick={() => setIsMenuOpen(false)}>
+                    <Button variant="primary" className="w-full rounded-md">
+                      Sign In
+                    </Button>
+                  </Link>
+                )}
+              </div>
+            </nav>
+          </Container>
+        </div>
+      )}
     </div>
   );
 };

@@ -10,10 +10,9 @@ const CoreFeatures = () => {
       <Container>
         {/* Section Header */}
         <SectionHeader
-          title="Everything you need to get involved "
-          description="ESSA Hub brings together sport, community and support for women - whether you're starting for the first time
-or returning after a break."
-          align="left"
+          title="Explore ESSA Hub "
+         
+          align="center"
           className="mb-4 lg:mb-6 text-xl lg:text-2xl"
         />
 
