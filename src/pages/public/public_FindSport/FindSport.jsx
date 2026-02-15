@@ -151,7 +151,7 @@ const FindSport = () => {
     return (
         <section className="py-8">
             <Container>
-                <PageHeader title="Find Your Sport" description="Browse clubs, sessions and activities. Filter by sport and location." />
+                <PageHeader title="Find Sport"  />
 
                 <div className="mt-6">
                     <Filters

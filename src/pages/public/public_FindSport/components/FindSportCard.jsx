@@ -66,7 +66,7 @@ const FindSportCard = ({ item }) => {
       </div>
 
       {isAuthenticated ? (
-        <Link >
+        <Link to={`/find-sport/${item.id}`} state={{ item }}>
           <Button variant="primary" className="w-full rounded-lg bg-btn-primary text-white hover:bg-[#0d655d]">
             View Details
           </Button>
