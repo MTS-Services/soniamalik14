@@ -155,7 +155,7 @@ const LoginView = () => {
             <div className="text-center pt-4">
               <p className="text-sm text-[#363636] mb-3">Don't have account</p>
               <Link
-                to="/signup"
+                to="/register"
                 className="block w-full border-2 border-btn-primary text-btn-primary hover:bg-btn-primary hover:text-white py-3 rounded-lg font-medium transition-all"
               >
                 CREATE ACCOUNT

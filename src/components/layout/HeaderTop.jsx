@@ -195,12 +195,18 @@ const HeaderTop = ({ onMenuClick, isMenuOpen }) => {
           </Link>
 
           {/* Right: User Icon (Fixed for Mobile/Tablet) */}
-          <button 
-            onClick={handleProfileClick}
-            className="p-2 -mr-2 hover:bg-gray-100 rounded-md"
-          >
-            <CiUser className="h-6 w-6" />
-          </button>
+          {!isAuthenticated ? (
+            <Link to="/signin" className="p-2 -mr-2 hover:bg-gray-100 rounded-md">
+              <CiUser className="h-6 w-6" />
+            </Link>
+          ) : (
+            <button
+              onClick={handleProfileClick}
+              className="p-2 -mr-2 hover:bg-gray-100 rounded-md"
+            >
+              <CiUser className="h-6 w-6" />
+            </button>
+          )}
         </div>
 
         {/* Mobile Search Dropdown */}
@@ -245,9 +251,6 @@ const HeaderTop = ({ onMenuClick, isMenuOpen }) => {
                 <Link to="/signin">
                   <Button variant="primary" className="rounded-md">Sign IN</Button>
                 </Link>
-                <Link to="/register">
-                  <Button variant="secondary" className="rounded-md lg:text-base">Sign UP</Button>
-                </Link>
               </div>
             ) : (
               <div className="flex items-center gap-3">
@@ -259,7 +262,7 @@ const HeaderTop = ({ onMenuClick, isMenuOpen }) => {
                   <span>Logout</span>
                 </button>
                 <button onClick={handleProfileClick} className="p-2 hover:bg-gray-100 rounded-md">
-                   <CiUser className="h-6 w-6" />
+                  <CiUser className="h-6 w-6" />
                 </button>
               </div>
             )}

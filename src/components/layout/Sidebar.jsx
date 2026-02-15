@@ -17,6 +17,7 @@ import {
     Heart,
     X,
     Settings,
+    CirclePlus,
 } from 'lucide-react';
 import { useAuth, ROLES } from '../../context/AuthContext';
 
@@ -40,8 +41,8 @@ const getMenuItems = (role, basePath) => {
         { id: 'dashboard', label: 'Event', icon: <Calendar className="w-5 h-5" />, path: `${basePath}` },
         { id: 'event-analytics', label: 'Event Analytics', icon: <BarChart3 className="w-5 h-5" />, path: `${basePath}/event-analytics` },
         { id: 'thread', label: 'Thread', icon: <MessageSquare className="w-5 h-5" />, path: `${basePath}/thread` },
-        { id: 'service', label: 'Service', icon: <Wrench className="w-5 h-5" />, path: `${basePath}/service` },
-        { id: 'service-analytics', label: 'Service Analytics', icon: <BarChart3 className="w-5 h-5" />, path: `${basePath}/service-analytics` },
+        { id: 'service', label: 'Add Listing', icon: <CirclePlus className="w-5 h-5" />, path: `${basePath}/service` },
+        // { id: 'service-analytics', label: 'Service Analytics', icon: <BarChart3 className="w-5 h-5" />, path: `${basePath}/service-analytics` },
     ];
 
     const coachMenu = [
@@ -49,7 +50,7 @@ const getMenuItems = (role, basePath) => {
         { id: 'event', label: 'Event', icon: <Calendar className="w-5 h-5" />, path: `${basePath}/event` },
         { id: 'event-analytics', label: 'Event Analytics', icon: <BarChart3 className="w-5 h-5" />, path: `${basePath}/event-analytics` },
         { id: 'thread', label: 'Thread', icon: <MessageSquare className="w-5 h-5" />, path: `${basePath}/thread` },
-        { id: 'recruitment', label: 'Recruitment', icon: <UserPlus className="w-5 h-5" />, path: `${basePath}/recruitment` },
+        { id: 'recruitment', label: 'Add Listing', icon: <UserPlus className="w-5 h-5" />, path: `${basePath}/recruitment` },
     ];
 
     switch (role) {
