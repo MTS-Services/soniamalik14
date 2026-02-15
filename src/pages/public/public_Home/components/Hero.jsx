@@ -17,7 +17,7 @@ const Hero = () => {
           {/* action btns */}
           <div className='flex flex-col md:flex-row items-center justify-center gap-1.5 lg:gap-4 w-full'>
             {/* <Button className='w-5/6 max-w-sm rounded-md whitespace-nowrap md:w-auto'>Explore Sport s Near You</Button> */}
-            <Button className='w-2/3 max-w-xs rounded-md whitespace-nowrap md:w-auto'>Join ESSA Hub</Button>
+            <Button className='rounded-md whitespace-nowrap md:w-auto'>Join ESSA Hub</Button>
             {/* <Button className='w-2/3 max-w-xs rounded-md whitespace-nowrap text-btn font-medium md:w-auto' variant='outline'>Join the ESSA Hub</Button> */}
           </div>
           {/* <p className='herosubtitle hidden sm:flex'>Women-focused services, support and connection - all around sport</p> */}
