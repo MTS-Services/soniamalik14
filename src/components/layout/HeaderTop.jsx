@@ -168,10 +168,10 @@ const HeaderTop = ({ onMenuClick, isMenuOpen }) => {
   };
 
   return (
-    <div className="bg-white py-2">
+    <div className="bg-white py-2 ">
       <Container>
         {/* Mobile Header: [Menu + Search] --- Logo (centered) --- [User] */}
-        <div className="flex lg:hidden items-center justify-between py-1 ">
+        <div className="flex lg:hidden items-center justify-between  ">
           {/* Left: Menu & Search together */}
           <div className="flex items-center gap-1">
             <button

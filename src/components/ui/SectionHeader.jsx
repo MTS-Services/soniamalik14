@@ -24,7 +24,7 @@ const SectionHeader = ({
       )}
       
       {description && (
-        <p className="description">
+        <p className="description text-base sm:text-lg">
           {description}
         </p>
       )}
