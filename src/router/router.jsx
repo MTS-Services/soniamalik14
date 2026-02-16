@@ -48,6 +48,7 @@ import CoachEvent from '../pages/dashboards/coach/event/CoachEvent.jsx';
 import CoachEventDetails from '../pages/dashboards/coach/event/EventDetails.jsx';
 import EventAnalytics from '../pages/dashboards/coach/eventAnalytics/EventAnalytics.jsx';
 import Thread from '../pages/dashboards/coach/thread/Thread.jsx';
+import EventAnallyticsDetails from '../pages/dashboards/shared/eventAnalytics/EventAnallyticsDetails.jsx';
 import AdminThread from '../pages/dashboards/admin/Thread/Thread.jsx';
 import AdminThreadDetails from '../pages/dashboards/admin/Thread/ThreadDetails.jsx';
 import ThreadDetails from '../pages/dashboards/coach/thread/ThreadDetails.jsx';
@@ -154,6 +155,7 @@ const router = createBrowserRouter(
         <Route path="event" element={<ProviderEvent />} />
         <Route path="event/:id" element={<ProviderEventDetails />} />
         <Route path="event-analytics" element={<ProviderEventAnalytics />} />
+        <Route path="event-analytics/event/:id" element={<EventAnallyticsDetails />} />
         <Route path="thread" element={<ProviderThread />} />
         <Route path="thread/:id" element={<ProviderThreadDetails />} />
         <Route path="service" element={<ProviderService />} />
@@ -174,6 +176,7 @@ const router = createBrowserRouter(
         <Route path="event" element={<CoachEvent />} />
         <Route path="event/:id" element={<CoachEventDetails />} />
         <Route path="event-analytics" element={<EventAnalytics />} />
+        <Route path="event-analytics/event/:id" element={<EventAnallyticsDetails />} />
         <Route path="thread" element={<Thread />} />
         <Route path="thread/:id" element={<ThreadDetails />} />
         <Route path="recruitment" element={<Recruitment />} />

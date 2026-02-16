@@ -195,7 +195,7 @@ const EventAnalytics = ({ baseRoute = '/coach' }) => {
     const resultsPerPage = 6;
 
     const scrollContainerRef = useRef(null);
-    const activeTabRef = useRef(null); 
+    const activeTabRef = useRef(null);
 
     const tabs = [
         { id: 'all', label: 'All Event List' },
@@ -238,7 +238,7 @@ const EventAnalytics = ({ baseRoute = '/coach' }) => {
         if (activeTab === 'cancel') return event.isCancelled;
         return true;
     });
-    
+
     const totalResults = filteredEvents.length;
     const totalPages = Math.ceil(totalResults / resultsPerPage);
     const paginatedEvents = filteredEvents.slice((currentPage - 1) * resultsPerPage, currentPage * resultsPerPage);
@@ -277,7 +277,7 @@ const EventAnalytics = ({ baseRoute = '/coach' }) => {
                 </td>
                 <td className="px-4 py-4"><span className="text-btn-primary font-medium">{event.joined}</span></td>
                 <td className="px-4 py-4">
-                    <Link to={`${baseRoute}/event/${event.id}`} state={{ item: event, from: 'analytics' }} className="text-gray-600 hover:text-btn-primary transition-colors inline-flex items-center">
+                    <Link to={`${baseRoute}/event-analytics/event/${event.id}`} state={{ item: event, from: 'analytics' }} className="text-gray-600 hover:text-btn-primary transition-colors inline-flex items-center">
                         <Eye className="w-5 h-5" />
                     </Link>
                 </td>
@@ -292,7 +292,7 @@ const EventAnalytics = ({ baseRoute = '/coach' }) => {
                     <ChevronLeft className="w-5 h-5 text-gray-600" />
                 </button>
 
-                <div 
+                <div
                     ref={scrollContainerRef}
                     className="flex gap-8 px-10 overflow-x-auto scrollbar-hide scroll-smooth"
                 >
