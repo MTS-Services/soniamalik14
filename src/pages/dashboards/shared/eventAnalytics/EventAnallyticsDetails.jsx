@@ -3,9 +3,13 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useLocation, Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { MapPin, Calendar, Clock, Phone, Mail, ArrowLeft } from 'lucide-react';
+import HeroImage from './components/HeroImage';
+import EventInfo from './components/EventInfo';
+import VenueCard from './components/VenueCard';
+import CancelAlert from './components/CancelAlert';
 import { fetchEvents } from '../../../../features/events/eventsAPI';
 import { selectAllEvents } from '../../../../features/events/eventsSlice';
-import TablePagination from '../../../../components/ui/TablePagination';
+import BookingsTable from './components/BookingsTable';
 
 const EventAnallyticsDetails = ({ backRoute = '/coach/event' }) => {
     const { id } = useParams();
@@ -29,11 +33,7 @@ const EventAnallyticsDetails = ({ backRoute = '/coach/event' }) => {
     ];
 
     const [bookings] = useState(sampleBookings);
-    const [currentPage, setCurrentPage] = useState(1);
     const resultsPerPage = 6;
-    const totalResults = bookings.length;
-    const totalPages = Math.max(1, Math.ceil(totalResults / resultsPerPage));
-    const paginatedBookings = bookings.slice((currentPage - 1) * resultsPerPage, currentPage * resultsPerPage);
 
     const fallback = {
         id,
@@ -110,8 +110,7 @@ const EventAnallyticsDetails = ({ backRoute = '/coach/event' }) => {
         );
     }
 
-    // derive dashboard prefix from current pathname so back button returns
-    // to the correct dashboard (provider/coach/admin)
+
     const prefix = (location.pathname || '').split('/')[1] || 'coach';
     const derivedBackBase = `/${prefix}/event`;
     const derivedAnalyticsPath = `/${prefix}/event-analytics`;
@@ -130,166 +129,20 @@ const EventAnallyticsDetails = ({ backRoute = '/coach/event' }) => {
             <div className="">
 
                 {/* Hero Image */}
-                <div className="w-full h-64 md:h-[520px] relative rounded-xl overflow-hidden mb-6">
-                    <img
-                        src={item.image}
-                        alt={item.title}
-                        className="w-full h-full object-cover"
-                    />
-                </div>
+                <HeroImage src={item.image} alt={item.title} />
 
+                {/* Cancelled / Not Approved alert */}
+                <CancelAlert item={item} />
 
                 {/* Left Column: Details */}
-                <div className="lg:col-span-2">
-                    <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
-                        {item.title}
-                    </h1>
+                <EventInfo item={item} />
 
-                    <div className="text-base md:w-2xl text-gray-600 leading-relaxed whitespace-pre-line mb-8">
-                        {item.description}
-                    </div>
-
-                    {/* Date & Time Section */}
-                    <div className="flex flex-col gap-3 mb-6">
-                        <div className="flex items-center gap-3 text-sm text-gray-700">
-                            <Calendar className="w-5 h-5 text-gray-500" />
-                            <span className="font-medium">{item.date}</span>
-                        </div>
-                        <div className="flex items-center gap-3 text-sm text-gray-700">
-                            <Clock className="w-5 h-5 text-gray-500" />
-                            <span className="font-medium">{item.time}</span>
-                        </div>
-                    </div>
-
-                    {/* Event Attributes (Age, Sport, Skill, Deadline) */}
-                    <div className="space-y-4 text-sm text-gray-800 mb-8">
-                        <div>
-                            <span className="font-bold block text-gray-900">Age Group:</span>
-                            <span>{item.ageGroup}</span>
-                        </div>
-                        <div>
-                            <span className="font-bold block text-gray-900">Sport Type:</span>
-                            <span>{item.sportType}</span>
-                        </div>
-                        <div>
-                            <span className="font-bold block text-gray-900">Skill Level:</span>
-                            <span>{item.skillLevel}</span>
-                        </div>
-                        <div>
-                            <span className="font-bold block text-gray-900">Last Date to Register</span>
-                            <span>{item.lastDateToRegister}</span>
-                        </div>
-                    </div>
-                </div>
-
-
-
-                {/* Right Column: Venue & Contact Card (Matching Image Bottom Section) */}
-                <aside className="max-w-md lg:col-span-1 mt-10 lg:mt-0">
-                    <div className="border border-[#91C0BC] rounded-xl bg-white shadow-sm overflow-hidden">
-
-                        <div className="p-4">
-                            {/* Venue Section */}
-                            <div className="mb-2">
-                                <div className="flex items-center gap-2 mb-1">
-                                    <span className="font-bold text-sm text-gray-900">Venue:</span>
-                                    <span className="text-sm text-gray-600">{item.venue?.name}</span>
-                                </div>
-                                <div className="flex items-start gap-2 text-xs text-gray-500">
-                                    <MapPin className="w-4 h-4 mt-0.5 shrink-0" />
-                                    <span>{item.venue?.address}</span>
-                                </div>
-                            </div>
-                            {/* Top image (map / illustration) */}
-                            <div className="w-full mb-2  h-40 md:h-48 bg-gray-100">
-                                <img
-                                    src="https://i.ibb.co.com/fY1frBX7/Rectangle-4319.png"
-                                    alt="Venue map"
-                                    className="w-full rounded-lg h-full object-cover"
-                                />
-                            </div>
-
-                            {/* Contact Information */}
-                            <div className="mb-4">
-                                <h4 className="font-bold text-sm text-gray-900 mb-3">Contact Information</h4>
-                                <div className="space-y-2">
-                                    <div className="flex items-center gap-2 text-sm text-gray-600">
-                                        <Phone className="w-4 h-4 text-gray-400" />
-                                        <span>{item.contact?.phone}</span>
-                                    </div>
-                                    <div className="flex items-center gap-2 text-sm text-gray-600">
-                                        <Mail className="w-4 h-4 text-gray-400" />
-                                        <span className="break-all">{item.contact?.email}</span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            {/* Organized By */}
-                            <div>
-                                <h4 className="font-bold text-sm text-gray-900 mb-3">Organized By:</h4>
-                                <div className="flex items-center gap-3">
-                                    <div className="w-10 h-10 rounded-full bg-gray-100 overflow-hidden border border-gray-200">
-                                        {/* Using placeholder or item image for logo */}
-                                        <img
-                                            src={item.organizer?.avatar || '/api/placeholder/40/40'}
-                                            alt="Logo"
-                                            className="w-full h-full object-cover"
-                                        />
-                                    </div>
-                                    <span className="text-sm font-semibold text-gray-800">
-                                        {item.organizer?.name}
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </aside>
+                {/* Right Column: Venue & Contact */}
+                <VenueCard item={item} />
             </div>
 
-            {/* Bookings Table (custom) */}
-            <div className="mt-10">
-                <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
-                    <div className="px-6 py-5 border-b bg-white border-gray-200">
-                        <h2 className="text-xl font-semibold text-gray-900">Bookings</h2>
-                    </div>
-
-                    {/* Bookings table (semantic <table>) */}
-                    <div className="overflow-x-auto">
-                        <table className="min-w-full divide-y divide-gray-200">
-                            <thead className="bg-[#F8F8F8]">
-                                <tr>
-                                    <th scope="col" className="text-left px-6 py-3 text-sm font-medium text-gray-700">Name</th>
-                                    <th scope="col" className="text-center px-6 py-3 text-sm font-medium text-gray-700">Phone Number</th>
-                                    <th scope="col" className="text-center px-6 py-3 text-sm font-medium text-gray-700">Email</th>
-                                </tr>
-                            </thead>
-                            <tbody className="bg-white divide-y divide-gray-200">
-                                {paginatedBookings.map((b, idx) => (
-                                    <tr key={idx} className="odd:bg-white even:bg-white">
-                                        <td className="px-6 py-6 text-sm text-gray-800 font-medium">{b.name}</td>
-                                        <td className="px-6 py-6 text-sm text-center text-gray-700">{b.phone}</td>
-                                        <td className="px-6 py-6 text-sm text-gray-700 break-words text-center">{b.email}</td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    </div>
-
-                    {/* Pagination footer */}
-                    <div className="border-t border-gray-200">
-                        <TablePagination
-                            currentPage={currentPage}
-                            totalPages={totalPages}
-                            totalResults={totalResults}
-                            resultsPerPage={resultsPerPage}
-                            onPageChange={(p) => {
-                                if (p < 1 || p > totalPages) return;
-                                setCurrentPage(p);
-                            }}
-                        />
-                    </div>
-                </div>
-            </div>
+            {/* Bookings Table (separated component) */}
+            <BookingsTable bookings={bookings} resultsPerPage={resultsPerPage} />
 
         </div>
     );
