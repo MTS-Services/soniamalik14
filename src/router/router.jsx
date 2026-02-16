@@ -60,6 +60,7 @@ import ProviderServiceDetails from '../pages/dashboards/provider/service/Service
 import ServiceAnalytics from '../pages/dashboards/provider/serviceAnalytics/ServiceAnalytics.jsx';
 import ProviderThread from '../pages/dashboards/provider/thread/ProviderThread.jsx';
 import ProviderThreadDetails from '../pages/dashboards/provider/thread/ProviderThreadDetails.jsx';
+import MyOrders from '../pages/myOrders/MyOrders.jsx';
 
 // User Dashboard Pages
 import DashboardOverview from '../pages/dashboards/user/dashboardOverview/DashboardOverview.jsx';
@@ -99,6 +100,7 @@ const router = createBrowserRouter(
         <Route path="marketplace/:id" element={<MarketplaceDetails />} />
         <Route path="checkout" element={<Checkout />} />
         <Route path="order-confirmed" element={<OrderConfirmed />} />
+        <Route path="my-orders" element={<MyOrders />} />
         <Route path="services" element={<ServiceView />} />
         <Route path="services/:id" element={<ServiceDetails />} />
         <Route path="news" element={<NewsView />} />
