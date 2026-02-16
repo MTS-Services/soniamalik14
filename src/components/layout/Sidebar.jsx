@@ -18,6 +18,7 @@ import {
     X,
     Settings,
     CirclePlus,
+    LandPlot,
 } from 'lucide-react';
 import { useAuth, ROLES } from '../../context/AuthContext';
 
@@ -31,6 +32,7 @@ const getMenuItems = (role, basePath) => {
         { id: 'order', label: 'Order', icon: <ShoppingCart className="w-5 h-5" />, path: `${basePath}/order` },
         { id: 'thread', label: 'Thread', icon: <MessageSquare className="w-5 h-5" />, path: `${basePath}/thread` },
         { id: 'club', label: 'Club', icon: <Users className="w-5 h-5" />, path: `${basePath}/club` },
+        { id: 'sports', label: 'Sports', icon: <LandPlot className="w-5 h-5" />, path: `${basePath}/sports` },
         { id: 'service', label: 'Service', icon: <Wrench className="w-5 h-5" />, path: `${basePath}/service` },
         { id: 'finances', label: 'Finances', icon: <DollarSign className="w-5 h-5" />, path: `${basePath}/finances` },
         { id: 'role-matrix', label: 'Role Matrix', icon: <Shield className="w-5 h-5" />, path: `${basePath}/role-matrix` },

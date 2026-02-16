@@ -43,6 +43,7 @@ import AdminIndex from '../pages/dashboards/admin/adminIndex/AdminIndex.jsx';
 import EventDetails from '../pages/dashboards/admin/EventDetails/AdminEventDetails.jsx';
 import ProductRequested from '../pages/dashboards/admin/ProductRequested/ProductRequested.jsx';
 import OrderList from '../pages/dashboards/admin/OrderList/OrderList.jsx';
+import Sports from '../pages/dashboards/admin/Sports/Sports.jsx';
 import CoachEvent from '../pages/dashboards/coach/event/CoachEvent.jsx';
 import CoachEventDetails from '../pages/dashboards/coach/event/EventDetails.jsx';
 import EventAnalytics from '../pages/dashboards/coach/eventAnalytics/EventAnalytics.jsx';
@@ -129,6 +130,7 @@ const router = createBrowserRouter(
         <Route path="event-details" element={<EventDetails />} />
         <Route path="product-request" element={<ProductRequested />} />
         <Route path="order" element={<OrderList />} />
+        <Route path="sports" element={<Sports />} />
         <Route path="thread" element={<AdminThread />} />
         <Route path="thread/:id" element={<AdminThreadDetails />} />
         <Route path="club" element={<ClubList />} />
