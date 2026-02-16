@@ -19,13 +19,34 @@ const BookingsTable = ({ bookings = [], resultsPerPage = 6 }) => {
                     <h2 className="text-xl font-semibold text-gray-900">Bookings</h2>
                 </div>
 
-                <div className="overflow-x-auto">
+                {/* Card view for mobile & tablet (show until large screens) */}
+                <div className="block lg:hidden">
+                    {paginated.map((b, idx) => (
+                        <div key={idx} className="px-6 py-4 border-b border-gray-200 last:border-b-0">
+                            <div className="grid grid-cols-2 gap-2 items-start">
+                                <div className="text-xs text-gray-500">Name</div>
+                                <div className="text-sm text-gray-800 font-medium text-right">{b.name}</div>
+                            </div>
+                            <div className="grid grid-cols-2 gap-2 items-start mt-3">
+                                <div className="text-xs text-gray-500">Phone Number</div>
+                                <div className="text-sm text-gray-700 text-right">{b.phone}</div>
+                            </div>
+                            <div className="grid grid-cols-2 gap-2 items-start mt-3">
+                                <div className="text-xs text-gray-500">Email</div>
+                                <div className="text-sm text-gray-700 break-words text-right">{b.email}</div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+
+                {/* Table view for large screens */}
+                <div className="hidden lg:block overflow-x-auto">
                     <table className="min-w-full divide-y divide-gray-200">
                         <thead className="bg-[#F8F8F8]">
                             <tr>
                                 <th scope="col" className="text-left px-6 py-3 text-sm font-medium text-gray-700">Name</th>
                                 <th scope="col" className="text-center px-6 py-3 text-sm font-medium text-gray-700">Phone Number</th>
-                                <th scope="col" className="text-right px-6 py-3 text-sm font-medium text-gray-700">Email</th>
+                                <th scope="col" className="text-center px-6 py-3 text-sm font-medium text-gray-700">Email</th>
                             </tr>
                         </thead>
                         <tbody className="bg-white divide-y divide-gray-200">
@@ -33,7 +54,7 @@ const BookingsTable = ({ bookings = [], resultsPerPage = 6 }) => {
                                 <tr key={idx} className="odd:bg-white even:bg-white">
                                     <td className="px-6 py-6 text-sm text-gray-800 font-medium">{b.name}</td>
                                     <td className="px-6 py-6 text-sm text-center text-gray-700">{b.phone}</td>
-                                    <td className="px-6 py-6 text-sm text-gray-700 break-words text-right">{b.email}</td>
+                                    <td className="px-6 py-6 text-sm text-gray-700 break-words text-center">{b.email}</td>
                                 </tr>
                             ))}
                         </tbody>
