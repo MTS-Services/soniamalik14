@@ -52,16 +52,8 @@ const ServiceCard = ({ item = {}, editLink, onEdit, onDelete, className = '' }) 
                         </div>
 
                         <h3 className="text-[#282828] font-semibold text-lg mb-2 min-h-[56px]">{item.title}</h3>
-                        <div className="text-sm text-[#363636] mb-2 flex items-center gap-2">
-                            <MapPin className="w-4 h-4 text-[#363636]" />
-                            <span className="text-sm">{item.location || 'Dhaka'}</span>
-                        </div>
-                        <div className="text-sm text-[#363636] mb-2 flex items-start gap-2 flex-col">
-                            <div className="flex items-center gap-2"><Calendar className="w-4 h-4 text-[#363636]" /> <span className="text-sm">{item.days || '12 March 2026'}</span></div>
-                        </div>
-                        <div className="text-sm text-[#363636] mb-2 flex items-start gap-2 flex-col">
-                            <div className="flex items-center gap-2"><Clock className="w-4 h-4 text-[#363636]" /> <span className="text-sm">{item.time || '4:00 PM – 7:00 PM'}</span></div>
-                        </div>
+                        <div className="text-sm text-[#363636] mb-2 min-h-[40px] overflow-hidden">{item.description}</div>
+
                     </div>
 
                     <div className="mt-2" onClick={(e) => e.preventDefault()}>

@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ArrowLeft } from 'lucide-react';
 import { fetchServices } from '../../../../features/service/serviceApi';
 import { selectAllServices } from '../../../../features/service/serviceSlice';
-import SessionsTable from './components/SessionsTable';
+import BookingsTable from '../../shared/eventAnalytics/components/BookingsTable';
 
 const ServiceDetails = () => {
     const { id } = useParams();
@@ -99,22 +99,20 @@ It helps prevent injuries, improve performance, and support recovery so players 
             <div className="space-y-3 text-base text-gray-800 mb-8">
                 <div>
                     <span className=" block text-gray-900"> <span className='font-semibold'>Category: </span>{service.category || service.type}</span>
-                    
+
                 </div>
                 <div>
                     <span className=" block text-gray-900"><span className='font-semibold'>Status:</span>{service.status || 'Active'}</span>
-                    
+
                 </div>
                 <div>
                     <span className=" block text-gray-900"><span className='font-semibold'>Visibility:</span>{service.visibility || 'Live for women athletes'}</span>
-                  
+
                 </div>
                 <div>
                     <span className=" block text-gray-900"><span className='font-semibold'>Available Days:</span>{service.availableDays || service.days}</span>
                 </div>
-                <div>
-                    <span className=" block text-gray-900"><span className='font-semibold'>Time Slots:</span>{service.timeSlots || service.time}</span>
-                </div>
+                
             </div>
 
             {/* About This Service */}
@@ -135,10 +133,18 @@ It helps prevent injuries, improve performance, and support recovery so players 
                 </ul>
             </div>
 
-            {/* Active Sessions Table */}
+            {/* Active Sessions / Bookings Table */}
             <div className="mb-8">
-                <h2 className="text-xl font-bold text-gray-900 mb-4">Active Sessions</h2>
-                <SessionsTable sessions={service.sessions || []} resultsPerPage={6} />
+
+                
+                <BookingsTable
+                    bookings={(service.sessions || []).map(s => ({
+                        name: s.user || s.name || 'Guest',
+                        phone: s.phone || s.contact || '-',
+                        email: s.email || s.contactEmail || '-',
+                    }))}
+                    resultsPerPage={6}
+                />
             </div>
         </div>
     );
