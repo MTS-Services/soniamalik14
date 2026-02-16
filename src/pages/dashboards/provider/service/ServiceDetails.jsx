@@ -112,7 +112,7 @@ It helps prevent injuries, improve performance, and support recovery so players 
                 <div>
                     <span className=" block text-gray-900"><span className='font-semibold'>Available Days:</span>{service.availableDays || service.days}</span>
                 </div>
-                
+
             </div>
 
             {/* About This Service */}
@@ -136,7 +136,7 @@ It helps prevent injuries, improve performance, and support recovery so players 
             {/* Active Sessions / Bookings Table */}
             <div className="mb-8">
 
-                
+
                 <BookingsTable
                     bookings={(service.sessions || []).map(s => ({
                         name: s.user || s.name || 'Guest',

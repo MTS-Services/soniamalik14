@@ -14,7 +14,7 @@ const ApplicationTable = ({ applicants = [], resultsPerPage = 9 }) => {
     return applicants.slice(start, start + resultsPerPage);
   }, [applicants, currentPage, resultsPerPage]);
 
-  const columns = ['Player Name', 'Phone Number', 'Email', 'Date', 'Position', 'Status'];
+  const columns = ['Player Name', 'Phone Number', 'Email', 'Date', 'Position', 'Action'];
 
   const sampleApplicants = [
     { id: 's1', name: 'Eleanor Pena', phone: '(219) 555-0114', email: 'kenzi.lawson@example.com', date: '15 Jan 2026', position: 'Midfielder' },
