@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import Container from '../../../../components/layout/Container'
+import SectionHeader from '../../../../components/ui/SectionHeader'
 
 const tiles = [
     { id: 1, title: 'Football', img: 'https://i.ibb.co.com/whwV45L2/71815299707b2a29a3a530becb1cb7289e4edc91.jpg', sport: 'football' },
@@ -12,9 +13,12 @@ const FindYourSport = () => {
     return (
         <section className="py-8">
             <Container>
-                <div className="max-w-7xl mx-auto text-center mb-6">
-                    <h2 className="text-2xl md:text-3xl font-semibold">Find your sport. Find your squad</h2>
-                </div>
+                <SectionHeader
+          title="Find your sport. Find your squad "
+         
+          align="center"
+          className="mb-4 lg:mb-6 text-xl lg:text-2xl"
+        />
 
                 <div className="flex justify-center">
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 lg:gap-6 w-full max-w-4xl">
