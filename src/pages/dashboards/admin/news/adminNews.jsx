@@ -7,6 +7,7 @@ import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { Search } from 'lucide-react'
 import Pagination from '../../../../components/ui/Pagination'
+import EmptyState from '../../../../components/ui/EmptyState'
 
 const sampleNews = [
   {
@@ -116,6 +117,11 @@ const AdminNews = () => {
 
   return (
     <div className="p-6 bg-gray-50 min-h-screen">
+      {/* Page Heading */}
+      <div className="mb-6">
+        <h1 className="text-3xl font-bold text-gray-900">News Management</h1>
+        <p className="text-base text-gray-600 mt-1">Create, edit and manage news items shown across the platform.</p>
+      </div>
       {/* Header Section */}
       <div className="flex items-center justify-between mb-6 gap-4 flex-wrap">
         {/* Search Box */}
@@ -140,18 +146,24 @@ const AdminNews = () => {
       </div>
 
       {/* News Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-6">
-        {paged.map(item => (
-          <NewsCard
-            key={item.id}
-            news={item}
-            onEdit={handleEdit}
-            onDelete={handleDelete}
-          />
-        ))}
-      </div>
+      {filtered.length === 0 ? (
+        <EmptyState title={query ? 'No results found' : 'No news available'} subtitle={query ? `No news matching "${query}"` : 'There are currently no news items.'} className="mt-8" />
+      ) : (
+        <>
+          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-6">
+            {paged.map(item => (
+              <NewsCard
+                key={item.id}
+                news={item}
+                onEdit={handleEdit}
+                onDelete={handleDelete}
+              />
+            ))}
+          </div>
 
-      <Pagination page={page} total={total} onChange={(p) => setPage(p)} />
+          <Pagination page={page} total={total} onChange={(p) => setPage(p)} />
+        </>
+      )}
       <NewsModal isOpen={isModalOpen} initialData={editingNews} onClose={() => { setIsModalOpen(false); setEditingNews(null) }} onSave={(d) => { handleSaveNews(d); setIsModalOpen(false) }} />
       <DeleteConfirmationModal isOpen={isDeleteOpen} onClose={() => { setIsDeleteOpen(false); setDeleteTarget(null) }} itemTitle={deleteTarget?.title} onConfirm={() => {
         if (deleteTarget) {
