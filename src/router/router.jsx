@@ -74,6 +74,7 @@ import ServiceProviderDetails from '../pages/dashboards/admin/ServiceProviderLis
 import AdminFinances from '../pages/dashboards/admin/finances/AdminFinances.jsx';
 import RoleMatrix from '../pages/dashboards/admin/role_matrix/RoleMatrix.jsx';
 import AdminSettings from '../pages/dashboards/admin/settings/Settings.jsx';
+import AdminNews from '../pages/dashboards/admin/news/adminNews.jsx';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -141,6 +142,7 @@ const router = createBrowserRouter(
         <Route path="service/:id" element={<ServiceProviderDetails />} />
         <Route path="finances" element={<AdminFinances />} />
         <Route path="role-matrix" element={<RoleMatrix />} />
+        <Route path="news" element={<AdminNews />} />
         <Route path="settings" element={<AdminSettings />} />
       </Route>
 
