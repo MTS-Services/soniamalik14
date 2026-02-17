@@ -11,4 +11,11 @@ export const ENDPOINT = {
     PROFILE: '/profile',
     SETTINGS: '/settings',
   },
+  NEWS: {
+    LIST: '/api/news',
+    CREATE: '/api/news',
+    UPDATE: (id) => `/api/news/${id}`,
+    DELETE: (id) => `/api/news/${id}`,
+    DETAIL: (id) => `/api/news/${id}`,
+  },
 };

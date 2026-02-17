@@ -1,4 +1,5 @@
 import React, { useState, useMemo, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import Button from '../../../../components/ui/Button'
 import NewsCard from './components/NewsCard'
 import NewsModal from './components/NewsModal'
@@ -8,58 +9,22 @@ import 'react-toastify/dist/ReactToastify.css'
 import { Search } from 'lucide-react'
 import Pagination from '../../../../components/ui/Pagination'
 import EmptyState from '../../../../components/ui/EmptyState'
-
-const sampleNews = [
-  {
-    id: 1,
-    date: 'Wed Dec 10 2025',
-    title: 'New Morning Yoga Classes Added',
-    desc: "We've added new morning yoga sessions to help you start your day with calm energy and focus. Join now and...",
-    img: 'https://i.ibb.co.com/ynYvN6kk/66e347ed7da510ae6fc8584bc37e1f711dba0ffa.jpg'
-  },
-  {
-    id: 2,
-    date: 'Wed Dec 10 2025',
-    title: 'Special Workshop This Weekend',
-    desc: 'Join our special weekend workshop focused on flexibility, breathing, and relaxation. Limited seats available.',
-    img: 'https://i.ibb.co.com/ynYvN6kk/66e347ed7da510ae6fc8584bc37e1f711dba0ffa.jpg'
-  },
-  {
-    id: 3,
-    date: 'Wed Dec 10 2025',
-    title: 'Improve Your Flexibility in 30 Days',
-    desc: 'Discover how regular yoga practice can improve your flexibility and reduce stress in just 30 days.',
-    img: 'https://i.ibb.co.com/ynYvN6kk/66e347ed7da510ae6fc8584bc37e1f711dba0ffa.jpg'
-  },
-  {
-    id: 4,
-    date: 'Wed Dec 10 2025',
-    title: 'New Morning Yoga Classes Added',
-    desc: "We've added new morning yoga sessions to help you start your day with calm energy and focus. Join now and...",
-    img: 'https://i.ibb.co.com/ynYvN6kk/66e347ed7da510ae6fc8584bc37e1f711dba0ffa.jpg'
-  },
-  {
-    id: 5,
-    date: 'Wed Dec 10 2025',
-    title: 'Special Workshop This Weekend',
-    desc: 'Join our special weekend workshop focused on flexibility, breathing, and relaxation. Limited seats available.',
-    img: 'https://i.ibb.co.com/ynYvN6kk/66e347ed7da510ae6fc8584bc37e1f711dba0ffa.jpg'
-  },
-  {
-    id: 6,
-    date: 'Wed Dec 10 2025',
-    title: 'Improve Your Flexibility in 30 Days',
-    desc: 'Discover how regular yoga practice can improve your flexibility and reduce stress in just 30 days.',
-    img: 'https://i.ibb.co.com/ynYvN6kk/66e347ed7da510ae6fc8584bc37e1f711dba0ffa.jpg'
-  }
-]
+import { fetchNews, createNews, updateNews, deleteNews } from '../../../../features/news/newsAPI'
+import { selectAllNews, selectNewsLoading } from '../../../../features/news/newsSlice'
 
 const AdminNews = () => {
+  const dispatch = useDispatch()
+  const newsList = useSelector(selectAllNews)
+  const loading = useSelector(selectNewsLoading)
+
   const [query, setQuery] = useState('')
   const [page, setPage] = useState(1)
   const pageSize = 6
 
-  const [newsList, setNewsList] = useState(sampleNews)
+  // Fetch news on component mount
+  useEffect(() => {
+    dispatch(fetchNews())
+  }, [dispatch])
 
   const filtered = useMemo(() => {
     if (!query) return newsList
@@ -67,12 +32,11 @@ const AdminNews = () => {
     return newsList.filter(n => n.title.toLowerCase().includes(q) || n.desc.toLowerCase().includes(q))
   }, [query, newsList])
 
-  useEffect(() => {
-    setPage(1)
-  }, [query])
+  // Reset to page 1 when query changes
+  const currentPage = useMemo(() => query ? 1 : page, [query, page])
 
   const total = Math.max(1, Math.ceil(filtered.length / pageSize))
-  const paged = filtered.slice((page - 1) * pageSize, page * pageSize)
+  const paged = filtered.slice((currentPage - 1) * pageSize, currentPage * pageSize)
 
   const handleEdit = (news) => {
     // open modal with existing news data
@@ -96,23 +60,32 @@ const AdminNews = () => {
 
   const handleOpenModal = () => { setEditingNews(null); setIsModalOpen(true) }
 
-  const handleSaveNews = (data) => {
-    // Demo save: if editingNews exists, treat as update
-    if (editingNews) {
-      // update existing
-      setNewsList(prev => prev.map(n => n.id === editingNews.id ? { ...n, title: data.title, desc: data.desc, img: data.image && typeof data.image === 'string' ? data.image : n.img } : n))
-      toast.success('News updated (demo)')
-      console.log('Updated news id:', editingNews.id, 'data:', data)
-    } else {
-      // add new
-      const nextId = Math.max(0, ...newsList.map(n => n.id)) + 1
-      const newItem = { id: nextId, date: new Date().toDateString(), title: data.title, desc: data.desc, img: data.image && typeof data.image === 'string' ? data.image : '' }
-      setNewsList(prev => [newItem, ...prev])
-      toast.success('News saved (demo)')
-      console.log('Saved news data:', data)
+  const handleSaveNews = async (data) => {
+    try {
+      if (editingNews) {
+        // Update existing news
+        await dispatch(updateNews({
+          id: editingNews.id,
+          data: {
+            title: data.title,
+            desc: data.desc,
+            img: data.image && typeof data.image === 'string' ? data.image : editingNews.img
+          }
+        })).unwrap()
+        toast.success('News updated successfully')
+      } else {
+        // Create new news
+        await dispatch(createNews({
+          title: data.title,
+          desc: data.desc,
+          img: data.image && typeof data.image === 'string' ? data.image : ''
+        })).unwrap()
+        toast.success('News created successfully')
+      }
+      setEditingNews(null)
+    } catch (error) {
+      toast.error(error || 'Operation failed')
     }
-    // reset editing state
-    setEditingNews(null)
   }
 
   return (
@@ -145,8 +118,12 @@ const AdminNews = () => {
         </Button>
       </div>
 
-      {/* News Grid */}
-      {filtered.length === 0 ? (
+      {/* Loading State */}
+      {loading && newsList.length === 0 ? (
+        <div className="flex items-center justify-center py-12">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-teal-600"></div>
+        </div>
+      ) : filtered.length === 0 ? (
         <EmptyState title={query ? 'No results found' : 'No news available'} subtitle={query ? `No news matching "${query}"` : 'There are currently no news items.'} className="mt-8" />
       ) : (
         <>
@@ -161,15 +138,18 @@ const AdminNews = () => {
             ))}
           </div>
 
-          <Pagination page={page} total={total} onChange={(p) => setPage(p)} />
+          <Pagination page={currentPage} total={total} onChange={(p) => setPage(p)} />
         </>
       )}
       <NewsModal isOpen={isModalOpen} initialData={editingNews} onClose={() => { setIsModalOpen(false); setEditingNews(null) }} onSave={(d) => { handleSaveNews(d); setIsModalOpen(false) }} />
-      <DeleteConfirmationModal isOpen={isDeleteOpen} onClose={() => { setIsDeleteOpen(false); setDeleteTarget(null) }} itemTitle={deleteTarget?.title} onConfirm={() => {
+      <DeleteConfirmationModal isOpen={isDeleteOpen} onClose={() => { setIsDeleteOpen(false); setDeleteTarget(null) }} itemTitle={deleteTarget?.title} onConfirm={async () => {
         if (deleteTarget) {
-          setNewsList(prev => prev.filter(n => n.id !== deleteTarget.id))
-          toast.success('News deleted (demo)')
-          console.log('Deleted news id:', deleteTarget.id)
+          try {
+            await dispatch(deleteNews(deleteTarget.id)).unwrap()
+            toast.success('News deleted successfully')
+          } catch (error) {
+            toast.error(error || 'Failed to delete news')
+          }
         }
         setIsDeleteOpen(false)
         setDeleteTarget(null)

@@ -21,12 +21,12 @@ const ProviderService = () => {
     }, [dispatch]);
 
     // Pagination logic
+    const totalPages = Math.max(1, Math.ceil(services.length / itemsPerPage));
+
     const paginatedServices = useMemo(() => {
         const startIndex = (currentPage - 1) * itemsPerPage;
         return services.slice(startIndex, startIndex + itemsPerPage);
-    }, [services, currentPage]);
-
-    const totalPages = Math.ceil(services.length / itemsPerPage);
+    }, [services, currentPage, itemsPerPage]);
 
     const handleEdit = () => {
         // open modal in edit mode (not implemented in ServiceModal yet)
@@ -71,13 +71,11 @@ const ProviderService = () => {
                 </div>
             </div>
 
-            {totalPages > 1 && (
-                <Pagination
-                    currentPage={currentPage}
-                    totalPages={totalPages}
-                    onPageChange={setCurrentPage}
-                />
-            )}
+            <Pagination
+                page={currentPage}
+                total={totalPages}
+                onChange={(p) => setCurrentPage(p)}
+            />
 
             <ServiceModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
         </div>

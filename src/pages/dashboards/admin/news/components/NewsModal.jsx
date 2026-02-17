@@ -9,6 +9,7 @@ const NewsModal = ({ isOpen, onClose, initialData = null, onSave }) => {
 
     useEffect(() => {
         if (initialData) {
+            // eslint-disable-next-line react-hooks/set-state-in-effect
             setTitle(initialData.title || '')
             setDesc(initialData.desc || '')
             setImage(initialData.img || null)
