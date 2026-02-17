@@ -81,7 +81,7 @@ const HeaderNav = ({ isMenuOpen, setIsMenuOpen }) => {
               <Link
                 key={item.name}
                 to={item.href}
-                className={`text-sm font-normal transition-colors ${isActive(item.href)
+                className={`text-sm xl:text-base font-normal transition-colors ${isActive(item.href)
                   ? 'text-btn-primary border-btn-primary border-b-2 pb-1'
                   : 'hover:text-btn-primary text-navigation'
                   }`}
