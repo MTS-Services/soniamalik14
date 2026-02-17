@@ -19,6 +19,7 @@ import {
     Settings,
     CirclePlus,
     LandPlot,
+    Newspaper,
 } from 'lucide-react';
 import { useAuth, ROLES } from '../../context/AuthContext';
 
@@ -35,7 +36,8 @@ const getMenuItems = (role, basePath) => {
         { id: 'sports', label: 'Sports', icon: <LandPlot className="w-5 h-5" />, path: `${basePath}/sports` },
         { id: 'service', label: 'Service', icon: <Wrench className="w-5 h-5" />, path: `${basePath}/service` },
         { id: 'finances', label: 'Finances', icon: <DollarSign className="w-5 h-5" />, path: `${basePath}/finances` },
-        { id: 'role-matrix', label: 'Role Matrix', icon: <Shield className="w-5 h-5" />, path: `${basePath}/role-matrix` },
+        // { id: 'role-matrix', label: 'Role Matrix', icon: <Shield className="w-5 h-5" />, path: `${basePath}/role-matrix` },
+        { id: 'News', label: 'News', icon: <Newspaper className="w-5 h-5" />, path: `${basePath}/news` },
         { id: 'settings', label: 'Settings', icon: <Settings className="w-5 h-5" />, path: `${basePath}/settings` },
     ];
 
@@ -182,7 +184,7 @@ const Sidebar = ({ isOpen, onClose }) => {
                                 }}
                             >
                                 <span className="flex items-center">{item.icon}</span>
-                                <span className="text-sm font-medium">{item.label}</span>
+                                <span className="text-base font-medium">{item.label}</span>
                             </NavLink>
                         </div>
                     ))}

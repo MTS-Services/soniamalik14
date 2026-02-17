@@ -40,7 +40,7 @@ const RecruitmentCard = ({ item = {}, editLink, onEdit, onDelete, className = ''
 
                             <div className="h-36 bg-gray-200 rounded-md mb-4 overflow-hidden flex items-center justify-center">
                                 {item.image ? (
-                                    <img src={item.image} alt={item.title} className="w-full h-full object-cover rounded-md" />
+                                    <img src={item.image} alt={item.title} className="w-full h-full  rounded-md" />
                                 ) : (
                                     <div className="text-[#000000] bg-[#D9D9D9] rounded-md p-4">Image</div>
                                 )}
@@ -53,7 +53,7 @@ const RecruitmentCard = ({ item = {}, editLink, onEdit, onDelete, className = ''
                             <span className="text-sm">{item.location || "Dhaka"} </span>
                         </div>
                         <div className="text-sm text-[#363636] mb-2 flex items-start gap-2 flex-col">
-                            <div className="flex items-center gap-2"><Calendar className="w-4 h-4 text-[#363636]" /> <span className="text-sm">{item.days ||"12 march 2026" }</span></div>
+                            <div className="flex items-center gap-2"><Calendar className="w-4 h-4 text-[#363636]" /> <span className="text-sm">{item.days || "12 march 2026"}</span></div>
                         </div>
                         <div className="text-sm text-[#363636] mb-3 flex items-start gap-2 flex-col">
                             <div className="flex items-center gap-2"><Clock className="w-4 h-4 text-[#363636]" /> <span className="text-sm">{item.time}</span></div>
