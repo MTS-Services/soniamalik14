@@ -18,4 +18,9 @@ export const ENDPOINT = {
     DELETE: (id) => `/api/news/${id}`,
     DETAIL: (id) => `/api/news/${id}`,
   },
+  AUTH: {
+    LOGIN: '/api/auth/login',
+    ME: '/api/auth/me',
+    LOGOUT: '/api/auth/logout',
+  },
 };
