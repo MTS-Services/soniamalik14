@@ -9,6 +9,7 @@ import FindSport from '../pages/public/public_FindSport/FindSport';
 import FindSportDetails from '../pages/public/public_FindSport/components/FindSportDetails';
 import SigninView from '../pages/public/public_login/SigninView.jsx';
 import RegisterView from '../pages/public/public_login/SignUpView.jsx';
+import VerifyEmailView from '../pages/public/public_login/VerifyEmailView.jsx';
 import ForgotPasswordView from '../pages/public/public_login/ForgotPasswordView.jsx';
 import OtpVerificationView from '../pages/public/public_login/OtpVerificationView.jsx';
 import ResetPasswordView from '../pages/public/public_login/ResetPasswordView.jsx';
@@ -83,6 +84,7 @@ const router = createBrowserRouter(
       <Route path="/register" element={<RegisterView />} />
       <Route path="/forgot-password" element={<ForgotPasswordView />} />
       <Route path="/otp-verification" element={<OtpVerificationView />} />
+      <Route path="/verify-email" element={<VerifyEmailView />} />
       <Route path="/reset-password" element={<ResetPasswordView />} />
       <Route path="/unauthorized" element={<Unauthorized />} />
 

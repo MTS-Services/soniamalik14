@@ -39,7 +39,7 @@ axiosInstance.interceptors.request.use(
 );
 
 // Response interceptor - Only for non-error responses
-// Error handling is delegated to apiExecutor for Redux thunks
+
 axiosInstance.interceptors.response.use(
   (response) => {
     return response;

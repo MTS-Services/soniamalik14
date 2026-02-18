@@ -5,8 +5,17 @@ import { apiExecutor } from '../../services/apiExecutor';
 
 export const fetchProducts = createAsyncThunk(
   'products/fetchAll',
-  async (_, { rejectWithValue, signal }) =>
-    apiExecutor((signal) => GET(ENDPOINT.PUBLIC.PRODUCTS, { signal }), rejectWithValue, signal),
+  async (_, { rejectWithValue, signal }) => {
+    if (!ENDPOINT?.PUBLIC?.PRODUCTS) {
+      // No products endpoint configured — return empty list to avoid axios calls with undefined URL
+      return [];
+    }
+    return apiExecutor(
+      (signal) => GET(ENDPOINT.PUBLIC.PRODUCTS, { signal }),
+      rejectWithValue,
+      signal
+    );
+  },
   {
     condition: (_, { getState }) => {
       const { status } = getState().products;

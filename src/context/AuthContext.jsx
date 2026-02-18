@@ -49,16 +49,22 @@ export const AuthProvider = ({ children }) => {
         return { success: false, message: msg };
       }
 
+      // persist user + token
       handleSetUser(userObj, token);
+      // ensure axios header for immediate requests
       // Ensure axios default header is set for immediate subsequent requests
       try {
         if (token) {
           axiosInstance.defaults.headers.common.Authorization = `Bearer ${token}`;
           // eslint-disable-next-line no-console
-          console.debug('[auth] token set (masked):', `${String(token).slice(0, 6)}...`);
+          console.log('[auth] token set (masked):', `${String(token).slice(0, 6)}...`);
+        } else {
+          // eslint-disable-next-line no-console
+          console.log('[auth] no token returned from login; may be cookie-based auth');
         }
       } catch (e) {
-        // noop
+        // eslint-disable-next-line no-console
+        console.error('[auth] error setting axios header', e);
       }
       setLoading(false);
       return { success: true, user: userObj };
@@ -76,15 +82,32 @@ export const AuthProvider = ({ children }) => {
   const fetchMe = useCallback(async () => {
     setLoading(true);
     try {
+      // diagnostic: log intent and stored token
+      // eslint-disable-next-line no-console
+      console.log('[auth][fetchMe] calling', ENDPOINT.AUTH.ME, 'token(masked)=', String(getToken()).slice(0, 6) + '...');
       const response = await GET(ENDPOINT.AUTH.ME);
       const payload = response.data ?? response;
-      const userObj = payload.user || payload?.data || payload;
+      // Backend sometimes wraps the user inside payload.data.user — unwrap it safely
+      let userObj = payload.user ?? payload?.data?.user ?? payload?.data ?? payload;
+      if (userObj && typeof userObj === 'object' && userObj.user) {
+        userObj = userObj.user;
+      }
+      // eslint-disable-next-line no-console
+      console.log('[auth][fetchMe] success - resolved user:', userObj, 'raw payload:', payload);
       handleSetUser(userObj, null);
       setLoading(false);
       return { success: true, user: userObj };
     } catch (err) {
       setLoading(false);
       // If unauthorized, clear local auth
+      // eslint-disable-next-line no-console
+      console.error('[auth][fetchMe][error]', {
+        message: err?.message,
+        status: err?.response?.status,
+        url: err?.config?.url,
+        responseData: err?.response?.data,
+      });
+
       if (err?.response?.status === 401) {
         removeToken();
         removeUser();
@@ -92,7 +115,8 @@ export const AuthProvider = ({ children }) => {
         setIsAuthenticated(false);
       }
       const message = err?.response?.data?.message || err?.message || 'Failed to fetch profile';
-      toast.error(message);
+      // Do not always toast on fetchMe; prefer console diagnostics for now
+      // toast.error(message);
       return { success: false, message };
     }
   }, []);

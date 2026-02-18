@@ -1,7 +1,24 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { useAuth } from '../../../../context/AuthContext'
+import { changePassword, updateUserProfile, updateBillingAddress, updateShippingAddress } from '../../../../services/authService'
 import { FiCamera, FiEye, FiEyeOff, FiChevronDown } from 'react-icons/fi'
 
 export default function Account() {
+  const { fetchMe, user } = useAuth();
+
+  useEffect(() => {
+    const load = async () => {
+      try {
+        const res = await fetchMe();
+        // eslint-disable-next-line no-console
+        console.log('[Account] /api/auth/me:', res?.user ?? res);
+      } catch (e) {
+        // eslint-disable-next-line no-console
+        console.error('[Account] fetchMe error', e);
+      }
+    };
+    load();
+  }, [fetchMe]);
   const [showCurrentPassword, setShowCurrentPassword] = useState(false)
   const [showNewPassword, setShowNewPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
@@ -22,6 +39,10 @@ export default function Account() {
     newPassword: '',
     confirmPassword: ''
   })
+  const [changingPassword, setChangingPassword] = useState(false)
+  const [savingAccount, setSavingAccount] = useState(false)
+  const [savingBilling, setSavingBilling] = useState(false)
+  const [savingShipping, setSavingShipping] = useState(false)
 
   const [billingAddress, setBillingAddress] = useState({
     firstName: 'Kevin',
@@ -50,6 +71,75 @@ export default function Account() {
   const regions = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut']
   const cities = ['Montgomery', 'Birmingham', 'Mobile', 'Huntsville', 'Tuscaloosa']
 
+  // When `user` becomes available, populate the form fields with real data
+  useEffect(() => {
+    if (!user) return;
+    const fullName = user.name || user.fullName || '';
+    const parts = fullName.trim().split(' ').filter(Boolean);
+    const firstName = parts[0] || '';
+    const lastName = parts.slice(1).join(' ') || '';
+
+    setAccountData((prev) => ({
+      ...prev,
+      firstName: firstName || prev.firstName,
+      lastName: lastName || prev.lastName,
+      email: user.email || prev.email,
+      phone: user.phoneNumber || user.phone || prev.phone,
+      region: user.region || prev.region,
+      city: user.city || prev.city,
+      zipCode: user.zipCode || prev.zipCode,
+      address: user.address || prev.address,
+    }));
+
+    // Populate billing address from user.billingAddress object if available
+    if (user.billingAddress) {
+      setBillingAddress({
+        firstName: user.billingAddress.firstName || firstName,
+        lastName: user.billingAddress.lastName || lastName,
+        companyName: user.billingAddress.companyName || '',
+        address: user.billingAddress.address || '',
+        region: user.billingAddress.regionState || user.billingAddress.region || '',
+        city: user.billingAddress.city || '',
+        zipCode: user.billingAddress.zipCode || '',
+        email: user.billingAddress.email || user.email || '',
+        phone: user.billingAddress.phoneNumber || user.billingAddress.phone || user.phoneNumber || ''
+      });
+    } else {
+      setBillingAddress((prev) => ({
+        ...prev,
+        firstName: firstName || prev.firstName,
+        lastName: lastName || prev.lastName,
+        email: user.email || prev.email,
+        phone: user.phoneNumber || user.phone || prev.phone,
+        address: user.address || prev.address,
+      }));
+    }
+
+    // Populate shipping address from user.shippingAddress object if available
+    if (user.shippingAddress) {
+      setShippingAddress({
+        firstName: user.shippingAddress.firstName || firstName,
+        lastName: user.shippingAddress.lastName || lastName,
+        companyName: user.shippingAddress.companyName || '',
+        address: user.shippingAddress.address || '',
+        region: user.shippingAddress.regionState || user.shippingAddress.region || '',
+        city: user.shippingAddress.city || '',
+        zipCode: user.shippingAddress.zipCode || '',
+        email: user.shippingAddress.email || user.email || '',
+        phone: user.shippingAddress.phoneNumber || user.shippingAddress.phone || user.phoneNumber || ''
+      });
+    } else {
+      setShippingAddress((prev) => ({
+        ...prev,
+        firstName: firstName || prev.firstName,
+        lastName: lastName || prev.lastName,
+        email: user.email || prev.email,
+        phone: user.phoneNumber || user.phone || prev.phone,
+        address: user.address || prev.address,
+      }));
+    }
+  }, [user]);
+
   return (
     <div className="min-h-screen bg-transparent">
       <div className="p-4 md:p-6 lg:p-8">
@@ -60,22 +150,7 @@ export default function Account() {
           <div className="flex flex-col md:flex-row gap-6 md:gap-8">
             {/* Profile Photo */}
             <div className="flex-shrink-0">
-              <div className="relative w-20 h-20 md:w-24 md:h-24">
-                <div className="w-full h-full rounded-full bg-gray-200 flex items-center justify-center overflow-hidden">
-                  <img 
-                    src="/placeholder-avatar.jpg" 
-                    alt="Profile" 
-                    className="w-full h-full object-cover"
-                    onError={(e) => {
-                      e.target.style.display = 'none'
-                      e.target.parentElement.innerHTML = '<div class="text-gray-400 text-2xl font-bold">KD</div>'
-                    }}
-                  />
-                </div>
-                <button className="absolute bottom-0 right-0 w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center border-2 border-white hover:bg-gray-200 transition-colors">
-                  <FiCamera className="w-4 h-4 text-gray-600" />
-                </button>
-              </div>
+
             </div>
 
             {/* Form Fields */}
@@ -174,8 +249,34 @@ export default function Account() {
                 </div>
               </div>
 
-              <button className="mt-6 px-6 py-2.5 bg-teal-700 text-white rounded-lg hover:bg-teal-800 transition-colors font-medium">
-                SAVE CHANGES
+              <button
+                type="button"
+                onClick={async () => {
+                  if (!user?.id) {
+                    // toast.error('User ID not found');
+                    return;
+                  }
+                  setSavingAccount(true);
+                  const userData = {
+                    name: `${accountData.firstName} ${accountData.lastName}`.trim(),
+                    email: accountData.email,
+                    phoneNumber: accountData.phone,
+                    address: accountData.address,
+                    city: accountData.city,
+                    region: accountData.region,
+                    zipCode: accountData.zipCode,
+                  };
+                  const result = await updateUserProfile(user.id, userData);
+                  setSavingAccount(false);
+                  if (result.success && result.user) {
+                    // Optionally refresh user data
+                    await fetchMe();
+                  }
+                }}
+                className="mt-6 px-6 py-2.5 bg-teal-700 text-white rounded-lg hover:bg-teal-800 transition-colors font-medium"
+                disabled={savingAccount}
+              >
+                {savingAccount ? 'Saving...' : 'SAVE CHANGES'}
               </button>
             </div>
           </div>
@@ -246,8 +347,22 @@ export default function Account() {
               </div>
             </div>
 
-            <button className="mt-6 px-6 py-2.5 bg-teal-700 text-white rounded-lg hover:bg-teal-800 transition-colors font-medium">
-              CHANGE PASSWORD
+            <button
+              type="button"
+              onClick={async () => {
+                const { currentPassword, newPassword, confirmPassword } = passwordData;
+                setChangingPassword(true);
+                const result = await changePassword(currentPassword, newPassword, confirmPassword);
+                setChangingPassword(false);
+                if (result.success) {
+                  // Clear password inputs on success
+                  setPasswordData({ currentPassword: '', newPassword: '', confirmPassword: '' });
+                }
+              }}
+              className="mt-6 px-6 py-2.5 bg-teal-700 text-white rounded-lg hover:bg-teal-800 transition-colors font-medium"
+              disabled={changingPassword}
+            >
+              {changingPassword ? 'Changing...' : 'CHANGE PASSWORD'}
             </button>
           </div>
         </div>
@@ -367,8 +482,29 @@ export default function Account() {
               </div>
             </div>
 
-            <button className="mt-6 px-6 py-2.5 bg-teal-700 text-white rounded-lg hover:bg-teal-800 transition-colors font-medium">
-              SAVE CHANGES
+            <button
+              type="button"
+              onClick={async () => {
+                if (!user?.id) return;
+                setSavingBilling(true);
+                const billingData = {
+                  firstName: billingAddress.firstName,
+                  lastName: billingAddress.lastName,
+                  companyName: billingAddress.companyName,
+                  address: billingAddress.address,
+                  regionState: billingAddress.region,
+                  city: billingAddress.city,
+                  zipCode: billingAddress.zipCode,
+                  email: billingAddress.email,
+                  phoneNumber: billingAddress.phone,
+                };
+                await updateBillingAddress(user.id, billingData);
+                setSavingBilling(false);
+              }}
+              className="mt-6 px-6 py-2.5 bg-teal-700 text-white rounded-lg hover:bg-teal-800 transition-colors font-medium"
+              disabled={savingBilling}
+            >
+              {savingBilling ? 'Saving...' : 'SAVE CHANGES'}
             </button>
           </div>
 
@@ -485,8 +621,29 @@ export default function Account() {
               </div>
             </div>
 
-            <button className="mt-6 px-6 py-2.5 bg-teal-700 text-white rounded-lg hover:bg-teal-800 transition-colors font-medium">
-              SAVE CHANGES
+            <button
+              type="button"
+              onClick={async () => {
+                if (!user?.id) return;
+                setSavingShipping(true);
+                const shippingData = {
+                  firstName: shippingAddress.firstName,
+                  lastName: shippingAddress.lastName,
+                  companyName: shippingAddress.companyName,
+                  address: shippingAddress.address,
+                  regionState: shippingAddress.region,
+                  city: shippingAddress.city,
+                  zipCode: shippingAddress.zipCode,
+                  email: shippingAddress.email,
+                  phoneNumber: shippingAddress.phone,
+                };
+                await updateShippingAddress(user.id, shippingData);
+                setSavingShipping(false);
+              }}
+              className="mt-6 px-6 py-2.5 bg-teal-700 text-white rounded-lg hover:bg-teal-800 transition-colors font-medium"
+              disabled={savingShipping}
+            >
+              {savingShipping ? 'Saving...' : 'SAVE CHANGES'}
             </button>
           </div>
         </div>

@@ -11,6 +11,7 @@ const ResetPasswordView = () => {
     password: '',
     confirmPassword: '',
   });
+  const [otp, setOtp] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [errors, setErrors] = useState({});
@@ -28,6 +29,10 @@ const ResetPasswordView = () => {
 
   const validateForm = () => {
     const newErrors = {};
+
+    if (!otp) {
+      newErrors.otp = 'OTP is required';
+    }
 
     if (!formData.password) {
       newErrors.password = 'Password is required';
@@ -54,8 +59,11 @@ const ResetPasswordView = () => {
       (async () => {
         try {
           const email = localStorage.getItem('forgot_email');
-          const body = { password: formData.password };
-          if (email) body.email = email;
+          const body = {
+            email: email || undefined,
+            otp: otp,
+            newPassword: formData.password,
+          };
 
           await POST(ENDPOINT.AUTH.RESET_PASSWORD, body);
           setLoading(false);
@@ -95,6 +103,18 @@ const ResetPasswordView = () => {
 
         <form onSubmit={handleSubmit} className="space-y-5">
           {/* Password Field */}
+          <div>
+            <label className="block text-[#282828] font-medium mb-2 text-sm">OTP</label>
+            <input
+              type="text"
+              value={otp}
+              onChange={(e) => setOtp(e.target.value)}
+              placeholder="Enter OTP"
+              className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-btn-primary focus:border-transparent transition-all text-sm text-gray-700 placeholder-gray-400"
+            />
+            {errors.otp && <p className="text-red-500 text-xs mt-1">{errors.otp}</p>}
+          </div>
+
           <div>
             <label className="block text-[#282828] font-medium mb-2 text-sm">
               Password

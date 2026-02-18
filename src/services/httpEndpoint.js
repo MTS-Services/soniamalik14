@@ -23,7 +23,15 @@ export const ENDPOINT = {
     ME: '/api/auth/me',
     LOGOUT: '/api/auth/logout',
     FORGOT_PASSWORD: '/api/auth/forgot-password',
+    REGISTER: '/api/auth/register',
     VERIFY_OTP: '/api/auth/verify-otp',
     RESET_PASSWORD: '/api/auth/reset-password',
+    VERIFY_EMAIL: '/api/auth/verify-email',
+    CHANGE_PASSWORD: '/api/auth/change-password',
+  },
+  USER: {
+    UPDATE: (userId) => `/api/users/${userId}`,
+    BILLING_ADDRESS: (userId) => `/api/users/${userId}/billing-address`,
+    SHIPPING_ADDRESS: (userId) => `/api/users/${userId}/shipping-address`,
   },
 };
