@@ -4,7 +4,7 @@ export const ENDPOINT = {
     HOME: '/',
     LOGIN: '/login',
     REGISTER: '/register',
-    PRODUCTS: '/api/products?limit=5',
+    // PRODUCTS: '/api/products?limit=5',
   },
   PRIVATE: {
     DASHBOARD: '/dashboard',

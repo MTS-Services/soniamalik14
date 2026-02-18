@@ -1,8 +1,9 @@
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import { POST, GET } from '../services/httpMethods';
+import axiosInstance from '../services/axiosInstance';
 import { toast } from 'react-toastify';
 import { ENDPOINT } from '../services/httpEndpoint';
-import { setToken, removeToken, setUser, getUser, removeUser } from '../utils/storage';
+import { setToken, removeToken, setUser, getUser, removeUser, getToken } from '../utils/storage';
 
 export const ROLES = {
   USER: 'user',
@@ -20,8 +21,14 @@ export const AuthProvider = ({ children }) => {
 
   const handleSetUser = (userObj, token) => {
     if (token) setToken(token);
-    if (userObj) setUser(userObj);
-    setUserState(userObj || null);
+    // Normalize role to lowercase so role checks are consistent across app
+    let normalized = userObj;
+    if (userObj && userObj.role) {
+      normalized = { ...userObj, role: String(userObj.role).toLowerCase() };
+    }
+
+    if (normalized) setUser(normalized);
+    setUserState(normalized || null);
     setIsAuthenticated(Boolean(userObj));
   };
 
@@ -43,10 +50,23 @@ export const AuthProvider = ({ children }) => {
       }
 
       handleSetUser(userObj, token);
+      // Ensure axios default header is set for immediate subsequent requests
+      try {
+        if (token) {
+          axiosInstance.defaults.headers.common.Authorization = `Bearer ${token}`;
+          // eslint-disable-next-line no-console
+          console.debug('[auth] token set (masked):', `${String(token).slice(0, 6)}...`);
+        }
+      } catch (e) {
+        // noop
+      }
       setLoading(false);
       return { success: true, user: userObj };
     } catch (err) {
       setLoading(false);
+      // Log full error for debugging
+      // eslint-disable-next-line no-console
+      console.error('[auth][login][error]', err);
       const message = err?.response?.data?.message || err?.message || 'Login failed';
       toast.error(message);
       return { success: false, message };
@@ -97,9 +117,11 @@ export const AuthProvider = ({ children }) => {
   // On mount, if token exists but no user, try to fetch profile
   useEffect(() => {
     const existingUser = getUser();
-    if (!existingUser) {
+    const token = getToken();
+
+    // Only attempt to fetch profile if we have a token but no user stored
+    if (!existingUser && token) {
       const tryFetch = async () => {
-        // If axiosInstance has token via storage, fetch me
         try {
           await fetchMe();
         } catch (e) {
