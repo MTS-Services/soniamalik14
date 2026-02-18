@@ -22,5 +22,8 @@ export const ENDPOINT = {
     LOGIN: '/api/auth/login',
     ME: '/api/auth/me',
     LOGOUT: '/api/auth/logout',
+    FORGOT_PASSWORD: '/api/auth/forgot-password',
+    VERIFY_OTP: '/api/auth/verify-otp',
+    RESET_PASSWORD: '/api/auth/reset-password',
   },
 };

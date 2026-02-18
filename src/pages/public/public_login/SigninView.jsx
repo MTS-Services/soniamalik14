@@ -77,7 +77,7 @@ const LoginView = () => {
             )}
 
             {/* Demo Credentials Info */}
-            <div className="bg-blue-50 border border-blue-200 text-blue-700 px-4 py-3 rounded-lg text-sm">
+            {/* <div className="bg-blue-50 border border-blue-200 text-blue-700 px-4 py-3 rounded-lg text-sm">
               <p className="font-semibold mb-2">Demo Credentials (Password: demo123)</p>
               <div className="space-y-1 text-xs">
                 <p><strong>Admin:</strong> admin@essahub.com</p>
@@ -85,7 +85,7 @@ const LoginView = () => {
                 <p><strong>Coach:</strong> coach@essahub.com</p>
                 <p><strong>User:</strong> user@essahub.com</p>
               </div>
-            </div>
+            </div> */}
 
             {/* Email Field */}
             <div>

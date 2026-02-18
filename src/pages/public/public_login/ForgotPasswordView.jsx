@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { ArrowRight, ArrowLeft } from 'lucide-react';
+import { POST } from '../../../services/httpMethods';
+import { ENDPOINT } from '../../../services/httpEndpoint';
+import { toast } from 'react-toastify';
 
 const ForgotPasswordView = () => {
   const navigate = useNavigate();
@@ -10,15 +13,32 @@ const ForgotPasswordView = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (!email.trim()) {
+      toast.error('Please enter your email');
+      return;
+    }
+
     setLoading(true);
     setMessage('');
 
-    // Simulate API call
-    setTimeout(() => {
-      setLoading(false);
-      // Navigate to OTP verification page
-      navigate('/otp-verification');
-    }, 1000);
+    (async () => {
+      try {
+        const response = await POST(ENDPOINT.AUTH.FORGOT_PASSWORD, { email });
+        const payload = response?.data ?? response;
+        const msg = payload?.message || 'Reset code sent to your email';
+        // persist email for OTP verification step
+        localStorage.setItem('forgot_email', email);
+        setLoading(false);
+        setMessage(msg);
+        toast.success(msg);
+        navigate('/otp-verification');
+      } catch (err) {
+        setLoading(false);
+        const message = err?.response?.data?.message || err?.message || 'Failed to send reset code';
+        setMessage(message);
+        toast.error(message);
+      }
+    })();
   };
 
   return (

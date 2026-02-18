@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowRight, ArrowLeft, Eye, EyeOff } from 'lucide-react';
+import { POST } from '../../../services/httpMethods';
+import { ENDPOINT } from '../../../services/httpEndpoint';
+import { toast } from 'react-toastify';
 
 const ResetPasswordView = () => {
   const navigate = useNavigate();
@@ -16,7 +19,7 @@ const ResetPasswordView = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
-    
+
     // Clear error for this field
     if (errors[name]) {
       setErrors(prev => ({ ...prev, [name]: '' }));
@@ -44,16 +47,28 @@ const ResetPasswordView = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
+
     if (validateForm()) {
       setLoading(true);
 
-      // Simulate API call
-      setTimeout(() => {
-        setLoading(false);
-        alert('Password reset successfully!');
-        navigate('/signin');
-      }, 1000);
+      (async () => {
+        try {
+          const email = localStorage.getItem('forgot_email');
+          const body = { password: formData.password };
+          if (email) body.email = email;
+
+          await POST(ENDPOINT.AUTH.RESET_PASSWORD, body);
+          setLoading(false);
+          localStorage.removeItem('forgot_email');
+          toast.success('Password reset successfully. Please sign in.');
+          navigate('/signin');
+        } catch (err) {
+          setLoading(false);
+          const message = err?.response?.data?.message || err?.message || 'Password reset failed';
+          setErrors({ form: message });
+          toast.error(message);
+        }
+      })();
     }
   };
 

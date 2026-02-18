@@ -1,6 +1,9 @@
 import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
+import { POST } from '../../../services/httpMethods';
+import { ENDPOINT } from '../../../services/httpEndpoint';
+import { toast } from 'react-toastify';
 
 const OtpVerificationView = () => {
   const navigate = useNavigate();
@@ -36,7 +39,7 @@ const OtpVerificationView = () => {
     e.preventDefault();
     const pastedData = e.clipboardData.getData('text').slice(0, 5);
     const digits = pastedData.split('').filter(char => /^\d$/.test(char));
-    
+
     const newOtp = [...otp];
     digits.forEach((digit, index) => {
       if (index < 5) {
@@ -52,7 +55,7 @@ const OtpVerificationView = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
+
     const otpValue = otp.join('');
     if (otpValue.length !== 5) {
       setError('Please enter all 5 digits');
@@ -62,11 +65,24 @@ const OtpVerificationView = () => {
     setLoading(true);
     setError('');
 
-    // Simulate API call
-    setTimeout(() => {
-      setLoading(false);
-      navigate('/reset-password');
-    }, 1000);
+    (async () => {
+      try {
+        const email = localStorage.getItem('forgot_email');
+        const body = { code: otpValue };
+        if (email) body.email = email;
+        const res = await POST(ENDPOINT.AUTH.VERIFY_OTP, body);
+        const payload = res?.data ?? res;
+        const msg = payload?.message || 'OTP verified';
+        setLoading(false);
+        toast.success(msg);
+        navigate('/reset-password');
+      } catch (err) {
+        setLoading(false);
+        const message = err?.response?.data?.message || err?.message || 'OTP verification failed';
+        setError(message);
+        toast.error(message);
+      }
+    })();
   };
 
   const handleResend = () => {
