@@ -300,7 +300,7 @@ const RegisterView = () => {
               <div>
                 <label className="block text-[#282828] font-medium mb-2">Password</label>
                 <div className="relative">
-                  <input type={showPassword ? "text" : "password"} name="password" placeholder="â€¢â€¢â€¢â€¢ â€¢â€¢â€¢â€¢ â€¢â€¢â€¢â€¢" value={formData.password} className="w-full px-4 py-3 bg-loginInput rounded-lg outline-none text-base" onChange={handleChange} />
+                  <input type={showPassword ? "text" : "password"} name="password" placeholder="... ... ..." value={formData.password} className="w-full px-4 py-3 bg-loginInput rounded-lg outline-none text-base" onChange={handleChange} />
                   <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500">
                     {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                   </button>
@@ -309,7 +309,7 @@ const RegisterView = () => {
               <div>
                 <label className="block text-[#282828] font-medium mb-2">Confirm Password</label>
                 <div className="relative">
-                  <input type={showConfirmPassword ? "text" : "password"} name="confirmPassword" placeholder="â€¢â€¢â€¢â€¢ â€¢â€¢â€¢â€¢ â€¢â€¢â€¢â€¢" value={formData.confirmPassword} className="w-full px-4 py-3 bg-loginInput rounded-lg outline-none text-base" onChange={handleChange} />
+                  <input type={showConfirmPassword ? "text" : "password"} name="confirmPassword" placeholder="... ... ... ..." value={formData.confirmPassword} className="w-full px-4 py-3 bg-loginInput rounded-lg outline-none text-base" onChange={handleChange} />
                   <button type="button" onClick={() => setShowConfirmPassword(!showConfirmPassword)} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500">
                     {showConfirmPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                   </button>

@@ -121,7 +121,7 @@ const LoginView = () => {
                   name="password"
                   value={formData.password}
                   onChange={handleChange}
-                  placeholder="â€¢â€¢â€¢â€¢ â€¢â€¢â€¢â€¢ â€¢â€¢â€¢â€¢"
+                  placeholder="... ... ... ..."
                   className="w-full px-4 py-3 pr-12 bg-loginInput rounded-lg outline-none focus:ring-2 focus:ring-btn-primary transition-all text-base text-gray-700 placeholder-[#747474]"
                   required
                 />
