@@ -1,4 +1,4 @@
-
+﻿
 import React, { useEffect, useState } from 'react';
 import { useParams, useLocation, Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -42,7 +42,7 @@ const EventAnallyticsDetails = ({ backRoute = '/coach/event' }) => {
         description:
             'This training camp is designed exclusively for women footballers who want to improve their skills, fitness, and overall match performance. The session will focus on technical drills, tactical awareness, team coordination, and physical conditioning in a supportive and competitive environment. \n\nWhether you are preparing for upcoming matches or looking to sharpen your fundamentals, this camp provides professional guidance and structured training. Players will train under experienced coaches and get valuable feedback to help them grow confidently on the field.',
         date: 'Saturday, 12 October 2025',
-        time: '4:00 PM – 7:00 PM',
+        time: '4:00 PM â€“ 7:00 PM',
         ageGroup: '16+ Years',
         sportType: 'Cricket',
         skillLevel: 'Beginner to Intermediate',
@@ -120,7 +120,7 @@ const EventAnallyticsDetails = ({ backRoute = '/coach/event' }) => {
         <div className=" dashboardPy dashboardSpaceY  text-gray-800">
             {/* Back Button */}
             <div className="mb-4">
-                <Link to={backTarget} className="inline-flex items-center text-sm font-medium text-teal-600 hover:text-teal-700">
+                <Link to={backTarget} className="inline-flex items-center text-base font-medium text-teal-600 hover:text-teal-700">
                     <ArrowLeft className="w-4 h-4 mr-1" /> Back
                 </Link>
             </div>

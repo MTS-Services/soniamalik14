@@ -1,9 +1,9 @@
-import React from 'react';
+﻿import React from 'react';
 
 const defaultMessages = [
   { id: 1, from: 'them', text: 'Hi! How can I help you today?', time: '10:12 AM' },
   { id: 2, from: 'me', text: 'I wanted to check recent sales trends for June.', time: '10:13 AM' },
-  { id: 3, from: 'them', text: 'Sure — I can pull that report for you.', time: '10:14 AM' },
+  { id: 3, from: 'them', text: 'Sure â€” I can pull that report for you.', time: '10:14 AM' },
 ];
 
 const Chat = ({ messages = defaultMessages }) => {
@@ -17,7 +17,7 @@ const Chat = ({ messages = defaultMessages }) => {
             {m.from === 'them' ? (
               <div className="max-w-[85%] sm:max-w-[70%]">
                 <div className="bg-white border border-gray-100 rounded-lg p-3" style={{ color: '#0F766E' }}>
-                  <div className="text-sm" style={{ color: '#0F766E' }}>{m.text}</div>
+                  <div className="text-base" style={{ color: '#0F766E' }}>{m.text}</div>
                 </div>
                 <div className="text-xs text-gray-400 mt-1">{m.time}</div>
               </div>
@@ -30,7 +30,7 @@ const Chat = ({ messages = defaultMessages }) => {
                     color: '#ffffff',
                   }}
                 >
-                  <div className="text-sm font-medium" style={{ color: '#ffffff' }}>{m.text}</div>
+                  <div className="text-base font-medium" style={{ color: '#ffffff' }}>{m.text}</div>
                 </div>
                 <div className="text-xs text-gray-400 mt-1">{m.time}</div>
               </div>

@@ -1,4 +1,4 @@
-// Route Paths
+﻿// Route Paths
 export const ENDPOINT = {
   PUBLIC: {
     HOME: '/',

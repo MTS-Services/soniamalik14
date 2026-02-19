@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { Eye } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import DashboardHeader from '../../../../components/ui/DashboardHeader';
@@ -124,7 +124,7 @@ export default function ServiceProviderList() {
           </button>
         </div>
         
-        <div className="space-y-2 text-sm">
+        <div className="space-y-2 text-base">
           <div>
             <span className="text-gray-500">Owner:</span>
             <span className="ml-2 font-medium text-[#674E43]">{provider.owner}</span>

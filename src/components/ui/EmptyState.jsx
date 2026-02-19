@@ -1,4 +1,4 @@
-import React from 'react'
+﻿import React from 'react'
 import { Search } from 'lucide-react'
 
 const EmptyState = ({ title = 'No items found', subtitle = '', className = '' }) => {
@@ -8,7 +8,7 @@ const EmptyState = ({ title = 'No items found', subtitle = '', className = '' })
                 <Search className="w-8 h-8 text-gray-500" />
             </div>
             <h3 className="text-lg font-semibold text-gray-800 mb-2">{title}</h3>
-            {subtitle && <p className="text-sm text-gray-500 max-w-md">{subtitle}</p>}
+            {subtitle && <p className="text-base text-gray-500 max-w-md">{subtitle}</p>}
         </div>
     )
 }

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
 import { FiSend } from 'react-icons/fi';
@@ -18,7 +18,7 @@ export default function AdminThreadDetails() {
 
     // Sample replies - in future, fetch real replies by thread id
     const [replies, setReplies] = useState([
-        { id: 1, author: 'Ralph Edwards', content: 'I usually train for 40–45 minutes a day, focusing on ball control and passing. Even simple drills help a lot when done consistently.' },
+        { id: 1, author: 'Ralph Edwards', content: 'I usually train for 40â€“45 minutes a day, focusing on ball control and passing. Even simple drills help a lot when done consistently.' },
         { id: 2, author: 'Ralph Edwards', content: 'Morning stretching and light cardio have really improved my flexibility and reduced muscle soreness after matches.' },
         { id: 3, author: 'Ralph Edwards', content: 'I watch professional women\'s matches to learn positioning and decision-making. It helps me understand the game better.' },
         { id: 4, author: 'Ralph Edwards', content: 'I practice shooting accuracy at home using cones and targets. It has helped me stay sharp even on busy days.' }
@@ -42,7 +42,7 @@ export default function AdminThreadDetails() {
                 {/* Back Button */}
                 <button
                     onClick={() => navigate(-1)}
-                    className="flex items-center text-teal-600 text-sm mb-4"
+                    className="flex items-center text-teal-600 text-base mb-4"
                 >
                     <ArrowLeft size={16} className="mr-2" /> Back
                 </button>
@@ -51,7 +51,7 @@ export default function AdminThreadDetails() {
                 <div className="bg-white rounded-lg p-6 shadow-sm mb-6 w-full lg:max-w-2xl">
                     <div className="text-xs font-medium text-gray-500 mb-2">{thread.author}</div>
                     <h1 className="text-2xl font-bold text-gray-900 mb-3">{thread.title}</h1>
-                    <p className="text-sm text-gray-600 leading-relaxed whitespace-pre-line">
+                    <p className="text-base text-gray-600 leading-relaxed whitespace-pre-line">
                         {thread.description}
                     </p>
                 </div>
@@ -63,7 +63,7 @@ export default function AdminThreadDetails() {
                         {replies.map((r) => (
                             <div key={r.id} className="bg-[#F4F4F4] border border-gray-100 rounded p-4">
                                 <div className="text-xs font-medium text-gray-500 mb-2">{r.author}</div>
-                                <div className="text-sm text-gray-700">{r.content}</div>
+                                <div className="text-base text-gray-700">{r.content}</div>
                             </div>
                         ))}
                     </div>
@@ -77,7 +77,7 @@ export default function AdminThreadDetails() {
                             value={reply}
                             onChange={(e) => setReply(e.target.value)}
                             placeholder="Write your reply"
-                            className="flex-1 rounded-md border border-gray-200 bg-[#F4F4F4] p-3 resize-none h-12 text-sm"
+                            className="flex-1 rounded-md border border-gray-200 bg-[#F4F4F4] p-3 resize-none h-12 text-base"
                         />
                         <button
                             onClick={handleSend}

@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+﻿import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
 import { POST } from '../../../services/httpMethods';
@@ -113,7 +113,7 @@ const OtpVerificationView = () => {
         {/* Back Button */}
         <button
           onClick={() => navigate(-1)}
-          className="mb-4 flex items-center gap-2 text-btn-primary hover:text-[#0d655d] font-medium text-sm transition-colors"
+          className="mb-4 flex items-center gap-2 text-btn-primary hover:text-[#0d655d] font-medium text-base transition-colors"
         >
           <ArrowLeft className="w-4 h-4" />
           Back
@@ -123,7 +123,7 @@ const OtpVerificationView = () => {
           <h1 className="text-2xl md:text-3xl font-bold text-[#282828] text-center mb-3">
             OTP Verification
           </h1>
-          <p className="text-[#666666] text-sm text-center">
+          <p className="text-[#666666] text-base text-center">
             Enter the verification code we just sent to your email address
           </p>
         </div>
@@ -131,26 +131,26 @@ const OtpVerificationView = () => {
         <form onSubmit={handleSubmit} className="space-y-5">
           {/* Error Message */}
           {error && (
-            <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-lg text-sm text-center">
+            <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-lg text-base text-center">
               {error}
             </div>
           )}
 
           {/* Success Message */}
           {resendMessage && (
-            <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg text-sm text-center">
+            <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg text-base text-center">
               {resendMessage}
             </div>
           )}
 
           {/* Email Field (prefilled from forgot-password) */}
           <div>
-            <label className="block text-[#282828] font-medium mb-2 text-sm">Email</label>
+            <label className="block text-[#282828] font-medium mb-2 text-base">Email</label>
             <input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-3 py-2 bg-white border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-btn-primary transition-all text-sm text-gray-700"
+              className="w-full px-3 py-2 bg-white border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-btn-primary transition-all text-base text-gray-700"
             />
           </div>
 
@@ -184,7 +184,7 @@ const OtpVerificationView = () => {
 
           {/* Resend Link */}
           <div className="text-center pt-2">
-            <p className="text-sm text-[#666666]">
+            <p className="text-base text-[#666666]">
               Didn't receive a code?{' '}
               <button
                 type="button"

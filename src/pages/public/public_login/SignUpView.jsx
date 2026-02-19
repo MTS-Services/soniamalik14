@@ -1,4 +1,4 @@
-
+﻿
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FaArrowLeft } from 'react-icons/fa';
@@ -71,14 +71,14 @@ const RegisterView = () => {
 
   const renderUserInput = (label, name, placeholder, type = "text") => (
     <div className="flex-1">
-      <label className="block text-[#282828] font-medium mb-2 text-sm md:text-base">{label}</label>
+      <label className="block text-[#282828] font-medium mb-2 text-base md:text-base">{label}</label>
       <input
         type={type}
         name={name}
         placeholder={placeholder}
         value={formData[name]}
         onChange={handleChange}
-        className="w-full px-4 py-3 bg-loginInput rounded-lg outline-none focus:ring-2 focus:ring-btn-primary transition-all text-sm text-gray-700 placeholder-[#747474]"
+        className="w-full px-4 py-3 bg-loginInput rounded-lg outline-none focus:ring-2 focus:ring-btn-primary transition-all text-base text-gray-700 placeholder-[#747474]"
       />
     </div>
   );
@@ -165,11 +165,11 @@ const RegisterView = () => {
       <div className="w-full lg:w-1/2 flex items-center justify-center px-6 py-12 bg-secondary overflow-y-auto">
         <div className="w-full max-w-md">
           <div className="mb-8">
-            <Link to="/" className="inline-flex items-center text-sm gap-1 text-btn-primary font-medium mb-4">
+            <Link to="/" className="inline-flex items-center text-base gap-1 text-btn-primary font-medium mb-4">
               <FaArrowLeft /> Back to Home
             </Link>
             <h1 className="text-3xl font-bold text-[#282828]">Create Account</h1>
-            <p className="text-[#363636] text-sm">Join the ESSA community today</p>
+            <p className="text-[#363636] text-base">Join the ESSA community today</p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-5">
@@ -179,7 +179,7 @@ const RegisterView = () => {
               <select
                 value={role}
                 onChange={handleRoleChange}
-                className="w-full px-4 py-3 bg-loginInput rounded-lg outline-none focus:ring-2 focus:ring-btn-primary appearance-none cursor-pointer text-sm"
+                className="w-full px-4 py-3 bg-loginInput rounded-lg outline-none focus:ring-2 focus:ring-btn-primary appearance-none cursor-pointer text-base"
                 style={{
                   backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23363636'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E")`,
                   backgroundRepeat: 'no-repeat',
@@ -204,7 +204,7 @@ const RegisterView = () => {
                 {renderUserInput("Phone Number", "phoneNumber", "enter your phone number", "tel")}
                 <div>
                   <label className="block text-[#282828] font-medium mb-2">Ability Level</label>
-                  <select name="abilityLevel" value={formData.abilityLevel} onChange={handleChange} className="w-full px-4 py-3 bg-loginInput rounded-lg outline-none focus:ring-2 focus:ring-btn-primary appearance-none cursor-pointer text-sm"
+                  <select name="abilityLevel" value={formData.abilityLevel} onChange={handleChange} className="w-full px-4 py-3 bg-loginInput rounded-lg outline-none focus:ring-2 focus:ring-btn-primary appearance-none cursor-pointer text-base"
                     style={{
                       backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23363636'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E")`,
                       backgroundRepeat: 'no-repeat',
@@ -224,7 +224,7 @@ const RegisterView = () => {
                     {sports.map((sport) => (
                       <label key={sport} className="flex items-center gap-2 cursor-pointer">
                         <input type="checkbox" value={sport} checked={formData.interestedIn.includes(sport)} onChange={handleChange} className="accent-btn-primary" />
-                        <span className="text-sm">{sport}</span>
+                        <span className="text-base">{sport}</span>
                       </label>
                     ))}
                   </div>
@@ -240,7 +240,7 @@ const RegisterView = () => {
                 </div>
                 <div>
                   <label className="block text-[#282828] font-medium mb-2">About</label>
-                  <textarea name="about" placeholder="Write a about of this club" className="w-full px-4 py-3 bg-loginInput rounded-lg outline-none h-32 text-sm" onChange={handleChange} />
+                  <textarea name="about" placeholder="Write a about of this club" className="w-full px-4 py-3 bg-loginInput rounded-lg outline-none h-32 text-base" onChange={handleChange} />
                 </div>
                 {renderUserInput("Location", "clubLocation", "2118 Thornridge Cir. Syracuse, Connecticut 35624")}
                 <div className="grid grid-cols-2 gap-4">
@@ -258,7 +258,7 @@ const RegisterView = () => {
                     {sports.map((sport) => (
                       <label key={sport} className="flex items-center gap-2 cursor-pointer">
                         <input type="checkbox" value={sport} checked={formData.interestedIn.includes(sport)} onChange={handleChange} className="accent-btn-primary" />
-                        <span className="text-sm">{sport}</span>
+                        <span className="text-base">{sport}</span>
                       </label>
                     ))}
                   </div>
@@ -274,7 +274,7 @@ const RegisterView = () => {
                 {renderUserInput("Business Name", "businessName", "Woking Warriors FC")}
                 <div>
                   <label className="block text-[#282828] font-medium mb-2">About</label>
-                  <textarea name="about" placeholder="Write a about of this club" className="w-full px-4 py-3 bg-loginInput rounded-lg outline-none h-32 text-sm" onChange={handleChange} />
+                  <textarea name="about" placeholder="Write a about of this club" className="w-full px-4 py-3 bg-loginInput rounded-lg outline-none h-32 text-base" onChange={handleChange} />
                 </div>
                 {renderUserInput("Clinic Address", "clinicAddress", "2118 Thornridge Cir. Syracuse, Connecticut 35624")}
                 {renderUserInput("Service Area", "serviceArea", "2118 Thornridge Cir. Syracuse, Connecticut 35624")}
@@ -300,7 +300,7 @@ const RegisterView = () => {
               <div>
                 <label className="block text-[#282828] font-medium mb-2">Password</label>
                 <div className="relative">
-                  <input type={showPassword ? "text" : "password"} name="password" placeholder="•••• •••• ••••" value={formData.password} className="w-full px-4 py-3 bg-loginInput rounded-lg outline-none text-sm" onChange={handleChange} />
+                  <input type={showPassword ? "text" : "password"} name="password" placeholder="â€¢â€¢â€¢â€¢ â€¢â€¢â€¢â€¢ â€¢â€¢â€¢â€¢" value={formData.password} className="w-full px-4 py-3 bg-loginInput rounded-lg outline-none text-base" onChange={handleChange} />
                   <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500">
                     {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                   </button>
@@ -309,7 +309,7 @@ const RegisterView = () => {
               <div>
                 <label className="block text-[#282828] font-medium mb-2">Confirm Password</label>
                 <div className="relative">
-                  <input type={showConfirmPassword ? "text" : "password"} name="confirmPassword" placeholder="•••• •••• ••••" value={formData.confirmPassword} className="w-full px-4 py-3 bg-loginInput rounded-lg outline-none text-sm" onChange={handleChange} />
+                  <input type={showConfirmPassword ? "text" : "password"} name="confirmPassword" placeholder="â€¢â€¢â€¢â€¢ â€¢â€¢â€¢â€¢ â€¢â€¢â€¢â€¢" value={formData.confirmPassword} className="w-full px-4 py-3 bg-loginInput rounded-lg outline-none text-base" onChange={handleChange} />
                   <button type="button" onClick={() => setShowConfirmPassword(!showConfirmPassword)} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500">
                     {showConfirmPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                   </button>
@@ -320,7 +320,7 @@ const RegisterView = () => {
             <button type="submit" className="w-full bg-btn-primary text-white py-3 rounded-lg font-bold hover:bg-[#0d655d] transition-colors">
               Create Account
             </button>
-            <p className="text-center text-sm">
+            <p className="text-center text-base">
               Already have an account? <Link to="/signin" className="text-btn-primary font-bold hover:underline">Log in</Link>
             </p>
           </form>

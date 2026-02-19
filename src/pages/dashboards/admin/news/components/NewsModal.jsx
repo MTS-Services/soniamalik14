@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+﻿import React, { useState, useEffect } from 'react'
 import { X, Upload } from 'lucide-react'
 import Button from '../../../../../components/ui/Button'
 
@@ -65,7 +65,7 @@ const NewsModal = ({ isOpen, onClose, initialData = null, onSave }) => {
                             <div className="h-28 bg-gray-100 rounded-md mb-2 flex items-center justify-center">
                                 <div className="flex flex-col items-center text-gray-500">
                                     <Upload className="w-6 h-6 mb-2" />
-                                    <div className="text-sm">Click to upload</div>
+                                    <div className="text-base">Click to upload</div>
                                 </div>
                             </div>
                             <input type="file" accept="image/*" onChange={handleFile} className="hidden" />

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Card from './Card';
 import Button from './Button';
@@ -39,7 +39,7 @@ const ServiceCard = ({ item = {}, editLink, onEdit, onDelete, className = '' }) 
                     <div className="flex-1">
                         <div className="relative">
                             {(item.category || item.tag) && (
-                                <div className="absolute top-3 left-3 z-10 rounded-md px-3 py-1 text-sm font-medium text-[#0F766E] bg-[#E7F1F1]">{item.category || item.tag}</div>
+                                <div className="absolute top-3 left-3 z-10 rounded-md px-3 py-1 text-base font-medium text-[#0F766E] bg-[#E7F1F1]">{item.category || item.tag}</div>
                             )}
 
                             <div className="h-36 bg-gray-200 rounded-md mb-4 overflow-hidden flex items-center justify-center">
@@ -52,7 +52,7 @@ const ServiceCard = ({ item = {}, editLink, onEdit, onDelete, className = '' }) 
                         </div>
 
                         <h3 className="text-[#282828] font-semibold text-lg mb-2 ">{item.title}</h3>
-                        <div className="text-sm text-[#363636] mb-2 min-h-[40px] overflow-hidden">{item.description}</div>
+                        <div className="text-base text-[#363636] mb-2 min-h-[40px] overflow-hidden">{item.description}</div>
 
 
 

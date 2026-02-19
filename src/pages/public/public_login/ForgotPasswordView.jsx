@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { ArrowRight, ArrowLeft } from 'lucide-react';
 import { POST } from '../../../services/httpMethods';
@@ -47,7 +47,7 @@ const ForgotPasswordView = () => {
         {/* Back Button */}
         <button
           onClick={() => navigate(-1)}
-          className="mb-4 flex items-center gap-2 text-btn-primary hover:text-[#0d655d] font-medium text-sm transition-colors"
+          className="mb-4 flex items-center gap-2 text-btn-primary hover:text-[#0d655d] font-medium text-base transition-colors"
         >
           <ArrowLeft className="w-4 h-4" />
           Back
@@ -57,7 +57,7 @@ const ForgotPasswordView = () => {
           <h1 className="text-2xl md:text-3xl font-bold text-[#282828] text-center mb-3">
             Forget Password
           </h1>
-          <p className="text-[#666666] text-sm text-center">
+          <p className="text-[#666666] text-base text-center">
             Enter the email address or mobile phone number associated with your Clicon account.
           </p>
         </div>
@@ -65,14 +65,14 @@ const ForgotPasswordView = () => {
         <form onSubmit={handleSubmit} className="space-y-5">
           {/* Success Message */}
           {message && (
-            <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg text-sm">
+            <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg text-base">
               {message}
             </div>
           )}
 
           {/* Email Field */}
           <div>
-            <label className="block text-[#282828] font-medium mb-2 text-sm">
+            <label className="block text-[#282828] font-medium mb-2 text-base">
               Email Address
             </label>
             <input
@@ -80,7 +80,7 @@ const ForgotPasswordView = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder=""
-              className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-btn-primary focus:border-transparent transition-all text-sm text-gray-700"
+              className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-btn-primary focus:border-transparent transition-all text-base text-gray-700"
               required
             />
           </div>
@@ -89,7 +89,7 @@ const ForgotPasswordView = () => {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-btn-primary hover:bg-[#0d655d] text-white py-3 rounded-lg font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 uppercase text-sm tracking-wide"
+            className="w-full bg-btn-primary hover:bg-[#0d655d] text-white py-3 rounded-lg font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 uppercase text-base tracking-wide"
           >
             {loading ? 'SENDING...' : 'SEND CODE'}
             <ArrowRight className="w-5 h-5" />
@@ -97,7 +97,7 @@ const ForgotPasswordView = () => {
 
           {/* Sign In Link */}
           {/* <div className="text-center pt-2">
-            <p className="text-sm text-[#666666]">
+            <p className="text-base text-[#666666]">
               Already have account?{' '}
               <Link to="/signin" className="text-btn-primary font-medium hover:underline">
                 Sign In
@@ -107,7 +107,7 @@ const ForgotPasswordView = () => {
 
           {/* Sign Up Link */}
           {/* <div className="text-center">
-            <p className="text-sm text-[#666666]">
+            <p className="text-base text-[#666666]">
               Don't have account?{' '}
               <Link to="/register" className="text-btn-primary font-medium hover:underline">
                 Sign Up
@@ -117,7 +117,7 @@ const ForgotPasswordView = () => {
 
           {/* Customer Service */}
           <div className="text-center pt-4 border-t border-gray-200">
-            <p className="text-sm text-[#666666]">
+            <p className="text-base text-[#666666]">
               You may contact{' '}
               <a href="#" className="text-btn-primary font-medium hover:underline">
                 Customer Service

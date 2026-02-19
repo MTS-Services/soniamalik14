@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+﻿import React, { useState, useMemo } from 'react';
 import { Cross, Eye, X } from 'lucide-react';
 import Table from '../../../../../components/ui/Table';
 import TablePagination from '../../../../../components/ui/TablePagination';
@@ -82,12 +82,12 @@ const ApplicationTable = ({ applicants = [], resultsPerPage = 9 }) => {
 
             <div className="space-y-2">
               <div className="font-medium">{selectedApplicant.name}</div>
-              <div className="text-sm text-gray-600">{selectedApplicant.phone}</div>
-              <div className="text-sm text-gray-600">{selectedApplicant.email}</div>
-              <div className="text-sm text-gray-600">{selectedApplicant.position || '—'}</div>
+              <div className="text-base text-gray-600">{selectedApplicant.phone}</div>
+              <div className="text-base text-gray-600">{selectedApplicant.email}</div>
+              <div className="text-base text-gray-600">{selectedApplicant.position || 'â€”'}</div>
             </div>
 
-            <div className="mt-4 text-sm text-gray-700">
+            <div className="mt-4 text-base text-gray-700">
               {selectedApplicant.description || selectedApplicant.bio || selectedApplicant.coverLetter || (
                 <p>
                   I am a passionate women athlete who loves playing sports and being part of a team. I enjoy improving my skills, staying active, and competing in a positive and supportive environment.

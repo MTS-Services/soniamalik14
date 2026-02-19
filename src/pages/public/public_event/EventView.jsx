@@ -1,4 +1,4 @@
-
+﻿
 import React, { useState, useEffect } from 'react';
 import Container from '../../../components/layout/Container';
 import SectionHeader from '../../../components/ui/SectionHeader';
@@ -9,7 +9,7 @@ import Pagination from '../../../components/ui/Pagination';
 
 const sampleEvents = new Array(12).fill(0).map((_, i) => ({
     id: i + 1,
-    title: `Women’s Football Friendly Match Day`,
+    title: `Womenâ€™s Football Friendly Match Day`,
     date: '4 Dec 2025',
     location: '1901 Thornridge Cir. Shiloh',
     tag: 'Tournament',
@@ -55,7 +55,7 @@ const EventView = () => {
                             <input
                                 type="search"
                                 placeholder="Search by event name or location"
-                                className="ml-3 w-full outline-none text-sm text-gray-700 placeholder-[#747474]"
+                                className="ml-3 w-full outline-none text-base text-gray-700 placeholder-[#747474]"
                             />
                         </div>
 
@@ -66,7 +66,7 @@ const EventView = () => {
                                 <input 
                                     type="search" 
                                     placeholder="Search events..." 
-                                    className="ml-2 w-full outline-none text-sm text-gray-700" 
+                                    className="ml-2 w-full outline-none text-base text-gray-700" 
                                 />
                             </div>
                             <button 

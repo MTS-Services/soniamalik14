@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { Home, Box, ShoppingCart, DollarSign, User, LogOut, X } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
@@ -52,7 +52,7 @@ const UserDashboardSidebar = ({ isOpen, onClose }) => {
             to={it.path}
             end={it.id === 'dashboard'}
             className={({ isActive }) =>
-              `w-full flex items-center gap-3 font-medium text-sm px-4 py-3 rounded-md ${isActive ? 'bg-btn-primary text-white' : 'text-sidebarLink hover:bg-gray-50'}`
+              `w-full flex items-center gap-3 font-medium text-base px-4 py-3 rounded-md ${isActive ? 'bg-btn-primary text-white' : 'text-sidebarLink hover:bg-gray-50'}`
             }
           >
             <span className="flex items-center">{it.icon}</span>
@@ -64,7 +64,7 @@ const UserDashboardSidebar = ({ isOpen, onClose }) => {
       <div className="px-4 py-4 border-t border-gray-200">
         <button onClick={handleLogout} className="w-full flex items-center gap-3 text-btn-primary px-4 py-3 hover:bg-gray-50 rounded-md">
           <LogOut className="w-5 h-5" />
-          <span className="text-sm font-medium">Log Out</span>
+          <span className="text-base font-medium">Log Out</span>
         </button>
       </div>
     </aside>

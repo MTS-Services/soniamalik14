@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+﻿import React, { useState, useEffect } from 'react'
 import { FiSearch, FiChevronDown } from 'react-icons/fi'
 import TablePagination from '../../../../components/ui/TablePagination'
 
@@ -52,7 +52,7 @@ export default function OrderList() {
             {/* Title & Description */}
             <div className="flex-shrink-0">
               <h2 className="text-xl md:text-2xl font-bold text-black">Order List</h2>
-              <p className="text-sm text-[#5B6B69] mt-1">Manage orders placed by customers</p>
+              <p className="text-base text-[#5B6B69] mt-1">Manage orders placed by customers</p>
             </div>
 
             {/* Search Bar - Styled to match image */}
@@ -63,7 +63,7 @@ export default function OrderList() {
                   <FiSearch />
                 </span>
                 <input
-                  className="w-full pl-10 pr-3 py-2.5 rounded-lg bg-[#B5D5D2] border border-transparent text-sm shadow-sm focus:outline-none focus:ring-1 focus:ring-[#0F766E]"
+                  className="w-full pl-10 pr-3 py-2.5 rounded-lg bg-[#B5D5D2] border border-transparent text-base shadow-sm focus:outline-none focus:ring-1 focus:ring-[#0F766E]"
 
                   placeholder="Search by Product name"
                   value={query}
@@ -77,7 +77,7 @@ export default function OrderList() {
         {/* Table for md+ screens */}
         <div className="hidden md:block">
           <div className="overflow-x-auto">
-            <table className="w-full table-auto text-sm">
+            <table className="w-full table-auto text-base">
               <thead>
                 <tr className="text-left bg-[#B5D5D2]" >
                   <th className="px-6 py-3 text-base text-[#000000] font-medium">Product Name</th>
@@ -101,7 +101,7 @@ export default function OrderList() {
                         <button
                           type="button"
                           onClick={() => setOpenStatus(openStatus === r.id ? null : r.id)}
-                          className="inline-flex items-center gap-3 px-3 py-1 rounded-md text-white text-sm font-medium"
+                          className="inline-flex items-center gap-3 px-3 py-1 rounded-md text-white text-base font-medium"
                           style={{ background: STATUS[r.status].color }}
                           aria-expanded={openStatus === r.id}
                         >
@@ -115,7 +115,7 @@ export default function OrderList() {
                               <button
                                 key={k}
                                 onClick={() => { setRowsData(prev => prev.map(it => it.id === r.id ? { ...it, status: k } : it)); setOpenStatus(null) }}
-                                className="w-full text-left px-3 py-2 hover:bg-gray-50 text-sm"
+                                className="w-full text-left px-3 py-2 hover:bg-gray-50 text-base"
                               >{STATUS[k].label}</button>
                             ))}
                           </div>
@@ -135,11 +135,11 @@ export default function OrderList() {
             <div key={r.id} className="border border-[#0F766E] rounded-lg p-3 ">
               <div className="flex justify-between items-start">
                 <div>
-                  <div className="text-sm font-semibold" style={{ color: '#000000' }}>{r.name}</div>
+                  <div className="text-base font-semibold" style={{ color: '#000000' }}>{r.name}</div>
                   <div className="text-xs text-gray-600 mt-1">{r.orderedBy}</div>
                 </div>
                 <div>
-                  <div className="text-sm font-extrabold">{r.price}</div>
+                  <div className="text-base font-extrabold">{r.price}</div>
                 </div>
               </div>
 
@@ -153,7 +153,7 @@ export default function OrderList() {
                   <button
                     type="button"
                     onClick={() => setOpenStatus(openStatus === r.id ? null : r.id)}
-                    className="inline-flex items-center gap-3 px-3 py-1 rounded-md text-white text-sm font-medium"
+                    className="inline-flex items-center gap-3 px-3 py-1 rounded-md text-white text-base font-medium"
                     style={{ background: STATUS[r.status].color }}
                     aria-expanded={openStatus === r.id}
                   >
@@ -167,7 +167,7 @@ export default function OrderList() {
                         <button
                           key={k}
                           onClick={() => { setRowsData(prev => prev.map(it => it.id === r.id ? { ...it, status: k } : it)); setOpenStatus(null) }}
-                          className="w-full text-left px-3 py-2 hover:bg-gray-50 text-sm"
+                          className="w-full text-left px-3 py-2 hover:bg-gray-50 text-base"
                         >{STATUS[k].label}</button>
                       ))}
                     </div>

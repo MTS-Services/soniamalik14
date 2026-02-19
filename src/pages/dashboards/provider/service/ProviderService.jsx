@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+﻿import React, { useState, useEffect, useMemo } from 'react';
 import { useAuth } from '../../../../context/AuthContext';
 import { useService } from '../../../../context/ServiceContext';
 import PageHeader from '../../../../components/ui/PageHeader';
@@ -69,7 +69,7 @@ const ProviderService = () => {
         <div className='dashboardPy dashboardSpaceY'>
             <PageHeader
                 title="Manage Your Services"
-                description="This is where you manage all the services you provide to the women’s sports community."
+                description="This is where you manage all the services you provide to the womenâ€™s sports community."
                 ctaText="Create Service"
                 onCtaClick={() => setIsModalOpen(true)}
             />

@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+﻿import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
 import { POST } from '../../../services/httpMethods';
@@ -70,21 +70,21 @@ const VerifyEmailView = () => {
     return (
         <div className="min-h-screen flex items-center justify-center px-6 py-12 bg-gray-50">
             <div className="w-full max-w-md bg-white rounded-lg shadow-md p-8">
-                <button onClick={() => navigate(-1)} className="mb-4 flex items-center gap-2 text-btn-primary hover:text-[#0d655d] font-medium text-sm">
+                <button onClick={() => navigate(-1)} className="mb-4 flex items-center gap-2 text-btn-primary hover:text-[#0d655d] font-medium text-base">
                     <ArrowLeft className="w-4 h-4" /> Back
                 </button>
 
                 <h1 className="text-2xl font-bold mb-3 text-center">Verify Email</h1>
-                <p className="text-sm text-center text-gray-600 mb-6">Enter the code sent to your email to verify your account</p>
+                <p className="text-base text-center text-gray-600 mb-6">Enter the code sent to your email to verify your account</p>
 
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <div>
-                        <label className="block text-sm font-medium mb-1">Email</label>
+                        <label className="block text-base font-medium mb-1">Email</label>
                         <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="w-full px-3 py-2 border rounded" />
                     </div>
 
                     <div>
-                        <label className="block text-sm font-medium mb-1">Verification Code</label>
+                        <label className="block text-base font-medium mb-1">Verification Code</label>
                         <div className="flex justify-center gap-3 mt-2" onPaste={handlePaste}>
                             {otp.map((digit, index) => (
                                 <input

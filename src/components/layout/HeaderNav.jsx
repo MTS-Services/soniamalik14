@@ -1,4 +1,4 @@
-
+﻿
 
 import React from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
@@ -81,7 +81,7 @@ const HeaderNav = ({ isMenuOpen, setIsMenuOpen }) => {
               <Link
                 key={item.name}
                 to={item.href}
-                className={`text-sm xl:text-base font-normal transition-colors ${isActive(item.href)
+                className={`text-base xl:text-base font-normal transition-colors ${isActive(item.href)
                   ? 'text-btn-primary border-btn-primary border-b-2 pb-1'
                   : 'hover:text-btn-primary text-navigation'
                   }`}
@@ -131,7 +131,7 @@ const HeaderNav = ({ isMenuOpen, setIsMenuOpen }) => {
                   key={item.name}
                   to={item.href}
                   onClick={() => setIsMenuOpen(false)}
-                  className={`rounded-md px-3 py-2.5 text-sm lg:text-base font-medium transition-colors ${isActive(item.href)
+                  className={`rounded-md px-3 py-2.5 text-base lg:text-base font-medium transition-colors ${isActive(item.href)
                     ? 'bg-secondary text-btn-primary'
                     : 'text-navigation hover:bg-gray-100'
                     }`}
@@ -163,7 +163,7 @@ const HeaderNav = ({ isMenuOpen, setIsMenuOpen }) => {
                     </Button>
                     <button
                       onClick={handleLogout}
-                      className="text-red-600 flex items-center justify-center gap-2 rounded-md border border-red-300 px-4 py-2 text-sm font-medium hover:bg-red-50"
+                      className="text-red-600 flex items-center justify-center gap-2 rounded-md border border-red-300 px-4 py-2 text-base font-medium hover:bg-red-50"
                     >
                       <LogOut className="h-4 w-4" />
                       Logout

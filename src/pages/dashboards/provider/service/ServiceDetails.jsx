@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+﻿import React, { useEffect, useState } from 'react';
 import { useParams, useLocation, Link } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
 import { useAuth } from '../../../../context/AuthContext';
@@ -41,7 +41,7 @@ const ServiceDetails = () => {
         title: 'Women\'s Sports Physio',
         location: 'Dhaka',
         days: 'Monday, Wednesday, Friday',
-        time: '4:00 PM – 8:00 PM',
+        time: '4:00 PM â€“ 8:00 PM',
         category: 'Physio',
         status: 'Active',
         visibility: 'Live for women athletes',
@@ -73,7 +73,7 @@ It helps prevent injuries, improve performance, and support recovery so players 
         <div className="dashboardPy dashboardSpaceY text-gray-800">
             {/* Back Button */}
             <div className="mb-4">
-                <Link to={backTarget} className="inline-flex items-center text-sm font-medium text-teal-600 hover:text-teal-700">
+                <Link to={backTarget} className="inline-flex items-center text-base font-medium text-teal-600 hover:text-teal-700">
                     <ArrowLeft className="w-4 h-4 mr-1" /> Back
                 </Link>
             </div>
@@ -127,7 +127,7 @@ It helps prevent injuries, improve performance, and support recovery so players 
                 {service.whoServiceFor ? (
                     <div className="text-base text-gray-700">{service.whoServiceFor}</div>
                 ) : (
-                    <ul className="list-disc list-inside text-sm text-gray-600 space-y-1">
+                    <ul className="list-disc list-inside text-base text-gray-600 space-y-1">
                         {(service.whoIsFor || []).map((item, idx) => (
                             <li key={idx}>{item}</li>
                         ))}

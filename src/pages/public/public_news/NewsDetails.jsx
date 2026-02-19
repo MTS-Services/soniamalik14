@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { useLocation, useParams, useNavigate } from 'react-router-dom';
 import Container from '../../../components/layout/Container';
 import { FaArrowLeft } from 'react-icons/fa';
@@ -31,16 +31,16 @@ The opening matches have already shown strong intensity, skillful gameplay, and 
               <div className="absolute top-6 left-6 z-20">
                 <button onClick={() => navigate(-1)} className="inline-flex items-center gap-2 bg-black/50 text-white px-3 py-1.5 rounded-md hover:bg-black/60 transition">
                   <FaArrowLeft />
-                  <span className="text-sm">Back</span>
+                  <span className="text-base">Back</span>
                 </button>
               </div>
 
               <div className="h-full flex flex-col justify-center items-start">
                 <h1 className="text-white text-3xl md:text-5xl font-bold leading-tight drop-shadow-lg max-w-3xl">{article.title}</h1>
 
-                <div className="mt-4 text-sm text-white/80 flex items-center gap-4">
+                <div className="mt-4 text-base text-white/80 flex items-center gap-4">
                   <span>by {article.author}</span>
-                  <span>—</span>
+                  <span>â€”</span>
                   <span>{article.readingTime}</span>
                 </div>
               </div>
@@ -53,7 +53,7 @@ The opening matches have already shown strong intensity, skillful gameplay, and 
 
               <div className="mt-10">
                 <blockquote className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-[#111111] leading-tight mb-8">
-                  WFL 2025 is more than a tournament — it is a movement shaping the future of women's football.
+                  WFL 2025 is more than a tournament â€” it is a movement shaping the future of women's football.
                 </blockquote>
 
                 <ul className="list-disc ml-6 space-y-6 text-[#333]">

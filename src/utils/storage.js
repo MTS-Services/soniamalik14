@@ -1,4 +1,4 @@
-import { STORAGE_KEYS } from '../config/constants';
+﻿import { STORAGE_KEYS } from '../config/constants';
 
 // Cookie helpers (simple, not httpOnly) - used for storing the auth token
 const setCookie = (name, value, days = 7) => {

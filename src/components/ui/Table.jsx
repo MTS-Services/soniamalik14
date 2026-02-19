@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 
 const Table = ({
   columns,
@@ -6,7 +6,7 @@ const Table = ({
   renderRow,
   className = '',
   headerClass = 'bg-secondary',
-  thClass = 'text-left text-sm e text-tableTh font-medium uppercase px-4 py-3',
+  thClass = 'text-left text-base e text-tableTh font-medium uppercase px-4 py-3',
   tableClass = 'w-full',
 }) => {
   return (
@@ -34,7 +34,7 @@ const Table = ({
         </thead>
         <tbody className="bg-white">
           {data.map((item, index) => (
-            <tr key={index} className="border-b border-gray-100 text-sm  text-tableText last:border-b-0">
+            <tr key={index} className="border-b border-gray-100 text-base  text-tableText last:border-b-0">
               {renderRow(item, index)}
             </tr>
           ))}

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+﻿import React, { useEffect } from 'react';
 import { X } from 'lucide-react';
 import Button from '../../../../components/ui/Button';
 
@@ -64,7 +64,7 @@ const OrderDetails = ({ order, onClose }) => {
 
           {/* Product Photo */}
           <div className="border-t border-gray-200 pt-4">
-            <h3 className="mb-3 text-sm font-semibold text-gray-900">
+            <h3 className="mb-3 text-base font-semibold text-gray-900">
               Product Photo
             </h3>
             <div className="h-48 w-full overflow-hidden rounded-lg bg-gray-200">
@@ -78,7 +78,7 @@ const OrderDetails = ({ order, onClose }) => {
 
           {/* Invoice */}
           <div className="border-t border-gray-200 pt-4">
-            <h3 className="mb-3 text-sm font-semibold text-gray-900">
+            <h3 className="mb-3 text-base font-semibold text-gray-900">
               Invoice Photo
             </h3>
             <div className="flex  w-full items-center justify-center overflow-hidden rounded-lg bg-gray-200 p-2">

@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import Title from '../../../components/ui/Title';
 import NewsList from './components/NewsList';
 import Container from '../../../components/layout/Container';

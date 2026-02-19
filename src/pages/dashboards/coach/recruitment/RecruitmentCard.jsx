@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Card from '../../../../components/ui/Card';
 import Button from '../../../../components/ui/Button';
@@ -35,7 +35,7 @@ const RecruitmentCard = ({ item = {}, editLink, onEdit, onDelete, className = ''
                     <div>
                         <div className="relative">
                             {item.tag && (
-                                <div className="absolute top-3 left-3 z-10 rounded-md px-3 py-1 text-sm font-medium text-[#0F766E] bg-[#E7F1F1]">{item.tag}</div>
+                                <div className="absolute top-3 left-3 z-10 rounded-md px-3 py-1 text-base font-medium text-[#0F766E] bg-[#E7F1F1]">{item.tag}</div>
                             )}
 
                             <div className="h-36 bg-gray-200 rounded-md mb-4 overflow-hidden flex items-center justify-center">
@@ -48,15 +48,15 @@ const RecruitmentCard = ({ item = {}, editLink, onEdit, onDelete, className = ''
                         </div>
 
                         <h3 className="text-[#282828] font-semibold text-lg mb-2">{item.title}</h3>
-                        <div className="text-sm text-[#363636] mb-2 flex items-center gap-2">
+                        <div className="text-base text-[#363636] mb-2 flex items-center gap-2">
                             <MapPin className="w-4 h-4 text-[#363636]" />
-                            <span className="text-sm">{item.location || "Dhaka"} </span>
+                            <span className="text-base">{item.location || "Dhaka"} </span>
                         </div>
-                        <div className="text-sm text-[#363636] mb-2 flex items-start gap-2 flex-col">
-                            <div className="flex items-center gap-2"><Calendar className="w-4 h-4 text-[#363636]" /> <span className="text-sm">{item.days || "12 march 2026"}</span></div>
+                        <div className="text-base text-[#363636] mb-2 flex items-start gap-2 flex-col">
+                            <div className="flex items-center gap-2"><Calendar className="w-4 h-4 text-[#363636]" /> <span className="text-base">{item.days || "12 march 2026"}</span></div>
                         </div>
-                        <div className="text-sm text-[#363636] mb-3 flex items-start gap-2 flex-col">
-                            <div className="flex items-center gap-2"><Clock className="w-4 h-4 text-[#363636]" /> <span className="text-sm">{item.time}</span></div>
+                        <div className="text-base text-[#363636] mb-3 flex items-start gap-2 flex-col">
+                            <div className="flex items-center gap-2"><Clock className="w-4 h-4 text-[#363636]" /> <span className="text-base">{item.time}</span></div>
                         </div>
 
 

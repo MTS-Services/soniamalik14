@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+﻿import { createSlice } from '@reduxjs/toolkit';
 import { fetchNews, createNews, updateNews, deleteNews } from './newsAPI';
 
 const initialState = {

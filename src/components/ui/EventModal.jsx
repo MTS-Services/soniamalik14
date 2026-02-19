@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { X, Upload } from 'lucide-react';
 import Button from './Button';
 import { useEvent } from '../../context/EventContext';
@@ -180,36 +180,36 @@ const EventModal = ({ isOpen, onClose, initialData = null, mode = 'create' }) =>
                         {/* Event Title & Sport Type */}
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Event Title</label>
+                                <label className="block text-base font-medium text-gray-700 mb-1">Event Title</label>
                                 <input
                                     type="text"
                                     placeholder="enter event title"
                                     value={formData.eventTitle}
                                     onChange={(e) => handleChange('eventTitle', e.target.value)}
-                                    className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-btn-primary"
+                                    className="w-full px-3 py-2 border border-gray-300 rounded-md text-base focus:outline-none focus:ring-2 focus:ring-btn-primary"
                                 />
-                                {errors.eventTitle && <p className="text-sm text-red-600 mt-1">{errors.eventTitle}</p>}
+                                {errors.eventTitle && <p className="text-base text-red-600 mt-1">{errors.eventTitle}</p>}
                             </div>
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Sport Type</label>
+                                <label className="block text-base font-medium text-gray-700 mb-1">Sport Type</label>
                                 <input
                                     type="text"
                                     placeholder="e.g Cricket, Football"
                                     value={formData.sportType}
                                     onChange={(e) => handleChange('sportType', e.target.value)}
-                                    className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-btn-primary"
+                                    className="w-full px-3 py-2 border border-gray-300 rounded-md text-base focus:outline-none focus:ring-2 focus:ring-btn-primary"
                                 />
-                                {errors.sportType && <p className="text-sm text-red-600 mt-1">{errors.sportType}</p>}
+                                {errors.sportType && <p className="text-base text-red-600 mt-1">{errors.sportType}</p>}
                             </div>
                         </div>
 
                         {/* Event Type */}
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">Event Type</label>
+                            <label className="block text-base font-medium text-gray-700 mb-1">Event Type</label>
                             <select
                                 value={formData.eventType}
                                 onChange={(e) => handleChange('eventType', e.target.value)}
-                                className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-btn-primary"
+                                className="w-full px-3 py-2 border border-gray-300 rounded-md text-base focus:outline-none focus:ring-2 focus:ring-btn-primary"
                             >
                                 <option>MATCH</option>
                                 <option>TOURNAMENT</option>
@@ -220,46 +220,46 @@ const EventModal = ({ isOpen, onClose, initialData = null, mode = 'create' }) =>
                                 <option>COMPETITION</option>
                                 <option>MEETUP</option>
                             </select>
-                            {errors.eventType && <p className="text-sm text-red-600 mt-1">{errors.eventType}</p>}
+                            {errors.eventType && <p className="text-base text-red-600 mt-1">{errors.eventType}</p>}
                         </div>
 
                         {/* Full Description */}
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">Full Description</label>
+                            <label className="block text-base font-medium text-gray-700 mb-1">Full Description</label>
                             <textarea
                                 placeholder="Describe your event in details"
                                 value={formData.description}
                                 onChange={(e) => handleChange('description', e.target.value)}
                                 rows={4}
-                                className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-btn-primary resize-none"
+                                className="w-full px-3 py-2 border border-gray-300 rounded-md text-base focus:outline-none focus:ring-2 focus:ring-btn-primary resize-none"
                             />
-                            {errors.description && <p className="text-sm text-red-600 mt-1">{errors.description}</p>}
+                            {errors.description && <p className="text-base text-red-600 mt-1">{errors.description}</p>}
                         </div>
 
                         {/* Start Date & End Date */}
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Start Date</label>
+                                <label className="block text-base font-medium text-gray-700 mb-1">Start Date</label>
                                 <div className="relative">
                                     <input
                                         type="date"
                                         value={formData.startDate}
                                         onChange={(e) => handleChange('startDate', e.target.value)}
-                                        className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-btn-primary"
+                                        className="w-full px-3 py-2 border border-gray-300 rounded-md text-base focus:outline-none focus:ring-2 focus:ring-btn-primary"
                                     />
-                                    {errors.startDate && <p className="text-sm text-red-600 mt-1">{errors.startDate}</p>}
+                                    {errors.startDate && <p className="text-base text-red-600 mt-1">{errors.startDate}</p>}
                                 </div>
                             </div>
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">End Date</label>
+                                <label className="block text-base font-medium text-gray-700 mb-1">End Date</label>
                                 <div className="relative">
                                     <input
                                         type="date"
                                         value={formData.endDate}
                                         onChange={(e) => handleChange('endDate', e.target.value)}
-                                        className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-btn-primary"
+                                        className="w-full px-3 py-2 border border-gray-300 rounded-md text-base focus:outline-none focus:ring-2 focus:ring-btn-primary"
                                     />
-                                    {errors.endDate && <p className="text-sm text-red-600 mt-1">{errors.endDate}</p>}
+                                    {errors.endDate && <p className="text-base text-red-600 mt-1">{errors.endDate}</p>}
                                 </div>
                             </div>
                         </div>
@@ -267,27 +267,27 @@ const EventModal = ({ isOpen, onClose, initialData = null, mode = 'create' }) =>
                         {/* Start Time & End Time */}
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Start Time</label>
+                                <label className="block text-base font-medium text-gray-700 mb-1">Start Time</label>
                                 <div className="relative">
                                     <input
                                         type="time"
                                         value={formData.startTime}
                                         onChange={(e) => handleChange('startTime', e.target.value)}
-                                        className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-btn-primary"
+                                        className="w-full px-3 py-2 border border-gray-300 rounded-md text-base focus:outline-none focus:ring-2 focus:ring-btn-primary"
                                     />
-                                    {errors.startTime && <p className="text-sm text-red-600 mt-1">{errors.startTime}</p>}
+                                    {errors.startTime && <p className="text-base text-red-600 mt-1">{errors.startTime}</p>}
                                 </div>
                             </div>
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">End Time</label>
+                                <label className="block text-base font-medium text-gray-700 mb-1">End Time</label>
                                 <div className="relative">
                                     <input
                                         type="time"
                                         value={formData.endTime}
                                         onChange={(e) => handleChange('endTime', e.target.value)}
-                                        className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-btn-primary"
+                                        className="w-full px-3 py-2 border border-gray-300 rounded-md text-base focus:outline-none focus:ring-2 focus:ring-btn-primary"
                                     />
-                                    {errors.endTime && <p className="text-sm text-red-600 mt-1">{errors.endTime}</p>}
+                                    {errors.endTime && <p className="text-base text-red-600 mt-1">{errors.endTime}</p>}
                                 </div>
                             </div>
                         </div>
@@ -295,91 +295,91 @@ const EventModal = ({ isOpen, onClose, initialData = null, mode = 'create' }) =>
                         {/* Venue Name & City */}
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Venue Name</label>
+                                <label className="block text-base font-medium text-gray-700 mb-1">Venue Name</label>
                                 <input
                                     type="text"
                                     placeholder="venue name"
                                     value={formData.venueName}
                                     onChange={(e) => handleChange('venueName', e.target.value)}
-                                    className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-btn-primary"
+                                    className="w-full px-3 py-2 border border-gray-300 rounded-md text-base focus:outline-none focus:ring-2 focus:ring-btn-primary"
                                 />
-                                {errors.venueName && <p className="text-sm text-red-600 mt-1">{errors.venueName}</p>}
+                                {errors.venueName && <p className="text-base text-red-600 mt-1">{errors.venueName}</p>}
                             </div>
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">City</label>
+                                <label className="block text-base font-medium text-gray-700 mb-1">City</label>
                                 <input
                                     type="text"
                                     placeholder="City"
                                     value={formData.city}
                                     onChange={(e) => handleChange('city', e.target.value)}
-                                    className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-btn-primary"
+                                    className="w-full px-3 py-2 border border-gray-300 rounded-md text-base focus:outline-none focus:ring-2 focus:ring-btn-primary"
                                 />
-                                {errors.city && <p className="text-sm text-red-600 mt-1">{errors.city}</p>}
+                                {errors.city && <p className="text-base text-red-600 mt-1">{errors.city}</p>}
                             </div>
                         </div>
 
                         {/* Full Address */}
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">Full Address</label>
+                            <label className="block text-base font-medium text-gray-700 mb-1">Full Address</label>
                             <input
                                 type="text"
                                 placeholder="enter full address"
                                 value={formData.fullAddress}
                                 onChange={(e) => handleChange('fullAddress', e.target.value)}
-                                className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-btn-primary"
+                                className="w-full px-3 py-2 border border-gray-300 rounded-md text-base focus:outline-none focus:ring-2 focus:ring-btn-primary"
                             />
-                            {errors.fullAddress && <p className="text-sm text-red-600 mt-1">{errors.fullAddress}</p>}
+                            {errors.fullAddress && <p className="text-base text-red-600 mt-1">{errors.fullAddress}</p>}
                         </div>
 
                         {/* Google Map Links */}
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">Google Map links</label>
+                            <label className="block text-base font-medium text-gray-700 mb-1">Google Map links</label>
                             <input
                                 type="text"
                                 placeholder="enter google map links"
                                 value={formData.googleMapLinks}
                                 onChange={(e) => handleChange('googleMapLinks', e.target.value)}
-                                className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-btn-primary"
+                                className="w-full px-3 py-2 border border-gray-300 rounded-md text-base focus:outline-none focus:ring-2 focus:ring-btn-primary"
                             />
-                            {errors.googleMapLinks && <p className="text-sm text-red-600 mt-1">{errors.googleMapLinks}</p>}
+                            {errors.googleMapLinks && <p className="text-base text-red-600 mt-1">{errors.googleMapLinks}</p>}
                         </div>
 
                         {/* Min Age & Maximum Participant */}
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Min Age</label>
+                                <label className="block text-base font-medium text-gray-700 mb-1">Min Age</label>
                                 <input
                                     type="text"
                                     placeholder="18"
                                     value={formData.minAge}
                                     onChange={(e) => handleChange('minAge', e.target.value)}
-                                    className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-btn-primary"
+                                    className="w-full px-3 py-2 border border-gray-300 rounded-md text-base focus:outline-none focus:ring-2 focus:ring-btn-primary"
                                 />
-                                {errors.minAge && <p className="text-sm text-red-600 mt-1">{errors.minAge}</p>}
+                                {errors.minAge && <p className="text-base text-red-600 mt-1">{errors.minAge}</p>}
                             </div>
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Maximum Participant</label>
+                                <label className="block text-base font-medium text-gray-700 mb-1">Maximum Participant</label>
                                 <input
                                     type="text"
                                     placeholder="20"
                                     value={formData.maxParticipant}
                                     onChange={(e) => handleChange('maxParticipant', e.target.value)}
-                                    className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-btn-primary"
+                                    className="w-full px-3 py-2 border border-gray-300 rounded-md text-base focus:outline-none focus:ring-2 focus:ring-btn-primary"
                                 />
-                                {errors.maxParticipant && <p className="text-sm text-red-600 mt-1">{errors.maxParticipant}</p>}
+                                {errors.maxParticipant && <p className="text-base text-red-600 mt-1">{errors.maxParticipant}</p>}
                             </div>
                         </div>
 
                         {/* Skill Level */}
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-2">Skill Level</label>
+                            <label className="block text-base font-medium text-gray-700 mb-2">Skill Level</label>
                             <div className="flex gap-2 flex-wrap">
                                 {['Beginner', 'Intermediate', 'Advanced'].map((level) => (
                                     <button
                                         key={level}
                                         type="button"
                                         onClick={() => handleChange('skillLevel', level)}
-                                        className={`px-4 py-2 rounded-md text-sm font-medium transition-colors flex-1 sm:flex-none text-center min-w-[110px] ${formData.skillLevel === level
+                                        className={`px-4 py-2 rounded-md text-base font-medium transition-colors flex-1 sm:flex-none text-center min-w-[110px] ${formData.skillLevel === level
                                             ? 'bg-btn-primary text-white'
                                             : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                                             }`}
@@ -388,54 +388,54 @@ const EventModal = ({ isOpen, onClose, initialData = null, mode = 'create' }) =>
                                     </button>
                                 ))}
                             </div>
-                            {errors.skillLevel && <p className="text-sm text-red-600 mt-1">{errors.skillLevel}</p>}
+                            {errors.skillLevel && <p className="text-base text-red-600 mt-1">{errors.skillLevel}</p>}
                         </div>
 
                         {/* Organizer Name & Phone */}
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Organizer Name</label>
+                                <label className="block text-base font-medium text-gray-700 mb-1">Organizer Name</label>
                                 <input
                                     type="text"
                                     placeholder="name"
                                     value={formData.organizerName}
                                     onChange={(e) => handleChange('organizerName', e.target.value)}
-                                    className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-btn-primary"
+                                    className="w-full px-3 py-2 border border-gray-300 rounded-md text-base focus:outline-none focus:ring-2 focus:ring-btn-primary"
                                 />
-                                {errors.organizerName && <p className="text-sm text-red-600 mt-1">{errors.organizerName}</p>}
+                                {errors.organizerName && <p className="text-base text-red-600 mt-1">{errors.organizerName}</p>}
                             </div>
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Organizer Phone Number</label>
+                                <label className="block text-base font-medium text-gray-700 mb-1">Organizer Phone Number</label>
                                 <input
                                     type="text"
                                     placeholder="Phone number"
                                     value={formData.organizerPhone}
                                     onChange={(e) => handleChange('organizerPhone', e.target.value)}
-                                    className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-btn-primary"
+                                    className="w-full px-3 py-2 border border-gray-300 rounded-md text-base focus:outline-none focus:ring-2 focus:ring-btn-primary"
                                 />
-                                {errors.organizerPhone && <p className="text-sm text-red-600 mt-1">{errors.organizerPhone}</p>}
+                                {errors.organizerPhone && <p className="text-base text-red-600 mt-1">{errors.organizerPhone}</p>}
                             </div>
                         </div>
 
                         {/* Organizer Email */}
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">Organizer Email</label>
+                            <label className="block text-base font-medium text-gray-700 mb-1">Organizer Email</label>
                             <input
                                 type="email"
                                 placeholder="enter your email"
                                 value={formData.organizerEmail}
                                 onChange={(e) => handleChange('organizerEmail', e.target.value)}
-                                className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-btn-primary"
+                                className="w-full px-3 py-2 border border-gray-300 rounded-md text-base focus:outline-none focus:ring-2 focus:ring-btn-primary"
                             />
-                            {errors.organizerEmail && <p className="text-sm text-red-600 mt-1">{errors.organizerEmail}</p>}
+                            {errors.organizerEmail && <p className="text-base text-red-600 mt-1">{errors.organizerEmail}</p>}
                         </div>
 
                         {/* Upload Image */}
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-2">Upload Image</label>
+                            <label className="block text-base font-medium text-gray-700 mb-2">Upload Image</label>
                             <div className="border-2 border-dashed border-gray-300 rounded-md p-8 text-center">
                                 <Upload className="w-8 h-8 text-green-600 mx-auto mb-2" />
-                                <p className="text-green-600 font-medium text-sm mb-1">Upload Image</p>
+                                <p className="text-green-600 font-medium text-base mb-1">Upload Image</p>
                                 <p className="text-gray-400 text-xs">JPEG files accepted. Max 100MB</p>
                                 <input
                                     type="file"
@@ -446,11 +446,11 @@ const EventModal = ({ isOpen, onClose, initialData = null, mode = 'create' }) =>
                                 />
                                 <label
                                     htmlFor="image-upload"
-                                    className="mt-3 inline-block cursor-pointer px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-md text-sm text-gray-700"
+                                    className="mt-3 inline-block cursor-pointer px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-md text-base text-gray-700"
                                 >
                                     Choose File
                                 </label>
-                                {errors.image && <p className="text-sm text-red-600 mt-2">{errors.image}</p>}
+                                {errors.image && <p className="text-base text-red-600 mt-2">{errors.image}</p>}
                             </div>
                         </div>
                     </form>

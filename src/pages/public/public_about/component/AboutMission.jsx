@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import Container from '../../../../components/layout/Container';
 import SectionHeader from '../../../../components/ui/SectionHeader';
 import Button from '../../../../components/ui/Button';
@@ -17,7 +17,7 @@ const AboutMission = () => {
 
             <div className="mt-6">
               <p className="description mb-6 text-base sm:text-lg">
-                For many women, opportunities aren’t always visible. Information can be scattered,
+                For many women, opportunities arenâ€™t always visible. Information can be scattered,
                 local sessions can be hard to discover, and starting or returning can feel daunting.
               </p>
               <p className="description mb-6 text-base sm:text-lg">

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import PageHeader from '../../../../components/ui/PageHeader';
 import EventCard from '../../../../components/ui/EventCard';
 import Pagination from '../../../../components/ui/Pagination';
@@ -103,7 +103,7 @@ const Event = ({ filterComponent: FilterComponent, detailsRoute = '/coach/event'
                 {!loading && !error && paged.length === 0 && (
                     <div className="text-center py-20">
                         <div className="text-gray-500 text-lg mb-2">No events found</div>
-                        <p className="text-gray-400 text-sm">Create your first event to get started!</p>
+                        <p className="text-gray-400 text-base">Create your first event to get started!</p>
                     </div>
                 )}
 

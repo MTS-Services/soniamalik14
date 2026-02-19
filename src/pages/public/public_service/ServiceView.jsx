@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import Container from '../../../components/layout/Container';
 import PageHeader from '../../../components/ui/PageHeader';
 import ServiceCard from './components/ServiceCard';
@@ -11,7 +11,7 @@ const sample = Array.from({ length: 12 }).map((_, i) => ({
     type: ['Physios', 'Nutrition', 'Mental Health', 'Wellbeing'][i % 4],
     day: 'Mon - Fri',
     time: '09:00 - 17:00',
-    location: 'Local provider — contact for details',
+    location: 'Local provider â€” contact for details',
     summary: 'Login to see contact details & pricing',
     image: [
         'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=500&auto=format&fit=crop', // Physiotherapy
@@ -55,12 +55,12 @@ const ServiceView = () => {
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                             </svg>
                             <h3 className="text-xl font-semibold text-[#282828] mb-2">No Services Found</h3>
-                            <p className="text-[#363636] text-sm mb-4">
+                            <p className="text-[#363636] text-base mb-4">
                                 We couldn't find any {filter !== 'All' ? filter.toLowerCase() : 'services'} matching your search.
                             </p>
                             <button
                                 onClick={() => setFilter('All')}
-                                className="text-btn-primary hover:text-[#0d655d] font-medium text-sm"
+                                className="text-btn-primary hover:text-[#0d655d] font-medium text-base"
                             >
                                 Clear filters
                             </button>

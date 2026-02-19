@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import Container from '../../../../components/layout/Container';
 import SectionHeader from '../../../../components/ui/SectionHeader';
 import { CiUser } from 'react-icons/ci';
@@ -42,7 +42,7 @@ const ServiceProvidersSection = () => {
             <Container>
                 <SectionHeader
                     title="For Service Providers"
-                    description="Trusted service providers can showcase services, host events, and connect with the community — safely, without accessing private player data."
+                    description="Trusted service providers can showcase services, host events, and connect with the community â€” safely, without accessing private player data."
                     align="left"
                     className="mb-4 lg:mb-6"
                 />

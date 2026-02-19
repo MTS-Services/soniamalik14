@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+﻿import React, { useEffect, useState } from 'react';
 import { Link, useLocation, useParams } from 'react-router-dom';
 import { ArrowLeft, MapPin, Calendar, Clock, Mail, Phone } from 'lucide-react';
 import ApplicationTable from './components/ApplicationTable';
@@ -50,7 +50,7 @@ const RecruitmentDetails = () => {
         <div className=" dashboardPy dashboardSpaceY  text-gray-800">
             {/* Back Button */}
             <div className="mb-4">
-                <Link to={backTarget} className="inline-flex items-center text-sm font-medium text-teal-600 hover:text-teal-700">
+                <Link to={backTarget} className="inline-flex items-center text-base font-medium text-teal-600 hover:text-teal-700">
                     <ArrowLeft className="w-4 h-4 mr-1" /> Back
                 </Link>
             </div>
@@ -77,20 +77,20 @@ const RecruitmentDetails = () => {
                 
                     <div className="mb-4">
                         {/* Skill practice / short descriptor */}
-                        <p className="text-sm text-gray-600 mb-2">
+                        <p className="text-base text-gray-600 mb-2">
                             {item.skillPractice || ''}
-                            {item.skillPractice && item.skillLevel ? ' · ' : ''}
+                            {item.skillPractice && item.skillLevel ? ' Â· ' : ''}
                             {item.skillLevel || ''}
                         </p>
 
                         {/* Location with pin */}
-                        <div className="flex items-center text-sm text-gray-700 mb-4">
+                        <div className="flex items-center text-base text-gray-700 mb-4">
                             <MapPin className="w-4 h-4 text-gray-500 mr-2" />
                             <span className="">{item.location || item.venue || ''}</span>
                         </div>
 
                         {/* Sessions Day & Training Time as labeled rows */}
-                        <div className="space-y-2 text-sm text-gray-700">
+                        <div className="space-y-2 text-base text-gray-700">
                             <div className="flex items-start">
                                 <div className="w-36 font-bold text-gray-900">Sessions Day:</div>
                                 <div className="flex-1">{item.sessionsDay || item.date || ''}</div>
@@ -104,13 +104,13 @@ const RecruitmentDetails = () => {
 
                     {/* Session Overview */}
                     <h2 className="text-lg font-semibold text-gray-900 mb-2">Session Overview</h2>
-                    <div className="text-sm text-gray-600 leading-relaxed whitespace-pre-line mb-8">
+                    <div className="text-base text-gray-600 leading-relaxed whitespace-pre-line mb-8">
                         {item.description}
                     </div>
 
 
                     {/* Event Attributes (Age, Sport, Skill, Deadline) */}
-                    <div className="space-y-4 text-sm text-gray-800 mb-8">
+                    <div className="space-y-4 text-base text-gray-800 mb-8">
                         <div>
                             <span className="font-bold block text-gray-900">Skill Level:</span>
                             <span>{item.skillLevel || 'N/A'}</span>

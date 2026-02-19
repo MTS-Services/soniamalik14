@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useRef, useEffect } from 'react';
+﻿import React, { useMemo, useState, useRef, useEffect } from 'react';
 import DashboardHeader from '../../../../components/ui/DashboardHeader';
 import TablePagination from '../../../../components/ui/TablePagination';
 import recruitments from '../../../../data/recruitments.json';
@@ -54,13 +54,13 @@ const Sports = () => {
 
     const renderRow = (item) => (
         <>
-            <td className="px-4 py-4 text-base text-gray-900 whitespace-nowrap">{item.postedBy || '—'}</td>
-            <td className="px-4 py-4 text-base text-gray-600 whitespace-nowrap">{item.trialLocation || '—'}</td>
-            <td className="px-4 py-4 text-base text-gray-600 whitespace-nowrap">{item.phone || '—'}</td>
-            <td className="px-4 py-4 text-base text-gray-600 whitespace-nowrap">{item.sportType || '—'}</td>
-            <td className="px-4 py-4 text-base text-gray-600 whitespace-nowrap">{item.skillLevel || '—'}</td>
-            <td className="px-4 py-4 text-base text-gray-600 whitespace-nowrap">{item.trainingFrequency || '—'}</td>
-            <td className="px-4 py-4 text-base text-gray-600 whitespace-nowrap">{item.sessionFormat || '—'}</td>
+            <td className="px-4 py-4 text-base text-gray-900 whitespace-nowrap">{item.postedBy || 'â€”'}</td>
+            <td className="px-4 py-4 text-base text-gray-600 whitespace-nowrap">{item.trialLocation || 'â€”'}</td>
+            <td className="px-4 py-4 text-base text-gray-600 whitespace-nowrap">{item.phone || 'â€”'}</td>
+            <td className="px-4 py-4 text-base text-gray-600 whitespace-nowrap">{item.sportType || 'â€”'}</td>
+            <td className="px-4 py-4 text-base text-gray-600 whitespace-nowrap">{item.skillLevel || 'â€”'}</td>
+            <td className="px-4 py-4 text-base text-gray-600 whitespace-nowrap">{item.trainingFrequency || 'â€”'}</td>
+            <td className="px-4 py-4 text-base text-gray-600 whitespace-nowrap">{item.sessionFormat || 'â€”'}</td>
         </>
     );
 
@@ -139,7 +139,7 @@ const Sports = () => {
 
                                 <tbody className="bg-white">
                                     {pageData.map((item, index) => (
-                                        <tr key={item.id || index} className="border-b border-gray-100 text-sm text-tableText last:border-b-0">
+                                        <tr key={item.id || index} className="border-b border-gray-100 text-base text-tableText last:border-b-0">
                                             {renderRow(item)}
                                         </tr>
                                     ))}
@@ -154,28 +154,28 @@ const Sports = () => {
                                     <div key={item.id || index} className="bg-white p-4 rounded-lg border border-gray-200">
                                         <div className="flex justify-between mb-2">
                                             <div>
-                                                <div className="font-medium text-sm text-gray-900">{item.postedBy || '—'}</div>
-                                                <div className="text-xs text-gray-500">{item.trialLocation || '—'}</div>
+                                                <div className="font-medium text-base text-gray-900">{item.postedBy || 'â€”'}</div>
+                                                <div className="text-xs text-gray-500">{item.trialLocation || 'â€”'}</div>
                                             </div>
-                                            <div className="text-base text-gray-700">{item.sportType || '—'}</div>
+                                            <div className="text-base text-gray-700">{item.sportType || 'â€”'}</div>
                                         </div>
 
                                         <div className="grid grid-cols-2 gap-2 text-base text-gray-600">
                                             <div>
                                                 <div className="text-base text-gray-500">Contact</div>
-                                                <div className="mt-1">{item.phone || '—'}</div>
+                                                <div className="mt-1">{item.phone || 'â€”'}</div>
                                             </div>
                                             <div>
                                                 <div className="text-base text-gray-500">Level</div>
-                                                <div className="mt-1">{item.skillLevel || '—'}</div>
+                                                <div className="mt-1">{item.skillLevel || 'â€”'}</div>
                                             </div>
                                             <div>
                                                 <div className="text-base text-gray-500">Preferred Days</div>
-                                                <div className="mt-1">{item.trainingFrequency || '—'}</div>
+                                                <div className="mt-1">{item.trainingFrequency || 'â€”'}</div>
                                             </div>
                                             <div>
                                                 <div className="text-base text-gray-500">Preference</div>
-                                                <div className="mt-1">{item.sessionFormat || '—'}</div>
+                                                <div className="mt-1">{item.sessionFormat || 'â€”'}</div>
                                             </div>
                                         </div>
                                     </div>
@@ -203,7 +203,7 @@ const Sports = () => {
                             <button onClick={() => setShowAddModal(false)} className="text-gray-400 hover:text-gray-600 text-2xl">&times;</button>
                         </div>
                         <div className="p-6">
-                            <label className="block text-sm font-medium text-gray-700 mb-2">Sport Name</label>
+                            <label className="block text-base font-medium text-gray-700 mb-2">Sport Name</label>
                             <input
                                 className="w-full border border-gray-300 p-2.5 rounded-lg focus:ring-2 focus:ring-[#0F766E] focus:border-transparent outline-none transition-all"
                                 value={newSportName}

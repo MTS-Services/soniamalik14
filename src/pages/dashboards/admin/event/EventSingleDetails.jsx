@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { ArrowLeft, Calendar, Clock, MapPin, Phone, Mail } from 'lucide-react';
 
@@ -25,7 +25,7 @@ const EventSingleDetails = () => {
     role: 'Club Owner',
     sport: 'Football',
     date: 'Saturday, 12 October 2025',
-    time: '4:00 PM – 7:00 PM',
+    time: '4:00 PM â€“ 7:00 PM',
     status: 'Pending',
     description: `This training camp is designed exclusively for women footballers who want to improve their skills, fitness, and overall match performance. The session will focus on technical drills, tactical awareness, team coordination, and physical conditioning in a supportive and competitive environment.
 

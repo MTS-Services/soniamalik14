@@ -1,4 +1,4 @@
-// import React, { useState } from 'react';
+﻿// import React, { useState } from 'react';
 // import { Link, useNavigate } from 'react-router-dom';
 // import { Search, MapPin, Menu, X, LogOut } from 'lucide-react';
 // import { CiUser } from 'react-icons/ci';
@@ -57,7 +57,7 @@
 //               <input
 //                 type="search"
 //                 placeholder="Search for anything..."
-//                 className="w-full rounded-lg border border-gray-300 py-2 pl-10 pr-4 text-sm focus:border-btn-primary focus:outline-none focus:ring-1 focus:ring-btn-primary"
+//                 className="w-full rounded-lg border border-gray-300 py-2 pl-10 pr-4 text-base focus:border-btn-primary focus:outline-none focus:ring-1 focus:ring-btn-primary"
 //               />
 //             </div>
 //           </div>
@@ -77,7 +77,7 @@
 //               <input
 //                 type="search"
 //                 placeholder="Search for anything..."
-//                 className="w-full rounded-xs border border-gray-300 py-2.5 pl-10 pr-4 text-sm focus:border-btn-primary focus:outline-none focus:ring-1 focus:ring-btn-primary"
+//                 className="w-full rounded-xs border border-gray-300 py-2.5 pl-10 pr-4 text-base focus:border-btn-primary focus:outline-none focus:ring-1 focus:ring-btn-primary"
 //               />
 //             </div>
 //           </div>
@@ -85,7 +85,7 @@
 //           {/* Right Actions */}
 //           <div className="flex items-center gap-3 lg:gap-9">
 //             {/* Location Selector */}
-//             <button className="flex items-center gap-2 rounded-md px-3 py-2 text-sm text-btn-primary hover:bg-gray-100">
+//             <button className="flex items-center gap-2 rounded-md px-3 py-2 text-base text-btn-primary hover:bg-gray-100">
 //               <MapPin className="h-4 w-4" />
 //               <span>Alabama</span>
 //             </button>
@@ -106,10 +106,10 @@
 //               </div>
 //             ) : (
 //               <div className="flex items-center gap-3">
-//                 {/* <span className="text-sm text-gray-700">Welcome, <strong>{user?.name}</strong></span>
+//                 {/* <span className="text-base text-gray-700">Welcome, <strong>{user?.name}</strong></span>
 //                 <button
 //                   onClick={handleLogout}
-//                   className="flex items-center gap-2 rounded-md px-3 py-2 text-sm text-btn-primary hover:bg-gray-100"
+//                   className="flex items-center gap-2 rounded-md px-3 py-2 text-base text-btn-primary hover:bg-gray-100"
 //                 >
 //                   <LogOut className="h-4 w-4" />
 //                   <span>Logout</span>
@@ -217,7 +217,7 @@ const HeaderTop = ({ onMenuClick, isMenuOpen }) => {
               <input
                 type="search"
                 placeholder="Search for anything..."
-                className="w-full rounded-lg border border-gray-300 py-2 pl-10 pr-4 text-sm focus:border-btn-primary focus:outline-none focus:ring-1 focus:ring-btn-primary"
+                className="w-full rounded-lg border border-gray-300 py-2 pl-10 pr-4 text-base focus:border-btn-primary focus:outline-none focus:ring-1 focus:ring-btn-primary"
               />
             </div>
           </div>
@@ -235,13 +235,13 @@ const HeaderTop = ({ onMenuClick, isMenuOpen }) => {
               <input
                 type="search"
                 placeholder="Search for anything..."
-                className="w-full rounded-xs border border-gray-300 py-2.5 pl-10 pr-4 text-sm focus:border-btn-primary focus:outline-none focus:ring-1 focus:ring-btn-primary"
+                className="w-full rounded-xs border border-gray-300 py-2.5 pl-10 pr-4 text-base focus:border-btn-primary focus:outline-none focus:ring-1 focus:ring-btn-primary"
               />
             </div>
           </div>
 
           <div className="flex items-center gap-3 lg:gap-9">
-            <button className="flex items-center gap-2 rounded-md px-3 py-2 text-sm text-btn-primary hover:bg-gray-100">
+            <button className="flex items-center gap-2 rounded-md px-3 py-2 text-base text-btn-primary hover:bg-gray-100">
               <MapPin className="h-4 w-4" />
               <span>Alabama</span>
             </button>
@@ -256,7 +256,7 @@ const HeaderTop = ({ onMenuClick, isMenuOpen }) => {
               <div className="flex items-center gap-3">
                 <button
                   onClick={handleLogout}
-                  className="flex items-center gap-2 rounded-md px-3 py-2 text-sm text-btn-primary hover:bg-gray-100"
+                  className="flex items-center gap-2 rounded-md px-3 py-2 text-base text-btn-primary hover:bg-gray-100"
                 >
                   <LogOut className="h-4 w-4" />
                   <span>Logout</span>

@@ -1,4 +1,4 @@
-import { Search, Users, Shield, Heart, ShieldCheck } from 'lucide-react';
+﻿import { Search, Users, Shield, Heart, ShieldCheck } from 'lucide-react';
 
 export const coreFeatures = [
   {

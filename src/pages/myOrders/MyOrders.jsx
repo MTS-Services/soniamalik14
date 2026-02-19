@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Container from '../../components/layout/Container';
 import { FaMapMarkerAlt, FaClock } from 'react-icons/fa';
@@ -61,7 +61,7 @@ const MyOrders = () => {
                                 <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
                                     <div className="flex-1">
                                         <h2 className="text-lg font-semibold text-[#000000] mb-3">Order Number{orderNumber}</h2>
-                                        <div className="flex flex-col gap-2 text-sm text-[#626262]">
+                                        <div className="flex flex-col gap-2 text-base text-[#626262]">
                                             <div className="flex items-center gap-2">
                                                 <MdDateRange className="text-[#626262] flex-shrink-0" size={16} />
                                                 <span>{orderDate}</span>
@@ -81,7 +81,7 @@ const MyOrders = () => {
                             {/* Pickup Information Card */}
                             <div className="bg-[#F8F8F8] rounded-lg p-6 shadow-sm border border-gray-200">
                                 <h2 className="text-lg font-semibold text-[#000000] mb-2">Pick Up Information</h2>
-                                <p className="text-sm text-[#626262] mb-6">2 items in this shipment</p>
+                                <p className="text-base text-[#626262] mb-6">2 items in this shipment</p>
 
                                 {/* Pickup Location */}
                                 <div className="mb-6">
@@ -89,7 +89,7 @@ const MyOrders = () => {
                                         <FaMapMarkerAlt className="text-[#000000] mt-0.5 flex-shrink-0" size={20} />
                                         <div>
                                             <h3 className="font-semibold text-[#000000] text-base mb-1">Pickup Location</h3>
-                                            <p className="text-sm text-[#626262]">4517 Washington Ave. Manchester, Kentucky 39495</p>
+                                            <p className="text-base text-[#626262]">4517 Washington Ave. Manchester, Kentucky 39495</p>
                                         </div>
                                     </div>
 
@@ -98,7 +98,7 @@ const MyOrders = () => {
                                         <FaClock className="text-[#000000]  flex-shrink-0" size={20} />
                                         <div>
                                             <h3 className="font-semibold text-[#000000] text-base mb-1">Available Hours</h3>
-                                            <p className="text-sm text-[#626262]">Sat-Thu: 10:00 AM - 8:00 PM</p>
+                                            <p className="text-base text-[#626262]">Sat-Thu: 10:00 AM - 8:00 PM</p>
                                         </div>
                                     </div>
                                 </div>
@@ -127,22 +127,22 @@ const MyOrders = () => {
                             <div className="flex gap-3 mb-4">
                                 <img src={item.image || '/images/productDetails/image1.png'} alt={item.title || 'Product'} className="w-20 h-20 rounded object-cover flex-shrink-0" />
                                 <div className="flex-1 min-w-0">
-                                    <h3 className="text-sm font-medium text-[#000000] mb-1">{item.title}</h3>
-                                    <p className="text-sm text-[#0F766E]">{quantity} x ${item.price}</p>
+                                    <h3 className="text-base font-medium text-[#000000] mb-1">{item.title}</h3>
+                                    <p className="text-base text-[#0F766E]">{quantity} x ${item.price}</p>
                                 </div>
                             </div>
 
                             {/* Price Breakdown */}
                             <div className="space-y-3 pt-4 ">
-                                <div className="flex justify-between text-sm">
+                                <div className="flex justify-between text-base">
                                     <span className="text-[#626262]">Sub-total</span>
                                     <span className="text-[#000000]">${subtotal.toFixed(2)}</span>
                                 </div>
-                                <div className="flex justify-between text-sm">
+                                <div className="flex justify-between text-base">
                                     <span className="text-[#626262]">Shipping</span>
                                     <span className="text-[#000000]">{shipping === 0 ? 'Free' : `$${shipping.toFixed(2)}`}</span>
                                 </div>
-                                <div className="flex justify-between text-sm">
+                                <div className="flex justify-between text-base">
                                     <span className="text-[#626262]">Tax</span>
                                     <span className="text-[#000000]">${tax.toFixed(2)}</span>
                                 </div>
@@ -154,7 +154,7 @@ const MyOrders = () => {
 
                             {/* Payment Method */}
                             <div className="bg-white  p-4 text-center mt-6 border-t border-gray-200">
-                                <p className="text-sm font-medium text-[#0F766E]">Payment Method : {paymentMethod}</p>
+                                <p className="text-base font-medium text-[#0F766E]">Payment Method : {paymentMethod}</p>
                             </div>
                         </div>
                     </div>
@@ -169,20 +169,20 @@ const MyOrders = () => {
                             </div>
 
                             {submitted === 'missing' && (
-                                <div className="mb-3 rounded-md bg-red-50 border border-red-100 text-red-700 px-3 py-2 text-sm">Please upload both product photo and invoice.</div>
+                                <div className="mb-3 rounded-md bg-red-50 border border-red-100 text-red-700 px-3 py-2 text-base">Please upload both product photo and invoice.</div>
                             )}
                             {submitted === 'success' && (
-                                <div className="mb-3 rounded-md bg-green-50 border border-green-100 text-green-700 px-3 py-2 text-sm">Marked as delivered.</div>
+                                <div className="mb-3 rounded-md bg-green-50 border border-green-100 text-green-700 px-3 py-2 text-base">Marked as delivered.</div>
                             )}
 
                             <div className="space-y-4">
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-2">Upload Product photo*</label>
+                                    <label className="block text-base font-medium text-gray-700 mb-2">Upload Product photo*</label>
                                     <div className="border-2 border-dashed border-gray-300 rounded-lg bg-white p-6 text-center">
                                         <input id="product-upload" type="file" accept="image/*" onChange={handleProductChange} className="hidden" />
                                         <label htmlFor="product-upload" className="cursor-pointer inline-flex flex-col items-center gap-2">
                                             <UploadCloud className="w-8 h-8 text-[#0F766E]" />
-                                            <div className="text-sm font-medium text-[#0F766E]">Upload Image</div>
+                                            <div className="text-base font-medium text-[#0F766E]">Upload Image</div>
                                             <div className="text-xs text-gray-500">JPEG files accepted. Max 100MB</div>
                                             <div className="text-xs text-gray-600 mt-2">{productFile ? productFile.name : ''}</div>
                                         </label>
@@ -190,12 +190,12 @@ const MyOrders = () => {
                                 </div>
 
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-2">Upload Invoice*</label>
+                                    <label className="block text-base font-medium text-gray-700 mb-2">Upload Invoice*</label>
                                     <div className="border-2 border-dashed border-gray-300 rounded-lg bg-white p-6 text-center">
                                         <input id="invoice-upload" type="file" accept="image/*,application/pdf" onChange={handleInvoiceChange} className="hidden" />
                                         <label htmlFor="invoice-upload" className="cursor-pointer inline-flex flex-col items-center gap-2">
                                             <FileText className="w-8 h-8 text-[#0F766E]" />
-                                            <div className="text-sm font-medium text-[#0F766E]">Upload Image</div>
+                                            <div className="text-base font-medium text-[#0F766E]">Upload Image</div>
                                             <div className="text-xs text-gray-500">JPEG or PDF accepted. Max 100MB</div>
                                             <div className="text-xs text-gray-600 mt-2">{invoiceFile ? invoiceFile.name : ''}</div>
                                         </label>

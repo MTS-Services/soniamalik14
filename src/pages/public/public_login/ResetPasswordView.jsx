@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowRight, ArrowLeft, Eye, EyeOff } from 'lucide-react';
 import { POST } from '../../../services/httpMethods';
@@ -86,7 +86,7 @@ const ResetPasswordView = () => {
         {/* Back Button */}
         <button
           onClick={() => navigate(-1)}
-          className="mb-4 flex items-center gap-2 text-btn-primary hover:text-[#0d655d] font-medium text-sm transition-colors"
+          className="mb-4 flex items-center gap-2 text-btn-primary hover:text-[#0d655d] font-medium text-base transition-colors"
         >
           <ArrowLeft className="w-4 h-4" />
           Back
@@ -96,7 +96,7 @@ const ResetPasswordView = () => {
           <h1 className="text-2xl md:text-3xl font-bold text-[#282828] text-center mb-3">
             Reset Password
           </h1>
-          <p className="text-[#666666] text-sm text-center">
+          <p className="text-[#666666] text-base text-center">
             Duis sagittis molestie tellus, at eleifend sapien pellque quis. Fusce lorem nunc, fringilla sit amet nunc.
           </p>
         </div>
@@ -104,19 +104,19 @@ const ResetPasswordView = () => {
         <form onSubmit={handleSubmit} className="space-y-5">
           {/* Password Field */}
           <div>
-            <label className="block text-[#282828] font-medium mb-2 text-sm">OTP</label>
+            <label className="block text-[#282828] font-medium mb-2 text-base">OTP</label>
             <input
               type="text"
               value={otp}
               onChange={(e) => setOtp(e.target.value)}
               placeholder="Enter OTP"
-              className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-btn-primary focus:border-transparent transition-all text-sm text-gray-700 placeholder-gray-400"
+              className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-btn-primary focus:border-transparent transition-all text-base text-gray-700 placeholder-gray-400"
             />
             {errors.otp && <p className="text-red-500 text-xs mt-1">{errors.otp}</p>}
           </div>
 
           <div>
-            <label className="block text-[#282828] font-medium mb-2 text-sm">
+            <label className="block text-[#282828] font-medium mb-2 text-base">
               Password
             </label>
             <div className="relative">
@@ -126,7 +126,7 @@ const ResetPasswordView = () => {
                 placeholder="8+ characters"
                 value={formData.password}
                 onChange={handleChange}
-                className="w-full px-4 py-3 pr-12 bg-white border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-btn-primary focus:border-transparent transition-all text-sm text-gray-700 placeholder-gray-400"
+                className="w-full px-4 py-3 pr-12 bg-white border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-btn-primary focus:border-transparent transition-all text-base text-gray-700 placeholder-gray-400"
               />
               <button
                 type="button"
@@ -147,7 +147,7 @@ const ResetPasswordView = () => {
 
           {/* Confirm Password Field */}
           <div>
-            <label className="block text-[#282828] font-medium mb-2 text-sm">
+            <label className="block text-[#282828] font-medium mb-2 text-base">
               Confirm Password
             </label>
             <div className="relative">
@@ -157,7 +157,7 @@ const ResetPasswordView = () => {
                 placeholder=""
                 value={formData.confirmPassword}
                 onChange={handleChange}
-                className="w-full px-4 py-3 pr-12 bg-white border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-btn-primary focus:border-transparent transition-all text-sm text-gray-700 placeholder-gray-400"
+                className="w-full px-4 py-3 pr-12 bg-white border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-btn-primary focus:border-transparent transition-all text-base text-gray-700 placeholder-gray-400"
               />
               <button
                 type="button"
@@ -180,7 +180,7 @@ const ResetPasswordView = () => {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-btn-primary hover:bg-[#0d655d] text-white py-3 rounded-lg font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 uppercase text-sm tracking-wide"
+            className="w-full bg-btn-primary hover:bg-[#0d655d] text-white py-3 rounded-lg font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 uppercase text-base tracking-wide"
           >
             {loading ? 'RESETTING...' : 'RESET PASSWORD'}
             <ArrowRight className="w-5 h-5" />

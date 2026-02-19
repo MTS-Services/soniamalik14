@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { MoreVertical, X } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import DashboardHeader from '../../../../components/ui/DashboardHeader';
@@ -205,15 +205,15 @@ const Event = () => {
 
   const renderEventRow = (event, index) => (
     <>
-      <td className="px-4 py-4 text-sm">{event.title}</td>
-      <td className="px-4 py-4 text-sm">{event.type}</td>
-      <td className="px-4 py-4 text-sm">{event.organizer}</td>
-      <td className="px-4 py-4 text-sm">{event.role}</td>
-      <td className="px-4 py-4 text-sm">{event.sport}</td>
-      <td className="px-4 py-4 text-sm">{event.date}</td>
+      <td className="px-4 py-4 text-base">{event.title}</td>
+      <td className="px-4 py-4 text-base">{event.type}</td>
+      <td className="px-4 py-4 text-base">{event.organizer}</td>
+      <td className="px-4 py-4 text-base">{event.role}</td>
+      <td className="px-4 py-4 text-base">{event.sport}</td>
+      <td className="px-4 py-4 text-base">{event.date}</td>
       <td className="px-4 py-4">
         <span
-          className="text-sm font-medium"
+          className="text-base font-medium"
           style={{ color: event.status === 'Approved' ? 'var(--color-btn-primary)' : 'var(--color-dashboardPending)' }}
         >
           {event.status}
@@ -232,20 +232,20 @@ const Event = () => {
             <div className="absolute right-0 top-full mt-1 w-40 bg-white border border-gray-200 rounded-md shadow-lg z-10">
               <button
                 onClick={() => handleAction('See Details', event)}
-                className="w-full text-left px-4 py-2 text-sm text-white transition-colors"
+                className="w-full text-left px-4 py-2 text-base text-white transition-colors"
                 style={{ backgroundColor: '#0F766E' }}
               >
                 See Details
               </button>
               <button
                 onClick={() => handleAction('Approved', event)}
-                className="w-full text-left px-4 py-2 text-sm hover:bg-gray-50 transition-colors"
+                className="w-full text-left px-4 py-2 text-base hover:bg-gray-50 transition-colors"
               >
                 Approved
               </button>
               <button
                 onClick={() => handleAction('Cancel', event)}
-                className="w-full text-left px-4 py-2 text-sm hover:bg-gray-50 transition-colors"
+                className="w-full text-left px-4 py-2 text-base hover:bg-gray-50 transition-colors"
               >
                 Cancel
               </button>
@@ -266,7 +266,7 @@ const Event = () => {
       <td className="px-4 py-4 ">{event.date}</td>
       <td className="px-4 py-4">
         <span
-          className="text-sm font-medium"
+          className="text-base font-medium"
           style={{ color: event.status === 'Approved' ? 'var(--color-btn-primary)' : 'var(--color-dashboardPending)' }}
         >
           {event.status}
@@ -285,20 +285,20 @@ const Event = () => {
             <div className="absolute right-0 top-full mt-1 w-40 bg-white border border-gray-200 rounded-md shadow-lg z-10">
               <button
                 onClick={() => handleAction('See Details', event)}
-                className="w-full text-left px-4 py-2 text-sm text-white transition-colors rounded-t-md"
+                className="w-full text-left px-4 py-2 text-base text-white transition-colors rounded-t-md"
                 style={{ backgroundColor: '#0F766E' }}
               >
                 See Details
               </button>
               <button
                 onClick={() => handleAction('Approved', event)}
-                className="w-full text-left px-4 py-2 text-sm hover:bg-gray-50 transition-colors"
+                className="w-full text-left px-4 py-2 text-base hover:bg-gray-50 transition-colors"
               >
                 Approved
               </button>
               <button
                 onClick={() => handleAction('Cancel', event)}
-                className="w-full text-left px-4 py-2 text-sm hover:bg-gray-50 transition-colors"
+                className="w-full text-left px-4 py-2 text-base hover:bg-gray-50 transition-colors"
               >
                 Cancel
               </button>
@@ -326,20 +326,20 @@ const Event = () => {
               <div className="absolute right-0 top-full mt-1 w-40 bg-white border border-gray-200 rounded-md shadow-lg z-10">
                 <button
                   onClick={() => handleAction('See Details', event)}
-                  className="w-full text-left px-4 py-2 text-sm text-white transition-colors rounded-t-md"
+                  className="w-full text-left px-4 py-2 text-base text-white transition-colors rounded-t-md"
                   style={{ backgroundColor: '#0F766E' }}
                 >
                   See Details
                 </button>
                 <button
                   onClick={() => handleAction('Approved', event)}
-                  className="w-full text-left px-4 py-2 text-sm hover:bg-gray-50 transition-colors"
+                  className="w-full text-left px-4 py-2 text-base hover:bg-gray-50 transition-colors"
                 >
                   Approved
                 </button>
                 <button
                   onClick={() => handleAction('Cancel', event)}
-                  className="w-full text-left px-4 py-2 text-sm hover:bg-gray-50 transition-colors"
+                  className="w-full text-left px-4 py-2 text-base hover:bg-gray-50 transition-colors"
                 >
                   Cancel
                 </button>
@@ -348,7 +348,7 @@ const Event = () => {
           </div>
         </div>
         
-        <div className="grid grid-cols-2 gap-2 text-sm">
+        <div className="grid grid-cols-2 gap-2 text-base">
           <div>
             <span className="text-gray-500">Type:</span>
             <span className="ml-2 font-medium">{event.type}</span>
@@ -373,7 +373,7 @@ const Event = () => {
         
         <div className="pt-2">
           <span
-            className="text-sm font-medium"
+            className="text-base font-medium"
             style={{ color: event.status === 'Approved' ? 'var(--color-btn-primary)' : 'var(--color-dashboardPending)' }}
           >
             {event.status}
@@ -460,14 +460,14 @@ const Event = () => {
 
             {/* Modal Body */}
             <div className="p-6">
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-base font-medium text-gray-700 mb-2">
                 Write Cancel Reason
               </label>
               <textarea
                 value={cancelReason}
                 onChange={(e) => setCancelReason(e.target.value)}
                 placeholder="Why cancel this event describe in details"
-                className="w-full h-40 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent resize-none text-sm"
+                className="w-full h-40 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent resize-none text-base"
               />
             </div>
 

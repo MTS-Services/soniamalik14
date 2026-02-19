@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
+﻿import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import { POST, GET } from '../services/httpMethods';
 import axiosInstance from '../services/axiosInstance';
 import { toast } from 'react-toastify';
@@ -87,7 +87,7 @@ export const AuthProvider = ({ children }) => {
       console.log('[auth][fetchMe] calling', ENDPOINT.AUTH.ME, 'token(masked)=', String(getToken()).slice(0, 6) + '...');
       const response = await GET(ENDPOINT.AUTH.ME);
       const payload = response.data ?? response;
-      // Backend sometimes wraps the user inside payload.data.user — unwrap it safely
+      // Backend sometimes wraps the user inside payload.data.user â€” unwrap it safely
       let userObj = payload.user ?? payload?.data?.user ?? payload?.data ?? payload;
       if (userObj && typeof userObj === 'object' && userObj.user) {
         userObj = userObj.user;

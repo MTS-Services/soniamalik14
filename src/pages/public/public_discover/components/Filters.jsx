@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import Button from '../../../../components/ui/Button';
 
 const Filters = ({ onFilter, active = 'All', types: propTypes, postcode, onPostcodeChange }) => {
@@ -12,7 +12,7 @@ const Filters = ({ onFilter, active = 'All', types: propTypes, postcode, onPostc
             placeholder="Enter Postcode/City"
             value={postcode || ''}
             onChange={(e) => onPostcodeChange && onPostcodeChange(e.target.value)}
-            className="w-full bg-transparent outline-none text-sm text-gray-700 placeholder-gray-400"
+            className="w-full bg-transparent outline-none text-base text-gray-700 placeholder-gray-400"
           />
         </div>
 
@@ -21,7 +21,7 @@ const Filters = ({ onFilter, active = 'All', types: propTypes, postcode, onPostc
           <select
             value={active}
             onChange={(e) => onFilter && onFilter(e.target.value)}
-            className="w-full bg-white rounded-lg px-4 py-2.5 shadow-sm border border-gray-200 outline-none text-sm text-gray-700"
+            className="w-full bg-white rounded-lg px-4 py-2.5 shadow-sm border border-gray-200 outline-none text-base text-gray-700"
           >
             {types.map((t) => (
               <option key={t} value={t}>

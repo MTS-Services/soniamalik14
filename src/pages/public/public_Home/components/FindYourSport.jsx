@@ -1,4 +1,4 @@
-import React from 'react'
+﻿import React from 'react'
 import { Link } from 'react-router-dom'
 import Container from '../../../../components/layout/Container'
 import SectionHeader from '../../../../components/ui/SectionHeader'
@@ -31,7 +31,7 @@ const FindYourSport = () => {
                                 <div className="relative flex flex-col h-full">
                                     <img src={t.img} alt={t.title} className="w-full h-72 md:h-80 lg:h-96 object-cover block" />
                                     <div className="absolute left-0 right-0 bottom-0 bg-[#0d6b62] text-white py-3 px-4">
-                                        <span className="font-semibold text-sm md:text-base">{t.title}</span>
+                                        <span className="font-semibold text-base md:text-base">{t.title}</span>
                                     </div>
                                 </div>
                             </Link>

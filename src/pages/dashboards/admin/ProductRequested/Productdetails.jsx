@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { ArrowLeft } from 'lucide-react';
 
 const ProductDetails = ({ product, onBack }) => {
@@ -15,7 +15,7 @@ const ProductDetails = ({ product, onBack }) => {
           className="flex items-center gap-2 text-[#0F766E]  transition-colors py-2 pb-2 "
         >
           <ArrowLeft className="w-6 h-6 " />
-          <span className="text-sm font-medium">Back</span>
+          <span className="text-base font-medium">Back</span>
         </button>
 
         <div className=" rounded-lg overflow-hidden">
@@ -59,7 +59,7 @@ const ProductDetails = ({ product, onBack }) => {
             </p>
 
             {/* Details */}
-            <p className="text-gray-600 text-sm leading-relaxed mb-6">
+            <p className="text-gray-600 text-base leading-relaxed mb-6">
               {product.details}
             </p>
 

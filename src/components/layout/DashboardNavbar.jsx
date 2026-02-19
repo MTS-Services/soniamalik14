@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { Bell, Menu } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth, ROLES } from '../../context/AuthContext';
@@ -58,7 +58,7 @@ const DashboardNavbar = ({ onMenuClick }) => {
             alt="User avatar"
             className="w-9 h-9 lg:w-10 lg:h-10 rounded-full object-cover"
           />
-          <div className="hidden sm:block text-sm">
+          <div className="hidden sm:block text-base">
             <div className="font-medium text-gray-900">{user?.name || 'Ismat Nikita'}</div>
             <div className="text-gray-500">{user?.role || 'Member'}</div>
           </div>

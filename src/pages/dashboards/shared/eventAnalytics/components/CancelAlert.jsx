@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { AlertCircle } from 'lucide-react';
 
 const CancelAlert = ({ item }) => {
@@ -6,7 +6,7 @@ const CancelAlert = ({ item }) => {
     if (!isCanceled) return null;
 
     return (
-        <div className="mb-6 rounded-lg bg-red-50 border border-red-100 p-4 text-sm text-red-800">
+        <div className="mb-6 rounded-lg bg-red-50 border border-red-100 p-4 text-base text-red-800">
             <div className="flex items-start gap-3">
                 <div className="mt-0.5 text-red-600">
                     <AlertCircle className="w-5 h-5" />

@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { Link } from 'react-router-dom';
 import Card from '../../../../components/ui/Card';
 import Button from '../../../../components/ui/Button';
@@ -40,14 +40,14 @@ const FindSportCard = ({ item }) => {
           {item.title}
         </h3>
 
-        <div className="text-sm text-[#1f3a37] mb-2 flex items-center gap-3">
+        <div className="text-base text-[#1f3a37] mb-2 flex items-center gap-3">
           <MapPin className="w-4 h-4 text-[#1f3a37]" />
-          <span className="text-sm text-gray-700">{item.location}</span>
+          <span className="text-base text-gray-700">{item.location}</span>
         </div>
 
-        <div className="text-sm text-[#1f3a37] mb-4 space-y-2">
-          <div className="flex items-center gap-2"><Calendar className="w-4 h-4 text-[#1f3a37]" /> <span className="text-sm text-gray-700">{item.day}</span></div>
-          <div className="flex items-center gap-2"><Clock className="w-4 h-4 text-[#1f3a37]" /> <span className="text-sm text-gray-700">{item.time}</span></div>
+        <div className="text-base text-[#1f3a37] mb-4 space-y-2">
+          <div className="flex items-center gap-2"><Calendar className="w-4 h-4 text-[#1f3a37]" /> <span className="text-base text-gray-700">{item.day}</span></div>
+          <div className="flex items-center gap-2"><Clock className="w-4 h-4 text-[#1f3a37]" /> <span className="text-base text-gray-700">{item.time}</span></div>
         </div>
 
         {!isAuthenticated && (

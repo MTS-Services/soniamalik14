@@ -1,4 +1,4 @@
-// import React, { useState, useEffect } from 'react';
+﻿// import React, { useState, useEffect } from 'react';
 // import { useDispatch, useSelector } from 'react-redux';
 // import Table from '../../../../components/ui/Table';
 // import TablePagination from '../../../../components/ui/TablePagination';
@@ -86,7 +86,7 @@
 //                 <td className="px-4 py-4 text-cardTitle">{event.sport}</td>
 //                 <td className="px-4 py-4 text-cardTitle">{formattedDate}</td>
 //                 <td className="px-4 py-4">
-//                     <span className={`rounded-md px-3 py-1 text-sm font-medium ${getStatusStyle(event.status)}`}>
+//                     <span className={`rounded-md px-3 py-1 text-base font-medium ${getStatusStyle(event.status)}`}>
 //                         {event.status}
 //                     </span>
 //                 </td>
@@ -115,7 +115,7 @@
 //                         <button
 //                             key={tab.id}
 //                             onClick={() => handleTabChange(tab.id)}
-//                             className={`py-4 text-sm font-medium transition-colors relative ${activeTab === tab.id
+//                             className={`py-4 text-base font-medium transition-colors relative ${activeTab === tab.id
 //                                 ? 'text-btn-primary'
 //                                 : 'text-gray-500 hover:text-gray-700'
 //                                 }`}
@@ -271,7 +271,7 @@ const EventAnalytics = ({ baseRoute = '/coach' }) => {
                 <td className="px-4 py-4 text-cardTitle">{event.sport}</td>
                 <td className="px-4 py-4 text-cardTitle">{formattedDate}</td>
                 <td className="px-4 py-4">
-                    <span className={`rounded-md px-3 py-1 text-sm font-medium ${getStatusStyle(event.status)}`}>
+                    <span className={`rounded-md px-3 py-1 text-base font-medium ${getStatusStyle(event.status)}`}>
                         {event.status}
                     </span>
                 </td>
@@ -301,7 +301,7 @@ const EventAnalytics = ({ baseRoute = '/coach' }) => {
                             key={tab.id}
                             ref={activeTab === tab.id ? activeTabRef : null} // Assign ref to the active button
                             onClick={() => handleTabChange(tab.id)}
-                            className={`py-4 text-sm font-medium transition-colors relative whitespace-nowrap ${activeTab === tab.id
+                            className={`py-4 text-base font-medium transition-colors relative whitespace-nowrap ${activeTab === tab.id
                                 ? 'text-btn-primary'
                                 : 'text-gray-500 hover:text-gray-700'
                                 }`}

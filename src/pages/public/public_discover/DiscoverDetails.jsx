@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { useLocation, useParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft, MapPin } from 'lucide-react';
 import Container from '../../../components/layout/Container';
@@ -13,7 +13,7 @@ const DiscoverDetails = () => {
     type: 'Women\'s Football Club',
     location: '2118 Thornridge Cir. Syracuse, Connecticut 35624',
     day: 'Monday, Wednesday',
-    time: '7:00 PM – 9:00 PM',
+    time: '7:00 PM â€“ 9:00 PM',
     homeGround: 'Woking Community Football Stadium',
     image: '/images/detaisPage/detailsBanner.png',
     image2: '/images/detaisPage/sideImage1.png',
@@ -39,7 +39,7 @@ const DiscoverDetails = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    alert('Interest submitted — demo only');
+    alert('Interest submitted â€” demo only');
   };
 
   return (
@@ -316,50 +316,50 @@ const DiscoverDetails = () => {
                 <form onSubmit={handleSubmit} className="space-y-4">
                   {/* Full Name */}
                   <div>
-                    <label className="block text-sm font-medium text-[#1D1D1D] mb-2">Full Name</label>
+                    <label className="block text-base font-medium text-[#1D1D1D] mb-2">Full Name</label>
                     <input
                       type="text"
                       placeholder="Player"
-                      className="w-full px-4 py-3 rounded-md bg-loginInput border-none text-sm text-[#1D1D1D] placeholder-[#5E5E5E] focus:outline-none focus:ring-2 focus:ring-btn-primary"
+                      className="w-full px-4 py-3 rounded-md bg-loginInput border-none text-base text-[#1D1D1D] placeholder-[#5E5E5E] focus:outline-none focus:ring-2 focus:ring-btn-primary"
                       required
                     />
                   </div>
 
                   {/* Email */}
                   <div>
-                    <label className="block text-sm font-medium text-[#1D1D1D] mb-2">Email</label>
+                    <label className="block text-base font-medium text-[#1D1D1D] mb-2">Email</label>
                     <input
                       type="email"
                       placeholder="enter your email"
-                      className="w-full px-4 py-3 rounded-md bg-loginInput border-none text-sm text-[#1D1D1D] placeholder-[#5E5E5E] focus:outline-none focus:ring-2 focus:ring-btn-primary"
+                      className="w-full px-4 py-3 rounded-md bg-loginInput border-none text-base text-[#1D1D1D] placeholder-[#5E5E5E] focus:outline-none focus:ring-2 focus:ring-btn-primary"
                       required
                     />
                   </div>
 
                   {/* Phone Number */}
                   <div>
-                    <label className="block text-sm font-medium text-[#1D1D1D] mb-2">Phone Number</label>
+                    <label className="block text-base font-medium text-[#1D1D1D] mb-2">Phone Number</label>
                     <input
                       type="tel"
                       placeholder="enter your phone number"
-                      className="w-full px-4 py-3 rounded-md bg-loginInput border-none text-sm text-[#1D1D1D] placeholder-[#5E5E5E] focus:outline-none focus:ring-2 focus:ring-btn-primary"
+                      className="w-full px-4 py-3 rounded-md bg-loginInput border-none text-base text-[#1D1D1D] placeholder-[#5E5E5E] focus:outline-none focus:ring-2 focus:ring-btn-primary"
                     />
                   </div>
 
                   {/* Position */}
                   <div>
-                    <label className="block text-sm font-medium text-[#1D1D1D] mb-2">Position</label>
+                    <label className="block text-base font-medium text-[#1D1D1D] mb-2">Position</label>
                     <input
                       type="text"
                       placeholder="write your position"
-                      className="w-full px-4 py-3 rounded-md bg-loginInput border-none text-sm text-[#1D1D1D] placeholder-[#5E5E5E] focus:outline-none focus:ring-2 focus:ring-btn-primary"
+                      className="w-full px-4 py-3 rounded-md bg-loginInput border-none text-base text-[#1D1D1D] placeholder-[#5E5E5E] focus:outline-none focus:ring-2 focus:ring-btn-primary"
                     />
                   </div>
 
                   {/* Skill Level */}
                   <div>
-                    <label className="block text-sm font-medium text-[#1D1D1D] mb-2">Skill Level</label>
-                    <select className="w-full px-4 py-3 rounded-md bg-loginInput border-none text-sm text-[#1D1D1D] focus:outline-none focus:ring-2 focus:ring-btn-primary">
+                    <label className="block text-base font-medium text-[#1D1D1D] mb-2">Skill Level</label>
+                    <select className="w-full px-4 py-3 rounded-md bg-loginInput border-none text-base text-[#1D1D1D] focus:outline-none focus:ring-2 focus:ring-btn-primary">
                       <option>Beginner</option>
                       <option>Intermediate</option>
                       <option>Advanced</option>
@@ -368,11 +368,11 @@ const DiscoverDetails = () => {
 
                   {/* About Me */}
                   <div>
-                    <label className="block text-sm font-medium text-[#1D1D1D] mb-2">About Me</label>
+                    <label className="block text-base font-medium text-[#1D1D1D] mb-2">About Me</label>
                     <textarea
                       placeholder="write about you"
                       rows="4"
-                      className="w-full px-4 py-3 rounded-md bg-loginInput border-none text-sm text-[#1D1D1D] placeholder-[#5E5E5E] focus:outline-none focus:ring-2 focus:ring-btn-primary resize-none"
+                      className="w-full px-4 py-3 rounded-md bg-loginInput border-none text-base text-[#1D1D1D] placeholder-[#5E5E5E] focus:outline-none focus:ring-2 focus:ring-btn-primary resize-none"
                     />
                   </div>
 

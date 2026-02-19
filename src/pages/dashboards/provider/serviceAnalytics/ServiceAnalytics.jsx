@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+﻿import React, { useEffect, useState } from 'react'
 import { useAuth } from '../../../../context/AuthContext'
 import { useService } from '../../../../context/ServiceContext'
 import PageHeader from '../../../../components/ui/PageHeader'
@@ -32,7 +32,7 @@ const ServiceAnalytics = () => {
                 <td className="px-4 py-4">
                     <div className="flex items-center gap-4">
 
-                        <div className="text-sm">
+                        <div className="text-base">
                             <div className="font-semibold text-cardTitle">{item.name}</div>
                         </div>
                     </div>

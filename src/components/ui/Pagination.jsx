@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 
 const ChevronLeft = ({ className = '' }) => (
   <svg className={className} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -47,7 +47,7 @@ const Pagination = ({ page = 1, total = 10, onChange = () => {} }) => {
 
   const pages = buildPages();
 
-  const squareBase = 'h-10 w-10 inline-flex items-center justify-center rounded-md text-sm border';
+  const squareBase = 'h-10 w-10 inline-flex items-center justify-center rounded-md text-base border';
 
   return (
     <div className="flex items-center justify-center gap-2 mt-6">
@@ -67,7 +67,7 @@ const Pagination = ({ page = 1, total = 10, onChange = () => {} }) => {
               key={`e-${idx}`}
               className={`${squareBase} bg-white border-gray-200 text-gray-500 flex items-center justify-center`}
             >
-              …
+              â€¦
             </div>
           );
         }

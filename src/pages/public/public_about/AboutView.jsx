@@ -1,4 +1,4 @@
-import HowItWorks from '../public_Home/components/HowItWorks';
+﻿import HowItWorks from '../public_Home/components/HowItWorks';
 import InjurySupportHub from '../public_Home/components/InjurySupportHub';
 import AboutCta from './component/AboutCta';
 import AboutHero from './component/AboutHero';

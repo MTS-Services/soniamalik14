@@ -1,8 +1,8 @@
-import React, { useEffect, useRef, useState } from 'react'
+﻿import React, { useEffect, useRef, useState } from 'react'
 import Button from '../../../../components/ui/Button'
 
 const Checkbox = ({ label, checked, onChange }) => (
-    <label className="inline-flex items-center gap-2 bg-gray-100 rounded-md px-3 py-2 text-sm mr-2 mb-2">
+    <label className="inline-flex items-center gap-2 bg-gray-100 rounded-md px-3 py-2 text-base mr-2 mb-2">
         <input type="checkbox" checked={checked} onChange={(e) => onChange && onChange(e.target.checked)} />
         <span>{label}</span>
     </label>
@@ -71,7 +71,7 @@ const FindSupportModal = ({ open, onClose }) => {
                 {/* Header - sticky */}
                 <div className="sticky top-0 bg-white border-b border-gray-200 px-4 py-3 flex items-center justify-between">
                     <h3 className="text-lg font-semibold">Fill the form</h3>
-                    <button onClick={onClose} aria-label="Close" className="text-gray-600 hover:text-gray-900">×</button>
+                    <button onClick={onClose} aria-label="Close" className="text-gray-600 hover:text-gray-900">Ã—</button>
                 </div>
 
                 {/* Body - scrollable */}
@@ -83,7 +83,7 @@ const FindSupportModal = ({ open, onClose }) => {
                     className="p-4 overflow-y-auto max-h-[60vh] space-y-4"
                 >
                     <div>
-                        <div className="text-sm font-medium text-gray-700 mb-2">Interested In</div>
+                        <div className="text-base font-medium text-gray-700 mb-2">Interested In</div>
                         <div className="flex flex-wrap">
                             <Checkbox label="Football" />
                             <Checkbox label="Squash" />
@@ -94,12 +94,12 @@ const FindSupportModal = ({ open, onClose }) => {
                             <Checkbox label="Tennis" />
                             <Checkbox label="Other" />
                         </div>
-                        <input placeholder="write specific gamename" className="mt-3 w-full bg-gray-100 rounded-md px-3 py-2 text-sm border border-gray-200" />
+                        <input placeholder="write specific gamename" className="mt-3 w-full bg-gray-100 rounded-md px-3 py-2 text-base border border-gray-200" />
                     </div>
 
                     <div>
-                        <div className="text-sm font-medium text-gray-700 mb-2">Level</div>
-                        <select className="w-full bg-white border border-gray-200 rounded-md px-3 py-2 text-sm">
+                        <div className="text-base font-medium text-gray-700 mb-2">Level</div>
+                        <select className="w-full bg-white border border-gray-200 rounded-md px-3 py-2 text-base">
                             <option>New to the sport</option>
                             <option>Some experience</option>
                             <option>Regular player</option>
@@ -108,7 +108,7 @@ const FindSupportModal = ({ open, onClose }) => {
                     </div>
 
                     <div>
-                        <div className="text-sm font-medium text-gray-700 mb-2">Preferred Days</div>
+                        <div className="text-base font-medium text-gray-700 mb-2">Preferred Days</div>
                         <div className="flex flex-wrap">
                             <Checkbox label="Weekday evenings" />
                             <Checkbox label="Weekday daytime" />
@@ -119,7 +119,7 @@ const FindSupportModal = ({ open, onClose }) => {
                     </div>
 
                     <div>
-                        <div className="text-sm font-medium text-gray-700 mb-2">Preference</div>
+                        <div className="text-base font-medium text-gray-700 mb-2">Preference</div>
                         <div className="flex flex-wrap">
                             <Checkbox label="Women-only sessions" />
                             <Checkbox label="Mixed sessions" />
@@ -129,7 +129,7 @@ const FindSupportModal = ({ open, onClose }) => {
                     </div>
 
                     <div>
-                        <div className="text-sm font-medium text-gray-700 mb-2">Would you help start something?</div>
+                        <div className="text-base font-medium text-gray-700 mb-2">Would you help start something?</div>
                         <div className="flex gap-3">
                             <label className="inline-flex items-center gap-2"><input type="radio" name="help" /> Yes</label>
                             <label className="inline-flex items-center gap-2"><input type="radio" name="help" /> Just want to play</label>

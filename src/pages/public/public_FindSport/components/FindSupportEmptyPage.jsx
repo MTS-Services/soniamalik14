@@ -1,4 +1,4 @@
-import React from 'react'
+﻿import React from 'react'
 import Container from '../../../../components/layout/Container'
 import Button from '../../../../components/ui/Button'
 
@@ -13,10 +13,10 @@ const FindSupportEmptyPage = ({ onOpen = () => { } }) => {
                         className="mx-auto w-[600px] h-48 md:h-[500px] object-contain mb-6"
                     />
 
-                    <h2 className="text-2xl sm:text-3xl font-extrabold text-gray-900 mb-3">Don’t see your sport locally?</h2>
+                    <h2 className="text-2xl sm:text-3xl font-extrabold text-gray-900 mb-3">Donâ€™t see your sport locally?</h2>
 
                     <p className="text-gray-600 mb-6">
-                        Tell us what you'd love to play — we'll show clubs there's demand in your area. Help us bring
+                        Tell us what you'd love to play â€” we'll show clubs there's demand in your area. Help us bring
                         more sport to your area.
                     </p>
 

@@ -1,4 +1,4 @@
-
+﻿
 import React, { useEffect, useState } from 'react';
 import { useParams, useLocation, Link } from 'react-router-dom';
 import { MapPin, Calendar, Clock, Phone, Mail, ArrowLeft } from 'lucide-react';
@@ -23,7 +23,7 @@ const transformEventData = (event) => {
     // Format time range
     const formatTime = (startTime, endTime) => {
         if (!startTime || !endTime) return '';
-        return `${startTime} – ${endTime}`;
+        return `${startTime} â€“ ${endTime}`;
     };
 
     // Format age group
@@ -135,7 +135,7 @@ const EventDetails = ({ backRoute = '/coach/event' }) => {
         <div className=" dashboardPy dashboardSpaceY  text-gray-800">
             {/* Back Button */}
             <div className="mb-4">
-                <Link to={backTarget} className="inline-flex items-center text-sm font-medium text-teal-600 hover:text-teal-700">
+                <Link to={backTarget} className="inline-flex items-center text-base font-medium text-teal-600 hover:text-teal-700">
                     <ArrowLeft className="w-4 h-4 mr-1" /> Back
                 </Link>
             </div>
@@ -165,18 +165,18 @@ const EventDetails = ({ backRoute = '/coach/event' }) => {
 
                     {/* Date & Time Section */}
                     <div className="flex flex-col gap-3 mb-6">
-                        <div className="flex items-center gap-3 text-sm text-gray-700">
+                        <div className="flex items-center gap-3 text-base text-gray-700">
                             <Calendar className="w-5 h-5 text-gray-500" />
                             <span className="font-medium">{item.date}</span>
                         </div>
-                        <div className="flex items-center gap-3 text-sm text-gray-700">
+                        <div className="flex items-center gap-3 text-base text-gray-700">
                             <Clock className="w-5 h-5 text-gray-500" />
                             <span className="font-medium">{item.time}</span>
                         </div>
                     </div>
 
                     {/* Event Attributes (Age, Sport, Skill, Deadline) */}
-                    <div className="space-y-4 text-sm text-gray-800 mb-8">
+                    <div className="space-y-4 text-base text-gray-800 mb-8">
                         <div>
                             <span className="font-bold block text-gray-900">Age Group:</span>
                             <span>{item.ageGroup}</span>
@@ -206,8 +206,8 @@ const EventDetails = ({ backRoute = '/coach/event' }) => {
                             {/* Venue Section */}
                             <div className="mb-2">
                                 <div className="flex items-center gap-2 mb-1">
-                                    <span className="font-bold text-sm text-gray-900">Venue:</span>
-                                    <span className="text-sm text-gray-600">{item.venue?.name}</span>
+                                    <span className="font-bold text-base text-gray-900">Venue:</span>
+                                    <span className="text-base text-gray-600">{item.venue?.name}</span>
                                 </div>
                                 <div className="flex items-start gap-2 text-xs text-gray-500">
                                     <MapPin className="w-4 h-4 mt-0.5 shrink-0" />
@@ -237,13 +237,13 @@ const EventDetails = ({ backRoute = '/coach/event' }) => {
 
                             {/* Contact Information */}
                             <div className="mb-4">
-                                <h4 className="font-bold text-sm text-gray-900 mb-3">Contact Information</h4>
+                                <h4 className="font-bold text-base text-gray-900 mb-3">Contact Information</h4>
                                 <div className="space-y-2">
-                                    <div className="flex items-center gap-2 text-sm text-gray-600">
+                                    <div className="flex items-center gap-2 text-base text-gray-600">
                                         <Phone className="w-4 h-4 text-gray-400" />
                                         <span>{item.contact?.phone}</span>
                                     </div>
-                                    <div className="flex items-center gap-2 text-sm text-gray-600">
+                                    <div className="flex items-center gap-2 text-base text-gray-600">
                                         <Mail className="w-4 h-4 text-gray-400" />
                                         <span className="break-all">{item.contact?.email}</span>
                                     </div>
@@ -252,7 +252,7 @@ const EventDetails = ({ backRoute = '/coach/event' }) => {
 
                             {/* Organized By */}
                             <div>
-                                <h4 className="font-bold text-sm text-gray-900 mb-3">Organized By:</h4>
+                                <h4 className="font-bold text-base text-gray-900 mb-3">Organized By:</h4>
                                 <div className="flex items-center gap-3">
                                     <div className="w-10 h-10 rounded-full bg-gray-100 overflow-hidden border border-gray-200">
                                         {/* Using placeholder or item image for logo */}
@@ -262,7 +262,7 @@ const EventDetails = ({ backRoute = '/coach/event' }) => {
                                             className="w-full h-full object-cover"
                                         />
                                     </div>
-                                    <span className="text-sm font-semibold text-gray-800">
+                                    <span className="text-base font-semibold text-gray-800">
                                         {item.organizer?.name}
                                     </span>
                                 </div>

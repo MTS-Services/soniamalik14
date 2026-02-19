@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import EventAnalytics from '../../shared/eventAnalytics/EventAnalytics';
 
 const ProviderEventAnalytics = () => {

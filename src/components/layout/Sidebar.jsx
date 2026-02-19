@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { Link, NavLink, useNavigate, useLocation } from 'react-router-dom';
 import {
     LayoutDashboard,
@@ -180,7 +180,7 @@ const Sidebar = ({ isOpen, onClose }) => {
                                         extraActive = true;
                                     }
                                     const active = isActive || extraActive;
-                                    return `w-full flex items-center gap-3 font-medium text-sm px-5 py-3 rounded-none ${active ? 'bg-btn-primary text-white' : 'text-sidebarLink hover:bg-gray-50'
+                                    return `w-full flex items-center gap-3 font-medium text-base px-5 py-3 rounded-none ${active ? 'bg-btn-primary text-white' : 'text-sidebarLink hover:bg-gray-50'
                                         }`;
                                 }}
                             >
@@ -198,7 +198,7 @@ const Sidebar = ({ isOpen, onClose }) => {
                         className="w-full flex items-center gap-3 px-4 py-3 text-btn-primary hover:bg-gray-50 rounded-none"
                     >
                         <LogOut className="w-5 h-5" />
-                        <span className="text-sm font-medium">Log Out</span>
+                        <span className="text-base font-medium">Log Out</span>
                     </button>
                 </div>
             </aside>

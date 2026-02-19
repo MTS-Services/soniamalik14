@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { useAuth } from '../../../../context/AuthContext';
 import { Link } from 'react-router-dom';
 import Card from '../../../../components/ui/Card';
@@ -12,7 +12,7 @@ const EventCard = ({ event }) => {
     <Card className="p-4 h-full flex flex-col justify-between" style={{ borderColor: '#B5D5D2' }}>
       <div>
         <div className="relative">
-          <div className="absolute top-3 left-3 bg-secondary text-btn-primary rounded-md px-3 py-1.5 text-sm font-semibold">{event.tag}</div>
+          <div className="absolute top-3 left-3 bg-secondary text-btn-primary rounded-md px-3 py-1.5 text-base font-semibold">{event.tag}</div>
           <div className="h-40 sm:h-48 lg:h-64 bg-gray-200 rounded-md mb-4 overflow-hidden flex items-center justify-center">
             {event.image ? (
               <img src={event.image} alt={event.title} className="w-full h-full object-cover rounded-md" />
@@ -24,13 +24,13 @@ const EventCard = ({ event }) => {
 
         <h3 className="text-[#282828] font-semibold text-lg mb-2">{event.title}</h3>
 
-        <div className="text-sm text-[#363636] mb-1 flex items-center gap-2">
+        <div className="text-base text-[#363636] mb-1 flex items-center gap-2">
           <MapPin className="w-4 h-4 text-[#363636]" />
-          <span className="text-sm">{event.location}</span>
+          <span className="text-base">{event.location}</span>
         </div>
 
-        <div className="text-sm text-[#363636] mb-3 flex items-start gap-2">
-          <div className="flex items-center gap-2"><Calendar className="w-4 h-4 text-[#363636]" /> <span className="text-sm">{event.date}</span></div>
+        <div className="text-base text-[#363636] mb-3 flex items-start gap-2">
+          <div className="flex items-center gap-2"><Calendar className="w-4 h-4 text-[#363636]" /> <span className="text-base">{event.date}</span></div>
         </div>
 
         {!isAuthenticated && (

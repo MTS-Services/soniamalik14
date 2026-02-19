@@ -1,4 +1,4 @@
-
+﻿
 import React, { useState } from 'react';
 
 export default function Settings() {
@@ -114,7 +114,7 @@ export default function Settings() {
                   onChange={handleChange}
                   className={`w-full px-4 py-3 border ${errors.email ? 'border-red-500' : 'border-gray-300'} rounded focus:outline-none focus:border-[#91C0BC] bg-white text-gray-700`}
                 />
-                {errors.email && <p className="mt-1 text-sm text-red-600">{errors.email}</p>}
+                {errors.email && <p className="mt-1 text-base text-red-600">{errors.email}</p>}
               </div>
 
               {/* Phone Number Field */}
@@ -127,7 +127,7 @@ export default function Settings() {
                   onChange={handleChange}
                   className={`w-full px-4 py-3 border ${errors.phoneNumber ? 'border-red-500' : 'border-gray-300'} rounded focus:outline-none focus:border-[#91C0BC] bg-white text-gray-700`}
                 />
-                {errors.phoneNumber && <p className="mt-1 text-sm text-red-600">{errors.phoneNumber}</p>}
+                {errors.phoneNumber && <p className="mt-1 text-base text-red-600">{errors.phoneNumber}</p>}
               </div>
 
               {/* Old Password Field */}
@@ -141,7 +141,7 @@ export default function Settings() {
                   onChange={handleChange}
                   className={`w-full px-4 py-3 border ${errors.oldPassword ? 'border-red-500' : 'border-gray-300'} rounded focus:outline-none focus:border-[#91C0BC] bg-white text-gray-700`}
                 />
-                {errors.oldPassword && <p className="mt-1 text-sm text-red-600">{errors.oldPassword}</p>}
+                {errors.oldPassword && <p className="mt-1 text-base text-red-600">{errors.oldPassword}</p>}
               </div>
 
               {/* New Password Field */}
@@ -155,7 +155,7 @@ export default function Settings() {
                   onChange={handleChange}
                   className={`w-full px-4 py-3 border ${errors.newPassword ? 'border-red-500' : 'border-gray-300'} rounded focus:outline-none focus:border-[#91C0BC] bg-white text-gray-700`}
                 />
-                {errors.newPassword && <p className="mt-1 text-sm text-red-600">{errors.newPassword}</p>}
+                {errors.newPassword && <p className="mt-1 text-base text-red-600">{errors.newPassword}</p>}
               </div>
 
               {/* Confirm New Password Field */}
@@ -169,7 +169,7 @@ export default function Settings() {
                   onChange={handleChange}
                   className={`w-full px-4 py-3 border ${errors.confirmNewPassword ? 'border-red-500' : 'border-gray-300'} rounded focus:outline-none focus:border-[#91C0BC] bg-white text-gray-700`}
                 />
-                {errors.confirmNewPassword && <p className="mt-1 text-sm text-red-600">{errors.confirmNewPassword}</p>}
+                {errors.confirmNewPassword && <p className="mt-1 text-base text-red-600">{errors.confirmNewPassword}</p>}
               </div>
             </form>
           </div>

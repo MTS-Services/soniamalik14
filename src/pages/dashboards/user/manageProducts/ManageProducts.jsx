@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+﻿import React, { useState } from 'react'
 import { FiPlus } from 'react-icons/fi'
 import Container from '../../../../components/layout/Container'
 import Card from '../../../../components/ui/Card'
@@ -25,9 +25,9 @@ const ManageProducts = () => {
           <div>
               <div className="w-full md:w-auto">
                 <h1 className="text-xl md:text-2xl lg:text-3xl font-bold text-[#161616]">
-              Marketplace – Manage Your Products
+              Marketplace â€“ Manage Your Products
             </h1>
-                <p className="text-sm md:text-base text-[#5B5B5B] mt-1">
+                <p className="text-base md:text-base text-[#5B5B5B] mt-1">
               Sell sports kits, equipment, and training essentials to your community.
             </p>
               </div>
@@ -36,7 +36,7 @@ const ManageProducts = () => {
           <div className="w-full md:w-auto mt-3 md:mt-0 text-left md:text-right">
             <button onClick={() => setShowAddModal(true)} className="inline-flex items-center gap-2 bg-[#0F766E] text-white px-4 py-2 rounded-md shadow">
               <FiPlus />
-              <span className="text-sm font-medium">Add Product</span>
+              <span className="text-base font-medium">Add Product</span>
             </button>
           </div>
         </div>

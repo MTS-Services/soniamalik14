@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Eye, EyeOff } from 'lucide-react';
 import { useAuth, ROLES } from '../../../context/AuthContext';
@@ -61,14 +61,14 @@ const LoginView = () => {
         <div className="w-full max-w-md">
           <div className="mb-8">
             <div className="mb-4">
-              <Link to="/" className="inline-flex items-center text-sm gap-1 text-btn-primary hover:text-[#0d655d] font-medium">
+              <Link to="/" className="inline-flex items-center text-base gap-1 text-btn-primary hover:text-[#0d655d] font-medium">
                 <FaArrowLeft /> Back to Home
               </Link>
             </div>
             <h1 className="text-3xl md:text-4xl font-bold text-[#282828] mb-2">
               Welcome Back
             </h1>
-            <p className="text-[#363636] text-sm md:text-base">
+            <p className="text-[#363636] text-base md:text-base">
               Sign in to access your dashboard
             </p>
           </div>
@@ -76,13 +76,13 @@ const LoginView = () => {
           <form onSubmit={handleSubmit} className="space-y-5">
             {/* Error Message */}
             {error && (
-              <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-lg text-sm">
+              <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-lg text-base">
                 {error}
               </div>
             )}
 
             {/* Demo Credentials Info */}
-            {/* <div className="bg-blue-50 border border-blue-200 text-blue-700 px-4 py-3 rounded-lg text-sm">
+            {/* <div className="bg-blue-50 border border-blue-200 text-blue-700 px-4 py-3 rounded-lg text-base">
               <p className="font-semibold mb-2">Demo Credentials (Password: demo123)</p>
               <div className="space-y-1 text-xs">
                 <p><strong>Admin:</strong> admin@essahub.com</p>
@@ -94,7 +94,7 @@ const LoginView = () => {
 
             {/* Email Field */}
             <div>
-              <label htmlFor="email" className="block text-[#282828] font-medium mb-2 text-sm md:text-base">
+              <label htmlFor="email" className="block text-[#282828] font-medium mb-2 text-base md:text-base">
                 Email
               </label>
               <input
@@ -104,14 +104,14 @@ const LoginView = () => {
                 value={formData.email}
                 onChange={handleChange}
                 placeholder="admin@essahub.com"
-                className="w-full px-4 py-3 bg-loginInput rounded-lg outline-none focus:ring-2 focus:ring-btn-primary transition-all text-sm text-gray-700 placeholder-[#747474]"
+                className="w-full px-4 py-3 bg-loginInput rounded-lg outline-none focus:ring-2 focus:ring-btn-primary transition-all text-base text-gray-700 placeholder-[#747474]"
                 required
               />
             </div>
 
             {/* Password Field */}
             <div>
-              <label htmlFor="password" className="block text-[#282828] font-medium mb-2 text-sm md:text-base">
+              <label htmlFor="password" className="block text-[#282828] font-medium mb-2 text-base md:text-base">
                 Password
               </label>
               <div className="relative">
@@ -121,8 +121,8 @@ const LoginView = () => {
                   name="password"
                   value={formData.password}
                   onChange={handleChange}
-                  placeholder="•••• •••• ••••"
-                  className="w-full px-4 py-3 pr-12 bg-loginInput rounded-lg outline-none focus:ring-2 focus:ring-btn-primary transition-all text-sm text-gray-700 placeholder-[#747474]"
+                  placeholder="â€¢â€¢â€¢â€¢ â€¢â€¢â€¢â€¢ â€¢â€¢â€¢â€¢"
+                  className="w-full px-4 py-3 pr-12 bg-loginInput rounded-lg outline-none focus:ring-2 focus:ring-btn-primary transition-all text-base text-gray-700 placeholder-[#747474]"
                   required
                 />
                 <button
@@ -140,7 +140,7 @@ const LoginView = () => {
               <div className="mt-2 text-right">
                 <Link
                   to="/forgot-password"
-                  className="text-sm text-btn-primary hover:text-[#0d655d] font-medium"
+                  className="text-base text-btn-primary hover:text-[#0d655d] font-medium"
                 >
                   Forgot Password?
                 </Link>
@@ -158,7 +158,7 @@ const LoginView = () => {
 
             {/* Create Account Section */}
             <div className="text-center pt-4">
-              <p className="text-sm text-[#363636] mb-3">Don't have account</p>
+              <p className="text-base text-[#363636] mb-3">Don't have account</p>
               <Link
                 to="/register"
                 className="block w-full border-2 border-btn-primary text-btn-primary hover:bg-btn-primary hover:text-white py-3 rounded-lg font-medium transition-all"

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import Container from '../../../components/layout/Container';
 import Button from '../../../components/ui/Button';
 import { useAuth } from '../../../context/AuthContext';
@@ -100,7 +100,7 @@ const ProviderSettings = () => {
         const { current, newPass, confirm } = passwords;
         setChangingPassword(true);
         try {
-            // authService handles toasts for success/error — avoid duplicating toasts here
+            // authService handles toasts for success/error â€” avoid duplicating toasts here
             const result = await changePassword(current, newPass, confirm);
             if (result && result.success) setPasswords({ current: '', newPass: '', confirm: '' });
         } catch (err) {
@@ -115,7 +115,7 @@ const ProviderSettings = () => {
         <div className=" dashboardPy dashboardSpaceY">
             <div className="py-4">
                 <h2 className="text-2xl font-semibold">Settings</h2>
-                <p className="text-sm text-gray-600 mt-1">Manage your profile and change password</p>
+                <p className="text-base text-gray-600 mt-1">Manage your profile and change password</p>
             </div>
 
             <div className="grid grid-cols-1  gap-6">
@@ -130,7 +130,7 @@ const ProviderSettings = () => {
                                         {imagePreview ? (
                                             <img src={imagePreview} alt="avatar" className="w-full h-full object-cover" />
                                         ) : (
-                                            <span className="text-sm text-gray-400">No image</span>
+                                            <span className="text-base text-gray-400">No image</span>
                                         )}
                                     </div>
                                     <label htmlFor="avatarInput" className="absolute bottom-2 right-1 bg-white rounded-full p-2 shadow-md cursor-pointer">
@@ -141,7 +141,7 @@ const ProviderSettings = () => {
 
                             </div>
                         </div>
-                        <label className="block text-sm mb-1">Business Name</label>
+                        <label className="block text-base mb-1">Business Name</label>
                         <input
                             name="businessName"
                             value={profile.businessName}
@@ -150,7 +150,7 @@ const ProviderSettings = () => {
                             placeholder="Business Name"
                         />
 
-                        <label className="block text-sm mb-1">About Business</label>
+                        <label className="block text-base mb-1">About Business</label>
                         <textarea
                             name="about"
                             value={profile.about}
@@ -159,7 +159,7 @@ const ProviderSettings = () => {
                             placeholder="Write about business"
                         />
 
-                        <label className="block text-sm mb-1">Clinic Address</label>
+                        <label className="block text-base mb-1">Clinic Address</label>
                         <input
                             name="clinicAddress"
                             value={profile.clinicAddress}
@@ -168,7 +168,7 @@ const ProviderSettings = () => {
                             placeholder="Clinic Address"
                         />
 
-                        <label className="block text-sm mb-1">Service Area</label>
+                        <label className="block text-base mb-1">Service Area</label>
                         <input
                             name="serviceArea"
                             value={profile.serviceArea}
@@ -179,7 +179,7 @@ const ProviderSettings = () => {
 
                         <div className="flex gap-4">
                             <div className="flex-1">
-                                <label className="block text-sm mb-1">Working Days</label>
+                                <label className="block text-base mb-1">Working Days</label>
                                 <input
                                     name="workingDays"
                                     value={profile.workingDays}
@@ -189,7 +189,7 @@ const ProviderSettings = () => {
                                 />
                             </div>
                             <div className="flex-1">
-                                <label className="block text-sm mb-1">Working Hours</label>
+                                <label className="block text-base mb-1">Working Hours</label>
                                 <input
                                     name="workingHours"
                                     value={profile.workingHours}
@@ -200,7 +200,7 @@ const ProviderSettings = () => {
                             </div>
                         </div>
 
-                        <label className="block text-sm mb-1">Email</label>
+                        <label className="block text-base mb-1">Email</label>
                         <input
                             name="email"
                             value={profile.email}
@@ -210,7 +210,7 @@ const ProviderSettings = () => {
                             type="email"
                         />
 
-                        <label className="block text-sm mb-1">Phone Number</label>
+                        <label className="block text-base mb-1">Phone Number</label>
                         <input
                             name="phone"
                             value={profile.phone}
@@ -231,7 +231,7 @@ const ProviderSettings = () => {
                 <section className="bg-white p-4 rounded shadow">
                     <h3 className="text-lg font-medium mb-3">Change Password</h3>
                     <form onSubmit={handlePasswordSubmit}>
-                        <label className="block text-sm mb-1">Current password</label>
+                        <label className="block text-base mb-1">Current password</label>
                         <div className="relative mb-3">
                             <input
                                 name="current"
@@ -251,7 +251,7 @@ const ProviderSettings = () => {
                             </button>
                         </div>
 
-                        <label className="block text-sm mb-1">New password</label>
+                        <label className="block text-base mb-1">New password</label>
                         <div className="relative mb-3">
                             <input
                                 name="newPass"
@@ -271,7 +271,7 @@ const ProviderSettings = () => {
                             </button>
                         </div>
 
-                        <label className="block text-sm mb-1">Confirm new password</label>
+                        <label className="block text-base mb-1">Confirm new password</label>
                         <div className="relative mb-4">
                             <input
                                 name="confirm"

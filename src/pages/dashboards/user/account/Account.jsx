@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+﻿import React, { useState, useEffect } from 'react'
 import { useAuth } from '../../../../context/AuthContext'
 import { changePassword, updateUserProfile, updateBillingAddress, updateShippingAddress } from '../../../../services/authService'
 import { FiCamera, FiEye, FiEyeOff, FiChevronDown } from 'react-icons/fi'
@@ -157,7 +157,7 @@ export default function Account() {
             <div className="flex-1">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">First name</label>
+                  <label className="block text-base font-medium text-gray-700 mb-2">First name</label>
                   <input
                     type="text"
                     value={accountData.firstName}
@@ -167,7 +167,7 @@ export default function Account() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Last name</label>
+                  <label className="block text-base font-medium text-gray-700 mb-2">Last name</label>
                   <input
                     type="text"
                     value={accountData.lastName}
@@ -177,7 +177,7 @@ export default function Account() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                  <label className="block text-base font-medium text-gray-700 mb-2">Email</label>
                   <input
                     type="email"
                     value={accountData.email}
@@ -187,7 +187,7 @@ export default function Account() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
+                  <label className="block text-base font-medium text-gray-700 mb-2">Phone Number</label>
                   <input
                     type="tel"
                     value={accountData.phone}
@@ -197,7 +197,7 @@ export default function Account() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Region/State</label>
+                  <label className="block text-base font-medium text-gray-700 mb-2">Region/State</label>
                   <div className="relative">
                     <select
                       value={accountData.region}
@@ -213,7 +213,7 @@ export default function Account() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">City</label>
+                  <label className="block text-base font-medium text-gray-700 mb-2">City</label>
                   <div className="relative">
                     <select
                       value={accountData.city}
@@ -229,7 +229,7 @@ export default function Account() {
                 </div>
 
                 <div className="md:col-span-1">
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Zip Code</label>
+                  <label className="block text-base font-medium text-gray-700 mb-2">Zip Code</label>
                   <input
                     type="text"
                     value={accountData.zipCode}
@@ -239,7 +239,7 @@ export default function Account() {
                 </div>
 
                 <div className="md:col-span-2">
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Address</label>
+                  <label className="block text-base font-medium text-gray-700 mb-2">Address</label>
                   <input
                     type="text"
                     value={accountData.address}
@@ -289,7 +289,7 @@ export default function Account() {
           <div className="">
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Current Password</label>
+                <label className="block text-base font-medium text-gray-700 mb-2">Current Password</label>
                 <div className="relative">
                   <input
                     type={showCurrentPassword ? 'text' : 'password'}
@@ -308,7 +308,7 @@ export default function Account() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">New Password</label>
+                <label className="block text-base font-medium text-gray-700 mb-2">New Password</label>
                 <div className="relative">
                   <input
                     type={showNewPassword ? 'text' : 'password'}
@@ -328,7 +328,7 @@ export default function Account() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Confirm Password</label>
+                <label className="block text-base font-medium text-gray-700 mb-2">Confirm Password</label>
                 <div className="relative">
                   <input
                     type={showConfirmPassword ? 'text' : 'password'}
@@ -376,7 +376,7 @@ export default function Account() {
             <div className="space-y-4">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">First Name</label>
+                  <label className="block text-base font-medium text-gray-700 mb-2">First Name</label>
                   <input
                     type="text"
                     value={billingAddress.firstName}
@@ -386,7 +386,7 @@ export default function Account() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Last Name</label>
+                  <label className="block text-base font-medium text-gray-700 mb-2">Last Name</label>
                   <input
                     type="text"
                     value={billingAddress.lastName}
@@ -397,7 +397,7 @@ export default function Account() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Company Name (Optional)</label>
+                <label className="block text-base font-medium text-gray-700 mb-2">Company Name (Optional)</label>
                 <input
                   type="text"
                   value={billingAddress.companyName}
@@ -407,7 +407,7 @@ export default function Account() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Address</label>
+                <label className="block text-base font-medium text-gray-700 mb-2">Address</label>
                 <input
                   type="text"
                   value={billingAddress.address}
@@ -417,7 +417,7 @@ export default function Account() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Region/State</label>
+                <label className="block text-base font-medium text-gray-700 mb-2">Region/State</label>
                 <div className="relative">
                   <select
                     value={billingAddress.region}
@@ -435,7 +435,7 @@ export default function Account() {
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">City</label>
+                  <label className="block text-base font-medium text-gray-700 mb-2">City</label>
                   <div className="relative">
                     <select
                       value={billingAddress.city}
@@ -451,7 +451,7 @@ export default function Account() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Zip Code</label>
+                  <label className="block text-base font-medium text-gray-700 mb-2">Zip Code</label>
                   <input
                     type="text"
                     value={billingAddress.zipCode}
@@ -462,7 +462,7 @@ export default function Account() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                <label className="block text-base font-medium text-gray-700 mb-2">Email</label>
                 <input
                   type="email"
                   value={billingAddress.email}
@@ -472,7 +472,7 @@ export default function Account() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
+                <label className="block text-base font-medium text-gray-700 mb-2">Phone Number</label>
                 <input
                   type="tel"
                   value={billingAddress.phone}
@@ -515,7 +515,7 @@ export default function Account() {
             <div className="space-y-4">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">First Name</label>
+                  <label className="block text-base font-medium text-gray-700 mb-2">First Name</label>
                   <input
                     type="text"
                     value={shippingAddress.firstName}
@@ -525,7 +525,7 @@ export default function Account() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Last Name</label>
+                  <label className="block text-base font-medium text-gray-700 mb-2">Last Name</label>
                   <input
                     type="text"
                     value={shippingAddress.lastName}
@@ -536,7 +536,7 @@ export default function Account() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Company Name (Optional)</label>
+                <label className="block text-base font-medium text-gray-700 mb-2">Company Name (Optional)</label>
                 <input
                   type="text"
                   value={shippingAddress.companyName}
@@ -546,7 +546,7 @@ export default function Account() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Address</label>
+                <label className="block text-base font-medium text-gray-700 mb-2">Address</label>
                 <input
                   type="text"
                   value={shippingAddress.address}
@@ -556,7 +556,7 @@ export default function Account() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Region/State</label>
+                <label className="block text-base font-medium text-gray-700 mb-2">Region/State</label>
                 <div className="relative">
                   <select
                     value={shippingAddress.region}
@@ -574,7 +574,7 @@ export default function Account() {
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">City</label>
+                  <label className="block text-base font-medium text-gray-700 mb-2">City</label>
                   <div className="relative">
                     <select
                       value={shippingAddress.city}
@@ -590,7 +590,7 @@ export default function Account() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Zip Code</label>
+                  <label className="block text-base font-medium text-gray-700 mb-2">Zip Code</label>
                   <input
                     type="text"
                     value={shippingAddress.zipCode}
@@ -601,7 +601,7 @@ export default function Account() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                <label className="block text-base font-medium text-gray-700 mb-2">Email</label>
                 <input
                   type="email"
                   value={shippingAddress.email}
@@ -611,7 +611,7 @@ export default function Account() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
+                <label className="block text-base font-medium text-gray-700 mb-2">Phone Number</label>
                 <input
                   type="tel"
                   value={shippingAddress.phone}

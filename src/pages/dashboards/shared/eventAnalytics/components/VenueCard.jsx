@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { MapPin, Phone, Mail } from 'lucide-react';
 
 const VenueCard = ({ item }) => {
@@ -8,8 +8,8 @@ const VenueCard = ({ item }) => {
                 <div className="p-4">
                     <div className="mb-2">
                         <div className="flex items-center gap-2 mb-1">
-                            <span className="font-bold text-sm text-gray-900">Venue:</span>
-                            <span className="text-sm text-gray-600">{item.venue?.name}</span>
+                            <span className="font-bold text-base text-gray-900">Venue:</span>
+                            <span className="text-base text-gray-600">{item.venue?.name}</span>
                         </div>
                         <div className="flex items-start gap-2 text-xs text-gray-500">
                             <MapPin className="w-4 h-4 mt-0.5 shrink-0" />
@@ -22,13 +22,13 @@ const VenueCard = ({ item }) => {
                     </div>
 
                     <div className="mb-4">
-                        <h4 className="font-bold text-sm text-gray-900 mb-3">Contact Information</h4>
+                        <h4 className="font-bold text-base text-gray-900 mb-3">Contact Information</h4>
                         <div className="space-y-2">
-                            <div className="flex items-center gap-2 text-sm text-gray-600">
+                            <div className="flex items-center gap-2 text-base text-gray-600">
                                 <Phone className="w-4 h-4 text-gray-400" />
                                 <span>{item.contact?.phone}</span>
                             </div>
-                            <div className="flex items-center gap-2 text-sm text-gray-600">
+                            <div className="flex items-center gap-2 text-base text-gray-600">
                                 <Mail className="w-4 h-4 text-gray-400" />
                                 <span className="break-all">{item.contact?.email}</span>
                             </div>
@@ -36,12 +36,12 @@ const VenueCard = ({ item }) => {
                     </div>
 
                     <div>
-                        <h4 className="font-bold text-sm text-gray-900 mb-3">Organized By:</h4>
+                        <h4 className="font-bold text-base text-gray-900 mb-3">Organized By:</h4>
                         <div className="flex items-center gap-3">
                             <div className="w-10 h-10 rounded-full bg-gray-100 overflow-hidden border border-gray-200">
                                 <img src={item.organizer?.avatar || '/api/placeholder/40/40'} alt="Logo" className="w-full h-full object-cover" />
                             </div>
-                            <span className="text-sm font-semibold text-gray-800">{item.organizer?.name}</span>
+                            <span className="text-base font-semibold text-gray-800">{item.organizer?.name}</span>
                         </div>
                     </div>
                 </div>
