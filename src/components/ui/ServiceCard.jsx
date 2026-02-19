@@ -54,6 +54,8 @@ const ServiceCard = ({ item = {}, editLink, onEdit, onDelete, className = '' }) 
                         <h3 className="text-[#282828] font-semibold text-lg mb-2 min-h-[56px]">{item.title}</h3>
                         <div className="text-sm text-[#363636] mb-2 min-h-[40px] overflow-hidden">{item.description}</div>
 
+
+
                     </div>
 
                     <div className="mt-2" onClick={(e) => e.preventDefault()}>

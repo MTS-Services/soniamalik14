@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { X, Upload } from 'lucide-react';
 import Button from './Button';
+import { useService } from '../../context/ServiceContext';
 
 const ServiceModal = ({ isOpen, onClose, initialData = null, mode = 'create' }) => {
+    const { createService, createLoading } = useService();
+
     const [formData, setFormData] = useState({
         title: '',
-        serviceType: 'Training',
+        serviceType: 'TRAINING',
         description: '',
         fullAddress: '',
         googleMapLinks: '',
@@ -20,7 +23,7 @@ const ServiceModal = ({ isOpen, onClose, initialData = null, mode = 'create' }) 
             // eslint-disable-next-line react-hooks/set-state-in-effect
             setFormData({
                 title: initialData.title || '',
-                serviceType: initialData.serviceType || 'Training',
+                serviceType: initialData.serviceType || 'TRAINING',
                 description: initialData.description || '',
                 fullAddress: initialData.fullAddress || '',
                 googleMapLinks: initialData.googleMapLinks || '',
@@ -32,7 +35,7 @@ const ServiceModal = ({ isOpen, onClose, initialData = null, mode = 'create' }) 
         } else if (mode === 'create') {
             setFormData({
                 title: '',
-                serviceType: 'Training',
+                serviceType: 'TRAINING',
                 description: '',
                 fullAddress: '',
                 googleMapLinks: '',
@@ -51,7 +54,7 @@ const ServiceModal = ({ isOpen, onClose, initialData = null, mode = 'create' }) 
         setErrors((p) => ({ ...p, [field]: undefined }));
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         const newErrors = {};
         // minimal validation for required fields
@@ -65,9 +68,39 @@ const ServiceModal = ({ isOpen, onClose, initialData = null, mode = 'create' }) 
             return;
         }
 
-        console.log('Submitting service', formData);
-        // TODO: integrate API
-        onClose();
+        // Prepare form data for API (use FormData for file upload)
+        const submitData = new FormData();
+        submitData.append('title', formData.title);
+        submitData.append('description', formData.description);
+        submitData.append('serviceType', formData.serviceType);
+        submitData.append('googleMapLink', formData.googleMapLinks); // Note: backend expects singular
+        submitData.append('fullAddress', formData.fullAddress);
+        submitData.append('providerName', formData.providerName);
+        submitData.append('providerPhone', formData.phone); // backend expects providerPhone
+        submitData.append('providerEmail', formData.email); // backend expects providerEmail
+
+        if (formData.image) {
+            submitData.append('image', formData.image);
+        }
+
+        const result = await createService(submitData);
+
+        if (result.success) {
+            // Reset form and close modal
+            setFormData({
+                title: '',
+                serviceType: 'Training',
+                description: '',
+                fullAddress: '',
+                googleMapLinks: '',
+                providerName: '',
+                phone: '',
+                email: '',
+                image: null,
+            });
+            setErrors({});
+            onClose();
+        }
     };
 
     if (!isOpen) return null;
@@ -98,10 +131,12 @@ const ServiceModal = ({ isOpen, onClose, initialData = null, mode = 'create' }) 
                         <div>
                             <label className="block text-sm font-medium text-gray-700 mb-1">Service Type</label>
                             <select value={formData.serviceType} onChange={(e) => handleChange('serviceType', e.target.value)} className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-btn-primary">
-                                <option>Training</option>
-                                <option>Workshop</option>
-                                <option>Consultation</option>
-                                <option>Event Support</option>
+                                <option value="COACHING">Coaching</option>
+                                <option value="TRAINING">Training</option>
+                                <option value="THERAPY">Therapy</option>
+                                <option value="CONSULTATION">Consultation</option>
+                                <option value="NUTRITION">Nutrition</option>
+                                <option value="OTHER">Other</option>
                             </select>
                         </div>
 
@@ -157,7 +192,15 @@ const ServiceModal = ({ isOpen, onClose, initialData = null, mode = 'create' }) 
 
                 {/* Sticky Footer */}
                 <div className="p-4 border-t border-gray-200 sticky bottom-0 bg-white rounded-b-lg z-10">
-                    <Button type="submit" form="service-form" variant="primary" className="w-full rounded-lg py-3">{mode === 'edit' ? 'Update Service' : 'Submit For Approval'}</Button>
+                    <Button
+                        type="submit"
+                        form="service-form"
+                        variant="primary"
+                        className="w-full rounded-lg py-3"
+                        disabled={createLoading}
+                    >
+                        {createLoading ? 'Submitting...' : (mode === 'edit' ? 'Update Service' : 'Submit For Approval')}
+                    </Button>
                 </div>
             </div>
         </div>

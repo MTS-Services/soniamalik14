@@ -129,12 +129,11 @@ export const ServiceProvider = ({ children }) => {
                 newService = response;
             }
 
-            // Optimistically add to provider services
-            if (newService) {
-                setProviderServices(prev => [newService, ...prev]);
-            }
-
             toast.success('Service created successfully! Waiting for admin approval.');
+
+            // Refetch provider services to get complete data from backend
+            await fetchProviderServices();
+
             return { success: true, service: newService };
         } catch (err) {
             const message = err?.response?.data?.message || err?.message || 'Failed to create service';
@@ -144,7 +143,7 @@ export const ServiceProvider = ({ children }) => {
         } finally {
             setCreateLoading(false);
         }
-    }, []);
+    }, [fetchProviderServices]);
 
     // Update service
     const updateService = useCallback(async (serviceId, serviceData) => {

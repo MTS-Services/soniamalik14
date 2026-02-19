@@ -11,7 +11,6 @@ const ProviderService = () => {
     const {
         providerServices,
         loading,
-        error,
         fetchProviderServices,
         deleteService
     } = useService();
@@ -46,7 +45,7 @@ const ProviderService = () => {
         }
     };
 
-  
+
     if (loading && providerServices.length === 0) {
         return (
             <div className='dashboardPy dashboardSpaceY'>
@@ -71,13 +70,6 @@ const ProviderService = () => {
                 ctaText="Create Service"
                 onCtaClick={() => setIsModalOpen(true)}
             />
-
-            {error && (
-                <div className="bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded-lg mb-4">
-                    {error}
-                </div>
-            )}
-
             <div className="pt-6">
                 {providerServices.length === 0 ? (
                     <div className="text-center py-12">
@@ -91,10 +83,10 @@ const ProviderService = () => {
                     </div>
                 ) : (
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-3  gap-6 2xl:grid-cols-4">
-                        {paginatedServices.map((s) => (
-                            <div key={s.id} className="relative">
+                        {paginatedServices.map((s, idx) => (
+                            <div key={s.id || `service-${idx}`} className="relative">
 
-                                <ServiceCard item={s} onEdit={() => handleEdit(s)} onDelete={() => handleDelete(s)} />
+                                <ServiceCard key={s.id || `service-${idx}`} item={s} onEdit={() => handleEdit(s)} onDelete={() => handleDelete(s)} />
                             </div>
                         ))}
                     </div>
