@@ -16,6 +16,7 @@ const ProviderService = () => {
     } = useService();
 
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [editingService, setEditingService] = useState(null);
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 9;
 
@@ -34,15 +35,17 @@ const ProviderService = () => {
     }, [providerServices, currentPage, itemsPerPage]);
 
     const handleEdit = (service) => {
-        // TODO: open modal in edit mode with service data
-        console.log('edit', service);
+        setEditingService(service);
         setIsModalOpen(true);
     };
 
+    const handleCloseModal = () => {
+        setIsModalOpen(false);
+        setEditingService(null);
+    };
+
     const handleDelete = async (item) => {
-        if (window.confirm('Are you sure you want to delete this service?')) {
-            await deleteService(item.id);
-        }
+        await deleteService(item.id);
     };
 
 
@@ -101,7 +104,12 @@ const ProviderService = () => {
                 />
             )}
 
-            <ServiceModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+            <ServiceModal
+                isOpen={isModalOpen}
+                onClose={handleCloseModal}
+                initialData={editingService}
+                mode={editingService ? 'edit' : 'create'}
+            />
         </div>
     );
 };

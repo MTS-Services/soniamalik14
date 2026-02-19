@@ -123,11 +123,16 @@ It helps prevent injuries, improve performance, and support recovery so players 
             {/* Who This Service Is For */}
             <div className="mb-8">
                 <h2 className="text-xl font-bold text-gray-900 mb-3">Who This Service Is For</h2>
-                <ul className="list-disc list-inside text-sm text-gray-600 space-y-1">
-                    {(service.whoIsFor || []).map((item, idx) => (
-                        <li key={idx}>{item}</li>
-                    ))}
-                </ul>
+                {/* Support both array `whoIsFor` and string `whoServiceFor` from API */}
+                {service.whoServiceFor ? (
+                    <div className="text-base text-gray-700">{service.whoServiceFor}</div>
+                ) : (
+                    <ul className="list-disc list-inside text-sm text-gray-600 space-y-1">
+                        {(service.whoIsFor || []).map((item, idx) => (
+                            <li key={idx}>{item}</li>
+                        ))}
+                    </ul>
+                )}
             </div>
 
             {/* Active Sessions / Bookings Table */}

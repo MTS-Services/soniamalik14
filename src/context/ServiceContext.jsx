@@ -159,12 +159,11 @@ export const ServiceProvider = ({ children }) => {
             const response = await PUT(ENDPOINT.SERVICES.UPDATE(serviceId), serviceData);
             const updatedService = response?.data?.service || response?.data || response;
 
-            // Update in provider services list
-            setProviderServices(prev =>
-                prev.map(s => s.id === serviceId ? updatedService : s)
-            );
-
             toast.success('Service updated successfully!');
+
+            // Refetch provider services to get complete updated data from backend
+            await fetchProviderServices();
+
             return { success: true, service: updatedService };
         } catch (err) {
             const message = err?.response?.data?.message || err?.message || 'Failed to update service';
@@ -174,7 +173,7 @@ export const ServiceProvider = ({ children }) => {
         } finally {
             setUpdateLoading(false);
         }
-    }, []);
+    }, [fetchProviderServices]);
 
     // Delete service
     const deleteService = useCallback(async (serviceId) => {

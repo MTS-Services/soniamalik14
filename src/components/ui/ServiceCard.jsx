@@ -38,8 +38,8 @@ const ServiceCard = ({ item = {}, editLink, onEdit, onDelete, className = '' }) 
                 <Card className={`p-4 h-full flex flex-col justify-between rounded-lg !bg-[#E7F1F180]   ${className}`}>
                     <div className="flex-1">
                         <div className="relative">
-                            {item.tag && (
-                                <div className="absolute top-3 left-3 z-10 rounded-md px-3 py-1 text-sm font-medium text-[#0F766E] bg-[#E7F1F1]">{item.tag}</div>
+                            {(item.category || item.tag) && (
+                                <div className="absolute top-3 left-3 z-10 rounded-md px-3 py-1 text-sm font-medium text-[#0F766E] bg-[#E7F1F1]">{item.category || item.tag}</div>
                             )}
 
                             <div className="h-36 bg-gray-200 rounded-md mb-4 overflow-hidden flex items-center justify-center">
@@ -51,7 +51,7 @@ const ServiceCard = ({ item = {}, editLink, onEdit, onDelete, className = '' }) 
                             </div>
                         </div>
 
-                        <h3 className="text-[#282828] font-semibold text-lg mb-2 min-h-[56px]">{item.title}</h3>
+                        <h3 className="text-[#282828] font-semibold text-lg mb-2 ">{item.title}</h3>
                         <div className="text-sm text-[#363636] mb-2 min-h-[40px] overflow-hidden">{item.description}</div>
 
 

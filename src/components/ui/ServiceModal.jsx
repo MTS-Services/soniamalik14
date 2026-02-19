@@ -4,7 +4,7 @@ import Button from './Button';
 import { useService } from '../../context/ServiceContext';
 
 const ServiceModal = ({ isOpen, onClose, initialData = null, mode = 'create' }) => {
-    const { createService, createLoading } = useService();
+    const { createService, createLoading, updateService, updateLoading } = useService();
 
     const [formData, setFormData] = useState({
         title: '',
@@ -15,6 +15,9 @@ const ServiceModal = ({ isOpen, onClose, initialData = null, mode = 'create' }) 
         providerName: '',
         phone: '',
         email: '',
+        availableDays: '',
+        category: '',
+        whoServiceFor: '',
         image: null,
     });
 
@@ -26,10 +29,13 @@ const ServiceModal = ({ isOpen, onClose, initialData = null, mode = 'create' }) 
                 serviceType: initialData.serviceType || 'TRAINING',
                 description: initialData.description || '',
                 fullAddress: initialData.fullAddress || '',
-                googleMapLinks: initialData.googleMapLinks || '',
+                googleMapLinks: initialData.googleMapLink || initialData.googleMapLinks || '',
                 providerName: initialData.providerName || '',
-                phone: initialData.phone || '',
-                email: initialData.email || '',
+                phone: initialData.providerPhone || initialData.phone || '',
+                email: initialData.providerEmail || initialData.email || '',
+                availableDays: initialData.availableDays || '',
+                category: initialData.category || '',
+                whoServiceFor: initialData.whoServiceFor || '',
                 image: initialData.image || null,
             });
         } else if (mode === 'create') {
@@ -42,6 +48,9 @@ const ServiceModal = ({ isOpen, onClose, initialData = null, mode = 'create' }) 
                 providerName: '',
                 phone: '',
                 email: '',
+                availableDays: '',
+                category: '',
+                whoServiceFor: '',
                 image: null,
             });
         }
@@ -78,24 +87,33 @@ const ServiceModal = ({ isOpen, onClose, initialData = null, mode = 'create' }) 
         submitData.append('providerName', formData.providerName);
         submitData.append('providerPhone', formData.phone); // backend expects providerPhone
         submitData.append('providerEmail', formData.email); // backend expects providerEmail
+        submitData.append('availableDays', formData.availableDays);
+        submitData.append('category', formData.category);
+        submitData.append('whoServiceFor', formData.whoServiceFor);
 
-        if (formData.image) {
+        if (formData.image && typeof formData.image !== 'string') {
             submitData.append('image', formData.image);
         }
 
-        const result = await createService(submitData);
+        let result;
+        if (mode === 'edit' && initialData?.id) {
+            result = await updateService(initialData.id, submitData);
+        } else {
+            result = await createService(submitData);
+        }
 
         if (result.success) {
             // Reset form and close modal
             setFormData({
                 title: '',
-                serviceType: 'Training',
+                serviceType: 'TRAINING',
                 description: '',
                 fullAddress: '',
                 googleMapLinks: '',
                 providerName: '',
                 phone: '',
                 email: '',
+                availableDays: '',
                 image: null,
             });
             setErrors({});
@@ -175,6 +193,29 @@ const ServiceModal = ({ isOpen, onClose, initialData = null, mode = 'create' }) 
                             {errors.email && <p className="text-sm text-red-600 mt-1">{errors.email}</p>}
                         </div>
 
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-1">Available Days</label>
+                            <input type="text" placeholder="e.g., Monday, Wednesday, Friday" value={formData.availableDays} onChange={(e) => handleChange('availableDays', e.target.value)} className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-btn-primary" />
+                        </div>
+
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-1">Category</label>
+                            <select value={formData.category} onChange={(e) => handleChange('category', e.target.value)} className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-btn-primary">
+                                <option value="">Select category</option>
+                                <option value="Physio">Physio</option>
+                                <option value="Nutrition">Nutrition</option>
+                                <option value="Mental Health">Mental Health</option>
+                                <option value="Wellbeing">Wellbeing</option>
+                                <option value="Training">Training</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-1">Who This Service Is For</label>
+                            <input type="text" placeholder="e.g., Female athletes, Coaches" value={formData.whoServiceFor} onChange={(e) => handleChange('whoServiceFor', e.target.value)} className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-btn-primary" />
+                        </div>
+
                         {/* Upload Image */}
                         <div>
                             <label className="block text-sm font-medium text-gray-700 mb-2">Upload Image</label>
@@ -184,7 +225,9 @@ const ServiceModal = ({ isOpen, onClose, initialData = null, mode = 'create' }) 
                                 <p className="text-gray-400 text-xs">JPEG files accepted. Max 100MB</p>
                                 <input type="file" accept="image/jpeg,image/jpg" onChange={(e) => handleChange('image', e.target.files[0])} className="hidden" id="service-image-upload" />
                                 <label htmlFor="service-image-upload" className="mt-3 inline-block cursor-pointer px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-md text-sm text-gray-700">Choose File</label>
-                                {formData.image && <p className="text-sm text-gray-700 mt-2">{formData.image.name}</p>}
+                                {formData.image && typeof formData.image === 'object' && formData.image.name && (
+                                    <p className="text-sm text-gray-700 mt-2">{formData.image.name}</p>
+                                )}
                             </div>
                         </div>
                     </form>
@@ -197,9 +240,9 @@ const ServiceModal = ({ isOpen, onClose, initialData = null, mode = 'create' }) 
                         form="service-form"
                         variant="primary"
                         className="w-full rounded-lg py-3"
-                        disabled={createLoading}
+                        disabled={createLoading || updateLoading}
                     >
-                        {createLoading ? 'Submitting...' : (mode === 'edit' ? 'Update Service' : 'Submit For Approval')}
+                        {(createLoading || updateLoading) ? (mode === 'edit' ? 'Updating...' : 'Submitting...') : (mode === 'edit' ? 'Update Service' : 'Submit For Approval')}
                     </Button>
                 </div>
             </div>
