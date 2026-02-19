@@ -146,6 +146,7 @@ export const AuthProvider = ({ children }) => {
     // Only attempt to fetch profile if we have a token but no user stored
     if (!existingUser && token) {
       const tryFetch = async () => {
+        
         try {
           await fetchMe();
         } catch (e) {

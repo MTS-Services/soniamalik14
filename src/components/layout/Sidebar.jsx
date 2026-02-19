@@ -47,6 +47,7 @@ const getMenuItems = (role, basePath) => {
         { id: 'thread', label: 'Thread', icon: <MessageSquare className="w-5 h-5" />, path: `${basePath}/thread` },
         { id: 'service', label: 'Add Listing', icon: <CirclePlus className="w-5 h-5" />, path: `${basePath}/service` },
         // { id: 'service-analytics', label: 'Service Analytics', icon: <BarChart3 className="w-5 h-5" />, path: `${basePath}/service-analytics` },
+        { id: 'settings', label: 'Settings', icon: <Settings className="w-5 h-5" />, path: `${basePath}/settings` },
     ];
 
     const coachMenu = [

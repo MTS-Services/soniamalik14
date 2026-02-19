@@ -61,6 +61,7 @@ import ProviderServiceDetails from '../pages/dashboards/provider/service/Service
 import ServiceAnalytics from '../pages/dashboards/provider/serviceAnalytics/ServiceAnalytics.jsx';
 import ProviderThread from '../pages/dashboards/provider/thread/ProviderThread.jsx';
 import ProviderThreadDetails from '../pages/dashboards/provider/thread/ProviderThreadDetails.jsx';
+import ProviderSettings from '../pages/dashboards/provider/ProviderSettings.jsx';
 import MyOrders from '../pages/myOrders/MyOrders.jsx';
 
 // User Dashboard Pages
@@ -167,6 +168,7 @@ const router = createBrowserRouter(
         <Route path="service" element={<ProviderService />} />
         <Route path="service/:id" element={<ProviderServiceDetails />} />
         <Route path="service-analytics" element={<ServiceAnalytics />} />
+        <Route path="settings" element={<ProviderSettings />} />
       </Route>
 
       {/* Coach Dashboard - Protected */}
