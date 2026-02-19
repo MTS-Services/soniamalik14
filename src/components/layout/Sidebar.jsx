@@ -114,7 +114,7 @@ const Sidebar = ({ isOpen, onClose }) => {
 
     const handleNavClick = () => {
         // Close sidebar on mobile when a nav item is clicked
-        if (window.innerWidth < 1024) {
+       if (isOpen) {
             onClose?.();
         }
     };
