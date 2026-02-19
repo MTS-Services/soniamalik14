@@ -2,6 +2,7 @@
 import { GET, POST, PUT, DELETE } from '../services/httpMethods';
 import { ENDPOINT } from '../services/httpEndpoint';
 import { toast } from 'react-toastify';
+import { useAuth } from './AuthContext';
 
 const EventContext = createContext(null);
 
@@ -13,30 +14,34 @@ export const EventProvider = ({ children }) => {
     const [deleteLoading, setDeleteLoading] = useState(false);
     const [error, setError] = useState(null);
 
-    // Fetch all events (uses authenticated token)
+    // Fetch all events (uses authenticated token). Admins hit the public LIST endpoint,
+    // regular users hit the MY_LIST endpoint.
+    const { user } = useAuth();
+
     const fetchEvents = useCallback(async () => {
         setLoading(true);
         setError(null);
         try {
-           
-            const response = await GET(ENDPOINT.EVENTS.MY_LIST);
-        
+            // Choose endpoint depending on role
+            const endpointToUse = (user && user.role === 'admin') ? ENDPOINT.EVENTS.LIST : ENDPOINT.EVENTS.MY_LIST;
+            const response = await GET(endpointToUse);
+
 
             // Backend returns: { success: true, data: { events: [...], total: 3, page: 1 } }
             let eventsList = [];
             if (response?.data) {
                 if (Array.isArray(response.data)) {
                     eventsList = response.data;
-                    
+
                 } else if (response.data.events && Array.isArray(response.data.events)) {
                     eventsList = response.data.events;
-                   ;
+                    ;
                 } else if (response.data.data && response.data.data.events && Array.isArray(response.data.data.events)) {
                     eventsList = response.data.data.events;
-                   
+
                 } else if (response.data.data && Array.isArray(response.data.data)) {
                     eventsList = response.data.data;
-                   
+
                 } else {
                     console.log(' Could not find events array in response structure');
                 }
@@ -53,7 +58,7 @@ export const EventProvider = ({ children }) => {
         } finally {
             setLoading(false);
         }
-    }, []);
+    }, [user]);
 
     // Fetch single event details
     const fetchEventById = useCallback(async (eventId) => {
