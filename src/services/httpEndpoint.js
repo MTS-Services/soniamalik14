@@ -34,4 +34,16 @@ export const ENDPOINT = {
     BILLING_ADDRESS: (userId) => `/api/users/${userId}/billing-address`,
     SHIPPING_ADDRESS: (userId) => `/api/users/${userId}/shipping-address`,
   },
+  SERVICES: {
+    LIST: '/api/services',
+    APPROVED: '/api/services?isApproved=true',
+    PENDING: '/api/services?status=PENDING_APPROVAL',
+    PROVIDER_SERVICES: (providerId) => `/api/services?providerId=${providerId}`,
+    CREATE: '/api/services',
+    DETAIL: (id) => `/api/services/${id}`,
+    UPDATE: (id) => `/api/services/${id}`,
+    DELETE: (id) => `/api/services/${id}`,
+    APPROVE: (id) => `/api/services/${id}/approve`,
+    REJECT: (id) => `/api/services/${id}/reject`,
+  },
 };

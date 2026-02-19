@@ -1,44 +1,53 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useAuth } from '../../../../context/AuthContext';
+import { useService } from '../../../../context/ServiceContext';
 import PageHeader from '../../../../components/ui/PageHeader';
 import ServiceModal from '../../../../components/ui/ServiceModal';
 import ServiceCard from '../../../../components/ui/ServiceCard';
 import Pagination from '../../../../components/ui/Pagination';
-import { fetchServices } from '../../../../features/service/serviceApi';
-import { selectAllServices, selectServicesLoading } from '../../../../features/service/serviceSlice';
 
 const ProviderService = () => {
-    const dispatch = useDispatch();
+    const { user } = useAuth();
+    const {
+        providerServices,
+        loading,
+        error,
+        fetchProviderServices,
+        deleteService
+    } = useService();
+
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 9;
 
-    const services = useSelector(selectAllServices);
-    const loading = useSelector(selectServicesLoading);
-
     useEffect(() => {
-        dispatch(fetchServices());
-    }, [dispatch]);
+        if (user) {
+            fetchProviderServices();
+        }
+    }, [user, fetchProviderServices]);
 
     // Pagination logic
-    const totalPages = Math.max(1, Math.ceil(services.length / itemsPerPage));
+    const totalPages = Math.max(1, Math.ceil(providerServices.length / itemsPerPage));
 
     const paginatedServices = useMemo(() => {
         const startIndex = (currentPage - 1) * itemsPerPage;
-        return services.slice(startIndex, startIndex + itemsPerPage);
-    }, [services, currentPage, itemsPerPage]);
+        return providerServices.slice(startIndex, startIndex + itemsPerPage);
+    }, [providerServices, currentPage, itemsPerPage]);
 
-    const handleEdit = () => {
-        // open modal in edit mode (not implemented in ServiceModal yet)
+    const handleEdit = (service) => {
+        // TODO: open modal in edit mode with service data
+        console.log('edit', service);
         setIsModalOpen(true);
     };
 
-    const handleDelete = (item) => {
-        // placeholder delete action
-        console.log('delete', item);
+    const handleDelete = async (item) => {
+        if (window.confirm('Are you sure you want to delete this service?')) {
+            await deleteService(item.id);
+        }
     };
 
-    if (loading) {
+  
+    if (loading && providerServices.length === 0) {
         return (
             <div className='dashboardPy dashboardSpaceY'>
                 <PageHeader
@@ -63,19 +72,42 @@ const ProviderService = () => {
                 onCtaClick={() => setIsModalOpen(true)}
             />
 
-            <div className="pt-6">
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-3  gap-6 2xl:grid-cols-4">
-                    {paginatedServices.map((s) => (
-                        <ServiceCard key={s.id} item={s} onEdit={handleEdit} onDelete={handleDelete} />
-                    ))}
+            {error && (
+                <div className="bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded-lg mb-4">
+                    {error}
                 </div>
+            )}
+
+            <div className="pt-6">
+                {providerServices.length === 0 ? (
+                    <div className="text-center py-12">
+                        <p className="text-gray-500 text-lg">No services found.</p>
+                        <button
+                            onClick={() => setIsModalOpen(true)}
+                            className="mt-4 px-6 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition-colors"
+                        >
+                            Create Your First Service
+                        </button>
+                    </div>
+                ) : (
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-3  gap-6 2xl:grid-cols-4">
+                        {paginatedServices.map((s) => (
+                            <div key={s.id} className="relative">
+
+                                <ServiceCard item={s} onEdit={() => handleEdit(s)} onDelete={() => handleDelete(s)} />
+                            </div>
+                        ))}
+                    </div>
+                )}
             </div>
 
-            <Pagination
-                page={currentPage}
-                total={totalPages}
-                onChange={(p) => setCurrentPage(p)}
-            />
+            {providerServices.length > itemsPerPage && (
+                <Pagination
+                    page={currentPage}
+                    total={totalPages}
+                    onChange={(p) => setCurrentPage(p)}
+                />
+            )}
 
             <ServiceModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
         </div>

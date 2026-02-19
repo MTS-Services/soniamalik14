@@ -1,35 +1,32 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useLocation, Link } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
 import { ArrowLeft } from 'lucide-react';
-import { fetchServices } from '../../../../features/service/serviceApi';
-import { selectAllServices } from '../../../../features/service/serviceSlice';
+import { useAuth } from '../../../../context/AuthContext';
+import { useService } from '../../../../context/ServiceContext';
 import BookingsTable from '../../shared/eventAnalytics/components/BookingsTable';
 
 const ServiceDetails = () => {
     const { id } = useParams();
     const { state } = useLocation();
+    const { user } = useAuth();
+    const { providerServices, loading, error, fetchProviderServices } = useService();
 
-    const dispatch = useDispatch();
-    const servicesList = useSelector(selectAllServices) || [];
     const [item, setItem] = useState(state?.item || null);
-    const loading = useSelector((s) => s.service.services.loading);
-    const error = useSelector((s) => s.service.services.error);
 
     useEffect(() => {
-        if (servicesList.length === 0) {
-            dispatch(fetchServices()).catch(() => { });
+        if (user && providerServices.length === 0) {
+            fetchProviderServices();
         }
-    }, [dispatch, servicesList.length]);
+    }, [user, providerServices.length, fetchProviderServices]);
 
     useEffect(() => {
         if (state?.item) {
             setItem(state.item);
-        } else if (servicesList.length > 0) {
-            const found = servicesList.find(s => String(s.id) === String(id));
+        } else if (providerServices.length > 0) {
+            const found = providerServices.find(s => String(s.id) === String(id));
             setItem(found || null);
         }
-    }, [state, id, servicesList]);
+    }, [state, id, providerServices]);
 
     const backTarget = state?.from === 'service' ? '/provider/service' : '/provider/service';
 

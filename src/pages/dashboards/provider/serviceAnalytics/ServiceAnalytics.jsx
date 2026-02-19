@@ -1,29 +1,28 @@
 import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useAuth } from '../../../../context/AuthContext'
+import { useService } from '../../../../context/ServiceContext'
 import PageHeader from '../../../../components/ui/PageHeader'
 import Table from '../../../../components/ui/Table'
 import TablePagination from '../../../../components/ui/TablePagination'
 import { Eye } from 'lucide-react'
 import { Link } from 'react-router-dom'
-import { fetchServiceAnalytics } from '../../../../features/service/serviceApi'
-import { selectServiceAnalytics, selectAnalyticsLoading } from '../../../../features/service/serviceSlice'
 
 const ServiceAnalytics = () => {
-    const dispatch = useDispatch();
+    const { user } = useAuth();
+    const { providerServices, loading, fetchProviderServices } = useService();
     const perPage = 6
     const [page, setPage] = useState(1)
 
-    const data = useSelector(selectServiceAnalytics);
-    const loading = useSelector(selectAnalyticsLoading);
-
     useEffect(() => {
-        dispatch(fetchServiceAnalytics());
-    }, [dispatch]);
+        if (user) {
+            fetchProviderServices();
+        }
+    }, [user, fetchProviderServices]);
 
-    const total = data.length
+    const total = providerServices.length
     const totalPages = Math.max(1, Math.ceil(total / perPage))
     const startIndex = (page - 1) * perPage
-    const pageData = data.slice(startIndex, startIndex + perPage)
+    const pageData = providerServices.slice(startIndex, startIndex + perPage)
 
     const columns = ['Service Name', 'Service Type', 'Phone', 'ACTIONS']
 
