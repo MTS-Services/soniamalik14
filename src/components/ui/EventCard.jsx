@@ -62,7 +62,7 @@ const EventCard = ({ item = {}, editLink, onEdit, onDelete, className = '', deta
 
                         <div className="text-sm text-[#363636] mb-3 flex items-start gap-2 flex-col">
                             {(() => {
-                                const dateText = item.day || item.date || '';
+                                const dateText = item.day || item.date || item.startDate || '';
                                 // Format date if it's in ISO format
                                 const formattedDate = dateText.includes('-')
                                     ? new Date(dateText).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })
@@ -75,7 +75,7 @@ const EventCard = ({ item = {}, editLink, onEdit, onDelete, className = '', deta
 
                         <div className="text-sm text-[#363636] mb-1 flex items-center gap-2">
                             <MapPin className="w-4 h-4 text-[#363636]" />
-                            <span className="text-sm">{item.location}</span>
+                            <span className="text-sm">{item.location || item.fullAddress || item.venueName || ''}</span>
                         </div>
 
 
@@ -103,14 +103,7 @@ const EventCard = ({ item = {}, editLink, onEdit, onDelete, className = '', deta
                 </Card>
             </Link>
 
-            {/* Edit Modal */}
-            <EventModal
-                isOpen={isEditModalOpen}
-                onClose={() => setIsEditModalOpen(false)}
-                initialData={item}
-                mode="edit"
-            />
-
+            
             {/* Delete Confirmation Modal */}
             <DeleteConfirmationModal
                 isOpen={isDeleteModalOpen}

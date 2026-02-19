@@ -1,87 +1,111 @@
 
 import React, { useEffect, useState } from 'react';
 import { useParams, useLocation, Link } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
 import { MapPin, Calendar, Clock, Phone, Mail, ArrowLeft } from 'lucide-react';
-import { fetchEvents } from '../../../../features/events/eventsAPI';
-import { selectAllEvents } from '../../../../features/events/eventsSlice';
+import { useEvent } from '../../../../context/EventContext';
+
+// Transform backend event data to component format
+const transformEventData = (event) => {
+    if (!event) return null;
+
+    // Format date
+    const formatDate = (dateStr) => {
+        if (!dateStr) return '';
+        const date = new Date(dateStr);
+        return date.toLocaleDateString('en-GB', {
+            weekday: 'long',
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric'
+        });
+    };
+
+    // Format time range
+    const formatTime = (startTime, endTime) => {
+        if (!startTime || !endTime) return '';
+        return `${startTime} – ${endTime}`;
+    };
+
+    // Format age group
+    const formatAgeGroup = (minAge) => {
+        if (!minAge) return 'All ages welcome';
+        return `${minAge}+ Years`;
+    };
+
+    return {
+        ...event,
+        date: formatDate(event.startDate),
+        time: formatTime(event.startTime, event.endTime),
+        ageGroup: formatAgeGroup(event.minAge),
+        lastDateToRegister: event.startDate ? formatDate(new Date(new Date(event.startDate).getTime() - 4 * 24 * 60 * 60 * 1000)) : '',
+        venue: {
+            name: event.venueName || '',
+            address: event.fullAddress || event.city || '',
+        },
+        contact: {
+            phone: event.organizerPhone || '',
+            email: event.organizerEmail || '',
+        },
+        organizer: {
+            name: event.organizerName || '',
+            avatar: event.organizerAvatar || `https://ui-avatars.com/api/?name=${encodeURIComponent(event.organizerName || 'Organizer')}&background=0D8ABC&color=fff`,
+        },
+    };
+};
 
 const EventDetails = ({ backRoute = '/coach/event' }) => {
     const { id } = useParams();
     const { state } = useLocation();
 
-    // We'll try to use the passed state item first; if it lacks details, try to load from Redux store by id.
-    const dispatch = useDispatch();
-    const eventsList = useSelector(selectAllEvents) || [];
-    const [itemData, setItemData] = useState(state?.item || null);
+    // Use Event Context instead of Redux
+    const { events, fetchEventById } = useEvent();
+    const [itemData, setItemData] = useState(null);
     const [loading, setLoading] = useState(false);
 
-    const fallback = {
-        id,
-        title: "Women's Open Football Training Camp",
-        image: 'https://i.ibb.co/bjNWBQ7y/Frame-2147226117.png',
-        description:
-            'This training camp is designed exclusively for women footballers who want to improve their skills, fitness, and overall match performance. The session will focus on technical drills, tactical awareness, team coordination, and physical conditioning in a supportive and competitive environment. \n\nWhether you are preparing for upcoming matches or looking to sharpen your fundamentals, this camp provides professional guidance and structured training. Players will train under experienced coaches and get valuable feedback to help them grow confidently on the field.',
-        date: 'Saturday, 12 October 2025',
-        time: '4:00 PM – 7:00 PM',
-        ageGroup: '16+ Years',
-        sportType: 'Cricket',
-        skillLevel: 'Beginner to Intermediate',
-        lastDateToRegister: '8 October 2025',
-        venue: {
-            name: 'City Sports Ground',
-            address: '2118 Thornridge Cir. Syracuse, Connecticut 35624',
-        },
-        contact: {
-            phone: '(406) 555-0120',
-            email: 'nevaeh.simmons@example.com',
-        },
-        organizer: {
-            name: 'Rising Queens Football Academy',
-            avatar: 'https://ui-avatars.com/api/?name=Rising+Queens&background=0D8ABC&color=fff', // Placeholder logo
-        },
-    };
-
-    // If the passed state item doesn't include full details (e.g., no description), try to find in store or fetch
+    // Load event data from state, context, or API
     useEffect(() => {
-        const hasFull = (obj) => obj && (obj.description || obj.time || obj.venue);
-
-        if (state?.item && hasFull(state.item)) {
-            setItemData(state.item);
+        // Priority 1: Use state if available
+        if (state?.item) {
+            const transformed = transformEventData(state.item);
+            setItemData(transformed);
             return;
         }
 
-        // try to find in store
-        const found = eventsList.find((e) => String(e.id) === String(id));
+        // Priority 2: Find in context events array
+        const found = events.find((e) => String(e.id) === String(id));
         if (found) {
-            setItemData(found);
+            const transformed = transformEventData(found);
+            setItemData(transformed);
             return;
         }
 
-        // otherwise dispatch fetch and wait
+        // Priority 3: Fetch from API
         const load = async () => {
             setLoading(true);
             try {
-                await dispatch(fetchEvents());
+                const result = await fetchEventById(id);
+                if (result.success && result.event) {
+                    const transformed = transformEventData(result.event);
+                    setItemData(transformed);
+                }
             } finally {
                 setLoading(false);
             }
         };
 
-        if (eventsList.length === 0) {
-            load();
-        }
-    }, [state, eventsList, id, dispatch]);
+        load();
+    }, [state, events, id, fetchEventById]);
 
-    // if events list updates (after fetch) and itemData still empty, try to pick up the item
+    // Update when events array changes
     useEffect(() => {
-        if (!itemData) {
-            const found = eventsList.find((e) => String(e.id) === String(id));
-            if (found) setItemData(found);
+        if (!itemData && events.length > 0) {
+            const found = events.find((e) => String(e.id) === String(id));
+            if (found) {
+                const transformed = transformEventData(found);
+                setItemData(transformed);
+            }
         }
-    }, [eventsList, id, itemData]);
-
-    const item = itemData || fallback;
+    }, [events, id, itemData]);
 
     if (loading) {
         return (
@@ -91,6 +115,20 @@ const EventDetails = ({ backRoute = '/coach/event' }) => {
         );
     }
 
+    if (!itemData) {
+        return (
+            <div className="dashboardPy dashboardSpaceY text-gray-800">
+                <div className="text-center py-20">
+                    <div className="text-gray-600 mb-4">Event not found</div>
+                    <Link to={backRoute} className="text-teal-600 hover:text-teal-700">
+                        Go back
+                    </Link>
+                </div>
+            </div>
+        );
+    }
+
+    const item = itemData;
     const backTarget = state?.from === 'analytics' ? `${backRoute}-analytics` : backRoute;
 
     return (
@@ -176,13 +214,25 @@ const EventDetails = ({ backRoute = '/coach/event' }) => {
                                     <span>{item.venue?.address}</span>
                                 </div>
                             </div>
-                            {/* Top image (map / illustration) */}
-                            <div className="w-full mb-2  h-40 md:h-48 bg-gray-100">
-                                <img
-                                    src="https://i.ibb.co.com/fY1frBX7/Rectangle-4319.png"
-                                    alt="Venue map"
-                                    className="w-full rounded-lg h-full object-cover"
-                                />
+
+                            {/* Google Map */}
+                            <div className="w-full mb-2 h-40 md:h-48 bg-gray-100 rounded-lg overflow-hidden">
+                                {item.googleMapLink ? (
+                                    <iframe
+                                        src={item.googleMapLink.includes('embed') ? item.googleMapLink : `https://maps.google.com/maps?q=${encodeURIComponent(item.venue?.address || '')}&t=&z=13&ie=UTF8&iwloc=&output=embed`}
+                                        width="100%"
+                                        height="100%"
+                                        style={{ border: 0 }}
+                                        allowFullScreen
+                                        loading="lazy"
+                                        referrerPolicy="no-referrer-when-downgrade"
+                                        title="Venue Location"
+                                    />
+                                ) : (
+                                    <div className="w-full h-full flex items-center justify-center text-gray-400">
+                                        Map not available
+                                    </div>
+                                )}
                             </div>
 
                             {/* Contact Information */}

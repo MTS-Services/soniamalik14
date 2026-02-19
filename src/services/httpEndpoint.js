@@ -46,4 +46,12 @@ export const ENDPOINT = {
     APPROVE: (id) => `/api/services/${id}/approve`,
     REJECT: (id) => `/api/services/${id}/reject`,
   },
+  EVENTS: {
+    LIST: '/api/events',
+    MY_LIST: '/api/events/my/list',
+    CREATE: '/api/events',
+    DETAIL: (id) => `/api/events/${id}`,
+    UPDATE: (id) => `/api/events/${id}`,
+    DELETE: (id) => `/api/events/${id}`,
+  },
 };

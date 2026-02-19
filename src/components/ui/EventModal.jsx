@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { X, Calendar, Clock, Upload } from 'lucide-react';
+import { X, Upload } from 'lucide-react';
 import Button from './Button';
+import { useEvent } from '../../context/EventContext';
 
 const EventModal = ({ isOpen, onClose, initialData = null, mode = 'create' }) => {
+    const { createEvent, updateEvent, createLoading, updateLoading } = useEvent();
     const [formData, setFormData] = useState({
         eventTitle: '',
         sportType: '',
-        eventType: 'Training',
+        eventType: 'TRAINING',
         description: '',
         startDate: '',
         endDate: '',
@@ -31,7 +33,7 @@ const EventModal = ({ isOpen, onClose, initialData = null, mode = 'create' }) =>
             setFormData({
                 eventTitle: initialData.title || '',
                 sportType: initialData.sportType || '',
-                eventType: initialData.type || 'Training',
+                eventType: initialData.eventType || initialData.type || 'TRAINING',
                 description: initialData.description || '',
                 startDate: initialData.startDate || initialData.date || '',
                 endDate: initialData.endDate || '',
@@ -39,11 +41,11 @@ const EventModal = ({ isOpen, onClose, initialData = null, mode = 'create' }) =>
                 endTime: initialData.endTime || '',
                 venueName: initialData.venueName || '',
                 city: initialData.city || '',
-                fullAddress: initialData.location || '',
-                googleMapLinks: initialData.googleMapLinks || '',
+                fullAddress: initialData.fullAddress || initialData.location || '',
+                googleMapLinks: initialData.googleMapLink || initialData.googleMapLinks || '',
                 minAge: initialData.minAge || '18',
-                maxParticipant: initialData.maxParticipant || '20',
-                skillLevel: initialData.skillLevel || 'Beginner',
+                maxParticipant: initialData.maxParticipants || initialData.maxParticipant || '20',
+                skillLevel: initialData.skillLevel ? (typeof initialData.skillLevel === 'string' ? initialData.skillLevel.charAt(0).toUpperCase() + initialData.skillLevel.slice(1).toLowerCase() : 'Beginner') : 'Beginner',
                 organizerName: initialData.organizerName || '',
                 organizerPhone: initialData.organizerPhone || '',
                 organizerEmail: initialData.organizerEmail || '',
@@ -54,7 +56,7 @@ const EventModal = ({ isOpen, onClose, initialData = null, mode = 'create' }) =>
             setFormData({
                 eventTitle: '',
                 sportType: '',
-                eventType: 'Training',
+                eventType: 'TRAINING',
                 description: '',
                 startDate: '',
                 endDate: '',
@@ -82,11 +84,15 @@ const EventModal = ({ isOpen, onClose, initialData = null, mode = 'create' }) =>
         setErrors((prev) => ({ ...prev, [field]: undefined }));
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        // Validate all fields (every field in formData must be non-empty/non-null)
+
+        // Validate required fields (image is optional)
         const newErrors = {};
         Object.entries(formData).forEach(([key, val]) => {
+            // Skip image validation - it's optional
+            if (key === 'image') return;
+
             if (val === null) {
                 newErrors[key] = 'This field is required';
             } else if (typeof val === 'string' && val.trim() === '') {
@@ -97,12 +103,51 @@ const EventModal = ({ isOpen, onClose, initialData = null, mode = 'create' }) =>
         if (Object.keys(newErrors).length > 0) {
             setErrors(newErrors);
             console.warn('Validation errors:', newErrors);
+            // Show alert notification for user feedback
+            alert(`Please fill all required fields. Missing: ${Object.keys(newErrors).length} field(s)`);
             return;
         }
 
-        console.log('Form submitted:', formData);
-        // TODO: submit to API
-        onClose();
+        // Prepare FormData for API submission
+        const payload = new FormData();
+        payload.append('title', formData.eventTitle);
+        payload.append('sportType', formData.sportType);
+        payload.append('eventType', formData.eventType);
+        payload.append('description', formData.description);
+        payload.append('startDate', formData.startDate);
+        payload.append('endDate', formData.endDate);
+        payload.append('startTime', formData.startTime);
+        payload.append('endTime', formData.endTime);
+        payload.append('venueName', formData.venueName);
+        payload.append('city', formData.city);
+        payload.append('fullAddress', formData.fullAddress);
+        payload.append('googleMapLink', formData.googleMapLinks);
+        payload.append('minAge', formData.minAge);
+        payload.append('maxParticipants', formData.maxParticipant);
+        payload.append('skillLevel', formData.skillLevel.toUpperCase());
+        payload.append('organizerName', formData.organizerName);
+        payload.append('organizerPhone', formData.organizerPhone);
+        payload.append('organizerEmail', formData.organizerEmail);
+
+        // Debug: Log FormData entries
+        console.log('Submitting event with data:', Object.fromEntries(payload.entries()));
+
+        // Add image if present
+        if (formData.image instanceof File) {
+            payload.append('image', formData.image);
+        }
+
+        // Call create or update based on mode
+        let result;
+        if (mode === 'edit' && initialData?.id) {
+            result = await updateEvent(initialData.id, payload);
+        } else {
+            result = await createEvent(payload);
+        }
+
+        if (result.success) {
+            onClose();
+        }
     };
 
     if (!isOpen) return null;
@@ -166,10 +211,14 @@ const EventModal = ({ isOpen, onClose, initialData = null, mode = 'create' }) =>
                                 onChange={(e) => handleChange('eventType', e.target.value)}
                                 className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-btn-primary"
                             >
-                                <option>Training</option>
-                                <option>Match</option>
-                                <option>Trial</option>
-                                <option>Community Event</option>
+                                <option>MATCH</option>
+                                <option>TOURNAMENT</option>
+                                <option>TRIAL</option>
+                                <option>TRAINING</option>
+                                <option>WORKSHOP</option>
+                                <option>SEMINAR</option>
+                                <option>COMPETITION</option>
+                                <option>MEETUP</option>
                             </select>
                             {errors.eventType && <p className="text-sm text-red-600 mt-1">{errors.eventType}</p>}
                         </div>
@@ -193,13 +242,11 @@ const EventModal = ({ isOpen, onClose, initialData = null, mode = 'create' }) =>
                                 <label className="block text-sm font-medium text-gray-700 mb-1">Start Date</label>
                                 <div className="relative">
                                     <input
-                                        type="text"
-                                        placeholder="MM/DD/YY"
+                                        type="date"
                                         value={formData.startDate}
                                         onChange={(e) => handleChange('startDate', e.target.value)}
-                                        className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-btn-primary pr-10"
+                                        className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-btn-primary"
                                     />
-                                    <Calendar className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
                                     {errors.startDate && <p className="text-sm text-red-600 mt-1">{errors.startDate}</p>}
                                 </div>
                             </div>
@@ -207,13 +254,11 @@ const EventModal = ({ isOpen, onClose, initialData = null, mode = 'create' }) =>
                                 <label className="block text-sm font-medium text-gray-700 mb-1">End Date</label>
                                 <div className="relative">
                                     <input
-                                        type="text"
-                                        placeholder="MM/DD/YY"
+                                        type="date"
                                         value={formData.endDate}
                                         onChange={(e) => handleChange('endDate', e.target.value)}
-                                        className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-btn-primary pr-10"
+                                        className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-btn-primary"
                                     />
-                                    <Calendar className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
                                     {errors.endDate && <p className="text-sm text-red-600 mt-1">{errors.endDate}</p>}
                                 </div>
                             </div>
@@ -225,13 +270,11 @@ const EventModal = ({ isOpen, onClose, initialData = null, mode = 'create' }) =>
                                 <label className="block text-sm font-medium text-gray-700 mb-1">Start Time</label>
                                 <div className="relative">
                                     <input
-                                        type="text"
-                                        placeholder="--:--"
+                                        type="time"
                                         value={formData.startTime}
                                         onChange={(e) => handleChange('startTime', e.target.value)}
-                                        className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-btn-primary pr-10"
+                                        className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-btn-primary"
                                     />
-                                    <Clock className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
                                     {errors.startTime && <p className="text-sm text-red-600 mt-1">{errors.startTime}</p>}
                                 </div>
                             </div>
@@ -239,13 +282,11 @@ const EventModal = ({ isOpen, onClose, initialData = null, mode = 'create' }) =>
                                 <label className="block text-sm font-medium text-gray-700 mb-1">End Time</label>
                                 <div className="relative">
                                     <input
-                                        type="text"
-                                        placeholder="--:--"
+                                        type="time"
                                         value={formData.endTime}
                                         onChange={(e) => handleChange('endTime', e.target.value)}
-                                        className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-btn-primary pr-10"
+                                        className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-btn-primary"
                                     />
-                                    <Clock className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
                                     {errors.endTime && <p className="text-sm text-red-600 mt-1">{errors.endTime}</p>}
                                 </div>
                             </div>
@@ -422,8 +463,9 @@ const EventModal = ({ isOpen, onClose, initialData = null, mode = 'create' }) =>
                         form="event-form"
                         variant="primary"
                         className="w-full rounded-lg py-3"
+                        disabled={createLoading || updateLoading}
                     >
-                        {mode === 'edit' ? 'Update Event' : 'Submit For Approval'}
+                        {createLoading || updateLoading ? 'Submitting...' : mode === 'edit' ? 'Update Event' : 'Submit For Approval'}
                     </Button>
                 </div>
             </div>

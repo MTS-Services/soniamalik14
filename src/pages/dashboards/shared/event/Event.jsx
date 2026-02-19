@@ -1,36 +1,54 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import PageHeader from '../../../../components/ui/PageHeader';
 import EventCard from '../../../../components/ui/EventCard';
 import Pagination from '../../../../components/ui/Pagination';
 import EventModal from '../../../../components/ui/EventModal';
-import { fetchEvents } from '../../../../features/events/eventsAPI';
-import { selectAllEvents, selectEventsLoading, selectEventsError } from '../../../../features/events/eventsSlice';
+import DeleteConfirmationModal from '../../../../components/ui/DeleteConfirmationModal';
+import { useEvent } from '../../../../context/EventContext';
 
 const Event = ({ filterComponent: FilterComponent, detailsRoute = '/coach/event' }) => {
-    const dispatch = useDispatch();
-    const events = useSelector(selectAllEvents);
-    const loading = useSelector(selectEventsLoading);
-    const error = useSelector(selectEventsError);
+    const { events, loading, error, fetchEvents, deleteEvent } = useEvent();
 
     // Fetch events on component mount
     useEffect(() => {
-        dispatch(fetchEvents());
-    }, [dispatch]);
+        fetchEvents();
+    }, [fetchEvents]);
 
     const [page, setPage] = useState(1);
     const [filter, setFilter] = useState({ status: 'All', query: '' });
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [editingEvent, setEditingEvent] = useState(null);
+    const [eventToDelete, setEventToDelete] = useState(null);
+    const [modalMode, setModalMode] = useState('create');
     const perPage = 9;
 
     const handleEdit = (item) => {
-        console.log('Edit', item);
-
+        setEditingEvent(item);
+        setModalMode('edit');
+        setIsModalOpen(true);
     };
 
-    const handleDelete = (item) => {
-        console.log('Delete', item);
+    const handleDelete = async (item) => {
+        setEventToDelete(item);
+    };
 
+    const confirmDelete = async () => {
+        if (eventToDelete) {
+            await deleteEvent(eventToDelete.id);
+            setEventToDelete(null);
+        }
+    };
+
+    const handleCreateNew = () => {
+        setEditingEvent(null);
+        setModalMode('create');
+        setIsModalOpen(true);
+    };
+
+    const handleCloseModal = () => {
+        setIsModalOpen(false);
+        setEditingEvent(null);
+        setModalMode('create');
     };
 
     const applyFilters = (list) => {
@@ -53,9 +71,14 @@ const Event = ({ filterComponent: FilterComponent, detailsRoute = '/coach/event'
     }, [filter]);
 
     return (
-        <div className="dashboardPy dashboardSpaceY">
+        <div className="dashboardPy dashboardSpaceY ">
             <div className='mb-6'>
-                <PageHeader title="Create a New Event" description="Host matches, training sessions, trials, and community events for your club." ctaText="Create Event" onCtaClick={() => setIsModalOpen(true)} />
+                <PageHeader
+                    title="Create a New Event"
+                    description="Host matches, training sessions, trials, and community events for your club."
+                    ctaText="Create Event"
+                    onCtaClick={handleCreateNew}
+                />
             </div>
 
             {FilterComponent && (
@@ -77,12 +100,19 @@ const Event = ({ filterComponent: FilterComponent, detailsRoute = '/coach/event'
                     </div>
                 )}
 
-                {!loading && !error && (
+                {!loading && !error && paged.length === 0 && (
+                    <div className="text-center py-20">
+                        <div className="text-gray-500 text-lg mb-2">No events found</div>
+                        <p className="text-gray-400 text-sm">Create your first event to get started!</p>
+                    </div>
+                )}
+
+                {!loading && !error && paged.length > 0 && (
                     <>
                         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-3  gap-6 2xl:grid-cols-4">
-                            {paged.map((e) => (
+                            {paged.map((e, idx) => (
                                 <EventCard
-                                    key={e.id}
+                                    key={e.id || `event-${idx}`}
                                     item={e}
                                     onEdit={() => handleEdit(e)}
                                     onDelete={() => handleDelete(e)}
@@ -95,7 +125,19 @@ const Event = ({ filterComponent: FilterComponent, detailsRoute = '/coach/event'
                 )}
             </div>
 
-            <EventModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+            <EventModal
+                isOpen={isModalOpen}
+                onClose={handleCloseModal}
+                initialData={editingEvent}
+                mode={modalMode}
+            />
+
+            <DeleteConfirmationModal
+                isOpen={!!eventToDelete}
+                onClose={() => setEventToDelete(null)}
+                onConfirm={confirmDelete}
+                itemName={eventToDelete?.title || 'this event'}
+            />
         </div>
     );
 };
