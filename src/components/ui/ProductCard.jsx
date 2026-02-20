@@ -1,4 +1,4 @@
-// ProductCard.jsx
+﻿// ProductCard.jsx
 import React from 'react';
 import { Eye, X, Check } from 'lucide-react';
 
@@ -11,7 +11,7 @@ const ProductCard = ({ product }) => {
           <Eye className="w-5 h-5 text-[#000000]" />
         </button>
       </div>
-      <div className="text-sm text-gray-600 space-y-1">
+      <div className="text-base text-gray-600 space-y-1">
         <p><span className="font-medium">Seller:</span> {product.sellerName}</p>
         <p><span className="font-medium">Price:</span> {product.price}</p>
         <p><span className="font-medium">Condition:</span> {product.condition}</p>

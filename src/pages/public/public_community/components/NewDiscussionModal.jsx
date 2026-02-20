@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+﻿import React, { useState, useEffect, useRef } from 'react';
 import { FiX, FiCheck } from 'react-icons/fi';
 
 const categories = [
@@ -59,18 +59,18 @@ export default function NewDiscussionModal({ open, onClose, onSubmit }) {
         </button>
 
         <h3 className="text-lg font-semibold">Start a Discussion</h3>
-        <p className="text-sm text-gray-500 mt-1 mb-4">Ask a question or share something with the community.</p>
+        <p className="text-base text-gray-500 mt-1 mb-4">Ask a question or share something with the community.</p>
 
         <div className="space-y-3">
           <div>
-            <label className="text-sm font-medium block mb-1">Category</label>
+            <label className="text-base font-medium block mb-1">Category</label>
             <div className="relative">
               <button
                 type="button"
                 onClick={() => setCategoryOpen((s) => !s)}
                 className="w-full text-left bg-gray-100 rounded-md p-3 flex items-center justify-between"
               >
-                <span className="text-sm text-gray-700">{category}</span>
+                <span className="text-base text-gray-700">{category}</span>
                 <svg className="h-4 w-4 text-gray-600" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M6 8l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
@@ -81,7 +81,7 @@ export default function NewDiscussionModal({ open, onClose, onSubmit }) {
                   {categories.map((c) => (
                     <li
                       key={c}
-                      className={`flex items-center justify-between px-3 py-2 text-sm cursor-pointer ${c === category ? 'bg-btn-primary text-white' : 'text-gray-700'}`}
+                      className={`flex items-center justify-between px-3 py-2 text-base cursor-pointer ${c === category ? 'bg-btn-primary text-white' : 'text-gray-700'}`}
                       onClick={() => { setCategory(c); setCategoryOpen(false); }}
                     >
                       <span>{c}</span>
@@ -94,22 +94,22 @@ export default function NewDiscussionModal({ open, onClose, onSubmit }) {
           </div>
 
           <div>
-            <label className="text-sm font-medium block mb-1">Thread Tittle</label>
+            <label className="text-base font-medium block mb-1">Thread Tittle</label>
             <input
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               placeholder="Write tittle"
-              className="w-full bg-gray-100 rounded-md p-3 text-sm"
+              className="w-full bg-gray-100 rounded-md p-3 text-base"
             />
           </div>
 
           <div>
-            <label className="text-sm font-medium block mb-1">Description</label>
+            <label className="text-base font-medium block mb-1">Description</label>
             <textarea
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               placeholder="Write description"
-              className="w-full bg-gray-100 rounded-md p-3 text-sm h-32 resize-none"
+              className="w-full bg-gray-100 rounded-md p-3 text-base h-32 resize-none"
             />
           </div>
 

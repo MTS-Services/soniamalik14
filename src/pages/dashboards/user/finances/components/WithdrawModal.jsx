@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+﻿import React, { useState } from 'react'
 
 export default function WithdrawModal({ isOpen, onClose, onConfirm, availableBalance }) {
   const [amount, setAmount] = useState('')
@@ -20,7 +20,7 @@ export default function WithdrawModal({ isOpen, onClose, onConfirm, availableBal
 
           <div className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Enter amount</label>
+              <label className="block text-base font-medium text-gray-700 mb-2">Enter amount</label>
               <div className="relative">
                 <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500">$</span>
                 <input
@@ -37,8 +37,8 @@ export default function WithdrawModal({ isOpen, onClose, onConfirm, availableBal
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Select payment method</label>
-              <div className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-gray-50 text-sm text-gray-700">
+              <label className="block text-base font-medium text-gray-700 mb-2">Select payment method</label>
+              <div className="w-full px-4 py-3 border border-gray-300 rounded-lg bg-gray-50 text-base text-gray-700">
                 {paymentMethod}
               </div>
             </div>

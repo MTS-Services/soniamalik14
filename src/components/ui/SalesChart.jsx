@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+﻿import React, { useState } from 'react'
 import { FiChevronDown } from 'react-icons/fi'
 import {
   ResponsiveContainer,
@@ -35,7 +35,7 @@ function CustomTooltip({ active, payload, label }) {
         {label}
       </div>
       <div className="bg-white rounded-b-md px-3 py-2 shadow-md flex items-center gap-2">
-        <div className="text-sm text-[#0F766E] font-semibold">${value.toLocaleString()}</div>
+        <div className="text-base text-[#0F766E] font-semibold">${value.toLocaleString()}</div>
       </div>
     </div>
   )
@@ -58,7 +58,7 @@ export default function SalesChart({ className = '' }) {
           <select
             value={period}
             onChange={(e) => setPeriod(e.target.value)}
-            className="block pl-3 pr-8 py-1 bg-white border border-gray-200 rounded-md shadow-sm text-sm text-[#464646] appearance-none"
+            className="block pl-3 pr-8 py-1 bg-white border border-gray-200 rounded-md shadow-sm text-base text-[#464646] appearance-none"
             aria-label="Select period"
           >
             <option value="this-year">This year</option>

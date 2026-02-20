@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Search, Plus } from 'lucide-react';
 
@@ -38,14 +38,14 @@ const PageHeader = ({
                                             if (onSearch) onSearch(e.target.value);
                                         }}
                                         placeholder={searchPlaceholder}
-                                        className="ml-3 w-full outline-none text-sm text-gray-700 placeholder-[#747474]"
+                                        className="ml-3 w-full outline-none text-base text-gray-700 placeholder-[#747474]"
                                         aria-label="search"
                                     />
                                 </div>
 
                                 {ctaText && (
                                     ctaHref ? (
-                                        <Link to={ctaHref} className="inline-flex items-center justify-center gap-1.5 bg-[#0F766E] hover:bg-[#0d655d] text-white px-4 py-3 rounded-md text-sm font-medium whitespace-nowrap transition-colors">
+                                        <Link to={ctaHref} className="inline-flex items-center justify-center gap-1.5 bg-[#0F766E] hover:bg-[#0d655d] text-white px-4 py-3 rounded-md text-base font-medium whitespace-nowrap transition-colors">
                                             <Plus className="w-4 h-4 shrink-0" />
                                             {ctaText}
                                         </Link>
@@ -53,7 +53,7 @@ const PageHeader = ({
                                         <button
                                             type="button"
                                             onClick={onCtaClick}
-                                            className="inline-flex items-center justify-center gap-1.5 bg-[#0F766E] hover:bg-[#0d655d] text-white px-4 py-3 rounded-md text-sm font-medium whitespace-nowrap transition-colors"
+                                            className="inline-flex items-center justify-center gap-1.5 bg-[#0F766E] hover:bg-[#0d655d] text-white px-4 py-3 rounded-md text-base font-medium whitespace-nowrap transition-colors"
                                         >
                                             <Plus className="w-4 h-4 shrink-0" />
                                             {ctaText}
@@ -74,14 +74,14 @@ const PageHeader = ({
                                             if (onSearch) onSearch(e.target.value);
                                         }}
                                         placeholder={searchPlaceholder}
-                                        className="ml-3 w-full outline-none text-sm text-gray-700 placeholder-[#747474]"
+                                        className="ml-3 w-full outline-none text-base text-gray-700 placeholder-[#747474]"
                                         aria-label="mobile-search"
                                     />
                                 </div>
 
                                 {ctaText && (
                                     ctaHref ? (
-                                        <Link to={ctaHref} className="w-full inline-flex items-center justify-center gap-1.5 bg-[#0F766E] hover:bg-[#0d655d] text-white px-4 py-3 rounded-md text-sm font-medium whitespace-nowrap transition-colors">
+                                        <Link to={ctaHref} className="w-full inline-flex items-center justify-center gap-1.5 bg-[#0F766E] hover:bg-[#0d655d] text-white px-4 py-3 rounded-md text-base font-medium whitespace-nowrap transition-colors">
                                             <Plus className="w-4 h-4 shrink-0" />
                                             {ctaText}
                                         </Link>
@@ -89,7 +89,7 @@ const PageHeader = ({
                                         <button
                                             type="button"
                                             onClick={onCtaClick}
-                                            className="w-full inline-flex items-center justify-center gap-1.5 bg-[#0F766E] hover:bg-[#0d655d] text-white px-4 py-3 rounded-md text-sm font-medium whitespace-nowrap transition-colors"
+                                            className="w-full inline-flex items-center justify-center gap-1.5 bg-[#0F766E] hover:bg-[#0d655d] text-white px-4 py-3 rounded-md text-base font-medium whitespace-nowrap transition-colors"
                                         >
                                             <Plus className="w-4 h-4 shrink-0" />
                                             {ctaText}
@@ -102,7 +102,7 @@ const PageHeader = ({
                         // fallback: only CTA (no search)
                         ctaText && (
                             ctaHref ? (
-                                <Link to={ctaHref} className="inline-flex items-center justify-center gap-1.5 bg-btn-primary hover:bg-[#0d655d] text-white px-3 sm:px-5 py-2.5 rounded-lg text-xs sm:text-sm font-medium whitespace-nowrap flex-1 md:flex-initial transition-colors">
+                                <Link to={ctaHref} className="inline-flex items-center justify-center gap-1.5 bg-btn-primary hover:bg-[#0d655d] text-white px-3 sm:px-5 py-2.5 rounded-lg text-xs sm:text-base font-medium whitespace-nowrap flex-1 md:flex-initial transition-colors">
                                     <Plus className="w-4 h-4 shrink-0" />
                                     {ctaText}
                                 </Link>
@@ -110,7 +110,7 @@ const PageHeader = ({
                                 <button
                                     type="button"
                                     onClick={onCtaClick}
-                                    className="inline-flex items-center justify-center gap-1.5 bg-btn-primary hover:bg-[#0d655d] text-white px-3 sm:px-5 py-2.5 rounded-lg text-xs sm:text-sm font-medium whitespace-nowrap flex-1 md:flex-initial transition-colors"
+                                    className="inline-flex items-center justify-center gap-1.5 bg-btn-primary hover:bg-[#0d655d] text-white px-3 sm:px-5 py-2.5 rounded-lg text-xs sm:text-base font-medium whitespace-nowrap flex-1 md:flex-initial transition-colors"
                                 >
                                     <Plus className="w-4 h-4 shrink-0" />
                                     {ctaText}

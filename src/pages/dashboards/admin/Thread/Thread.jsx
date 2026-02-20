@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { MessageSquare, X } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
@@ -84,11 +84,11 @@ export default function CommunityForumComponent() {
         <div className="flex items-start justify-between mb-8">
           <div>
             <h1 className="text-3xl font-bold text-gray-900 mb-2">Community Forum</h1>
-            <p className="text-gray-600 text-sm">Connect, chat, and support each o  ther.</p>
+            <p className="text-gray-600 text-base">Connect, chat, and support each o  ther.</p>
           </div>
           <button
             onClick={() => setIsModalOpen(true)}
-            className="bg-teal-600 hover:bg-teal-700 text-white px-6 py-2 rounded text-sm font-medium transition-colors"
+            className="bg-teal-600 hover:bg-teal-700 text-white px-6 py-2 rounded text-base font-medium transition-colors"
           >
             Post a thread
           </button>
@@ -114,12 +114,12 @@ export default function CommunityForumComponent() {
               </h2>
 
               {/* Description */}
-              <p className="text-sm text-gray-600 mb-4">
+              <p className="text-base text-gray-600 mb-4">
                 {thread.description}
               </p>
 
               {/* Reply Count */}
-              <div className="flex items-center text-gray-500 text-sm">
+              <div className="flex items-center text-gray-500 text-base">
                 <MessageSquare size={16} className="mr-2" />
                 <span>{thread.replies} Reply</span>
               </div>
@@ -144,7 +144,7 @@ export default function CommunityForumComponent() {
             {/* Modal Header */}
             <div className="p-6 border-b border-gray-200">
               <h2 className="text-xl font-bold text-gray-900">Start a Discussion</h2>
-              <p className="text-sm text-gray-600 mt-1">
+              <p className="text-base text-gray-600 mt-1">
                 Ask a question or share something with the community.
               </p>
             </div>
@@ -153,7 +153,7 @@ export default function CommunityForumComponent() {
             <div className="p-6 space-y-5">
               {/* Category Dropdown */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-base font-medium text-gray-700 mb-2">
                   Category
                 </label>
                 <select
@@ -172,7 +172,7 @@ export default function CommunityForumComponent() {
 
               {/* Thread Title */}
               <div>
-                <label className="block text-sm font-medium text-[#242424] mb-2">
+                <label className="block text-base font-medium text-[#242424] mb-2">
                   Thread Title
                 </label>
                 <input
@@ -187,7 +187,7 @@ export default function CommunityForumComponent() {
 
               {/* Description */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-base font-medium text-gray-700 mb-2">
                   Description
                 </label>
                 <textarea

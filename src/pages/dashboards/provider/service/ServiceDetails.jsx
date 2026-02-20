@@ -1,35 +1,32 @@
-import React, { useEffect, useState } from 'react';
+﻿import React, { useEffect, useState } from 'react';
 import { useParams, useLocation, Link } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
 import { ArrowLeft } from 'lucide-react';
-import { fetchServices } from '../../../../features/service/serviceApi';
-import { selectAllServices } from '../../../../features/service/serviceSlice';
-import SessionsTable from './components/SessionsTable';
+import { useAuth } from '../../../../context/AuthContext';
+import { useService } from '../../../../context/ServiceContext';
+import BookingsTable from '../../shared/eventAnalytics/components/BookingsTable';
 
 const ServiceDetails = () => {
     const { id } = useParams();
     const { state } = useLocation();
+    const { user } = useAuth();
+    const { providerServices, loading, error, fetchProviderServices } = useService();
 
-    const dispatch = useDispatch();
-    const servicesList = useSelector(selectAllServices) || [];
     const [item, setItem] = useState(state?.item || null);
-    const loading = useSelector((s) => s.service.services.loading);
-    const error = useSelector((s) => s.service.services.error);
 
     useEffect(() => {
-        if (servicesList.length === 0) {
-            dispatch(fetchServices()).catch(() => { });
+        if (user && providerServices.length === 0) {
+            fetchProviderServices();
         }
-    }, [dispatch, servicesList.length]);
+    }, [user, providerServices.length, fetchProviderServices]);
 
     useEffect(() => {
         if (state?.item) {
             setItem(state.item);
-        } else if (servicesList.length > 0) {
-            const found = servicesList.find(s => String(s.id) === String(id));
+        } else if (providerServices.length > 0) {
+            const found = providerServices.find(s => String(s.id) === String(id));
             setItem(found || null);
         }
-    }, [state, id, servicesList]);
+    }, [state, id, providerServices]);
 
     const backTarget = state?.from === 'service' ? '/provider/service' : '/provider/service';
 
@@ -44,7 +41,7 @@ const ServiceDetails = () => {
         title: 'Women\'s Sports Physio',
         location: 'Dhaka',
         days: 'Monday, Wednesday, Friday',
-        time: '4:00 PM – 8:00 PM',
+        time: '4:00 PM â€“ 8:00 PM',
         category: 'Physio',
         status: 'Active',
         visibility: 'Live for women athletes',
@@ -76,7 +73,7 @@ It helps prevent injuries, improve performance, and support recovery so players 
         <div className="dashboardPy dashboardSpaceY text-gray-800">
             {/* Back Button */}
             <div className="mb-4">
-                <Link to={backTarget} className="inline-flex items-center text-sm font-medium text-teal-600 hover:text-teal-700">
+                <Link to={backTarget} className="inline-flex items-center text-base font-medium text-teal-600 hover:text-teal-700">
                     <ArrowLeft className="w-4 h-4 mr-1" /> Back
                 </Link>
             </div>
@@ -99,22 +96,20 @@ It helps prevent injuries, improve performance, and support recovery so players 
             <div className="space-y-3 text-base text-gray-800 mb-8">
                 <div>
                     <span className=" block text-gray-900"> <span className='font-semibold'>Category: </span>{service.category || service.type}</span>
-                    
+
                 </div>
                 <div>
                     <span className=" block text-gray-900"><span className='font-semibold'>Status:</span>{service.status || 'Active'}</span>
-                    
+
                 </div>
                 <div>
                     <span className=" block text-gray-900"><span className='font-semibold'>Visibility:</span>{service.visibility || 'Live for women athletes'}</span>
-                  
+
                 </div>
                 <div>
                     <span className=" block text-gray-900"><span className='font-semibold'>Available Days:</span>{service.availableDays || service.days}</span>
                 </div>
-                <div>
-                    <span className=" block text-gray-900"><span className='font-semibold'>Time Slots:</span>{service.timeSlots || service.time}</span>
-                </div>
+
             </div>
 
             {/* About This Service */}
@@ -128,17 +123,30 @@ It helps prevent injuries, improve performance, and support recovery so players 
             {/* Who This Service Is For */}
             <div className="mb-8">
                 <h2 className="text-xl font-bold text-gray-900 mb-3">Who This Service Is For</h2>
-                <ul className="list-disc list-inside text-sm text-gray-600 space-y-1">
-                    {(service.whoIsFor || []).map((item, idx) => (
-                        <li key={idx}>{item}</li>
-                    ))}
-                </ul>
+                {/* Support both array `whoIsFor` and string `whoServiceFor` from API */}
+                {service.whoServiceFor ? (
+                    <div className="text-base text-gray-700">{service.whoServiceFor}</div>
+                ) : (
+                    <ul className="list-disc list-inside text-base text-gray-600 space-y-1">
+                        {(service.whoIsFor || []).map((item, idx) => (
+                            <li key={idx}>{item}</li>
+                        ))}
+                    </ul>
+                )}
             </div>
 
-            {/* Active Sessions Table */}
+            {/* Active Sessions / Bookings Table */}
             <div className="mb-8">
-                <h2 className="text-xl font-bold text-gray-900 mb-4">Active Sessions</h2>
-                <SessionsTable sessions={service.sessions || []} resultsPerPage={6} />
+
+
+                <BookingsTable
+                    bookings={(service.sessions || []).map(s => ({
+                        name: s.user || s.name || 'Guest',
+                        phone: s.phone || s.contact || '-',
+                        email: s.email || s.contactEmail || '-',
+                    }))}
+                    resultsPerPage={6}
+                />
             </div>
         </div>
     );

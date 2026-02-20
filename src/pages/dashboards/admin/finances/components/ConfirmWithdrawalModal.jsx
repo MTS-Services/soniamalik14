@@ -1,4 +1,4 @@
-import React from 'react'
+﻿import React from 'react'
 
 export default function ConfirmWithdrawalModal({ isOpen, onClose, onConfirm, amount, method }) {
   if (!isOpen) return null
@@ -11,12 +11,12 @@ export default function ConfirmWithdrawalModal({ isOpen, onClose, onConfirm, amo
 
           <div className="space-y-4 mb-6">
             <div className="flex justify-between items-center">
-              <span className="text-sm text-gray-600">Amount:</span>
-              <span className="text-sm font-semibold text-gray-900">${amount}</span>
+              <span className="text-base text-gray-600">Amount:</span>
+              <span className="text-base font-semibold text-gray-900">${amount}</span>
             </div>
             <div className="flex justify-between items-center">
-              <span className="text-sm text-gray-600">Method:</span>
-              <span className="text-sm font-semibold text-gray-900">Bank Account ****{method.slice(-4)}</span>
+              <span className="text-base text-gray-600">Method:</span>
+              <span className="text-base font-semibold text-gray-900">Bank Account ****{method.slice(-4)}</span>
             </div>
           </div>
 

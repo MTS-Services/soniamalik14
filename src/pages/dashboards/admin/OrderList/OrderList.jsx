@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+﻿import React, { useState, useEffect } from "react";
 import { Eye } from "lucide-react";
 import OrderDetails from "./Orderdetails";
 import DashboardHeader from "../../../../components/ui/DashboardHeader";
@@ -122,7 +122,7 @@ const OrderList = () => {
         <select
           value={order.status}
           onChange={(e) => handleStatusChange(order.id, e.target.value)}
-          className={`rounded-md border px-3 py-2 text-sm ${order.statusColor} text-white`}
+          className={`rounded-md border px-3 py-2 text-base ${order.statusColor} text-white`}
         >
           <option className="text-gray-700" value="Pending">Pending</option>
           <option className="text-gray-700" value="In Progress">In Progress</option>
@@ -147,25 +147,25 @@ const OrderList = () => {
             className="h-5 w-5 cursor-pointer text-gray-600"
             onClick={() => setSelectedOrder(order)}
           />
-          <div className=" text-sm font-medium px-3 py-1 rounded-md">
+          <div className=" text-base font-medium px-3 py-1 rounded-md">
             {order.sellerName}
           </div>
 
         </div>
       </div>
 
-      <div className="grid grid-cols-2 gap-2 text-sm text-gray-600">
+      <div className="grid grid-cols-2 gap-2 text-base text-gray-600">
         <div>Order: <span className="text-gray-900 font-medium">{order.id}</span></div>
         <div className="text-right">Platform Fee: <span className="text-gray-900 font-medium">{order.platformFee}</span></div>
         <div>Price: <span className="text-gray-900 font-medium">{order.price}</span></div>
       </div>
 
       <div className="pt-2">
-        <label className="text-sm text-gray-600 block mb-1">Status</label>
+        <label className="text-base text-gray-600 block mb-1">Status</label>
         <select
           value={order.status}
           onChange={(e) => handleStatusChange(order.id, e.target.value)}
-          className={`w-full rounded-md px-3 py-2 text-sm appearance-none ${order.statusColor} text-white`}
+          className={`w-full rounded-md px-3 py-2 text-base appearance-none ${order.statusColor} text-white`}
         >
           <option value="Pending">Pending</option>
           <option value="In Progress">In Progress</option>

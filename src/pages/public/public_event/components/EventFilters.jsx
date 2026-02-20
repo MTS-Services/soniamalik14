@@ -1,10 +1,10 @@
-import React from 'react';
+﻿import React from 'react';
 import Card from '../../../../components/ui/Card';
 import { Filter } from 'lucide-react';
 
 const SectionBox = ({ title, children }) => (
   <div className="mb-4">
-    <div className="text-sm font-medium mb-2">{title}</div>
+    <div className="text-base font-medium mb-2">{title}</div>
     <div className="bg-white border border-[#B5D5D2] rounded-md p-3">{children}</div>
   </div>
 );
@@ -20,11 +20,11 @@ const EventFilters = () => {
         <label className='pb2 mb-2 block text-base font-medium text-[#1D1D1D]'>
           City/Area
         </label>
-        <input placeholder="Search by city/area" className="w-full bg-gray-100 rounded-md p-2 text-sm" />
+        <input placeholder="Search by city/area" className="w-full bg-gray-100 rounded-md p-2 text-base" />
       </Card>
 
       <SectionBox title="Event Type">
-        <div className="space-y-2 text-sm">
+        <div className="space-y-2 text-base">
           <label className="flex items-center gap-2"><input type="checkbox" /> Match</label>
           <label className="flex items-center gap-2"><input type="checkbox" /> Tournament</label>
           <label className="flex items-center gap-2"><input type="checkbox" /> Trial</label>
@@ -33,7 +33,7 @@ const EventFilters = () => {
       </SectionBox>
 
       <SectionBox title="Date">
-        <div className="space-y-2 text-sm">
+        <div className="space-y-2 text-base">
           <label className="flex items-center gap-2"><input type="checkbox" /> Upcoming</label>
           <label className="flex items-center gap-2"><input type="checkbox" /> This Week</label>
           <label className="flex items-center gap-2"><input type="checkbox" /> This Month</label>
@@ -41,14 +41,14 @@ const EventFilters = () => {
       </SectionBox>
 
       <SectionBox title="Organizer">
-        <div className="space-y-2 text-sm">
+        <div className="space-y-2 text-base">
           <label className="flex items-center gap-2"><input type="checkbox" /> Club</label>
           <label className="flex items-center gap-2"><input type="checkbox" /> Community</label>
         </div>
       </SectionBox>
 
       <SectionBox title="Skill Level">
-        <div className="space-y-2 text-sm">
+        <div className="space-y-2 text-base">
           <label className="flex items-center gap-2"><input type="checkbox" /> Beginner</label>
           <label className="flex items-center gap-2"><input type="checkbox" /> Intermediate</label>
           <label className="flex items-center gap-2"><input type="checkbox" /> Advanced</label>

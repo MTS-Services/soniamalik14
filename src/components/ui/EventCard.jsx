@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Card from './Card';
 import Button from './Button';
@@ -45,7 +45,7 @@ const EventCard = ({ item = {}, editLink, onEdit, onDelete, className = '', deta
                                 const raw = (item.status || item.type || '').toString();
                                 const key = raw.toLowerCase();
                                 const isPending = key === 'pending';
-                                const badgeClasses = `absolute top-3 left-3 z-10 rounded-md px-3 py-1 text-sm font-medium capitalize ${isPending ? 'bg-[#FFDAB9] text-[#FF7700] border border-[#FFDAB9]' : 'bg-[#E9F7F5] text-[#0F766E] border border-[#B5D5D2]'}`;
+                                const badgeClasses = `absolute top-3 left-3 z-10 rounded-md px-3 py-1 text-base font-medium capitalize ${isPending ? 'bg-[#FFDAB9] text-[#FF7700] border border-[#FFDAB9]' : 'bg-[#E9F7F5] text-[#0F766E] border border-[#B5D5D2]'}`;
                                 return <div className={badgeClasses}>{raw}</div>;
                             })()}
 
@@ -60,22 +60,22 @@ const EventCard = ({ item = {}, editLink, onEdit, onDelete, className = '', deta
 
                         <h3 className="text-[#282828] font-semibold text-lg mb-2 min-h-[48px]">{item.title}</h3>
 
-                        <div className="text-sm text-[#363636] mb-3 flex items-start gap-2 flex-col">
+                        <div className="text-base text-[#363636] mb-3 flex items-start gap-2 flex-col">
                             {(() => {
-                                const dateText = item.day || item.date || '';
+                                const dateText = item.day || item.date || item.startDate || '';
                                 // Format date if it's in ISO format
                                 const formattedDate = dateText.includes('-')
                                     ? new Date(dateText).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })
                                     : dateText;
                                 return (
-                                    <div className="flex items-center gap-2"><Calendar className="w-4 h-4 text-[#363636]" /> <span className="text-sm">{formattedDate}</span></div>
+                                    <div className="flex items-center gap-2"><Calendar className="w-4 h-4 text-[#363636]" /> <span className="text-base">{formattedDate}</span></div>
                                 );
                             })()}
                         </div>
 
-                        <div className="text-sm text-[#363636] mb-1 flex items-center gap-2">
+                        <div className="text-base text-[#363636] mb-1 flex items-center gap-2">
                             <MapPin className="w-4 h-4 text-[#363636]" />
-                            <span className="text-sm">{item.location}</span>
+                            <span className="text-base">{item.location || item.fullAddress || item.venueName || ''}</span>
                         </div>
 
 
@@ -103,14 +103,7 @@ const EventCard = ({ item = {}, editLink, onEdit, onDelete, className = '', deta
                 </Card>
             </Link>
 
-            {/* Edit Modal */}
-            <EventModal
-                isOpen={isEditModalOpen}
-                onClose={() => setIsEditModalOpen(false)}
-                initialData={item}
-                mode="edit"
-            />
-
+            
             {/* Delete Confirmation Modal */}
             <DeleteConfirmationModal
                 isOpen={isDeleteModalOpen}

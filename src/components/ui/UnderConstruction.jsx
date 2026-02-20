@@ -1,9 +1,9 @@
-import React from 'react';
+﻿import React from 'react';
 import Container from '../layout/Container';
 import Button from './Button';
 import { ArrowLeft } from 'lucide-react';
 
-const UnderConstruction = ({ title = 'Page Under Construction', message = 'We are working on this page — check back soon.' }) => {
+const UnderConstruction = ({ title = 'Page Under Construction', message = 'We are working on this page â€” check back soon.' }) => {
   return (
     <section className="min-h-[60vh] flex items-center">
       <Container>
@@ -15,7 +15,7 @@ const UnderConstruction = ({ title = 'Page Under Construction', message = 'We ar
           </div>
 
           <h1 className="text-2xl md:text-3xl font-semibold text-[#282828] mb-3">{title}</h1>
-          <p className="text-sm text-[#505050] mb-6">{message}</p>
+          <p className="text-base text-[#505050] mb-6">{message}</p>
 
           <div className="flex items-center justify-center gap-3">
             <Button as="link" to="/" variant="outline" className="flex items-center gap-2">

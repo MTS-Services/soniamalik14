@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { ArrowLeft, Calendar, Clock, MapPin, Phone, Mail } from 'lucide-react';
 
@@ -25,7 +25,7 @@ const EventSingleDetails = () => {
     role: 'Club Owner',
     sport: 'Football',
     date: 'Saturday, 12 October 2025',
-    time: '4:00 PM – 7:00 PM',
+    time: '4:00 PM â€“ 7:00 PM',
     status: 'Pending',
     description: `This training camp is designed exclusively for women footballers who want to improve their skills, fitness, and overall match performance. The session will focus on technical drills, tactical awareness, team coordination, and physical conditioning in a supportive and competitive environment.
 
@@ -52,10 +52,17 @@ Whether you are preparing for upcoming matches or looking to sharpen your fundam
     contact: event?.contact || defaultEventData.contact,
   };
 
+  const getText = (val, fallback = '') => {
+    if (val === null || val === undefined) return fallback;
+    if (typeof val === 'string' || typeof val === 'number') return val;
+    if (typeof val === 'object') return val.name || val.fullName || val.organizerName || val.email || fallback;
+    return String(val);
+  };
+
   return (
     <div className="flex-1 overflow-auto bg-gray-50 min-h-screen">
       <div className=" mx-auto p-4 md:p-6 lg:p-8">
-        
+
         {/* Image Gallery Section */}
         <div className="mb-6">
           {/* Main Image */}
@@ -84,9 +91,8 @@ Whether you are preparing for upcoming matches or looking to sharpen your fundam
               <div
                 key={index}
                 onClick={() => setSelectedImage(index + 1)}
-                className={`rounded-xl overflow-hidden cursor-pointer border-2 transition-all ${
-                  selectedImage === index + 1 ? 'border-[#0F766E]' : 'border-transparent'
-                }`}
+                className={`rounded-xl overflow-hidden cursor-pointer border-2 transition-all ${selectedImage === index + 1 ? 'border-[#0F766E]' : 'border-transparent'
+                  }`}
               >
                 <img
                   src={img}
@@ -200,7 +206,7 @@ Whether you are preparing for upcoming matches or looking to sharpen your fundam
                     }}
                   />
                 </div>
-                <span className="text-base font-medium text-gray-900">{eventData.organizer}</span>
+                <span className="text-base font-medium text-gray-900">{getText(eventData.organizer)}</span>
               </div>
             </div>
           </div>

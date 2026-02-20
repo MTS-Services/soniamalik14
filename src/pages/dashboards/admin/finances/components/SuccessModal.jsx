@@ -1,4 +1,4 @@
-import React from 'react'
+﻿import React from 'react'
 import { FiCheckCircle } from 'react-icons/fi'
 
 export default function SuccessModal({ isOpen, onClose, amount }) {
@@ -14,7 +14,7 @@ export default function SuccessModal({ isOpen, onClose, amount }) {
 
           <h2 className="text-xl font-bold text-gray-900 mb-2">Withdrawal Successful!</h2>
           
-          <p className="text-sm text-gray-600 mb-1">
+          <p className="text-base text-gray-600 mb-1">
             Your withdrawal of ${amount} has been processed successfully.
           </p>
           

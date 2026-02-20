@@ -1,4 +1,4 @@
-
+﻿
 import React from 'react';
 import Container from '../../../../components/layout/Container';
 import Button from '../../../../components/ui/Button';
@@ -14,7 +14,7 @@ const InjurySupportHub = () => {
               <h2 className="text-2xl lg:text-4xl font-bold mb-4">Injury Support Hub</h2>
 
               <p className="text-base text-[#F3F3F3] mb-6 max-w-2xl">
-                Injuries and setbacks are a common part of staying active — but they shouldn't mean stepping away from sport altogether.
+                Injuries and setbacks are a common part of staying active â€” but they shouldn't mean stepping away from sport altogether.
               </p>
 
               <p className="text-base text-[#F3F3F3] mb-6 max-w-xl">
@@ -32,7 +32,7 @@ const InjurySupportHub = () => {
 
                 <div>
                   <h3 className="font-semibold text-white text-xl">Simple, general recovery principles</h3>
-                  <p className="text-[#F3F3F3] text-base">Clear, common-sense guidance around rest, gradual return and listening to your body — without medical overload.</p>
+                  <p className="text-[#F3F3F3] text-base">Clear, common-sense guidance around rest, gradual return and listening to your body â€” without medical overload.</p>
                 </div>
 
                 <div>
@@ -46,7 +46,7 @@ const InjurySupportHub = () => {
                 </div>
               </div>
 
-              <p className="text-base text-white mb-6">ESSA does not replace medical advice – it's here to help you find the right support.</p>
+              <p className="text-base text-white mb-6">ESSA does not replace medical advice â€“ it's here to help you find the right support.</p>
 
           
             </div>

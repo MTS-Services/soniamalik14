@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { X, AlertTriangle } from 'lucide-react';
 import Button from './Button';
 
@@ -32,7 +32,7 @@ const DeleteConfirmationModal = ({ isOpen, onClose, onConfirm, title = "Delete E
                             <AlertTriangle className="w-6 h-6 text-red-600" />
                         </div>
                         <div>
-                            <p className="text-gray-700 text-sm">{message}</p>
+                            <p className="text-gray-700 text-base">{message}</p>
                         </div>
                     </div>
                 </div>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+﻿import React, { useEffect, useState } from 'react';
 import { X, Upload } from 'lucide-react';
 import Button from './Button';
 
@@ -98,94 +98,94 @@ const CreateRecruitmentModal = ({ isOpen, onClose, initialData = null, mode = 'c
                     <form id="create-recruitment-form" onSubmit={handleSubmit} className="space-y-4">
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Post Title</label>
+                                <label className="block text-base font-medium text-gray-700 mb-1">Post Title</label>
                                 <input
                                     value={form.title}
                                     onChange={(e) => handleChange('title', e.target.value)}
-                                    className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm"
+                                    className="w-full px-3 py-2 border border-gray-300 rounded-md text-base"
                                     placeholder="enter event title"
                                 />
                             </div>
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Sport Type</label>
+                                <label className="block text-base font-medium text-gray-700 mb-1">Sport Type</label>
                                 <input
                                     value={form.sportType}
                                     onChange={(e) => handleChange('sportType', e.target.value)}
-                                    className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm"
+                                    className="w-full px-3 py-2 border border-gray-300 rounded-md text-base"
                                     placeholder="e.g. Cricket, Football"
                                 />
                             </div>
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">Skill Level Required</label>
+                            <label className="block text-base font-medium text-gray-700 mb-1">Skill Level Required</label>
                             <input
                                 value={form.skillLevelRequired}
                                 onChange={(e) => handleChange('skillLevelRequired', e.target.value)}
-                                className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm"
+                                className="w-full px-3 py-2 border border-gray-300 rounded-md text-base"
                                 placeholder="e.g., Point Guard, Defender"
                             />
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">Description of the Team & Opportunity</label>
+                            <label className="block text-base font-medium text-gray-700 mb-1">Description of the Team & Opportunity</label>
                             <textarea
                                 value={form.description}
                                 onChange={(e) => handleChange('description', e.target.value)}
                                 rows={4}
-                                className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm resize-none"
+                                className="w-full px-3 py-2 border border-gray-300 rounded-md text-base resize-none"
                                 placeholder="Describe your event in details"
                             />
                         </div>
 
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Training Location</label>
-                                <input value={form.trainingLocation} onChange={(e) => handleChange('trainingLocation', e.target.value)} className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm" placeholder="training location" />
+                                <label className="block text-base font-medium text-gray-700 mb-1">Training Location</label>
+                                <input value={form.trainingLocation} onChange={(e) => handleChange('trainingLocation', e.target.value)} className="w-full px-3 py-2 border border-gray-300 rounded-md text-base" placeholder="training location" />
                             </div>
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Times</label>
-                                <input value={form.times} onChange={(e) => handleChange('times', e.target.value)} className="w-full px-3 py-2 border rounded-md text-sm border-gray-300" placeholder="7:00am-8:00 pm" />
+                                <label className="block text-base font-medium text-gray-700 mb-1">Times</label>
+                                <input value={form.times} onChange={(e) => handleChange('times', e.target.value)} className="w-full px-3 py-2 border rounded-md text-base border-gray-300" placeholder="7:00am-8:00 pm" />
                             </div>
                         </div>
 
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Match Days</label>
-                                <input value={form.matchDays} onChange={(e) => handleChange('matchDays', e.target.value)} className="w-full border-gray-300 px-3 py-2 border rounded-md text-sm" placeholder="Days" />
+                                <label className="block text-base font-medium text-gray-700 mb-1">Match Days</label>
+                                <input value={form.matchDays} onChange={(e) => handleChange('matchDays', e.target.value)} className="w-full border-gray-300 px-3 py-2 border rounded-md text-base" placeholder="Days" />
                             </div>
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Application Deadline</label>
-                                <input value={form.applicationDeadline} onChange={(e) => handleChange('applicationDeadline', e.target.value)} className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm" placeholder="enter deadline" />
+                                <label className="block text-base font-medium text-gray-700 mb-1">Application Deadline</label>
+                                <input value={form.applicationDeadline} onChange={(e) => handleChange('applicationDeadline', e.target.value)} className="w-full px-3 py-2 border border-gray-300 rounded-md text-base" placeholder="enter deadline" />
                             </div>
                         </div>
 
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Age Range</label>
-                                <input value={form.ageRange} onChange={(e) => handleChange('ageRange', e.target.value)} className="w-full px-3 py-2 border rounded-md text-sm border-gray-300" placeholder="e.g 17-18" />
+                                <label className="block text-base font-medium text-gray-700 mb-1">Age Range</label>
+                                <input value={form.ageRange} onChange={(e) => handleChange('ageRange', e.target.value)} className="w-full px-3 py-2 border rounded-md text-base border-gray-300" placeholder="e.g 17-18" />
                             </div>
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Number of Players Needed</label>
-                                <input value={form.playersNeeded} onChange={(e) => handleChange('playersNeeded', e.target.value)} className="w-full px-3 py-2 border rounded-md text-sm border-gray-300" placeholder="e.g., 3 spots available" />
+                                <label className="block text-base font-medium text-gray-700 mb-1">Number of Players Needed</label>
+                                <input value={form.playersNeeded} onChange={(e) => handleChange('playersNeeded', e.target.value)} className="w-full px-3 py-2 border rounded-md text-base border-gray-300" placeholder="e.g., 3 spots available" />
                             </div>
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">Home Ground</label>
-                            <input value={form.homeGround} onChange={(e) => handleChange('homeGround', e.target.value)} className="w-full px-3 py-2 border rounded-md text-sm border-gray-300" placeholder="homeground" />
+                            <label className="block text-base font-medium text-gray-700 mb-1">Home Ground</label>
+                            <input value={form.homeGround} onChange={(e) => handleChange('homeGround', e.target.value)} className="w-full px-3 py-2 border rounded-md text-base border-gray-300" placeholder="homeground" />
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">What Players Receive</label>
-                            <input value={form.whatPlayersReceive} onChange={(e) => handleChange('whatPlayersReceive', e.target.value)} className="w-full px-3 py-2 border rounded-md text-sm border-gray-300" placeholder="e.g kit helmet etc" />
+                            <label className="block text-base font-medium text-gray-700 mb-1">What Players Receive</label>
+                            <input value={form.whatPlayersReceive} onChange={(e) => handleChange('whatPlayersReceive', e.target.value)} className="w-full px-3 py-2 border rounded-md text-base border-gray-300" placeholder="e.g kit helmet etc" />
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-2">Skill Level</label>
+                            <label className="block text-base font-medium text-gray-700 mb-2">Skill Level</label>
                             <div className="flex gap-2">
                                 {['Beginner', 'Intermediate', 'Advanced'].map((lvl) => (
-                                    <button type="button" key={lvl} onClick={() => handleChange('skillLevel', lvl)} className={`px-4 py-2 rounded-md text-sm ${form.skillLevel === lvl ? 'bg-btn-primary text-white' : 'bg-gray-100'}`}>
+                                    <button type="button" key={lvl} onClick={() => handleChange('skillLevel', lvl)} className={`px-4 py-2 rounded-md text-base ${form.skillLevel === lvl ? 'bg-btn-primary text-white' : 'bg-gray-100'}`}>
                                         {lvl}
                                     </button>
                                 ))}
@@ -194,14 +194,14 @@ const CreateRecruitmentModal = ({ isOpen, onClose, initialData = null, mode = 'c
 
                         {/* Image upload */}
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-2">Upload Image</label>
+                            <label className="block text-base font-medium text-gray-700 mb-2">Upload Image</label>
                             <div className="border-2 border-dashed border-gray-300 rounded-md p-6 text-center">
                                 <Upload className="w-8 h-8 text-green-600 mx-auto mb-2" />
-                                <p className="text-green-600 font-medium text-sm mb-1">Upload Image</p>
+                                <p className="text-green-600 font-medium text-base mb-1">Upload Image</p>
                                 <p className="text-gray-400 text-xs mb-2">JPEG files accepted. Max 100MB</p>
                                 <input id="create-recruitment-image" type="file" accept="image/*" onChange={(e) => handleChange('image', e.target.files?.[0] || null)} className="hidden" />
-                                <label htmlFor="create-recruitment-image" className="inline-block cursor-pointer px-4 py-2 bg-gray-100 rounded-md text-sm">Choose File</label>
-                                {form.image && <p className="text-sm text-gray-600 mt-2">Selected: {form.image.name}</p>}
+                                <label htmlFor="create-recruitment-image" className="inline-block cursor-pointer px-4 py-2 bg-gray-100 rounded-md text-base">Choose File</label>
+                                {form.image && <p className="text-base text-gray-600 mt-2">Selected: {form.image.name}</p>}
                             </div>
                         </div>
 

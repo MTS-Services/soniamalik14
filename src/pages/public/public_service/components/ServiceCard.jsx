@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { Link } from 'react-router-dom';
 import Card from '../../../../components/ui/Card';
 import Button from '../../../../components/ui/Button';
@@ -12,7 +12,7 @@ const ServiceCard = ({ item }) => {
     <Card className="p-4 h-full flex flex-col justify-between" style={{ backgroundColor: '#E7F1F180' }}>
       <div>
         <div className="relative">
-          <div className="absolute top-0 left-0 m-3 bg-secondary text-btn-primary rounded-full px-3 py-2 text-sm font-semibold">{item.type}</div>
+          <div className="absolute top-0 left-0 m-3 bg-secondary text-btn-primary rounded-full px-3 py-2 text-base font-semibold">{item.type}</div>
           <div className="h-64 bg-gray-200 rounded-md mb-4 overflow-hidden flex items-center justify-center">
             {item.image ? (
               <img src={item.image} alt={item.title} className="w-full h-full object-cover rounded-md" />
@@ -24,14 +24,14 @@ const ServiceCard = ({ item }) => {
 
         <h3 className="text-[#282828] font-semibold text-lg mb-2">{item.title}</h3>
 
-        <div className="text-sm text-[#363636] mb-1 flex items-center gap-2">
+        <div className="text-base text-[#363636] mb-1 flex items-center gap-2">
           <MapPin className="w-4 h-4 text-[#363636]" />
-          <span className="text-sm">{item.location}</span>
+          <span className="text-base">{item.location}</span>
         </div>
 
-        <div className="text-sm text-[#363636] mb-3 flex items-start gap-2 flex-col">
-          <div className="flex items-center gap-2"><Calendar className="w-4 h-4 text-[#363636]" /> <span className="text-sm">{item.day}</span></div>
-          <div className="flex items-center gap-2"><Clock className="w-4 h-4 text-[#363636]" /> <span className="text-sm">{item.time}</span></div>
+        <div className="text-base text-[#363636] mb-3 flex items-start gap-2 flex-col">
+          <div className="flex items-center gap-2"><Calendar className="w-4 h-4 text-[#363636]" /> <span className="text-base">{item.day}</span></div>
+          <div className="flex items-center gap-2"><Clock className="w-4 h-4 text-[#363636]" /> <span className="text-base">{item.time}</span></div>
         </div>
 
         {!isAuthenticated && (

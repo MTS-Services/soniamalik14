@@ -1,4 +1,4 @@
-
+﻿
 export async function fetchRecruitmentsJSON() {
   const res = await fetch('/data/recruitments.json');
   if (!res.ok) {

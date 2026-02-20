@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Container from '../../../../components/layout/Container';
 import SectionHeader from '../../../../components/ui/SectionHeader';
@@ -23,9 +23,9 @@ Whether you are a beginner learning the basics or an experienced player refining
     };
 
     const replies = [
-        { id: 1, author: 'Ralph Edwards', text: 'I usually train for 45–60 minutes a day, focusing on ball control and passing. Even simple drills help a lot when done consistently.' },
+        { id: 1, author: 'Ralph Edwards', text: 'I usually train for 45â€“60 minutes a day, focusing on ball control and passing. Even simple drills help a lot when done consistently.' },
         { id: 2, author: 'Ralph Edwards', text: 'Morning stretching and light cardio have really improved my flexibility and reduced muscle soreness.' },
-        { id: 3, author: 'Ralph Edwards', text: 'I watch professional women’s matches to learn positioning and decision-making. It helps me understand the game better.' },
+        { id: 3, author: 'Ralph Edwards', text: 'I watch professional womenâ€™s matches to learn positioning and decision-making. It helps me understand the game better.' },
         { id: 4, author: 'Ralph Edwards', text: 'I practice shooting accuracy at home using cones and targets. It has helped me stay sharp even on busy days.' }
     ];
 
@@ -42,7 +42,7 @@ Whether you are a beginner learning the basics or an experienced player refining
             <Container>
                 {/* Mobile: stacked layout */}
                 <div className="space-y-3 mb-4 lg:hidden">
-                    <button onClick={() => navigate('/community')} className="flex items-center gap-2 text-sm text-btn-primary hover:underline">
+                    <button onClick={() => navigate('/community')} className="flex items-center gap-2 text-base text-btn-primary hover:underline">
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
                         </svg>
@@ -63,7 +63,7 @@ Whether you are a beginner learning the basics or an experienced player refining
                 {/* Desktop: Back and Button at top, Header below */}
                 <div className="hidden lg:block mb-6">
                     <div className="flex items-center justify-between mb-4">
-                        <button onClick={() => navigate('/community')} className="flex items-center gap-2 text-sm text-btn-primary hover:underline">
+                        <button onClick={() => navigate('/community')} className="flex items-center gap-2 text-base text-btn-primary hover:underline">
                             <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
                             </svg>
@@ -96,11 +96,11 @@ Whether you are a beginner learning the basics or an experienced player refining
                                 </div>
                             </div>
 
-                            <div className="prose max-w-none text-sm text-gray-700 mb-4 whitespace-pre-line">
+                            <div className="prose max-w-none text-base text-gray-700 mb-4 whitespace-pre-line">
                                 {topic.content}
                             </div>
 
-                            <div className="text-sm text-gray-500 font-medium mb-3">Reply</div>
+                            <div className="text-base text-gray-500 font-medium mb-3">Reply</div>
 
                             <div className="space-y-2 lg:space-y-3">
                                 {replies.map((r) => (
@@ -109,9 +109,9 @@ Whether you are a beginner learning the basics or an experienced player refining
                                             <div className="bg-amber-100 rounded-full p-1">
                                                 <img src="/images/login/image_2.jpg" alt={r.author} className="w-6 h-6 rounded-full object-cover" />
                                             </div>
-                                            <div className="text-sm font-medium text-gray-700">{r.author}</div>
+                                            <div className="text-base font-medium text-gray-700">{r.author}</div>
                                         </div>
-                                        <div className="text-sm text-gray-600">{r.text}</div>
+                                        <div className="text-base text-gray-600">{r.text}</div>
                                     </div>
                                 ))}
                             </div>
@@ -124,7 +124,7 @@ Whether you are a beginner learning the basics or an experienced player refining
                                     value={reply}
                                     onChange={(e) => setReply(e.target.value)}
                                     placeholder="Write your reply"
-                                    className="flex-1 rounded-md border border-gray-200 p-3 resize-none h-12  text-sm"
+                                    className="flex-1 rounded-md border border-gray-200 p-3 resize-none h-12  text-base"
                                 />
                                 <button
                                     onClick={handleSend}

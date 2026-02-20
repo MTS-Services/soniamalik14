@@ -1,56 +1,114 @@
-import React from 'react';
+﻿import React, { useEffect, useState } from 'react';
 import Title from '../../../components/ui/Title';
 import NewsList from './components/NewsList';
 import Container from '../../../components/layout/Container';
+import { GET } from '../../../services/httpMethods';
+import { ENDPOINT } from '../../../services/httpEndpoint';
 
 const NewsView = () => {
-    const featured = {
-        id: 1,
-        date: 'Dec 1, 2025',
-        title: "Women's Football League Season 2025 Kicks Off",
-        excerpt:
-            "The new season of the Women's Football League has officially begun, bringing together top clubs and emerging talents from across the country.",
-        image: '/images/login/image_3.jpg',
-        url: '#',
-    };
+    const [newsList, setNewsList] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
 
-    const items = [
-        {
-            id: 2,
-            date: 'Dec 2, 2025',
-            title: 'Rising Stars: Young Women Footballers to Watch This Year',
-            excerpt:
-                'Meet the young players who are making headlines with their skills, dedication, and outstanding performances on the field.',
-            image: '/images/news/news-2.jpg',
-            url: '#',
-        },
-        {
-            id: 3,
-            date: 'Dec 3, 2025',
-            title: 'Community Training Camp Empowers Local Women Players',
-            excerpt:
-                'A special training camp was organized to support grassroots women footballers with professional coaching and fitness sessions.',
-            image: '/images/news/news-3.jpg',
-            url: '#',
-        },
-        {
-            id: 4,
-            date: 'Dec 4, 2025',
-            title: 'Women Referees Take the Lead in Local Football Matches',
-            excerpt:
-                'More women referees are stepping onto the field, creating new opportunities and promoting equality in football.',
-            image: '/images/news/news-4.jpg',
-            url: '#',
-        },
-        {
-            id: 5,
-            date: 'Dec 5, 2025',
-            title: 'Football Clubs Open Trials Exclusively for Women Players',
-            excerpt: 'Several clubs have announced open trials for women footballers, offering a chance to join competitive teams.',
-            image: '/images/news/news-5.jpg',
-            url: '#',
-        },
-    ];
+    useEffect(() => {
+        const fetchAllNews = async () => {
+            setLoading(true);
+            setError(null);
+            try {
+                const response = await GET(ENDPOINT.NEWS.LIST);
+                // Debug: log raw response and payload to help diagnose API issues
+                // eslint-disable-next-line no-console
+                console.log('[NewsView] GET', ENDPOINT.NEWS.LIST, response);
+                // eslint-disable-next-line no-console
+                console.log('[NewsView] payload', JSON.stringify(response?.data ?? response, null, 2));
+
+                // Normalize different backend shapes (be permissive)
+                let articles = [];
+                const payload = response?.data ?? response;
+
+                if (Array.isArray(payload)) {
+                    articles = payload;
+                } else if (Array.isArray(payload.data)) {
+                    articles = payload.data;
+                } else if (Array.isArray(payload.data?.data)) {
+                    articles = payload.data.data;
+                } else if (Array.isArray(payload.results)) {
+                    articles = payload.results;
+                } else if (Array.isArray(payload.pagination?.limit)) {
+                    articles = payload.pagination.limit;
+                } else if (Array.isArray(payload.items)) {
+                    articles = payload.items;
+                }
+
+                // Normalize each article to fields expected by the components
+                const normalize = (a) => {
+                    const getContentString = (val) => {
+                        if (!val && val !== 0) return '';
+                        if (typeof val === 'string') return val;
+                        if (val?.rendered && typeof val.rendered === 'string') return val.rendered;
+                        if (val?.html && typeof val.html === 'string') return val.html;
+                        try { return JSON.stringify(val); } catch (e) { return ''; }
+                    };
+
+                    let contentHtml = getContentString(a.content) || getContentString(a.body) || getContentString(a.description) || getContentString(a.excerpt) || '';
+                    const lower = contentHtml.toLowerCase();
+                    if (lower.includes('constructvisualizerpayload') || lower.startsWith('function ')) {
+                        contentHtml = getContentString(a.excerpt) || getContentString(a.description) || '';
+                    }
+
+                    return {
+                        id: a.id,
+                        title: a.title || a.name || '',
+                        excerpt: a.excerpt ?? a.desc ?? a.summary ?? '',
+                        image: a.image ?? a.img ?? '',
+                        // prefer publishedAt, fallback to createdAt or date
+                        date: a.publishedAt ? new Date(a.publishedAt).toLocaleDateString() : a.createdAt ? new Date(a.createdAt).toLocaleDateString() : a.date ?? '',
+                        content: contentHtml,
+                        raw: a,
+                    };
+                };
+
+                const normalized = articles.map(normalize);
+                setNewsList(normalized);
+            } catch (err) {
+                const message = err?.response?.data?.message || err?.message || 'Failed to fetch news';
+                // eslint-disable-next-line no-console
+                console.error('[NewsView] GET error', err);
+                setError(message);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchAllNews();
+    }, []);
+
+    if (loading) {
+        return (
+            <Container className="py-6 lg:py-8">
+                <div className="text-center py-20 text-gray-600">Loading news...</div>
+            </Container>
+        );
+    }
+
+    if (error) {
+        return (
+            <Container className="py-6 lg:py-8">
+                <div className="text-center py-20 text-red-600">{error}</div>
+            </Container>
+        );
+    }
+
+    const featured = newsList.length > 0 ? newsList[0] : null;
+    const items = newsList.length > 1 ? newsList.slice(1) : [];
+
+    if (!featured) {
+        return (
+            <Container className="py-6 lg:py-8">
+                <div className="text-center py-20 text-gray-600">No news available</div>
+            </Container>
+        );
+    }
 
     return (
         <Container className="py-6 lg:py-8">

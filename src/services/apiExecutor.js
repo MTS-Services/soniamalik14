@@ -1,4 +1,4 @@
-export const apiExecutor = async (apiCall, rejectWithValue, signal) => {
+﻿export const apiExecutor = async (apiCall, rejectWithValue, signal) => {
   try {
     const response = await apiCall(signal);
     return response.data ?? response;

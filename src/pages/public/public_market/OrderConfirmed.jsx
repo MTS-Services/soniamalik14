@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Container from '../../../components/layout/Container';
 import { FaCheckCircle, FaMapMarkerAlt, FaClock } from 'react-icons/fa';
@@ -66,7 +66,7 @@ const OrderConfirmed = () => {
                     <h2 className="text-lg font-semibold text-[#000000] mb-3">
                       Order Number{orderNumber}
                     </h2>
-                    <div className="flex flex-col gap-2 text-sm text-[#626262]">
+                    <div className="flex flex-col gap-2 text-base text-[#626262]">
                       <div className="flex items-center gap-2">
                         <MdDateRange className="text-[#626262] flex-shrink-0" size={16} />
                         <span>{orderDate}</span>
@@ -86,7 +86,7 @@ const OrderConfirmed = () => {
               {/* Pickup Information Card */}
               <div className="bg-white rounded-lg p-6 shadow-sm border border-gray-200">
                 <h2 className="text-lg font-semibold text-[#000000] mb-2">Pick Up Information</h2>
-                <p className="text-sm text-[#626262] mb-6">2 items in this shipment</p>
+                <p className="text-base text-[#626262] mb-6">2 items in this shipment</p>
 
                 {/* Pickup Location */}
                 <div className="mb-6">
@@ -94,7 +94,7 @@ const OrderConfirmed = () => {
                     <FaMapMarkerAlt className="text-[#000000] mt-0.5 flex-shrink-0" size={20} />
                     <div>
                       <h3 className="font-semibold text-[#000000] text-base mb-1">Pickup Location</h3>
-                      <p className="text-sm text-[#626262]">4517 Washington Ave. Manchester, Kentucky 39495</p>
+                      <p className="text-base text-[#626262]">4517 Washington Ave. Manchester, Kentucky 39495</p>
                     </div>
                   </div>
 
@@ -103,7 +103,7 @@ const OrderConfirmed = () => {
                     <FaClock className="text-[#000000] mt-0.5 flex-shrink-0" size={20} />
                     <div>
                       <h3 className="font-semibold text-[#000000] text-base mb-1">Available Hours</h3>
-                      <p className="text-sm text-[#626262]">Sat-Thu: 10:00 AM - 8:00 PM</p>
+                      <p className="text-base text-[#626262]">Sat-Thu: 10:00 AM - 8:00 PM</p>
                     </div>
                   </div>
                 </div>
@@ -111,7 +111,7 @@ const OrderConfirmed = () => {
                 {/* Pickup Instructions */}
                 <div className="mb-6 pt-4 border-t border-gray-200">
                   <h3 className="font-semibold text-[#000000] text-base mb-2">Pickup Instructions</h3>
-                  <p className="text-sm text-[#626262] leading-relaxed">
+                  <p className="text-base text-[#626262] leading-relaxed">
                     Bring your order number when picking up. Show ID for verification. Located on the 2nd floor near the escalator.
                   </p>
                 </div>
@@ -138,22 +138,22 @@ const OrderConfirmed = () => {
                   className="w-20 h-20 rounded object-cover flex-shrink-0"
                 />
                 <div className="flex-1 min-w-0">
-                  <h3 className="text-sm font-medium text-[#000000] mb-1">{item.title}</h3>
-                  <p className="text-sm text-[#626262]">{quantity} x ${item.price}</p>
+                  <h3 className="text-base font-medium text-[#000000] mb-1">{item.title}</h3>
+                  <p className="text-base text-[#626262]">{quantity} x ${item.price}</p>
                 </div>
               </div>
 
               {/* Price Breakdown */}
               <div className="space-y-3 pt-4 border-t border-gray-200">
-                <div className="flex justify-between text-sm">
+                <div className="flex justify-between text-base">
                   <span className="text-[#626262]">Sub-total</span>
                   <span className="text-[#000000]">${subtotal.toFixed(2)}</span>
                 </div>
-                <div className="flex justify-between text-sm">
+                <div className="flex justify-between text-base">
                   <span className="text-[#626262]">Shipping</span>
                   <span className="text-[#000000]">{shipping === 0 ? 'Free' : `$${shipping.toFixed(2)}`}</span>
                 </div>
-                <div className="flex justify-between text-sm">
+                <div className="flex justify-between text-base">
                   <span className="text-[#626262]">Tax</span>
                   <span className="text-[#000000]">${tax.toFixed(2)}</span>
                 </div>
@@ -165,7 +165,7 @@ const OrderConfirmed = () => {
 
               {/* Payment Method */}
               <div className="bg-white rounded-md p-4 text-center mt-6 border-t border-gray-200">
-                <p className="text-sm font-medium text-[#0F766E]">Payment Method : {paymentMethod}</p>
+                <p className="text-base font-medium text-[#0F766E]">Payment Method : {paymentMethod}</p>
               </div>
             </div>
           </div>

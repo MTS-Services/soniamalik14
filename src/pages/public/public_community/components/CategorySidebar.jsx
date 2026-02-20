@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 
 const CategorySidebar = ({ activeCategory = 'All Discussion', onCategoryChange }) => {
   const categories = [
@@ -24,7 +24,7 @@ const CategorySidebar = ({ activeCategory = 'All Discussion', onCategoryChange }
               <option key={c} value={c}>{c}</option>
             ))}
           </select>
-          <span className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none">▾</span>
+          <span className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none">â–¾</span>
         </div>
       </div>
 
@@ -38,7 +38,7 @@ const CategorySidebar = ({ activeCategory = 'All Discussion', onCategoryChange }
               <li key={category}>
                 <button
                   onClick={() => onCategoryChange && onCategoryChange(category)}
-                  className={`w-full text-left px-3 py-2 rounded text-sm transition-colors ${
+                  className={`w-full text-left px-3 py-2 rounded text-base transition-colors ${
                     isActive
                       ? 'bg-secondary text-btn-primary border-l-4 border-btn-primary'
                       : 'text-gray-700 hover:bg-gray-50'

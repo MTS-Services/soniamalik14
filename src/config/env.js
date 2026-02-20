@@ -1,4 +1,4 @@
-const requiredEnvVars = {
+﻿const requiredEnvVars = {
   VITE_API_BASE_URL: 'API base URL',
   VITE_APP_NAME: 'Application name',
 };

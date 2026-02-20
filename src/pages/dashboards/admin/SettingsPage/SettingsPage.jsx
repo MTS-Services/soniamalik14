@@ -1,4 +1,4 @@
-import { useState } from 'react';
+﻿import { useState } from 'react';
 
 export default function SettingsPage() {
   const [formData, setFormData] = useState({
@@ -47,7 +47,7 @@ export default function SettingsPage() {
           <div className="space-y-4">
             {/* Email Field */}
             <div>
-              <label className="block text-sm font-medium text-gray-800 mb-1.5">
+              <label className="block text-base font-medium text-gray-800 mb-1.5">
                 Email
               </label>
               <input
@@ -62,7 +62,7 @@ export default function SettingsPage() {
 
             {/* Phone Number Field */}
             <div>
-              <label className="block text-sm font-medium text-gray-800 mb-1.5">
+              <label className="block text-base font-medium text-gray-800 mb-1.5">
                 Phone Number
               </label>
               <input
@@ -77,7 +77,7 @@ export default function SettingsPage() {
 
             {/* Old Password Field */}
             <div>
-              <label className="block text-sm font-medium text-gray-800 mb-1.5">
+              <label className="block text-base font-medium text-gray-800 mb-1.5">
                 Old Password
               </label>
               <input
@@ -92,7 +92,7 @@ export default function SettingsPage() {
 
             {/* New Password Field */}
             <div>
-              <label className="block text-sm font-medium text-gray-800 mb-1.5">
+              <label className="block text-base font-medium text-gray-800 mb-1.5">
                 New Password
               </label>
               <input
@@ -107,7 +107,7 @@ export default function SettingsPage() {
 
             {/* Confirm New Password Field */}
             <div>
-              <label className="block text-sm font-medium text-gray-800 mb-1.5">
+              <label className="block text-base font-medium text-gray-800 mb-1.5">
                 Confirm New Password
               </label>
               <input

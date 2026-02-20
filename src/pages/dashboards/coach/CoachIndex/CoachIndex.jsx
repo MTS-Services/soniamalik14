@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Card from '../../../../components/ui/Card';
 import Button from '../../../../components/ui/Button';
@@ -25,7 +25,7 @@ const CoachIndex = () => {
           <div>
             <PageHeader title="Northside Elite Football" />
             <p className="text-base text-secondary-text mt-1 flex items-center gap-1 "> <IoLocationOutline />Manchester, UK</p>
-            <p className="text-sm text-description mt-2 max-w-2xl">
+            <p className="text-base text-description mt-2 max-w-2xl">
               Leading the way in youth female development. Our mission is to provide
               professional-grade training and competition for girls aged 12-18 across the North West.
             </p>
@@ -66,9 +66,9 @@ const CoachIndex = () => {
                 <div>
                   <h4 className="font-medium">{ad.title}</h4>
                   <p className="text-base text-secondary-text mt-1">{ad.applicants} Applicants</p>
-                  <Link to="#" className="text-btn-primary text-sm mt-2 inline-block">View Listing</Link>
+                  <Link to="#" className="text-btn-primary text-base mt-2 inline-block">View Listing</Link>
                 </div>
-                <div className="text-sm">
+                <div className="text-base">
                   <span className={`px-3 py-1 rounded-full text-xs ${ad.status === 'Active' ? 'bg-[#E7F1F1] text-[#0F766E]' : 'bg-[#FFDAB9] text-[#FF7700]'}`}>{ad.status}</span>
                 </div>
               </div>
@@ -88,12 +88,12 @@ const CoachIndex = () => {
               <div key={i} className="flex flex-col lg:flex-row items-start lg:items-center justify-between bg-white border border-gray-100 rounded-lg p-4">
                 <div className="flex items-center gap-4 flex-1">
                   <div className="text-center bg-gray-50 rounded-lg w-14 h-14 flex flex-col items-center justify-center">
-                    <div className="text-sm text-[#676767]">OCT</div>
+                    <div className="text-base text-[#676767]">OCT</div>
                     <div className="font-semibold !text-[#0F766E]">21</div>
                   </div>
                   <div>
                     <h4 className="font-medium">Open Trial Morning</h4>
-                    <p className={`text-sm mt-1 ${i < 2 ? 'text-[#0F766E]' : 'text-[#FF7700]'}`}>
+                    <p className={`text-base mt-1 ${i < 2 ? 'text-[#0F766E]' : 'text-[#FF7700]'}`}>
                       {i < 2 ? 'Approved' : 'Pending'}
                     </p>
                   </div>

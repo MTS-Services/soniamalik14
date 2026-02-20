@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import NewsHero from './NewsHero';
 import NewsItem from './NewsItem';
 
@@ -12,9 +12,12 @@ const NewsList = ({ featured, items = [] }) => {
 
         <aside className="md:col-span-1">
           <div className="bg-transparent">
-            {items.map((it, i) => (
-              <NewsItem key={i} item={it} />
-            ))}
+            {/* Make the news list scrollable within the sidebar area. Keep minimal change. */}
+            <div className="max-h-[520px] overflow-y-auto pr-2">
+              {items.map((it, i) => (
+                <NewsItem key={i} item={it} />
+              ))}
+            </div>
           </div>
         </aside>
       </div>

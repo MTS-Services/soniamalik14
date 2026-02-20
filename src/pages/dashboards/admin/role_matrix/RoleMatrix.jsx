@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+﻿import React, { useState } from 'react'
 import { FiTrash2, FiDownload } from 'react-icons/fi'
 
 export default function RoleMatrix() {
@@ -101,12 +101,12 @@ export default function RoleMatrix() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="Email Address"
-            className="flex-1 px-4 py-2 border bg-[#EDEDED] border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent text-sm"
+            className="flex-1 px-4 py-2 border bg-[#EDEDED] border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent text-base"
           />
           <select
             value={selectedRole}
             onChange={(e) => setSelectedRole(e.target.value)}
-            className="px-4 py-2 bg-[#EDEDED] border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent text-sm bg-[#EDEDED] min-w-[120px]"
+            className="px-4 py-2 bg-[#EDEDED] border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent text-base bg-[#EDEDED] min-w-[120px]"
           >
             <option>Admin</option>
             <option>Club Owner</option>
@@ -114,7 +114,7 @@ export default function RoleMatrix() {
           </select>
           <button
             onClick={handleSendInvite}
-            className="px-6 py-2 bg-teal-700 hover:bg-teal-800 text-white font-medium rounded-lg transition-colors text-sm whitespace-nowrap"
+            className="px-6 py-2 bg-teal-700 hover:bg-teal-800 text-white font-medium rounded-lg transition-colors text-base whitespace-nowrap"
           >
             Send Invite
           </button>
@@ -127,7 +127,7 @@ export default function RoleMatrix() {
           <h2 className="text-lg md:text-xl font-bold text-gray-900">Edit Matrix</h2>
           <button 
             onClick={handleOpenAddRuleModal}
-            className="px-4 py-2 bg-teal-700 hover:bg-teal-800 text-white font-medium rounded-lg transition-colors text-sm"
+            className="px-4 py-2 bg-teal-700 hover:bg-teal-800 text-white font-medium rounded-lg transition-colors text-base"
           >
             Add New Rule
           </button>
@@ -158,7 +158,7 @@ export default function RoleMatrix() {
             <tbody className="bg-white divide-y divide-gray-200">
               {editMatrixRules.map((rule) => (
                 <tr key={rule.id} className="hover:bg-gray-50 transition-colors">
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                  <td className="px-6 py-4 whitespace-nowrap text-base text-gray-900">
                     {rule.module}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
@@ -214,7 +214,7 @@ export default function RoleMatrix() {
           {editMatrixRules.map((rule) => (
             <div key={rule.id} className="p-4">
               <div className="flex justify-between items-start mb-4">
-                <h3 className="font-medium text-gray-900 text-sm">{rule.module}</h3>
+                <h3 className="font-medium text-gray-900 text-base">{rule.module}</h3>
                 <button
                   onClick={() => handleDelete(rule.id)}
                   className="text-red-600 hover:text-red-800 transition-colors ml-2"
@@ -226,7 +226,7 @@ export default function RoleMatrix() {
 
               <div className="space-y-3">
                 <div className="flex justify-between items-center">
-                  <span className="text-sm text-gray-600">Admin</span>
+                  <span className="text-base text-gray-600">Admin</span>
                   <label className="relative inline-flex items-center cursor-pointer">
                     <input
                       type="checkbox"
@@ -239,7 +239,7 @@ export default function RoleMatrix() {
                 </div>
 
                 <div className="flex justify-between items-center">
-                  <span className="text-sm text-gray-600">Club Owner</span>
+                  <span className="text-base text-gray-600">Club Owner</span>
                   <label className="relative inline-flex items-center cursor-pointer">
                     <input
                       type="checkbox"
@@ -252,7 +252,7 @@ export default function RoleMatrix() {
                 </div>
 
                 <div className="flex justify-between items-center">
-                  <span className="text-sm text-gray-600">Service Provider</span>
+                  <span className="text-base text-gray-600">Service Provider</span>
                   <label className="relative inline-flex items-center cursor-pointer">
                     <input
                       type="checkbox"
@@ -275,7 +275,7 @@ export default function RoleMatrix() {
           <h2 className="text-lg md:text-xl font-bold text-gray-900">Visibility Matrix</h2>
           <button
             onClick={handleDownload}
-            className="flex items-center gap-2 px-4 py-2 bg-teal-700 hover:bg-teal-800 text-white font-medium rounded-lg transition-colors text-sm"
+            className="flex items-center gap-2 px-4 py-2 bg-teal-700 hover:bg-teal-800 text-white font-medium rounded-lg transition-colors text-base"
           >
             <FiDownload className="w-4 h-4" />
             Download
@@ -304,20 +304,20 @@ export default function RoleMatrix() {
             <tbody className="bg-white divide-y divide-gray-200">
               {visibilityMatrix.map((item) => (
                 <tr key={item.id} className="hover:bg-gray-50 transition-colors">
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                  <td className="px-6 py-4 whitespace-nowrap text-base text-gray-900">
                     {item.module}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm">
+                  <td className="px-6 py-4 whitespace-nowrap text-base">
                     <span className={item.admin === 'Visible' ? 'text-teal-700 font-medium' : 'text-gray-400'}>
                       {item.admin}
                     </span>
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm">
+                  <td className="px-6 py-4 whitespace-nowrap text-base">
                     <span className={item.clubOwner === 'Visible' ? 'text-teal-700 font-medium' : 'text-gray-400'}>
                       {item.clubOwner}
                     </span>
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm">
+                  <td className="px-6 py-4 whitespace-nowrap text-base">
                     <span className={item.serviceProvider === 'Visible' ? 'text-teal-700 font-medium' : 'text-gray-400'}>
                       {item.serviceProvider}
                     </span>
@@ -332,23 +332,23 @@ export default function RoleMatrix() {
         <div className="md:hidden divide-y divide-gray-200">
           {visibilityMatrix.map((item) => (
             <div key={item.id} className="p-4">
-              <h3 className="font-medium text-gray-900 text-sm mb-3">{item.module}</h3>
+              <h3 className="font-medium text-gray-900 text-base mb-3">{item.module}</h3>
               <div className="grid grid-cols-3 gap-3">
                 <div>
                   <p className="text-xs text-gray-500 mb-1">Admin</p>
-                  <p className={`text-sm font-medium ${item.admin === 'Visible' ? 'text-teal-700' : 'text-gray-400'}`}>
+                  <p className={`text-base font-medium ${item.admin === 'Visible' ? 'text-teal-700' : 'text-gray-400'}`}>
                     {item.admin}
                   </p>
                 </div>
                 <div>
                   <p className="text-xs text-gray-500 mb-1">Club Owner</p>
-                  <p className={`text-sm font-medium ${item.clubOwner === 'Visible' ? 'text-teal-700' : 'text-gray-400'}`}>
+                  <p className={`text-base font-medium ${item.clubOwner === 'Visible' ? 'text-teal-700' : 'text-gray-400'}`}>
                     {item.clubOwner}
                   </p>
                 </div>
                 <div>
                   <p className="text-xs text-gray-500 mb-1">Service Provider</p>
-                  <p className={`text-sm font-medium ${item.serviceProvider === 'Visible' ? 'text-teal-700' : 'text-gray-400'}`}>
+                  <p className={`text-base font-medium ${item.serviceProvider === 'Visible' ? 'text-teal-700' : 'text-gray-400'}`}>
                     {item.serviceProvider}
                   </p>
                 </div>
@@ -366,7 +366,7 @@ export default function RoleMatrix() {
               <h2 className="text-xl font-bold text-gray-900 mb-4">Add New Rule</h2>
 
               <div className="mb-6">
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-base font-medium text-gray-700 mb-2">
                   Module / Page Name
                 </label>
                 <input
@@ -374,21 +374,21 @@ export default function RoleMatrix() {
                   value={newModuleName}
                   onChange={(e) => setNewModuleName(e.target.value)}
                   placeholder="Enter page or module name"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent text-sm"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent text-base"
                 />
               </div>
 
               <div className="flex gap-3">
                 <button
                   onClick={handleCloseAddRuleModal}
-                  className="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors font-medium text-sm"
+                  className="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors font-medium text-base"
                 >
                   Cancel
                 </button>
                 <button
                   onClick={handleSaveNewRule}
                   disabled={!newModuleName.trim()}
-                  className="flex-1 px-4 py-2 bg-teal-700 text-white rounded-lg hover:bg-teal-800 transition-colors font-medium text-sm disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="flex-1 px-4 py-2 bg-teal-700 text-white rounded-lg hover:bg-teal-800 transition-colors font-medium text-base disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   Save
                 </button>

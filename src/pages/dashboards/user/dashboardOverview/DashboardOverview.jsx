@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { FiCalendar, FiChevronDown, FiPackage, FiDollarSign, FiShoppingCart } from 'react-icons/fi';
 import Container from '../../../../components/layout/Container';
 import Card from '../../../../components/ui/Card';
@@ -13,7 +13,7 @@ const StatCard = ({ title, value, subtitle, Icon }) => {
   return (
     <Card className="p-4">
       <div>
-        <div className="text-sm" style={{ color: '#656565' }}>{title}</div>
+        <div className="text-base" style={{ color: '#656565' }}>{title}</div>
 
         <div className="mt-2 flex items-center justify-between">
           <div className="text-2xl font-semibold" style={{ color: '#464646' }}>{value}</div>
@@ -32,7 +32,7 @@ const StatCard = ({ title, value, subtitle, Icon }) => {
         </div>
 
         {subtitle && (
-          <div className={`text-sm mt-3 ${isPos ? 'text-green-600' : isNeg ? 'text-red-500' : ''}`} style={{ color: !isPos && !isNeg ? '#656565' : undefined }}>
+          <div className={`text-base mt-3 ${isPos ? 'text-green-600' : isNeg ? 'text-red-500' : ''}`} style={{ color: !isPos && !isNeg ? '#656565' : undefined }}>
             {subtitle}
           </div>
         )}
@@ -51,18 +51,18 @@ const DashboardOverview = () => {
           <div className="mb-6 flex flex-col md:flex-row md:items-start md:justify-between">
             <div className="w-full md:w-auto">
               <h2 className="text-xl md:text-2xl lg:text-3xl font-bold text-dashboardTitle]">Dashboard Overview</h2>
-              <p className="text-sm md:text-base mt-1 text-[#5B5B5B]">Monitor your customer service performance</p>
+              <p className="text-base md:text-base mt-1 text-[#5B5B5B]">Monitor your customer service performance</p>
             </div>
 
             <div className="mt-3 md:mt-0 text-left md:text-right w-full md:w-auto">
-              <div className="text-sm md:text-base text-[#5B5B5B] mb-2">{`Last ${range} days overview`}</div>
+              <div className="text-base md:text-base text-[#5B5B5B] mb-2">{`Last ${range} days overview`}</div>
               <div className="relative inline-block w-full md:w-auto">
                 <FiCalendar className="absolute left-2 top-1/2 -translate-y-1/2 h-4 w-4 text-[#5B5B5B] pointer-events-none" aria-hidden />
 
                 <select
                   value={range}
                   onChange={(e) => setRange(e.target.value)}
-                  className="block w-full md:w-auto pl-9 pr-8 py-2 bg-white border border-gray-200 rounded-md shadow-sm text-sm text-gray-700 appearance-none"
+                  className="block w-full md:w-auto pl-9 pr-8 py-2 bg-white border border-gray-200 rounded-md shadow-sm text-base text-gray-700 appearance-none"
                   aria-label="Select date range"
                 >
                   <option value="7">Last 7 days</option>
@@ -91,7 +91,7 @@ const DashboardOverview = () => {
 
               <div className="relative inline-flex">
                 <select
-                  className="block pl-3 pr-8 py-1 bg-white border border-gray-200 rounded-md shadow-sm text-sm text-gray-700 appearance-none"
+                  className="block pl-3 pr-8 py-1 bg-white border border-gray-200 rounded-md shadow-sm text-base text-gray-700 appearance-none"
                   aria-label="Select period"
                 >
                   <option>This year</option>
@@ -125,7 +125,7 @@ const DashboardOverview = () => {
                     </div>
                   </div>
 
-                  <div className="text-sm text-gray-700 ml-4 md:hidden">{item.sold} Sold</div>
+                  <div className="text-base text-gray-700 ml-4 md:hidden">{item.sold} Sold</div>
                 </div>
               ))}
             </div>
