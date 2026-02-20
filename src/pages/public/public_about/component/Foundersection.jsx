@@ -12,7 +12,7 @@ export default function Foundersection() {
       <Container className="w-full">
         <div className="w-full grid grid-cols-1 lg:grid-cols-[35%_65%] items-center gap-4 md:pl-10 lg:pl-0  lg:-ml-12">
           {/* Left: Image */}
-          <div className="px-4 sm:px-6 md:px-8 lg:px-12 py-6">
+          <div className="px-4 sm:px-6 md:pl-8 lg:pl-12 py-6">
             <img
               src="./fromfounders.png"
               alt="Founder of ESSA Hub"
@@ -21,7 +21,7 @@ export default function Foundersection() {
           </div>
 
           {/* Right: Text */}
-          <div className="px-4 sm:px-6 md:px-8 lg:px-12 py-6">
+          <div className="max-w-3xl px-4 md:px-0 ">
           <SectionHeader
             title={"A note from the founder"}
             align="left"
@@ -49,7 +49,6 @@ export default function Foundersection() {
           <p className="text-base sm:text-lg text-[#2f2f2f] leading-[1.8]">
             Welcome to ESSA Hub
           </p>
-
           </div>
         </div>
       </Container>
