@@ -1,5 +1,5 @@
 ﻿import React, { createContext, useContext, useState, useCallback } from 'react';
-import { GET, POST, PUT, DELETE } from '../services/httpMethods';
+import { GET, POST, PUT, DELETE, PATCH } from '../services/httpMethods';
 import { ENDPOINT } from '../services/httpEndpoint';
 import { toast } from 'react-toastify';
 import { useAuth } from './AuthContext';
@@ -195,6 +195,72 @@ export const EventProvider = ({ children }) => {
         }
     }, []);
 
+    // Approve event
+    const approveEvent = useCallback(async (eventId) => {
+        if (!eventId) {
+            toast.error('Event ID is required');
+            return { success: false, message: 'Event ID is required' };
+        }
+
+        setUpdateLoading(true);
+        setError(null);
+        try {
+            const response = await PATCH(ENDPOINT.EVENTS.APPROVAL_STATUS(eventId), {
+                action: 'approve'
+            });
+
+            toast.success('Event approved successfully!');
+
+            // Refetch events to get updated data
+            await fetchEvents();
+
+            return { success: true, data: response?.data };
+        } catch (err) {
+            const message = err?.response?.data?.message || err?.message || 'Failed to approve event';
+            setError(message);
+            toast.error(message);
+            return { success: false, message };
+        } finally {
+            setUpdateLoading(false);
+        }
+    }, [fetchEvents]);
+
+    // Reject event
+    const rejectEvent = useCallback(async (eventId, rejectionReason) => {
+        if (!eventId) {
+            toast.error('Event ID is required');
+            return { success: false, message: 'Event ID is required' };
+        }
+
+        if (!rejectionReason || rejectionReason.trim() === '') {
+            toast.error('Rejection reason is required');
+            return { success: false, message: 'Rejection reason is required' };
+        }
+
+        setUpdateLoading(true);
+        setError(null);
+        try {
+            const response = await PATCH(ENDPOINT.EVENTS.APPROVAL_STATUS(eventId), {
+                action: 'reject',
+                rejectionReason: rejectionReason.trim()
+            });
+
+            toast.success('Event rejected successfully!');
+
+            // Refetch events to get updated data
+            await fetchEvents();
+
+            return { success: true, data: response?.data };
+        } catch (err) {
+            const message = err?.response?.data?.message || err?.message || 'Failed to reject event';
+            setError(message);
+            toast.error(message);
+            return { success: false, message };
+        } finally {
+            setUpdateLoading(false);
+        }
+    }, [fetchEvents]);
+
     const value = {
         events,
         loading,
@@ -207,6 +273,8 @@ export const EventProvider = ({ children }) => {
         createEvent,
         updateEvent,
         deleteEvent,
+        approveEvent,
+        rejectEvent,
     };
 
     return <EventContext.Provider value={value}>{children}</EventContext.Provider>;

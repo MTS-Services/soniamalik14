@@ -1,6 +1,7 @@
 ﻿import React, { useState, useEffect } from 'react';
 import { X, Eye, Check } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import DashboardHeader from '../../../../components/ui/DashboardHeader';
 import Table from '../../../../components/ui/Table';
 import TablePagination from '../../../../components/ui/TablePagination';
@@ -9,54 +10,22 @@ import { useEvent } from '../../../../context/EventContext';
 
 const Event = () => {
   const [currentEventPage, setCurrentEventPage] = useState(1);
-  const [isCancelModalOpen, setIsCancelModalOpen] = useState(false);
+  const [isRejectModalOpen, setIsRejectModalOpen] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [isViewModalOpen, setIsViewModalOpen] = useState(false);
-  const [cancelReason, setCancelReason] = useState('');
+  const [rejectionReason, setRejectionReason] = useState('');
   const navigate = useNavigate();
 
   // Use events from EventContext (fetched from backend /api/events/my/list)
-  const { events, fetchEvents, loading } = useEvent();
+  const { events, fetchEvents, approveEvent, rejectEvent } = useEvent();
 
-  // Local fallback sample data while backend list is empty
-  const sampleData = [
-    {
-      title: "Women's Football Trial",
-      type: 'Trial',
-      organizer: 'Sunny Lions FC',
-      role: 'Club Owner',
-      sport: 'Football',
-      date: '12 Mar 26',
-      status: 'Pending',
-    },
-    {
-      title: 'Girls Cricket Camp',
-      type: 'Training',
-      organizer: 'London Warriors',
-      role: 'Club Owner',
-      sport: 'Cricket',
-      date: '12 Mar 26',
-      status: 'Pending',
-    },
-  ];
-
-  const eventData = (events && events.length) ? events : sampleData;
+  // Use events from context; show empty list when none returned
+  const eventData = Array.isArray(events) ? events : [];
 
   useEffect(() => {
     // fetch admin's events when component mounts
     fetchEvents();
   }, [fetchEvents]);
-
-  const getStatusColor = (status) => {
-    switch (status) {
-      case 'Approved':
-        return 'bg-btn-primary text-white';
-      case 'Pending':
-        return 'bg-dashboardPending text-white';
-      default:
-        return 'bg-gray-500 text-white';
-    }
-  };
 
   const getText = (val, fallback = '-') => {
     if (val === null || val === undefined) return fallback;
@@ -86,6 +55,24 @@ const Event = () => {
     return t ? formatEnum(t) : '-';
   };
 
+  const getSportText = (event) => {
+    if (!event) return '-';
+    const sport = event.sportType ?? event.sport ?? null;
+    return sport ? formatEnum(sport) : '-';
+  };
+
+  const getDateText = (event) => {
+    if (!event) return '-';
+    const dateStr = event.startDate ?? event.date ?? null;
+    if (!dateStr) return '-';
+    try {
+      const date = new Date(dateStr);
+      return date.toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' });
+    } catch {
+      return dateStr;
+    }
+  };
+
   const eventColumns = [
     'Event Title',
     'Type',
@@ -101,10 +88,14 @@ const Event = () => {
 
   const handleAction = (action, event) => {
     console.log(`${action} action for:`, event);
-    // dropdown removed — no dropdown state to clear
-    if (action === 'Cancel') {
+
+    if (action === 'Reject') {
       setSelectedEvent(event);
-      setIsCancelModalOpen(true);
+      setIsRejectModalOpen(true);
+    }
+
+    if (action === 'Approve') {
+      handleApproveEvent(event);
     }
 
     if (action === 'See Details') {
@@ -113,22 +104,43 @@ const Event = () => {
     }
   };
 
-  const handleCancelEvent = () => {
-    console.log('Canceling event:', selectedEvent);
-    console.log('Cancel reason:', cancelReason);
-    // Add your cancel logic here
-    // For example: API call to cancel the event
+  const handleApproveEvent = async (event) => {
+    if (!event?.id) {
+      toast.error('Event ID is missing');
+      return;
+    }
 
-    // Reset and close modal
-    setIsCancelModalOpen(false);
-    setSelectedEvent(null);
-    setCancelReason('');
+    const result = await approveEvent(event.id);
+    if (result.success) {
+      console.log('Event approved:', event);
+    }
   };
 
-  const closeCancelModal = () => {
-    setIsCancelModalOpen(false);
+  const handleRejectEvent = async () => {
+    if (!selectedEvent?.id) {
+      toast.error('Event ID is missing');
+      return;
+    }
+
+    if (!rejectionReason.trim()) {
+      toast.error('Please provide a rejection reason');
+      return;
+    }
+
+    const result = await rejectEvent(selectedEvent.id, rejectionReason);
+    if (result.success) {
+      console.log('Event rejected:', selectedEvent);
+      // Close modal and reset
+      setIsRejectModalOpen(false);
+      setSelectedEvent(null);
+      setRejectionReason('');
+    }
+  };
+
+  const closeRejectModal = () => {
+    setIsRejectModalOpen(false);
     setSelectedEvent(null);
-    setCancelReason('');
+    setRejectionReason('');
   };
 
   const closeViewModal = () => {
@@ -136,120 +148,138 @@ const Event = () => {
     setSelectedEvent(null);
   };
 
-  const renderEventRow = (event, index) => (
-    <>
-      <td className="px-4 py-4 text-base">{event.title}</td>
-      <td className="px-4 py-4 text-base">{getTypeText(event)}</td>
-      <td className="px-4 py-4 text-base">{getText(event.organizer)}</td>
-      <td className="px-4 py-4 text-base">{getRoleText(event)}</td>
-      <td className="px-4 py-4 text-base">{event.sport}</td>
-      <td className="px-4 py-4 text-base">{event.date}</td>
-      <td className="px-4 py-4">
-        <span
-          className="text-base font-medium"
-          style={{ color: event.status === 'Approved' ? 'var(--color-btn-primary)' : 'var(--color-dashboardPending)' }}
-        >
-          {event.status}
-        </span>
-      </td>
-      <td className="px-4 py-4 text-right">
-        <div className="flex flex-row items-center justify-end gap-2 whitespace-nowrap">
-          <button
-            onClick={() => handleAction('See Details', event)}
-            className="inline-flex w-9 h-9 items-center justify-center bg-[#0F766E] text-white rounded-md text-sm p-0"
-            aria-label="View"
-            title="View"
-          >
-            <Eye className="w-4 h-4" />
-          </button>
-          <button
-            onClick={() => handleAction('Approved', event)}
-            className="inline-flex w-9 h-9 items-center justify-center bg-white border border-gray-200 rounded-md text-sm hover:bg-gray-50 text-green-600 p-0"
-            aria-label="Approve"
-            title="Approve"
-          >
-            <Check className="w-4 h-4" />
-          </button>
-          <button
-            onClick={() => handleAction('Cancel', event)}
-            className="inline-flex w-9 h-9 items-center justify-center bg-white border border-red-200 text-red-600 rounded-md text-sm hover:bg-red-50 p-0"
-            aria-label="Cancel"
-            title="Cancel"
-          >
-            <X className="w-4 h-4" />
-          </button>
-        </div>
-      </td>
-    </>
-  );
+  const renderEventRow = (event) => {
+    const status = event.status?.toUpperCase();
+    const showApprovalButtons = status !== 'APPROVED' && status !== 'REJECTED';
 
-  const renderEventCard = (event, index, prefix = 'card') => (
-    <div key={index} className="bg-white p-4 rounded-lg border border-gray-100 mb-3">
-      <div className="space-y-2">
-        <div className="flex justify-between items-start">
-          <h3 className="font-semibold text-base">{event.title}</h3>
-          <div className="flex flex-row items-center gap-2">
+    return (
+      <>
+        <td className="px-4 py-4 text-base">{event.title}</td>
+        <td className="px-4 py-4 text-base">{getTypeText(event)}</td>
+        <td className="px-4 py-4 text-base">{getText(event.organizer)}</td>
+        <td className="px-4 py-4 text-base">{getRoleText(event)}</td>
+        <td className="px-4 py-4 text-base">{getSportText(event)}</td>
+        <td className="px-4 py-4 text-base">{getDateText(event)}</td>
+        <td className="px-4 py-4">
+          <span
+            className="text-base font-medium"
+            style={{ color: status === 'APPROVED' ? 'var(--color-btn-primary)' : status === 'REJECTED' ? '#ef4444' : 'var(--color-dashboardPending)' }}
+          >
+            {formatEnum(event.status)}
+          </span>
+        </td>
+        <td className="px-4 py-4 text-right">
+          <div className={`flex flex-row items-center gap-2 whitespace-nowrap ${showApprovalButtons ? 'justify-end' : 'justify-center'}`}>
             <button
               onClick={() => handleAction('See Details', event)}
-              className="inline-flex w-8 h-8 items-center justify-center bg-[#0F766E] text-white rounded-md text-sm p-0"
+              className="inline-flex w-9 h-9 items-center justify-center bg-[#0F766E] text-white rounded-md text-sm p-0"
               aria-label="View"
               title="View"
             >
               <Eye className="w-4 h-4" />
             </button>
-            <button
-              onClick={() => handleAction('Approved', event)}
-              className="inline-flex w-8 h-8 items-center justify-center bg-white border border-gray-200 rounded-md text-sm hover:bg-gray-50 text-green-600 p-0"
-              aria-label="Approve"
-              title="Approve"
-            >
-              <Check className="w-4 h-4" />
-            </button>
-            <button
-              onClick={() => handleAction('Cancel', event)}
-              className="inline-flex w-8 h-8 items-center justify-center bg-white border border-red-200 text-red-600 rounded-md text-sm hover:bg-red-50 p-0"
-              aria-label="Cancel"
-              title="Cancel"
-            >
-              <X className="w-4 h-4" />
-            </button>
+            {showApprovalButtons && (
+              <>
+                <button
+                  onClick={() => handleAction('Approve', event)}
+                  className="inline-flex w-9 h-9 items-center justify-center bg-white border border-gray-200 rounded-md text-sm hover:bg-gray-50 text-green-600 p-0"
+                  aria-label="Approve"
+                  title="Approve"
+                >
+                  <Check className="w-4 h-4" />
+                </button>
+                <button
+                  onClick={() => handleAction('Reject', event)}
+                  className="inline-flex w-9 h-9 items-center justify-center bg-white border border-red-200 text-red-600 rounded-md text-sm hover:bg-red-50 p-0"
+                  aria-label="Reject"
+                  title="Reject"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              </>
+            )}
           </div>
-        </div>
+        </td>
+      </>
+    );
+  };
 
-        <div className="grid grid-cols-2 gap-2 text-base">
-          <div>
-            <span className="text-gray-500">Type:</span>
-            <span className="ml-2 font-medium">{getTypeText(event)}</span>
-          </div>
-          <div>
-            <span className="text-gray-500">Sport:</span>
-            <span className="ml-2 font-medium">{event.sport}</span>
-          </div>
-          <div className="col-span-2">
-            <span className="text-gray-500">Organizer:</span>
-            <span className="ml-2 font-medium">{getText(event.organizer)}</span>
-          </div>
-          <div>
-            <span className="text-gray-500">Role:</span>
-            <span className="ml-2 font-medium">{getRoleText(event)}</span>
-          </div>
-          <div>
-            <span className="text-gray-500">Date:</span>
-            <span className="ml-2 font-medium">{event.date}</span>
-          </div>
-        </div>
+  const renderEventCard = (event, index) => {
+    const status = event.status?.toUpperCase();
+    const showApprovalButtons = status !== 'APPROVED' && status !== 'REJECTED';
 
-        <div className="pt-2">
-          <span
-            className="text-base font-medium"
-            style={{ color: event.status === 'Approved' ? 'var(--color-btn-primary)' : 'var(--color-dashboardPending)' }}
-          >
-            {event.status}
-          </span>
+    return (
+      <div key={index} className="bg-white p-4 rounded-lg border border-gray-100 mb-3">
+        <div className="space-y-2">
+          <div className="flex justify-between items-start">
+            <h3 className="font-semibold text-base">{event.title}</h3>
+            <div className="flex flex-row items-center gap-2">
+              <button
+                onClick={() => handleAction('See Details', event)}
+                className="inline-flex w-8 h-8 items-center justify-center bg-[#0F766E] text-white rounded-md text-sm p-0"
+                aria-label="View"
+                title="View"
+              >
+                <Eye className="w-4 h-4" />
+              </button>
+              {showApprovalButtons && (
+                <>
+                  <button
+                    onClick={() => handleAction('Approve', event)}
+                    className="inline-flex w-8 h-8 items-center justify-center bg-white border border-gray-200 rounded-md text-sm hover:bg-gray-50 text-green-600 p-0"
+                    aria-label="Approve"
+                    title="Approve"
+                  >
+                    <Check className="w-4 h-4" />
+                  </button>
+                  <button
+                    onClick={() => handleAction('Reject', event)}
+                    className="inline-flex w-8 h-8 items-center justify-center bg-white border border-red-200 text-red-600 rounded-md text-sm hover:bg-red-50 p-0"
+                    aria-label="Reject"
+                    title="Reject"
+                  >
+                    <X className="w-4 h-4" />
+                  </button>
+                </>
+              )}
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 gap-2 text-base">
+            <div>
+              <span className="text-gray-500">Type:</span>
+              <span className="ml-2 font-medium">{getTypeText(event)}</span>
+            </div>
+            <div>
+              <span className="text-gray-500">Sport:</span>
+              <span className="ml-2 font-medium">{getSportText(event)}</span>
+            </div>
+            <div className="col-span-2">
+              <span className="text-gray-500">Organizer:</span>
+              <span className="ml-2 font-medium">{getText(event.organizer)}</span>
+            </div>
+            <div>
+              <span className="text-gray-500">Role:</span>
+              <span className="ml-2 font-medium">{getRoleText(event)}</span>
+            </div>
+            <div>
+              <span className="text-gray-500">Date:</span>
+              <span className="ml-2 font-medium">{getDateText(event)}</span>
+            </div>
+          </div>
+
+          <div className="pt-2">
+            <span
+              className="text-base font-medium"
+              style={{ color: status === 'APPROVED' ? 'var(--color-btn-primary)' : status === 'REJECTED' ? '#ef4444' : 'var(--color-dashboardPending)' }}
+            >
+              {formatEnum(event.status)}
+            </span>
+          </div>
         </div>
       </div>
-    </div>
-  );
+    );
+  };
 
   return (
     <div className="flex-1 overflow-auto bg-gray-50 dashboardPy dashboardSpaceY">
@@ -272,8 +302,7 @@ const Event = () => {
         {/* Desktop Table View */}
         <div className="hidden md:block border border-gray-100 rounded-md">
           <style>{`.event-actions-table th:last-child, .event-actions-table td:last-child { width: 140px; min-width: 140px; max-width: 140px; }
-.event-actions-table td:last-child { padding-right: 16px; }
-.event-actions-table td:last-child .flex { justify-content: flex-end; }
+.event-actions-table td:last-child { padding-right: 16px; padding-left: 16px; }
 @media (max-width: 1024px) { .event-actions-table th:last-child, .event-actions-table td:last-child { min-width: 110px; width: 110px; } }`}</style>
           <Table className="event-actions-table" columns={eventColumns} data={eventData} renderRow={renderEventRow} />
           <TablePagination
@@ -286,15 +315,21 @@ const Event = () => {
         </div>
       </div>
 
-      {/* Cancel Reason Modal */}
-      {isCancelModalOpen && (
-        <div className="fixed inset-0 bg-black/60 bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-lg shadow-xl w-full max-w-lg">
+      {/* Reject Reason Modal */}
+      {isRejectModalOpen && (
+        <div
+          className="fixed inset-0 bg-black/60 bg-opacity-50 flex items-center justify-center z-50 p-4"
+          onClick={closeRejectModal}
+        >
+          <div
+            className="bg-white rounded-lg shadow-xl w-full max-w-lg"
+            onClick={(e) => e.stopPropagation()}
+          >
             {/* Modal Header */}
             <div className="flex items-center justify-between p-6">
-              <h2 className="text-xl font-semibold text-gray-900">Cancel Reason</h2>
+              <h2 className="text-xl font-semibold text-gray-900">Reject Event</h2>
               <button
-                onClick={closeCancelModal}
+                onClick={closeRejectModal}
                 className="p-1 hover:bg-gray-100 rounded-full transition-colors"
               >
                 <X className="w-5 h-5 text-gray-500" />
@@ -304,30 +339,30 @@ const Event = () => {
             {/* Modal Body */}
             <div className="p-6">
               <label className="block text-base font-medium text-gray-700 mb-2">
-                Write Cancel Reason
+                Write Rejection Reason
               </label>
               <textarea
-                value={cancelReason}
-                onChange={(e) => setCancelReason(e.target.value)}
-                placeholder="Why cancel this event describe in details"
+                value={rejectionReason}
+                onChange={(e) => setRejectionReason(e.target.value)}
+                placeholder="Why reject this event describe in details"
                 className="w-full h-40 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent resize-none text-base"
               />
             </div>
 
             {/* Modal Footer */}
             <div className="px-6 pb-6">
-              <div className="flex flex-wrap items-center gap-3">
+              <div className="flex flex-wrap justify-end items-center gap-3">
                 <button
-                  onClick={handleCancelEvent}
+                  onClick={handleRejectEvent}
                   className="px-6 py-3 bg-[#0F766E] text-white rounded-md shadow-sm hover:opacity-95 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#0F766E]"
                 >
-                  Cancel Event
+                  Reject Event
                 </button>
                 <button
-                  onClick={() => { /* implement send logic if needed */ }}
-                  className="px-6 py-3 bg-white text-[#0F766E] border border-[#0F766E] rounded-md shadow-sm hover:bg-[#f0fdfa] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#0F766E]"
+                  onClick={closeRejectModal}
+                  className="px-6 py-3 bg-white text-gray-700 border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
                 >
-                  Send
+                  Cancel
                 </button>
               </div>
             </div>

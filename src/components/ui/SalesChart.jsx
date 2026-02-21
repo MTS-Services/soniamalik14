@@ -11,20 +11,7 @@ import {
   ReferenceLine,
 } from 'recharts'
 
-const sampleData = [
-  { name: 'Jan', value: 4000 },
-  { name: 'Feb', value: 3000 },
-  { name: 'Mar', value: 5000 },
-  { name: 'Apr', value: 4000 },
-  { name: 'May', value: 6000 },
-  { name: 'Jun', value: 7000 },
-  { name: 'Jul', value: 8000 },
-  { name: 'Aug', value: 6000 },
-  { name: 'Sep', value: 7000 },
-  { name: 'Oct', value: 9000 },
-  { name: 'Nov', value: 10000 },
-  { name: 'Dec', value: 9500 },
-]
+// Chart data should be passed via props; default to empty array (no dummy data)
 
 function CustomTooltip({ active, payload, label }) {
   if (!active || !payload || !payload.length) return null
@@ -41,11 +28,11 @@ function CustomTooltip({ active, payload, label }) {
   )
 }
 
-export default function SalesChart({ className = '' }) {
+export default function SalesChart({ className = '', data = [] }) {
   const [period, setPeriod] = useState('this-year')
 
-  // TODO: switch datasets based on `period` if real data is provided
-  const chartData = sampleData
+  // Use provided data or empty array
+  const chartData = data || []
 
   return (
     <div className={`w-full bg-white rounded-lg shadow-sm p-4 ${className} mb-4 md:mb-6`}>
