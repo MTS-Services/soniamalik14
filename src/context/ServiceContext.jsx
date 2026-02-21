@@ -9,7 +9,6 @@ export const ServiceProvider = ({ children }) => {
     const [approvedServices, setApprovedServices] = useState([]);
     const [providerServices, setProviderServices] = useState([]);
     const [pendingServices, setPendingServices] = useState([]);
-
     const [loading, setLoading] = useState(false);
     const [createLoading, setCreateLoading] = useState(false);
     const [updateLoading, setUpdateLoading] = useState(false);
