@@ -5,9 +5,10 @@
 
 // Debug: Log all VITE_ environment variables
 // eslint-disable-next-line no-console
-console.log('[env] All VITE_ variables:', 
+console.log(
+  '[env] All VITE_ variables:',
   Object.keys(import.meta.env)
-    .filter(k => k.startsWith('VITE_'))
+    .filter((k) => k.startsWith('VITE_'))
     .reduce((acc, k) => ({ ...acc, [k]: import.meta.env[k] }), {})
 );
 
