@@ -15,7 +15,7 @@ const EventFilters = () => {
       <Card className="p-3" style={{ borderColor: '#B5D5D2' }}>
         <div className="flex items-center justify-between mb-3">
           <div className="font-semibold">Filters</div>
-          <div className=""><Filter /></div>
+          
         </div>
         <label className='pb2 mb-2 block text-base font-medium text-[#1D1D1D]'>
           City/Area

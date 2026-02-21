@@ -5,11 +5,9 @@ import Button from './Button';
 import { MapPin, Calendar, Clock } from 'lucide-react';
 import { FiEdit, FiTrash2 } from 'react-icons/fi';
 import EventModal from './EventModal';
-import DeleteConfirmationModal from './DeleteConfirmationModal';
 
 const EventCard = ({ item = {}, editLink, onEdit, onDelete, className = '', detailsRoute = '/coach/event' }) => {
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
     const handleEditClick = (e) => {
         e.preventDefault();
@@ -23,13 +21,7 @@ const EventCard = ({ item = {}, editLink, onEdit, onDelete, className = '', deta
     const handleDeleteClick = (e) => {
         e.preventDefault();
         e.stopPropagation();
-        setIsDeleteModalOpen(true);
-    };
-
-    const handleDeleteConfirm = () => {
-        if (onDelete) {
-            onDelete(item);
-        }
+        if (onDelete) onDelete(item);
     };
 
     return (
@@ -103,15 +95,8 @@ const EventCard = ({ item = {}, editLink, onEdit, onDelete, className = '', deta
                 </Card>
             </Link>
 
-            
-            {/* Delete Confirmation Modal */}
-            <DeleteConfirmationModal
-                isOpen={isDeleteModalOpen}
-                onClose={() => setIsDeleteModalOpen(false)}
-                onConfirm={handleDeleteConfirm}
-                title="Delete Event"
-                message={`Are you sure you want to delete "${item.title}"? This action cannot be undone.`}
-            />
+
+            {/* Delete confirmation is handled by parent to avoid duplicate modals */}
         </>
     );
 };

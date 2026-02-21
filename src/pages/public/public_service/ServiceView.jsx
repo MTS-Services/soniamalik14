@@ -11,7 +11,7 @@ const sample = Array.from({ length: 12 }).map((_, i) => ({
     type: ['Physios', 'Nutrition', 'Mental Health', 'Wellbeing'][i % 4],
     day: 'Mon - Fri',
     time: '09:00 - 17:00',
-    location: 'Local provider â€” contact for details',
+    location: 'Local provider contact for details',
     summary: 'Login to see contact details & pricing',
     image: [
         'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=500&auto=format&fit=crop', // Physiotherapy

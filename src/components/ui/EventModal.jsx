@@ -2,6 +2,7 @@
 import { X, Upload } from 'lucide-react';
 import Button from './Button';
 import { useEvent } from '../../context/EventContext';
+import { toast } from 'react-toastify';
 
 const EventModal = ({ isOpen, onClose, initialData = null, mode = 'create' }) => {
     const { createEvent, updateEvent, createLoading, updateLoading } = useEvent();
@@ -103,8 +104,8 @@ const EventModal = ({ isOpen, onClose, initialData = null, mode = 'create' }) =>
         if (Object.keys(newErrors).length > 0) {
             setErrors(newErrors);
             console.warn('Validation errors:', newErrors);
-            // Show alert notification for user feedback
-            alert(`Please fill all required fields. Missing: ${Object.keys(newErrors).length} field(s)`);
+            // Use toast instead of blocking alert for user feedback
+            toast.error(`Please fill all required fields. Missing: ${Object.keys(newErrors).length} field(s)`);
             return;
         }
 

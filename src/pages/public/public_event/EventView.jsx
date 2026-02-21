@@ -131,7 +131,7 @@ const EventView = () => {
                 <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 mt-6">
                     {/* Desktop Sidebar */}
                     <aside className="hidden lg:block lg:col-span-1 ">
-                        <div className="sticky top-28   ">
+                        <div className="sticky top-34   ">
                             <EventFilters />
                         </div>
                     </aside>
