@@ -13,7 +13,7 @@ const ProfessionalSupport = () => {
           <div className="max-w-xl order-first lg:order-last">
             <SectionHeader
               title="For Professional Support"
-              description="We want to work with professionals whose expertise supports women in sport â€” including physiotherapy, strength and conditioning, nutrition, women's health and wellbeing."
+              description="We want to work with professionals whose expertise supports women in sport — including physiotherapy, strength and conditioning, nutrition, women’s health and wellbeing."
             />
 
             <div className="mt-6">

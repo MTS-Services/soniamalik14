@@ -17,11 +17,13 @@ const AboutMission = () => {
 
             <div className="mt-6">
               <p className="description mb-6 text-base sm:text-lg">
-                For many women, opportunities arenâ€™t always visible. Information can be scattered,
-                local sessions can be hard to discover, and starting or returning can feel daunting.
+                For many women, opportunities aren’t always visible. Information can be scattered, local sessions can be hard to discover, and starting or returning can feel daunting.
               </p>
               <p className="description mb-6 text-base sm:text-lg">
                 ESSA Hub brings local sport, community and women-focused services into one place.
+              </p>
+              <p className="description mb-6 text-base sm:text-lg">
+                Built for women. Led by women. Focused on participation.
               </p>
             </div>
           </div>
