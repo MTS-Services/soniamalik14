@@ -9,7 +9,7 @@ import Pagination from '../../../components/ui/Pagination';
 
 const sampleEvents = new Array(12).fill(0).map((_, i) => ({
     id: i + 1,
-    title: `Womenâ€™s Football Friendly Match Day`,
+    title: `Womens Football Friendly Match Day`,
     date: '4 Dec 2025',
     location: '1901 Thornridge Cir. Shiloh',
     tag: 'Tournament',
