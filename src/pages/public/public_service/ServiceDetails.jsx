@@ -35,7 +35,7 @@ const ServiceDetails = () => {
 
               <div>
                 <h1 className="text-2xl font-bold text-[#000000]">{item.title}</h1>
-                <div className="text-base text-[#626262] mt-2">{item.type} â€¢ {item.location}</div>
+                <div className="text-base text-[#626262] mt-2">{item.type}  {item.location}</div>
 
                 <div className="mt-6 text-base text-[#626262] leading-relaxed">
                   <h3 className="font-semibold text-[#000000] mb-2">About the Service Provider</h3>

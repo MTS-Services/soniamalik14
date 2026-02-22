@@ -3,7 +3,7 @@ import { useAuth } from '../../../../context/AuthContext';
 import { Link } from 'react-router-dom';
 import Card from '../../../../components/ui/Card';
 import Button from '../../../../components/ui/Button';
-import { MapPin, Calendar, Lock } from 'lucide-react';
+import { MapPin, Calendar } from 'lucide-react';
 
 const EventCard = ({ event }) => {
   const { isAuthenticated } = useAuth();
@@ -33,29 +33,18 @@ const EventCard = ({ event }) => {
           <div className="flex items-center gap-2"><Calendar className="w-4 h-4 text-[#363636]" /> <span className="text-base">{event.date}</span></div>
         </div>
 
-        {!isAuthenticated && (
-          <div className="bg-[#E7F1F1] rounded-lg p-6 text-center mb-4">
-            <div className="flex flex-col items-center justify-center gap-3">
-              <Lock className="w-6 h-6 text-emerald-700" />
-              <span className="font-medium text-[#0B2F2C]">Login to see contact details & ability requirements</span>
-              <Link to="/signin" className="w-full">
-                <Button variant="primary" className="mx-auto mt-3 w-4/5 rounded-lg bg-btn-primary text-white hover:bg-[#0d655d]">
-                  Login to view
-                </Button>
-              </Link>
-            </div>
-          </div>
-        )}
+        {/* Intentionally show only View Details button; signin will receive return state */}
       </div>
 
       <div className="mt-2">
-        {isAuthenticated ? (
-          <Link to={`/events/${event.id}`} state={{ event }}>
-            <Button variant="primary" className="w-full rounded-md bg-btn-primary text-white hover:bg-[#0d655d]">
-              View Details
-            </Button>
-          </Link>
-        ) : null}
+        <Link
+          to={isAuthenticated ? `/events/${event.id}` : '/signin'}
+          state={isAuthenticated ? { event } : { from: `/events/${event.id}`, event }}
+        >
+          <Button variant="primary" className="w-full rounded-md bg-btn-primary text-white hover:bg-[#0d655d]">
+            View Details
+          </Button>
+        </Link>
       </div>
     </Card>
   );
