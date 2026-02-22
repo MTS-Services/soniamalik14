@@ -8,14 +8,12 @@ export const fetchEvents = createAsyncThunk(
   'events/fetchAll',
   async (_, { rejectWithValue, signal }) => {
     try {
-      // Call real API
-      return apiExecutor(
-        (signal) => GET(ENDPOINT.EVENTS.LIST, { signal }),
-        rejectWithValue,
-        signal
-      );
+      // Call real API (pass signal as third arg to avoid it being serialized into query params)
+      const response = await GET(ENDPOINT.EVENTS.LIST, null, signal);
+      return response.data ?? response;
     } catch (error) {
-      return rejectWithValue(error.message || 'Failed to fetch events');
+      if (error?.response?.status === 404) return [];
+      return rejectWithValue(error.response?.data || error.message || 'Failed to fetch events');
     }
   }
 );
@@ -25,14 +23,14 @@ export const fetchEventAnalytics = createAsyncThunk(
   'events/fetchAnalytics',
   async (_, { rejectWithValue, signal }) => {
     try {
-      // Call real API (if backend supports analytics)
-      return apiExecutor(
-        (signal) => GET(ENDPOINT.EVENTS.ANALYTICS, { signal }),
-        rejectWithValue,
-        signal
-      );
+      // Call real API (pass signal correctly). If backend doesn't support analytics, return empty array.
+      const response = await GET(ENDPOINT.EVENTS.ANALYTICS, null, signal);
+      return response.data ?? response;
     } catch (error) {
-      return rejectWithValue(error.message || 'Failed to fetch event analytics');
+      if (error?.response?.status === 404) return [];
+      return rejectWithValue(
+        error.response?.data || error.message || 'Failed to fetch event analytics'
+      );
     }
   }
 );

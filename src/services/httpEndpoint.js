@@ -50,6 +50,7 @@ export const ENDPOINT = {
   EVENTS: {
     LIST: '/api/events',
     MY_LIST: '/api/events/my/list',
+    ANALYTICS: '/api/events/analytics',
     CREATE: '/api/events',
     DETAIL: (id) => `/api/events/${id}`,
     UPDATE: (id) => `/api/events/${id}`,

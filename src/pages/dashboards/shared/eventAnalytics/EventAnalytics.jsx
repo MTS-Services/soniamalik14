@@ -16,6 +16,19 @@ const EventAnalytics = ({ baseRoute = '/coach' }) => {
     const loading = useSelector(selectAnalyticsLoading);
     const error = useSelector(selectAnalyticsError);
 
+    // Temporary demo data when analytics from API is empty
+    const demoEvents = [
+        { id: 'demo-1', title: 'Community Football', type: 'Tournament', organizer: 'Local Club', sport: 'Football', date: '2026-02-10', status: 'Approved', joined: 24, isComplete: true, isUpcoming: false, isPending: false, isCancelled: false },
+        { id: 'demo-2', title: 'Morning Yoga', type: 'Class', organizer: 'Wellness Center', sport: 'Yoga', date: '2026-03-05', status: 'Pending', joined: 12, isComplete: false, isUpcoming: true, isPending: true, isCancelled: false },
+        { id: 'demo-3', title: 'City Marathon', type: 'Race', organizer: 'City Sports', sport: 'Running', date: '2026-04-20', status: 'Approved', joined: 130, isComplete: false, isUpcoming: true, isPending: false, isCancelled: false },
+        { id: 'demo-4', title: 'Swimming Gala', type: 'Meet', organizer: 'Aquatics Club', sport: 'Swimming', date: '2026-01-18', status: 'Cancelled', joined: 0, isComplete: false, isUpcoming: false, isPending: false, isCancelled: true },
+        { id: 'demo-5', title: 'Junior Tennis', type: 'Training', organizer: 'Tennis Academy', sport: 'Tennis', date: '2026-02-02', status: 'Approved', joined: 18, isComplete: true, isUpcoming: false, isPending: false, isCancelled: false },
+        { id: 'demo-6', title: 'Basketball Pickup', type: 'Pickup', organizer: 'Community Center', sport: 'Basketball', date: '2026-03-12', status: 'Pending', joined: 9, isComplete: false, isUpcoming: true, isPending: true, isCancelled: false },
+    ];
+
+    const eventsSource = Array.isArray(allEvents) && allEvents.length > 0 ? allEvents : demoEvents;
+    const usingDemo = !(Array.isArray(allEvents) && allEvents.length > 0);
+
     const [activeTab, setActiveTab] = useState('all');
     const [currentPage, setCurrentPage] = useState(1);
     const resultsPerPage = 6;
@@ -56,7 +69,7 @@ const EventAnalytics = ({ baseRoute = '/coach' }) => {
 
     const columns = ['Event Title', 'Type', 'Organizer', 'Sport', 'Date', 'Status', 'Joined', 'Action'];
 
-    const filteredEvents = allEvents.filter(event => {
+    const filteredEvents = eventsSource.filter(event => {
         if (activeTab === 'all') return true;
         if (activeTab === 'complete') return event.isComplete;
         if (activeTab === 'upcoming') return event.isUpcoming;
@@ -146,9 +159,13 @@ const EventAnalytics = ({ baseRoute = '/coach' }) => {
             </div>
 
             <div className="">
-                <div className="py-4"><h2 className="text-xl font-bold text-gray-900">Event Details</h2></div>
+
                 {loading && <div className="text-center py-8 text-gray-600">Loading analytics...</div>}
-                {error && <div className="text-center py-8 text-red-600">Error: {error}</div>}
+                {error && (
+                    <div className="text-center py-8 text-red-600">
+                        Error: {typeof error === 'string' ? error : (error && (error.message || JSON.stringify(error)))}
+                    </div>
+                )}
                 {!loading && !error && (
                     <>
                         <Table columns={columns} data={paginatedEvents} renderRow={renderRow} />
