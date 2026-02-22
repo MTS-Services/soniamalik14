@@ -50,28 +50,16 @@ const DiscoverCard = ({ item }) => {
           <div className="flex items-center gap-2"><Clock className="w-4 h-4 text-[#1f3a37]" /> <span className="text-base text-gray-700">{item.time}</span></div>
         </div>
 
-        {!isAuthenticated && (
-          <div className="bg-[#E7F1F1] rounded-lg p-6 text-center mt-auto min-h-[110px]">
-            <div className="flex flex-col items-center justify-center gap-3">
-              <Lock className="w-6 h-6 text-emerald-700" />
-              <span className="font-medium text-[#0B2F2C]">Login to see contact details & ability requirements</span>
-              <Link to="/signin" className="w-full">
-                <Button variant="primary" className="mx-auto mt-3 w-4/5 rounded-lg bg-btn-primary text-white hover:bg-[#0d655d]">
-                  Login to view
-                </Button>
-              </Link>
-            </div>
-          </div>
-        )}
       </div>
 
-      {isAuthenticated ? (
-        <Link to={`/discover/${item.type}/${item.id}`} state={{ item }}>
-          <Button variant="primary" className="w-full rounded-lg bg-btn-primary text-white hover:bg-[#0d655d]">
-            View Details
-          </Button>
-        </Link>
-      ) : null}
+      <Link
+        to={isAuthenticated ? `/discover/${item.type}/${item.id}` : '/signin'}
+        state={isAuthenticated ? { item } : { from: `/discover/${item.type}/${item.id}`, item }}
+      >
+        <Button variant="primary" className="w-full rounded-lg bg-btn-primary text-white hover:bg-[#0d655d]">
+          View Details
+        </Button>
+      </Link>
     </Card>
   );
 };

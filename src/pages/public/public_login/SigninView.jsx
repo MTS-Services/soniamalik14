@@ -1,11 +1,12 @@
 ﻿import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { Eye, EyeOff } from 'lucide-react';
 import { useAuth, ROLES } from '../../../context/AuthContext';
 import { FaArrowLeft } from 'react-icons/fa';
 
 const LoginView = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { login } = useAuth();
   const [formData, setFormData] = useState({
     email: '',
@@ -30,8 +31,14 @@ const LoginView = () => {
       setLoading(false);
 
       if (result.success) {
+        const intended = location?.state?.from;
         const userRoleRaw = result.user?.role || result.role || '';
         const role = String(userRoleRaw).toLowerCase();
+
+        if (intended) {
+          navigate(intended, { replace: true });
+          return;
+        }
 
         if (role === ROLES.USER) {
           navigate('/');
