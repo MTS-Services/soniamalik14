@@ -3,7 +3,7 @@ import Card from '../../../../../components/ui/Card'
 import Button from '../../../../../components/ui/Button'
 import { FiEdit, FiTrash2 } from 'react-icons/fi'
 
-const NewsCard = ({ news, onEdit, onDelete, className = '' }) => {
+const NewsCard = ({ news, onEdit, onDelete, selected = false, onSelect, className = '' }) => {
     const handleEditClick = (e) => {
         e.preventDefault()
         e.stopPropagation()
@@ -20,6 +20,9 @@ const NewsCard = ({ news, onEdit, onDelete, className = '' }) => {
         <Card className={`p-4 h-full flex flex-col justify-between rounded-lg !bg-[#FFFFFF] ${className}`}>
             <div className="flex-1">
                 <div className="relative">
+                    <label className="absolute top-3 right-3 z-20 inline-flex items-center">
+                        <input type="checkbox" checked={!!selected} onChange={(e) => { e.stopPropagation(); onSelect?.(news.id ?? news._id ?? news.newsId ?? news?.data?.id, e.target.checked) }} className="w-4 h-4" />
+                    </label>
                     {news.tag && (
                         <div className="absolute top-3 left-3 z-10 rounded-md px-3 py-1 text-base font-medium text-[#0F766E] bg-[#E7F1F1]">
                             {news.tag}
