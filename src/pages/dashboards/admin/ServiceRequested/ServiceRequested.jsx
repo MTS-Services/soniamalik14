@@ -196,22 +196,30 @@ const ServiceRequested = () => {
             ) : (
                 <>
                     <div className="bg-white rounded-lg shadow overflow-hidden">
-                        <Table
-                            columns={serviceColumns}
-                            data={paginatedData}
-                            renderRow={renderServiceRow}
-                            emptyMessage="No service requests found"
-                        />
+                        {serviceData.length === 0 ? (
+                            <div className="py-16 px-6 text-center">
 
+                                <h3 className="text-xl font-semibold mb-2">No service requests found</h3>
+                                <p className="text-gray-600">There are no service requests at the moment. Check back later.</p>
+                            </div>
+                        ) : (
+                            <>
+                                <Table
+                                    columns={serviceColumns}
+                                    data={paginatedData}
+                                    renderRow={renderServiceRow}
+                                />
 
-                        {serviceData.length > 0 && (
-                            <TablePagination
-                                currentPage={currentPage}
-                                totalPages={totalPages}
-                                totalResults={serviceData.length}
-                                resultsPerPage={itemsPerPage}
-                                onPageChange={handleEventPageChange}
-                            />
+                                {serviceData.length > 0 && (
+                                    <TablePagination
+                                        currentPage={currentPage}
+                                        totalPages={totalPages}
+                                        totalResults={serviceData.length}
+                                        resultsPerPage={itemsPerPage}
+                                        onPageChange={handleEventPageChange}
+                                    />
+                                )}
+                            </>
                         )}
                     </div>
                 </>

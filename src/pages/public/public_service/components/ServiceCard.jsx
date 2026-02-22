@@ -8,11 +8,18 @@ import { useAuth } from '../../../../context/AuthContext';
 const ServiceCard = ({ item }) => {
   const { isAuthenticated } = useAuth();
 
+  const typeLabel = item.serviceType || item.type || item.service_type || '';
+
+  const formatLabel = (v) => {
+    if (!v) return '';
+    return String(v).replace(/_/g, ' ').toLowerCase().replace(/(^|\s)\S/g, (t) => t.toUpperCase());
+  };
+
   return (
     <Card className="p-4 h-full flex flex-col justify-between" style={{ backgroundColor: '#E7F1F180' }}>
       <div>
         <div className="relative">
-          <div className="absolute top-0 left-0 m-3 bg-secondary text-btn-primary rounded-full px-3 py-2 text-base font-semibold">{item.type}</div>
+          <div className="absolute top-0 left-0 m-3 bg-secondary text-btn-primary rounded-full px-3 py-2 text-base font-semibold">{formatLabel(typeLabel)}</div>
           <div className="h-64 bg-gray-200 rounded-md mb-4 overflow-hidden flex items-center justify-center">
             {item.image ? (
               <img src={item.image} alt={item.title} className="w-full h-full object-cover rounded-md" />

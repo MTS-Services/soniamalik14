@@ -244,7 +244,7 @@ const HeaderTop = ({ onMenuClick, isMenuOpen }) => {
             {isAuthenticated && (
               <button className="flex items-center gap-2 rounded-md px-3 py-2 text-base text-btn-primary hover:bg-gray-100">
                 <MapPin className="h-4 w-4" />
-                <span>Alabama</span>
+                <span>{user?.address || user?.city || user?.location || user?.profile?.address}</span>
               </button>
             )}
 
