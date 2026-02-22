@@ -84,7 +84,7 @@ const MarketPlaceView = () => {
         <section className="py-6 lg:py-10">
             <Container>
                 <div className="mb-6">
-                    <h1 className="text-3xl font-bold">Curated brands across women’s sport.</h1>
+                    <h1 className="sectiontitle mb-2 tracking-tight">Curated brands across women’s sport.</h1>
                     <p className="text-gray-700 mt-2">Find brands focused on women's performance, comfort and fit.</p>
                 </div>
 
