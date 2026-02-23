@@ -5,6 +5,34 @@ import { FaArrowLeft } from 'react-icons/fa';
 import { GET } from '../../../services/httpMethods';
 import { ENDPOINT } from '../../../services/httpEndpoint';
 
+const normalizeArticle = (a) => {
+  const getContentString = (val) => {
+    if (!val && val !== 0) return '';
+    if (typeof val === 'string') return val;
+    if (val?.rendered && typeof val.rendered === 'string') return val.rendered;
+    if (val?.html && typeof val.html === 'string') return val.html;
+    try { return JSON.stringify(val); } catch { return ''; }
+  };
+
+  let contentHtml = getContentString(a.content) || getContentString(a.body) || getContentString(a.description) || getContentString(a.excerpt) || '';
+  const lower = contentHtml.toLowerCase();
+  if (lower.includes('constructvisualizerpayload') || lower.startsWith('function ')) {
+    contentHtml = getContentString(a.excerpt) || getContentString(a.description) || '';
+  }
+
+  return {
+    id: a.id,
+    title: a.title || a.name || '',
+    image: a.image ?? a.img ?? '',
+    date: a.publishedAt ? new Date(a.publishedAt).toLocaleDateString() : a.createdAt ? new Date(a.createdAt).toLocaleDateString() : a.date ?? '',
+    excerpt: a.excerpt ?? a.desc ?? a.summary ?? '',
+    content: contentHtml,
+    views: a.views ?? 0,
+    authorId: a.authorId ?? a.author ?? null,
+    raw: a,
+  };
+};
+
 const NewsDetails = () => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -16,33 +44,27 @@ const NewsDetails = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    // Priority 1: Use state if available
+    // Priority 1: use normalized state if available
     if (location.state?.article) {
-      setArticle(location.state.article);
+      setArticle(normalizeArticle(location.state.article));
       return;
     }
 
-    // Priority 2: Fetch from API
+    // Priority 2: fetch from API and normalize
     const fetchNewsById = async () => {
       if (!id) return;
       setLoading(true);
       setError(null);
       try {
         const response = await GET(ENDPOINT.NEWS.DETAIL(id));
-        // Debug: log raw response and payload to help diagnose API issues
-        // eslint-disable-next-line no-console
-        console.log('[NewsDetails] GET', ENDPOINT.NEWS.DETAIL(id), response);
-        // eslint-disable-next-line no-console
-        console.log('[NewsDetails] payload', JSON.stringify(response?.data ?? response, null, 2));
+        console.debug('[NewsDetails] GET', ENDPOINT.NEWS.DETAIL(id), response);
 
-        // Normalize different response shapes (be permissive)
         const payload = response?.data ?? response;
         let newsData = null;
 
         if (payload?.data && typeof payload.data === 'object' && !Array.isArray(payload.data)) {
           newsData = payload.data;
         } else if (Array.isArray(payload.data)) {
-          // If backend returned list, try to find item by id
           newsData = payload.data.find((x) => String(x.id) === String(id)) || payload.data[0];
         } else if (Array.isArray(payload.pagination?.limit)) {
           newsData = payload.pagination.limit.find((x) => String(x.id) === String(id)) || payload.pagination.limit[0];
@@ -52,47 +74,9 @@ const NewsDetails = () => {
           newsData = payload;
         }
 
-        // Normalize article fields for consistent UI
-        const normalizeArticle = (a) => {
-          const getContentString = (val) => {
-            if (!val && val !== 0) return '';
-            if (typeof val === 'string') return val;
-            if (val?.rendered && typeof val.rendered === 'string') return val.rendered;
-            if (val?.html && typeof val.html === 'string') return val.html;
-            try {
-              return JSON.stringify(val);
-            } catch (e) {
-              return '';
-            }
-          };
-
-          // derive content with fallbacks
-          let contentHtml = getContentString(a.content) || getContentString(a.body) || getContentString(a.description) || getContentString(a.excerpt) || '';
-
-          // Ignore accidental Postman test scripts or large non-HTML blobs
-          const lower = contentHtml.toLowerCase();
-          if (lower.includes('constructvisualizerpayload') || lower.startsWith('function ')) {
-            contentHtml = getContentString(a.excerpt) || getContentString(a.description) || '';
-          }
-
-          return {
-            id: a.id,
-            title: a.title || a.name || '',
-            image: a.image ?? a.img ?? '',
-            // prefer publishedAt, fallback to createdAt or date
-            date: a.publishedAt ? new Date(a.publishedAt).toLocaleDateString() : a.createdAt ? new Date(a.createdAt).toLocaleDateString() : a.date ?? '',
-            excerpt: a.excerpt ?? a.desc ?? a.summary ?? '',
-            content: contentHtml,
-            views: a.views ?? 0,
-            authorId: a.authorId ?? a.author ?? null,
-            raw: a,
-          };
-        };
-
         setArticle(normalizeArticle(newsData));
       } catch (err) {
         const message = err?.response?.data?.message || err?.message || 'Failed to fetch news';
-        // eslint-disable-next-line no-console
         console.error('[NewsDetails] GET error', err);
         setError(message);
       } finally {

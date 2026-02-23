@@ -1,47 +1,15 @@
 ﻿import React, { useState, useEffect } from 'react'
 import { X, Upload } from 'lucide-react'
 import Button from '../../../../../components/ui/Button'
-import axiosInstance from '../../../../../services/axiosInstance'
-import { toast } from 'react-toastify'
+// removed status-related direct API calls and toast usage
 
 const NewsModal = ({ isOpen, onClose, initialData = null, onSave }) => {
     const [title, setTitle] = useState('')
     const [desc, setDesc] = useState('')
     const [image, setImage] = useState(null)
     const [excerpt, setExcerpt] = useState('')
-    const [status, setStatus] = useState('PUBLISHED')
     const [previewUrl, setPreviewUrl] = useState(null)
-
-    const handleStatusChange = async (e) => {
-        const newStatus = e.target.value
-        const prev = status
-        // optimistic update
-        setStatus(newStatus)
-
-        // determine news id from initialData
-        const newsId = initialData?.id || initialData?._id || initialData?.newsId || initialData?.data?.id
-        if (!newsId) {
-            // nothing to call backend for (creating new item) — just update local state
-            return
-        }
-
-        try {
-            if (newStatus === 'PUBLISHED') {
-                // some servers require a body for PATCH; send empty object to ensure correct headers
-                await axiosInstance.patch(`/api/news/${newsId}/publish`, {})
-                toast.success('News published')
-            } else if (newStatus === 'UNPUBLISHED') {
-                await axiosInstance.patch(`/api/news/${newsId}/unpublish`, {})
-                toast.success('News unpublished')
-            }
-        } catch (err) {
-            // revert on failure and notify
-            setStatus(prev)
-            // eslint-disable-next-line no-console
-            console.error('Failed updating news status', err)
-            toast.error(err?.response?.data?.message || err.message || 'Failed to update status')
-        }
-    }
+    
 
     useEffect(() => {
         if (initialData) {
@@ -52,14 +20,12 @@ const NewsModal = ({ isOpen, onClose, initialData = null, onSave }) => {
             // set preview to existing url if available
             setPreviewUrl(initialData.img || initialData.image || null)
             setExcerpt(initialData.excerpt || initialData.excerpt || '')
-            setStatus(initialData.status || 'PUBLISHED')
         } else {
             setTitle('')
             setDesc('')
             setImage(null)
             setPreviewUrl(null)
             setExcerpt('')
-            setStatus('PUBLISHED')
         }
     }, [initialData, isOpen])
 
@@ -81,7 +47,7 @@ const NewsModal = ({ isOpen, onClose, initialData = null, onSave }) => {
     const handleSubmit = (e) => {
         e.preventDefault()
   
-        const data = { title, desc, content: desc, excerpt, status, image }
+        const data = { title, desc, content: desc, excerpt, image }
         console.log('News modal submit:', data)
         onSave?.(data)
         onClose()
@@ -117,13 +83,7 @@ const NewsModal = ({ isOpen, onClose, initialData = null, onSave }) => {
                         <input value={excerpt} onChange={(e) => setExcerpt(e.target.value)} placeholder="Enter short excerpt" className="w-full bg-[#EEEEEE] px-3 py-2 border border-gray-300 rounded-md text-base" />
                     </div>
 
-                    <div>
-                        <label className="block text-base font-medium text-gray-700 mb-1">Status</label>
-                        <select value={status} onChange={handleStatusChange} className="w-full bg-[#EEEEEE] px-3 py-2 border border-gray-300 rounded-md text-base">
-                            <option value="PUBLISHED">PUBLISHED</option>
-                            <option value="UNPUBLISHED">UNPUBLISHED</option>
-                        </select>
-                    </div>
+                            {/* Status selection removed */}
   <div>
                         <label className="block text-base font-medium text-gray-700 mb-1">Upload Image</label>
                         <label className="block cursor-pointer">
