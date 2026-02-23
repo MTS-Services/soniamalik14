@@ -5,6 +5,17 @@ import { getToken } from '../utils/storage';
 // In development we prefer relative requests so Vite dev server proxy can forward /api to backend
 const baseURL = import.meta.env.DEV ? '' : API_CONFIG.BASE_URL;
 
+// Debug: Log environment info to help diagnose production issues
+// eslint-disable-next-line no-console
+console.log('[axios] Environment Debug:', {
+  isDev: import.meta.env.DEV,
+  isProd: import.meta.env.PROD,
+  mode: import.meta.env.MODE,
+  rawEnvVar: import.meta.env.VITE_API_BASE_URL,
+  configBaseUrl: API_CONFIG.BASE_URL,
+  finalBaseURL: baseURL,
+});
+
 const axiosInstance = axios.create({
   baseURL,
   timeout: API_CONFIG.TIMEOUT,

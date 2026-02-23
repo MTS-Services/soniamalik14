@@ -14,6 +14,10 @@ export const PUT = async (url, data, signal) => {
   return axiosInstance.put(url, data, { signal });
 };
 
+export const PATCH = async (url, data, signal) => {
+  return axiosInstance.patch(url, data, { signal });
+};
+
 export const DELETE = async (url, signal) => {
   return axiosInstance.delete(url, { signal });
 };

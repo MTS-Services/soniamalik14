@@ -1,5 +1,5 @@
 ﻿import React, { createContext, useContext, useState, useCallback } from 'react';
-import { GET, POST, PUT, DELETE } from '../services/httpMethods';
+import { GET, POST, PUT, PATCH, DELETE } from '../services/httpMethods';
 import { ENDPOINT } from '../services/httpEndpoint';
 import { toast } from 'react-toastify';
 
@@ -9,6 +9,7 @@ export const ServiceProvider = ({ children }) => {
     const [approvedServices, setApprovedServices] = useState([]);
     const [providerServices, setProviderServices] = useState([]);
     const [pendingServices, setPendingServices] = useState([]);
+    const [allServices, setAllServices] = useState([]);
 
     const [loading, setLoading] = useState(false);
     const [createLoading, setCreateLoading] = useState(false);
@@ -100,6 +101,34 @@ export const ServiceProvider = ({ children }) => {
             return { success: true, services };
         } catch (err) {
             const message = err?.response?.data?.message || err?.message || 'Failed to fetch pending services';
+            setError(message);
+            toast.error(message);
+            return { success: false, message };
+        } finally {
+            setLoading(false);
+        }
+    }, []);
+
+    // Fetch all services (admin - no filters)
+    const fetchAllServices = useCallback(async () => {
+        setLoading(true);
+        setError(null);
+        try {
+            const response = await GET(ENDPOINT.SERVICES.LIST);
+            let services = [];
+            if (response?.data) {
+                if (Array.isArray(response.data)) {
+                    services = response.data;
+                } else if (response.data.services && Array.isArray(response.data.services)) {
+                    services = response.data.services;
+                } else if (response.data.data && Array.isArray(response.data.data)) {
+                    services = response.data.data;
+                }
+            }
+            setAllServices(services);
+            return { success: true, services };
+        } catch (err) {
+            const message = err?.response?.data?.message || err?.message || 'Failed to fetch services';
             setError(message);
             toast.error(message);
             return { success: false, message };
@@ -205,7 +234,7 @@ export const ServiceProvider = ({ children }) => {
         }
     }, []);
 
-    // Approve service (admin only)
+    // Approve service (admin only) - uses PATCH /api/services/{id}/approval-status
     const approveService = useCallback(async (serviceId) => {
         if (!serviceId) {
             const msg = 'Service ID is required';
@@ -216,12 +245,14 @@ export const ServiceProvider = ({ children }) => {
         setLoading(true);
         setError(null);
         try {
-            const response = await POST(ENDPOINT.SERVICES.APPROVE(serviceId));
+            const payload = { action: 'approve' };
+            const response = await PATCH(ENDPOINT.SERVICES.APPROVAL_STATUS(serviceId), payload);
             const approvedService = response?.data?.service || response?.data || response;
 
-            // Move from pending to approved
+            // Update local lists
             setPendingServices(prev => prev.filter(s => s.id !== serviceId));
             setApprovedServices(prev => [approvedService, ...prev]);
+            setAllServices(prev => prev.map(s => (s.id === serviceId ? approvedService : s)));
 
             toast.success('Service approved successfully!');
             return { success: true, service: approvedService };
@@ -235,7 +266,7 @@ export const ServiceProvider = ({ children }) => {
         }
     }, []);
 
-    // Reject service (admin only)
+    // Reject service (admin only) - uses PATCH /api/services/{id}/approval-status with reason
     const rejectService = useCallback(async (serviceId, reason = '') => {
         if (!serviceId) {
             const msg = 'Service ID is required';
@@ -246,11 +277,13 @@ export const ServiceProvider = ({ children }) => {
         setLoading(true);
         setError(null);
         try {
-            const response = await POST(ENDPOINT.SERVICES.REJECT(serviceId), { reason });
+            const payload = { action: 'reject', reason };
+            const response = await PATCH(ENDPOINT.SERVICES.APPROVAL_STATUS(serviceId), payload);
             const rejectedService = response?.data?.service || response?.data || response;
 
-            // Remove from pending
+            // Update local lists
             setPendingServices(prev => prev.filter(s => s.id !== serviceId));
+            setAllServices(prev => prev.map(s => (s.id === serviceId ? rejectedService : s)));
 
             toast.success('Service rejected!');
             return { success: true, service: rejectedService };
@@ -269,6 +302,7 @@ export const ServiceProvider = ({ children }) => {
         approvedServices,
         providerServices,
         pendingServices,
+        allServices,
         loading,
         createLoading,
         updateLoading,
@@ -279,6 +313,7 @@ export const ServiceProvider = ({ children }) => {
         fetchApprovedServices,
         fetchProviderServices,
         fetchPendingServices,
+        fetchAllServices,
         createService,
         updateService,
         deleteService,

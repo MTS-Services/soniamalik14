@@ -9,7 +9,7 @@ import { toast } from 'react-toastify';
 
 const RegisterView = () => {
   const navigate = useNavigate();
-  const [role, setRole] = useState('User'); 
+  const [role, setRole] = useState('User');
   const [formData, setFormData] = useState({
     // Shared fields
     email: '',
@@ -69,19 +69,24 @@ const RegisterView = () => {
     if (errors[name]) setErrors(prev => ({ ...prev, [name]: '' }));
   };
 
-  const renderUserInput = (label, name, placeholder, type = "text") => (
-    <div className="flex-1">
-      <label className="block text-[#282828] font-medium mb-2 text-base md:text-base">{label}</label>
-      <input
-        type={type}
-        name={name}
-        placeholder={placeholder}
-        value={formData[name]}
-        onChange={handleChange}
-        className="w-full px-4 py-3 bg-loginInput rounded-lg outline-none focus:ring-2 focus:ring-btn-primary transition-all text-base text-gray-700 placeholder-[#747474]"
-      />
-    </div>
-  );
+  const renderUserInput = (label, name, placeholder, type = "text") => {
+    const hasError = Boolean(errors[name]);
+    return (
+      <div className="flex-1">
+        <label className="block text-[#282828] font-medium mb-2 text-base md:text-base">{label}</label>
+        <input
+          aria-invalid={hasError}
+          type={type}
+          name={name}
+          placeholder={placeholder}
+          value={formData[name]}
+          onChange={handleChange}
+          className={`w-full px-4 py-3 bg-loginInput rounded-lg outline-none focus:ring-2 focus:ring-btn-primary transition-all text-base text-gray-700 placeholder-[#747474] ${hasError ? 'border-2 border-red-500' : ''}`}
+        />
+        {hasError && <p className="text-red-600 text-sm mt-1">{errors[name]}</p>}
+      </div>
+    );
+  };
 
   const validate = () => {
     const err = {};
@@ -122,11 +127,12 @@ const RegisterView = () => {
           role: 'USER',
         };
       } else if (role === 'Club Owner') {
+        // map UI role label to backend role value: send as COACH for club owners
         payload = {
           email: formData.email,
           password: formData.password,
           name: formData.ownerFullName,
-          role: 'CLUB_OWNER',
+          role: 'COACH',
           clubName: formData.clubName,
         };
       } else {
@@ -241,6 +247,7 @@ const RegisterView = () => {
                 <div>
                   <label className="block text-[#282828] font-medium mb-2">About</label>
                   <textarea name="about" placeholder="Write a about of this club" className="w-full px-4 py-3 bg-loginInput rounded-lg outline-none h-32 text-base" onChange={handleChange} />
+                  {errors.about && <p className="text-red-600 text-sm mt-1">{errors.about}</p>}
                 </div>
                 {renderUserInput("Location", "clubLocation", "2118 Thornridge Cir. Syracuse, Connecticut 35624")}
                 <div className="grid grid-cols-2 gap-4">
@@ -275,6 +282,7 @@ const RegisterView = () => {
                 <div>
                   <label className="block text-[#282828] font-medium mb-2">About</label>
                   <textarea name="about" placeholder="Write a about of this club" className="w-full px-4 py-3 bg-loginInput rounded-lg outline-none h-32 text-base" onChange={handleChange} />
+                  {errors.about && <p className="text-red-600 text-sm mt-1">{errors.about}</p>}
                 </div>
                 {renderUserInput("Clinic Address", "clinicAddress", "2118 Thornridge Cir. Syracuse, Connecticut 35624")}
                 {renderUserInput("Service Area", "serviceArea", "2118 Thornridge Cir. Syracuse, Connecticut 35624")}

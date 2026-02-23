@@ -2,17 +2,24 @@
 import { Link } from 'react-router-dom';
 import Card from '../../../../components/ui/Card';
 import Button from '../../../../components/ui/Button';
-import { MapPin, Calendar, Clock, Lock } from 'lucide-react';
+import { MapPin, Calendar, Clock } from 'lucide-react';
 import { useAuth } from '../../../../context/AuthContext';
 
 const ServiceCard = ({ item }) => {
   const { isAuthenticated } = useAuth();
 
+  const typeLabel = item.serviceType || item.type || item.service_type || '';
+
+  const formatLabel = (v) => {
+    if (!v) return '';
+    return String(v).replace(/_/g, ' ').toLowerCase().replace(/(^|\s)\S/g, (t) => t.toUpperCase());
+  };
+
   return (
     <Card className="p-4 h-full flex flex-col justify-between" style={{ backgroundColor: '#E7F1F180' }}>
       <div>
         <div className="relative">
-          <div className="absolute top-0 left-0 m-3 bg-secondary text-btn-primary rounded-full px-3 py-2 text-base font-semibold">{item.type}</div>
+          <div className="absolute top-0 left-0 m-3 bg-secondary text-btn-primary rounded-full px-3 py-2 text-base font-semibold">{formatLabel(typeLabel)}</div>
           <div className="h-64 bg-gray-200 rounded-md mb-4 overflow-hidden flex items-center justify-center">
             {item.image ? (
               <img src={item.image} alt={item.title} className="w-full h-full object-cover rounded-md" />
@@ -34,29 +41,18 @@ const ServiceCard = ({ item }) => {
           <div className="flex items-center gap-2"><Clock className="w-4 h-4 text-[#363636]" /> <span className="text-base">{item.time}</span></div>
         </div>
 
-        {!isAuthenticated && (
-          <div className="bg-[#E7F1F1] rounded-lg p-6 text-center mb-4">
-            <div className="flex flex-col items-center justify-center gap-3">
-              <Lock className="w-6 h-6 text-emerald-700" />
-              <span className="font-medium text-[#0B2F2C]">Login to see contact details & ability requirements</span>
-              <Link to="/signin" className="w-full">
-                <Button variant="primary" className="mx-auto mt-3 w-4/5 rounded-lg bg-btn-primary text-white hover:bg-[#0d655d]">
-                  Login to view
-                </Button>
-              </Link>
-            </div>
-          </div>
-        )}
+        {/* Show only the View Details button; signin receives return state when unauthenticated */}
       </div>
 
       <div className="mt-2">
-        {isAuthenticated ? (
-          <Link to={`/services/${item.id}`} state={{ item }}>
-            <Button variant="primary" className="w-full rounded-lg bg-btn-primary text-white hover:bg-[#0d655d]">
-              View Details
-            </Button>
-          </Link>
-        ) : null}
+        <Link
+          to={isAuthenticated ? `/services/${item.id}` : '/signin'}
+          state={isAuthenticated ? { item } : { from: `/services/${item.id}`, item }}
+        >
+          <Button variant="primary" className="w-full rounded-lg bg-btn-primary text-white hover:bg-[#0d655d]">
+            View Details
+          </Button>
+        </Link>
       </div>
     </Card>
   );

@@ -3,24 +3,17 @@ import { GET } from '../../services/httpMethods';
 import { ENDPOINT } from '../../services/httpEndpoint';
 import { apiExecutor } from '../../services/apiExecutor';
 
-// For now, import from local JSON files
-// When backend is ready, these will use real API endpoints
-import eventsData from '../../data/eventsData.json';
-import eventAnalyticsData from '../../data/eventAnalyticsData.json';
-
 // Fetch all events
 export const fetchEvents = createAsyncThunk(
   'events/fetchAll',
   async (_, { rejectWithValue, signal }) => {
     try {
-      // TODO: Replace with real API call when backend is ready
-      // return apiExecutor((signal) => GET(ENDPOINT.EVENTS.LIST, { signal }), rejectWithValue, signal);
-
-      // Simulate API delay
-      await new Promise((resolve) => setTimeout(resolve, 500));
-      return eventsData;
+      // Call real API (pass signal as third arg to avoid it being serialized into query params)
+      const response = await GET(ENDPOINT.EVENTS.LIST, null, signal);
+      return response.data ?? response;
     } catch (error) {
-      return rejectWithValue(error.message || 'Failed to fetch events');
+      if (error?.response?.status === 404) return [];
+      return rejectWithValue(error.response?.data || error.message || 'Failed to fetch events');
     }
   }
 );
@@ -30,14 +23,14 @@ export const fetchEventAnalytics = createAsyncThunk(
   'events/fetchAnalytics',
   async (_, { rejectWithValue, signal }) => {
     try {
-      // TODO: Replace with real API call when backend is ready
-      // return apiExecutor((signal) => GET(ENDPOINT.EVENTS.ANALYTICS, { signal }), rejectWithValue, signal);
-
-      // Simulate API delay
-      await new Promise((resolve) => setTimeout(resolve, 500));
-      return eventAnalyticsData;
+      // Call real API (pass signal correctly). If backend doesn't support analytics, return empty array.
+      const response = await GET(ENDPOINT.EVENTS.ANALYTICS, null, signal);
+      return response.data ?? response;
     } catch (error) {
-      return rejectWithValue(error.message || 'Failed to fetch event analytics');
+      if (error?.response?.status === 404) return [];
+      return rejectWithValue(
+        error.response?.data || error.message || 'Failed to fetch event analytics'
+      );
     }
   }
 );

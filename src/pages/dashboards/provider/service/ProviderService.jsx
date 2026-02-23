@@ -69,7 +69,7 @@ const ProviderService = () => {
         <div className='dashboardPy dashboardSpaceY'>
             <PageHeader
                 title="Manage Your Services"
-                description="This is where you manage all the services you provide to the womenâ€™s sports community."
+                description="This is where you manage all the services you provide to the women's sports community."
                 ctaText="Create Service"
                 onCtaClick={() => setIsModalOpen(true)}
             />
@@ -77,12 +77,7 @@ const ProviderService = () => {
                 {providerServices.length === 0 ? (
                     <div className="text-center py-12">
                         <p className="text-gray-500 text-lg">No services found.</p>
-                        <button
-                            onClick={() => setIsModalOpen(true)}
-                            className="mt-4 px-6 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition-colors"
-                        >
-                            Create Your First Service
-                        </button>
+                      
                     </div>
                 ) : (
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-3  gap-6 2xl:grid-cols-4">

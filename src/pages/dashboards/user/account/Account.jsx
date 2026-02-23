@@ -148,10 +148,7 @@ export default function Account() {
           <h2 className="text-xl font-bold text-gray-900 mb-6">ACCOUNT SETTING</h2>
 
           <div className="flex flex-col md:flex-row gap-6 md:gap-8">
-            {/* Profile Photo */}
-            <div className="flex-shrink-0">
-
-            </div>
+           
 
             {/* Form Fields */}
             <div className="flex-1">

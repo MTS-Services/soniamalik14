@@ -208,7 +208,7 @@ const DiscoverDetails = () => {
 
                   <div>
                     <h2 className="text-lg font-bold text-[#1D1D1D] mb-2">About the Club</h2>
-                    <p className="text-base font-normal text-[#1D1D1D] leading-relaxed">{item.about || 'No information available'}</p>
+                    <p className="text-base font-normal text-[#1D1D1D] leading-relaxed max-w-xl">{item.about || 'No information available'}</p>
                   </div>
 
                   <div>

@@ -45,13 +45,16 @@ export const ENDPOINT = {
     DELETE: (id) => `/api/services/${id}`,
     APPROVE: (id) => `/api/services/${id}/approve`,
     REJECT: (id) => `/api/services/${id}/reject`,
+    APPROVAL_STATUS: (id) => `/api/services/${id}/approval-status`,
   },
   EVENTS: {
     LIST: '/api/events',
     MY_LIST: '/api/events/my/list',
+    ANALYTICS: '/api/events/analytics',
     CREATE: '/api/events',
     DETAIL: (id) => `/api/events/${id}`,
     UPDATE: (id) => `/api/events/${id}`,
     DELETE: (id) => `/api/events/${id}`,
+    APPROVAL_STATUS: (id) => `/api/events/${id}/approval-status`,
   },
 };
