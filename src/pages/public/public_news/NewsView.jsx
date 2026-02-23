@@ -1,60 +1,97 @@
-﻿import React from 'react';
+﻿import React, { useEffect, useState, useMemo } from 'react';
 import Title from '../../../components/ui/Title';
 import NewsList from './components/NewsList';
 import Container from '../../../components/layout/Container';
+import { GET } from '../../../services/httpMethods';
+import { ENDPOINT } from '../../../services/httpEndpoint';
 
-const NewsView = () => {
-    const featured = {
-        id: 1,
-        date: 'Dec 1, 2025',
-        title: "Women's Football League Season 2025 Kicks Off",
-        excerpt:
-            "The new season of the Women's Football League has officially begun, bringing together top clubs and emerging talents from across the country.",
-        image: '/images/login/image_3.jpg',
-        url: '#',
+const normalizeArticle = (a) => {
+    const getContentString = (val) => {
+        if (!val && val !== 0) return '';
+        if (typeof val === 'string') return val;
+        if (val?.rendered && typeof val.rendered === 'string') return val.rendered;
+        if (val?.html && typeof val.html === 'string') return val.html;
+        try { return JSON.stringify(val); } catch { return ''; }
     };
 
-    const items = [
-        {
-            id: 2,
-            date: 'Dec 2, 2025',
-            title: 'Rising Stars: Young Women Footballers to Watch This Year',
-            excerpt:
-                'Meet the young players who are making headlines with their skills, dedication, and outstanding performances on the field.',
-            image: '/images/news/news-2.jpg',
-            url: '#',
-        },
-        {
-            id: 3,
-            date: 'Dec 3, 2025',
-            title: 'Community Training Camp Empowers Local Women Players',
-            excerpt:
-                'A special training camp was organized to support grassroots women footballers with professional coaching and fitness sessions.',
-            image: '/images/news/news-3.jpg',
-            url: '#',
-        },
-        {
-            id: 4,
-            date: 'Dec 4, 2025',
-            title: 'Women Referees Take the Lead in Local Football Matches',
-            excerpt:
-                'More women referees are stepping onto the field, creating new opportunities and promoting equality in football.',
-            image: '/images/news/news-4.jpg',
-            url: '#',
-        },
-        {
-            id: 5,
-            date: 'Dec 5, 2025',
-            title: 'Football Clubs Open Trials Exclusively for Women Players',
-            excerpt: 'Several clubs have announced open trials for women footballers, offering a chance to join competitive teams.',
-            image: '/images/news/news-5.jpg',
-            url: '#',
-        },
-    ];
+    let contentHtml = getContentString(a.content) || getContentString(a.body) || getContentString(a.description) || getContentString(a.excerpt) || '';
+    const lower = contentHtml.toLowerCase();
+    if (lower.includes('constructvisualizerpayload') || lower.startsWith('function ')) {
+        contentHtml = getContentString(a.excerpt) || getContentString(a.description) || '';
+    }
+
+    return {
+        id: a.id,
+        title: a.title || a.name || '',
+        excerpt: a.excerpt ?? a.desc ?? a.summary ?? '',
+        image: a.image ?? a.img ?? '',
+        date: a.publishedAt ? new Date(a.publishedAt).toLocaleDateString() : a.createdAt ? new Date(a.createdAt).toLocaleDateString() : a.date ?? '',
+        content: contentHtml,
+        raw: a,
+    };
+};
+
+const NewsView = () => {
+    const [newsList, setNewsList] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        const fetchAllNews = async () => {
+            setLoading(true);
+            setError(null);
+            try {
+                const response = await GET(ENDPOINT.NEWS.LIST);
+                console.debug('[NewsView] GET', ENDPOINT.NEWS.LIST, response);
+
+                // tolerant extraction of items array from response shapes
+                const payload = response?.data ?? response;
+                let articles = [];
+                if (Array.isArray(payload)) articles = payload;
+                else if (Array.isArray(payload.data)) articles = payload.data;
+                else if (Array.isArray(payload.data?.data)) articles = payload.data.data;
+                else if (Array.isArray(payload.results)) articles = payload.results;
+                else if (Array.isArray(payload.pagination?.limit)) articles = payload.pagination.limit;
+                else if (Array.isArray(payload.items)) articles = payload.items;
+
+                const normalized = (articles || []).map(normalizeArticle);
+                setNewsList(normalized);
+            } catch (err) {
+                const message = err?.response?.data?.message || err?.message || 'Failed to fetch news';
+                console.error('[NewsView] GET error', err);
+                setError(message);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchAllNews();
+    }, []);
+
+    const featured = useMemo(() => (newsList.length > 0 ? newsList[0] : null), [newsList]);
+    const items = useMemo(() => (newsList.length > 1 ? newsList.slice(1) : []), [newsList]);
+
+    if (loading) return (
+        <Container className="py-6 lg:py-8">
+            <div className="text-center py-20 text-gray-600">Loading news...</div>
+        </Container>
+    );
+
+    if (error) return (
+        <Container className="py-6 lg:py-8">
+            <div className="text-center py-20 text-red-600">{error}</div>
+        </Container>
+    );
+
+    if (!featured) return (
+        <Container className="py-6 lg:py-8">
+            <div className="text-center py-20 text-gray-600">No news available</div>
+        </Container>
+    );
 
     return (
         <Container className="py-6 lg:py-8">
-            <div className="">
+            <div>
                 <Title>Latest News</Title>
                 <div className="mt-4 lg:mt-6">
                     <NewsList featured={featured} items={items} />

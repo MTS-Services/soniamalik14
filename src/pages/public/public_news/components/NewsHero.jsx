@@ -15,7 +15,15 @@ const NewsHero = ({ article }) => {
             <h3 className="font-semibold text-lg md:text-xl mt-2 text-title leading-tight">{article.title}</h3>
           </div>
 
-          <div className="md:col-span-2 text-base text-color-secondary-text description max-w-xl">
+          <div
+            className="md:col-span-2 text-base text-color-secondary-text description max-w-xl"
+            style={{
+              display: '-webkit-box',
+              WebkitLineClamp: 3,
+              WebkitBoxOrient: 'vertical',
+              overflow: 'hidden',
+            }}
+          >
             {article.excerpt}
           </div>
         </div>
