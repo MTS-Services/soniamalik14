@@ -1,60 +1,77 @@
-﻿
+﻿import { useState } from "react";
 
- 
-import React from 'react';
-import Container from '../../../../components/layout/Container';
-import SectionHeader from '../../../../components/ui/SectionHeader';
- 
-export default function Foundersection() {
+const Foundersection = () => {
+  const [hovered, setHovered] = useState(false);
+
   return (
-    <div
-      className="w-full flex items-center justify-center bg-[#E7F1F1] py-8 lg:py-12"
-    >
-      <Container className="w-full">
-        <div className="w-full grid grid-cols-1 lg:grid-cols-[35%_65%] items-center gap-4 md:pl-10 lg:pl-0  lg:-ml-12">
-          {/* Left: Image */}
-          <div className="px-4 sm:px-6 md:pl-8 lg:pl-12 py-6">
-            <img
-              src="./fromfounders.png"
-              alt="Founder of ESSA Hub"
-              className="w-full h-56 sm:h-72 md:h-96 lg:h-[460px] object-cover object-[center_10%] rounded-lg shadow-lg block"
-            />
+    <div className="h-auto md:min-h-164 flex items-center justify-center px-4 sm:p-6 lg:p-8 pt-14 bg-[#E7F1F1]">
+
+      
+
+      <article
+        className="relative bg-white rounded-2xl shadow-lg  max-w-5xl w-full px-3 py-5 sm:px-6 sm:py-6 md:p-8 lg:p-10 transition-all duration-500"
+        style={{
+          boxShadow: hovered
+            ? "0 32px 64px rgba(90, 158, 146, 0.18), 0 8px 24px rgba(0,0,0,0.07)"
+            : "0 16px 48px rgba(90, 158, 146, 0.12), 0 4px 16px rgba(0,0,0,0.06)"
+        }}
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
+      >
+        {/* Top section: photo + title */}
+        <header className="flex flex-col sm:flex-row sm:items-start gap-3 sm:gap-6 mb-5 sm:mb-8">
+          {/* Founder photo */}
+          <div className="flex-shrink-0 w-full sm:w-auto px-2 sm:px-0">
+            <div className="relative flex justify-center sm:justify-start">
+              
+              <img
+                src="/public/images/founder.jpg"
+                alt="ESSA Hub founder"
+                className="relative w-full max-w-xs sm:max-w-none sm:w-36 sm:h-36 md:w-40 md:h-40 h-auto object-cover rounded-lg sm:rounded-xl"
+                
+              />
+            </div>
           </div>
- 
-          {/* Right: Text */}
-          <div className="max-w-3xl px-4 md:px-0 ">
-          <SectionHeader
-            title={"A note from the founder"}
-            align="left"
-            className="mb-4"
-          />
- 
-          <p className="text-base sm:text-lg text-[#2f2f2f] leading-[1.8] mb-5">
-            ESSA Hub grew from recognising that women&#39;s relationship with sport isn&#39;t always
-            straightforward. Life changes. Confidence shifts. Priorities evolve. The right
-            opportunity isn&#39;t always obvious or accessible.
+
+          {/* Title + first paragraph */}
+          <div className="flex-1 min-w-0 w-full">
+            <h1 className="text-xl sm:text-3xl md:text-4xl font-normal mb-2 sm:mb-4 leading-tight tracking-tight">
+              A note from the founder
+            </h1>
+            <p className="text-xs sm:text-base md:text-lg text-gray-700 leading-relaxed">
+              ESSA Hub grew from recognising that women's relationship with sport isn't always
+              straightforward. Life changes. Confidence shifts. Priorities evolve. The right
+              opportunity isn't always obvious or accessible.
+            </p>
+          </div>
+        </header>
+
+   
+
+        
+        <div className="space-y-3 sm:space-y-5">
+          <p className="text-xs sm:text-base md:text-lg text-gray-700 leading-relaxed">
+            I wanted to build something that makes getting involved easier — in ways that fit around
+            real life. A space where women can explore opportunities, connect with others and take
+            part in ways that feel right for them, without pressure or judgement.
           </p>
- 
-          <p className="text-base sm:text-lg text-[#2f2f2f] leading-[1.8] mb-5">
-            I wanted to build something that makes getting involved easier - in ways that fit around
-            real life. A space where women can explore opportunities, connect with others and
-            take part in ways that feel right for them, without pressure or judgement.
+
+          <p className="text-xs sm:text-base md:text-lg text-gray-700 leading-relaxed">
+            ESSA Hub is still growing and evolving, shaped by the women who use it. My hope is that
+            it becomes a place women return to again and again, as their lives and interests change
+            over time.
           </p>
- 
-          <p className="text-base sm:text-lg text-[#2f2f2f] leading-[1.8] mb-6">
-            ESSA Hub is still growing and evolving, shaped by the women who use it. My hope is
-            that it becomes a place women return to again and again, as their lives and interests
-            change over time.
-          </p>
- 
-          <p className="text-base sm:text-lg text-[#2f2f2f] leading-[1.8]">
+        </div>
+
+        {/* Sign-off */}
+        <footer className="mt-5 sm:mt-8 pt-3 sm:pt-5">
+          <p className="font-medium tracking-wide text-xs sm:text-base md:text-lg text-gray-900">
             Welcome to ESSA Hub
           </p>
- 
-          </div>
-        </div>
-      </Container>
+        </footer>
+      </article>
     </div>
   );
-}
- 
+};
+
+export default Foundersection;
