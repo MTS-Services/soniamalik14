@@ -1,5 +1,5 @@
 ﻿import React from 'react';
-import Button from '../../../../components/ui/Button';
+import { Download } from 'lucide-react';
 import StatsGrid from './components/StatsGrid';
 import UserTrendsChart from './components/UserTrendsChart';
 import DemandVsSupply from './components/DemandVsSupply';
@@ -15,7 +15,10 @@ const AdminIndex = () => {
           <h1 className="text-3xl font-bold text-gray-900">Admin Dashboard</h1>
           <p className="text-base text-gray-600 mt-2">Welcome back, Admin. Here's what's happening today.</p>
         </div>
-        <Button variant="primary" className='rounded-lg'>Export CSV</Button>
+        <button className="flex items-center gap-2 px-6 py-5 bg-btn-primary text-white font-medium rounded-lg hover:bg-teal-700 transition-colors">
+          <Download className="h-6 w-6" />
+          Export CSV
+        </button>
       </div>
 
       {/* Stats Grid */}
