@@ -64,7 +64,7 @@ const LoginView = () => {
   return (
     <div className="min-h-screen flex">
       {/* Left Side - Login Form */}
-      <div className="w-full lg:w-1/2 flex items-center justify-center px-6 py-12 bg-secondary">
+      <div className="w-full  flex items-center justify-center px-6 py-12 bg-secondary">
         <div className="w-full max-w-md">
           <div className="mb-8">
             <div className="mb-4">
@@ -177,88 +177,7 @@ const LoginView = () => {
         </div>
       </div>
 
-      {/* Right Side - Image Grid */}
-      <div className="hidden lg:flex lg:w-1/2 bg-white items-center justify-center p-6 relative overflow-hidden">
-        <div className="relative w-full max-w-2xl h-full">
-          {/* Image Grid Pattern */}
-          <div className="absolute top-0 left-0 w-full h-full grid grid-cols-3 gap-4">
-            {/* Column 1 */}
-            <div className="flex flex-col gap-4 pt-8">
-              <div className="rounded-[100px] overflow-hidden h-84 bg-gray-200 ">
-                <img
-                  src="/images/login/image_1.jpg"
-                  alt="Player"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              <div className="rounded-[100px] overflow-hidden h-64 bg-gray-200">
-                <img
-                  src="/images/login/image_2.jpg"
-                  alt="Player"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              <div className="rounded-[100px] overflow-hidden h-56 bg-gray-100 border-2 border-[#5EA39E]">
-                <img
-                  src="/images/login/image_3.jpg"
-                  alt="Player"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-            </div>
-
-            {/* Column 2 */}
-            <div className="flex flex-col gap-4">
-              <div className="rounded-[100px] overflow-hidden h-72 bg-gray-200">
-                <img
-                  src="/images/login/image_4.jpg"
-                  alt="Player"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              <div className="rounded-[100px] overflow-hidden h-68 bg-gray-200">
-                <img
-                  src="/images/login/image_5.jpg"
-                  alt="Player"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              <div className="rounded-[100px] overflow-hidden h-72 bg-gray-200">
-                <img
-                  src="/images/login/image_6.jpg"
-                  alt="Player"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-            </div>
-
-            {/* Column 3 */}
-            <div className="flex flex-col gap-4 pt-16">
-              <div className="rounded-[100px] overflow-hidden h-56 bg-gray-200">
-                <img
-                  src="/images/login/image_7.jpg"
-                  alt="Player"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              <div className="rounded-[100px] overflow-hidden h-64 bg-gray-200">
-                <img
-                  src="/images/login/image_8.jpg"
-                  alt="Player"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              <div className="rounded-[100px] overflow-hidden h-84 bg-gray-100 border-2 border-[#5EA39E]">
-                <img
-                  src="/images/login/image_9.jpg"
-                  alt="Player"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+    
     </div>
   );
 };

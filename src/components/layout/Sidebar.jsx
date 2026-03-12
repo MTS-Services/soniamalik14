@@ -133,7 +133,7 @@ const Sidebar = ({ isOpen, onClose }) => {
             {/* Sidebar */}
             <aside className={`
                 fixed lg:static inset-y-0 left-0 z-50
-                w-63 h-screen bg-white border-r border-gray-200 flex flex-col
+                w-63 lg:w-80 h-screen bg-white border-r border-gray-200 flex flex-col overflow-x-hidden
                 transform transition-transform duration-300 ease-in-out
                 ${isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
             `}>
@@ -154,7 +154,7 @@ const Sidebar = ({ isOpen, onClose }) => {
                 </div>
 
                 {/* Menu */}
-                <nav className="flex-1 pb-4 overflow-y-auto">
+                <nav className="flex-1 pt-2 pb-4 overflow-y-auto overflow-x-hidden">
                     {menuItems.map((item) => (
                         <div key={item.id}>
                             <NavLink
@@ -181,12 +181,12 @@ const Sidebar = ({ isOpen, onClose }) => {
                                         extraActive = true;
                                     }
                                     const active = isActive || extraActive;
-                                    return `w-full flex items-center gap-3 font-medium text-base px-5 py-3 rounded-none ${active ? 'bg-btn-primary text-white' : 'text-sidebarLink hover:bg-gray-50'
-                                        }`;
+                                    return `flex items-center gap-3 font-medium text-base mx-5 py-3  ${active ? 'bg-btn-primary text-white px-8 rounded-lg mx-8' : 'text-sidebarLink hover:bg-gray-50 px-5 pl-6'}`;
+
                                 }}
                             >
                                 <span className="flex items-center">{item.icon}</span>
-                                <span className="text-base font-medium">{item.label}</span>
+                                <span className="text-base 2xl:text-lg font-medium">{item.label}</span>
                             </NavLink>
                         </div>
                     ))}
