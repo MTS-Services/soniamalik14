@@ -4,17 +4,18 @@ import Button from '../../../../components/ui/Button';
 import HeroTitle from '../../../../components/ui/HeroTitle';
 
 const AboutHero = () => {
+  const backgroundImageUrl = '/public/images/About.jpg'; // Replace with your actual image URL
   return (
     <div
-      style={{ backgroundImage: "url('/aboutBg.jpg')" }}
+      style={{ backgroundImage: backgroundImageUrl ? `url(${backgroundImageUrl})` : 'none' }}
       className="relative flex w-auto items-center justify-center bg-cover bg-center lg:h-200"
     >
       <div className="absolute inset-0 z-0 bg-black opacity-30"></div>
       <Container className="relative z-10 py-10 lg:py-0">
-        <div className="flex flex-col items-center justify-center space-y-3.5 text-center lg:max-w-3xl mx-auto">
+        {/* <div className="flex flex-col items-center justify-center space-y-3.5 text-center lg:max-w-3xl mx-auto">
           <HeroTitle>Where Women Play, Train & Belong</HeroTitle>
           <p className="herosubtitle">A safe, inclusive sports community for women & girls</p>
-        </div>
+        </div> */}
       </Container>
     </div>
   );

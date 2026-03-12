@@ -1,83 +1,69 @@
-﻿
-
-
-import React from 'react';
-import Container from '../../../../components/layout/Container';
-import Title from '../../../../components/ui/Title';
-import { Building2, MousePointerClick, Search } from 'lucide-react';
+﻿import React from 'react';
+import { UserPlus, Search, Users2 } from 'lucide-react';
 
 const steps = [
   {
-    icon: <Search className="w-8 h-8 text-white" />,
-    title: "Sign Up Online",
-    description: "Create a profile to join the ESSA Hub community and take part when you're ready"
+    icon: <UserPlus className="w-10 h-10 text-white" />,
+    title: "Join",
+    description: "Create a profile to join the ESSA Hub community.",
   },
   {
-    icon: <MousePointerClick className="w-8 h-8 text-white" />,
-    title: "Browse opportunities",
-    description: "Explore women-only teams, sessions, events and support across a range of sports and locations."
+    icon: <Search className="w-10 h-10 text-white" />,
+    title: "Browse",
+    description: "Explore women-focused opportunities around you.",
   },
   {
-    icon: <Building2 className="w-8 h-8 text-white" />,
+    icon: <Users2 className="w-10 h-10 text-white" />,
     title: "Get involved",
-    description: "Join a session or event, connect with others, and access the support around you."
+    description: "Play, connect and access the support available.",
   }
 ];
 
 const HowItWorks = () => {
   return (
-    <section className="py-16 px-6 sm:px-8  font-sans">
-      <div className="max-w-7xl mx-auto">
+    <section className="bg-white py-20 px-4 sm:px-6 lg:px-8 font-sans">
+      <div className="max-w-6xl mx-auto">
         {/* Section Header */}
-        <h2 className="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-16">
-          How ESSA Hub Works
+        <h2 className="text-4xl font-bold text-center text-[#0B544E] mb-24">
+          How it works
         </h2>
 
         {/* Process Container */}
-        <div className="flex flex-col md:flex-row items-center md:items-start md:justify-between relative gap-8 md:gap-4">
+        <div className="relative">
+          
+          {/* Main Connector Line (Desktop) */}
+          <div className="hidden md:block absolute top-[45px] left-0 right-0 h-[4px] bg-[#0F766E] z-0 mx-4">
+            {/* Left End Dot */}
+            <div className="absolute left-0 top-1/2 -translate-y-1/2 w-3 h-3 rounded-full bg-[#0F766E]" />
+            {/* Right End Dot */}
+            <div className="absolute right-0 top-1/2 -translate-y-1/2 w-3 h-3 rounded-full bg-[#0F766E]" />
+          </div>
 
-          {steps.map((step, index) => (
-            <React.Fragment key={index}>
-              {/* Individual Step */}
-              <div className="flex flex-col items-center text-center md:flex-1 z-10">
-                {/* Icon Box with Gradient and Shadow */}
-                <div className="relative group mb-8">
-                  <div
-                    className="w-16 md:w-20 h-16 md:h-20 rounded-2xl bg-gradient-to-br from-[#2FDDCF] to-[#118980] flex items-center justify-center transition-transform duration-300 group-hover:scale-105"
-                    style={{
-                      boxShadow:
-                        '0px 1.85px 3.15px rgba(34,197,94,0.0169), 0px 8.15px 6.52px rgba(34,197,94,0.0275), 0px 20px 13px rgba(34,197,94,0.035), 0px 38.52px 25.48px rgba(34,197,94,0.0425), 0px 64.81px 46.85px rgba(34,197,94,0.0531), 0px 100px 80px rgba(34,197,94,0.07)'
-                    }}
-                  >
+          {/* Steps Wrapper */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 relative z-10">
+            {steps.map((step, index) => (
+              <div key={index} className="flex flex-col items-center text-center">
+                
+                {/* Icon Circle */}
+                <div className="relative mb-6">
+                  {/* White background behind icon to create the 'line-break' effect */}
+                  <div className="absolute inset-0 bg-white scale-110 rounded-full z-[-1] invisible md:visible" />
+                  
+                  <div className="w-22 h-22 rounded-full bg-gradient-to-br from-[#79D7C6] to-[#29A7AE] flex items-center justify-center shadow-sm">
                     {step.icon}
                   </div>
                 </div>
 
                 {/* Text Content */}
-                <h3 className="text-xl font-bold text-gray-900 mb-3">
+                <h3 className="text-2xl font-bold text-[#0B544E] mb-3">
                   {step.title}
                 </h3>
-                <p className="text-gray-600 text-base leading-relaxed max-w-xs">
+                <p className="text-gray-600 text-base leading-relaxed max-w-[250px]">
                   {step.description}
                 </p>
               </div>
-
-              {/* Connector (Only show between items and on desktop) */}
-              {index < steps.length - 1 && (
-                <div className="hidden md:flex items-center justify-center flex-1 pt-12">
-                  <div className="flex items-center w-full px-4">
-                    {/* Left Dot */}
-                    <div className="w-3 h-3 rounded-full bg-gradient-to-br from-[#2FDDCF] to-[#118980]" />
-                    {/* Dashed Line */}
-                    <div className="flex-1 border-t-2 border-dashed border-[#c5e9e5] mx-1" />
-                    {/* Right Dot */}
-                    <div className="w-3 h-3 rounded-full bg-gradient-to-br from-[#2FDDCF] to-[#118980]" />
-                  </div>
-                </div>
-              )}
-            </React.Fragment>
-          ))}
-
+            ))}
+          </div>
         </div>
       </div>
     </section>
@@ -85,7 +71,3 @@ const HowItWorks = () => {
 };
 
 export default HowItWorks;
-
-
-
-

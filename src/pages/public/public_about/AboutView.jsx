@@ -15,12 +15,12 @@ const AboutView = () => {
       <AboutHero />
       <AboutMission />
       <Foundersection/>
-      <SportProviders/>
-      <ProfessionalSupport/>
-      <BrandsProducts/>
+      {/* <SportProviders/> */}
+      {/* <ProfessionalSupport/> */}
+      {/* <BrandsProducts/> */}
       {/* <ServiceProvidersSection /> */}
       {/* <HowItWorks /> */}
-      <InjurySupportHub/>
+      {/* <InjurySupportHub/> */}
       {/* <AboutCta /> */}
     </div>
   );

@@ -22,7 +22,7 @@ const AboutMission = () => {
               <p className="description mb-6 text-base sm:text-lg">
                 ESSA Hub brings local sport, community and women-focused services into one place.
               </p>
-              <p className="description mb-6 text-base sm:text-lg">
+              <p className="description mb-6 text-base sm:text-lg font-bold">
                 Built for women. Led by women. Focused on participation.
               </p>
             </div>
