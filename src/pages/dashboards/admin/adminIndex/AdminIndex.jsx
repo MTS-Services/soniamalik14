@@ -22,7 +22,7 @@ const AdminIndex = () => {
       <StatsGrid />
 
       {/* User Trends & Demand vs Supply */}
-      <div className="grid grid-cols-1 gap-3 lg:gap-6 lg:grid-cols-3">
+      <div className="grid grid-cols-1 gap-3 lg:gap-6 xl:grid-cols-3">
         <UserTrendsChart />
         <DemandVsSupply />
       </div>
