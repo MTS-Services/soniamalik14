@@ -99,11 +99,11 @@ const DemandVsSupply = () => {
             {/* Bars Container - Changed to flex-col to stack them vertically */}
             <div className="flex-1 flex flex-col gap-1.5">
               <div
-                className="h-3.5 bg-[#14B8A6] rounded-full"
+                className="h-4 bg-[#14B8A6] rounded-full"
                 style={{ width: `${sport.demand}%` }}
               ></div>
               <div
-                className="h-3.5 bg-[#FDE68A] rounded-full"
+                className="h-4 bg-[#FDE68A] rounded-full"
                 style={{ width: `${sport.supply}%` }}
               ></div>
             </div>

@@ -4,7 +4,7 @@ const HighDemandAlerts = () => {
   const alerts = [1, 2, 3, 4];
 
   return (
-    <div className="rounded-lg bg-white p-6 shadow-sm min-w-0">
+    <div className="rounded-lg bg-white p-6 shadow-sm min-w-0 lg:col-span-2">
       <h2 className="mb-6 text-lg font-semibold text-gray-900">High Demand / Low Supply Alerts</h2>
       <div className="space-y-4">
         {alerts.map((item) => (

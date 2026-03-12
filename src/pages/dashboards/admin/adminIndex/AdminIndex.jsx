@@ -28,7 +28,7 @@ const AdminIndex = () => {
       </div>
 
       {/* High Demand Alerts & Top Locations */}
-      <div className="grid grid-cols-1 gap-3 lg:gap-6 lg:grid-cols-2">
+      <div className="grid grid-cols-1 gap-3 lg:gap-6 xl:grid-cols-3">
         <HighDemandAlerts />
         <TopLocationsByDemand />
       </div>
