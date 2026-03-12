@@ -74,14 +74,14 @@ const HeaderNav = ({ isMenuOpen, setIsMenuOpen }) => {
     <div className="bg-nav-bg border-b border-gray-200 shadow-sm">
       <Container>
         {/* Desktop Navigation */}
-        <div className="hidden items-center justify-between py-2 lg:flex">
+        <div className="hidden items-center justify-between py-4 lg:flex">
           {/* Navigation Links */}
           <nav className="flex items-center gap-6">
             {navigation.map((item) => (
               <Link
                 key={item.name}
                 to={item.href}
-                className={`text-base xl:text-base font-normal transition-colors ${isActive(item.href)
+                className={`text-base  font-normal transition-colors ${isActive(item.href)
                   ? 'text-btn-primary border-btn-primary border-b-2 pb-1'
                   : 'hover:text-btn-primary text-navigation'
                   }`}

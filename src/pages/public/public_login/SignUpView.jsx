@@ -168,7 +168,7 @@ const RegisterView = () => {
   return (
     <div className="min-h-screen flex">
       {/* Left Side Form */}
-      <div className="w-full lg:w-1/2 flex items-center justify-center px-6 py-12 bg-secondary overflow-y-auto">
+      <div className="w-full  flex items-center justify-center px-6 py-12 bg-secondary overflow-y-auto">
         <div className="w-full max-w-md">
           <div className="mb-8">
             <Link to="/" className="inline-flex items-center text-base gap-1 text-btn-primary font-medium mb-4">
@@ -335,26 +335,7 @@ const RegisterView = () => {
         </div>
       </div>
 
-      {/* Right Side - Image Grid (Remains the same as original) */}
-      <div className="hidden lg:flex lg:w-1/2 bg-white items-center justify-center p-6 sticky top-0 h-screen overflow-hidden">
-        {/* ... original image grid code ... */}
-        <div className="relative w-full max-w-2xl h-full">
-          <div className="absolute top-0 left-0 w-full h-full grid grid-cols-3 gap-4">
-            <div className="flex flex-col gap-4 pt-8">
-              <div className="rounded-[100px] overflow-hidden h-84 bg-gray-200"><img src="/images/login/image_1.jpg" alt="Player" className="w-full h-full object-cover" /></div>
-              <div className="rounded-[100px] overflow-hidden h-64 bg-gray-200"><img src="/images/login/image_2.jpg" alt="Player" className="w-full h-full object-cover" /></div>
-            </div>
-            <div className="flex flex-col gap-4">
-              <div className="rounded-[100px] overflow-hidden h-72 bg-gray-200"><img src="/images/login/image_4.jpg" alt="Player" className="w-full h-full object-cover" /></div>
-              <div className="rounded-[100px] overflow-hidden h-68 bg-gray-200"><img src="/images/login/image_5.jpg" alt="Player" className="w-full h-full object-cover" /></div>
-            </div>
-            <div className="flex flex-col gap-4 pt-16">
-              <div className="rounded-[100px] overflow-hidden h-56 bg-gray-200"><img src="/images/login/image_7.jpg" alt="Player" className="w-full h-full object-cover" /></div>
-              <div className="rounded-[100px] overflow-hidden h-84 bg-gray-100 border-2 border-[#5EA39E]"><img src="/images/login/image_9.jpg" alt="Player" className="w-full h-full object-cover" /></div>
-            </div>
-          </div>
-        </div>
-      </div>
+      
     </div>
   );
 };
