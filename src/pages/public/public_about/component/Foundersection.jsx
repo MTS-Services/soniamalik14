@@ -25,7 +25,7 @@ const Foundersection = () => {
             <div className="relative flex justify-center sm:justify-start">
               
               <img
-                src="/public/images/founder.jpg"
+                src="/images/founder.jpg"
                 alt="ESSA Hub founder"
                 className="relative w-full max-w-xs sm:max-w-none sm:w-36 sm:h-36 md:w-40 md:h-40 h-auto object-cover rounded-lg sm:rounded-xl"
                 

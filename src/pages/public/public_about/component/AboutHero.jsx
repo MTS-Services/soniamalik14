@@ -4,7 +4,7 @@ import Button from '../../../../components/ui/Button';
 import HeroTitle from '../../../../components/ui/HeroTitle';
 
 const AboutHero = () => {
-  const backgroundImageUrl = '/public/images/About.jpg'; // Replace with your actual image URL
+  const backgroundImageUrl = '/images/About.jpg'; // Replace with your actual image URL
   return (
     <div
       style={{ backgroundImage: backgroundImageUrl ? `url(${backgroundImageUrl})` : 'none' }}
