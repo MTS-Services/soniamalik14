@@ -1,8 +1,9 @@
-import React from 'react';
+﻿import React, { useState } from 'react';
 import { X, AlertTriangle } from 'lucide-react';
 import Button from './Button';
 
 const DeleteConfirmationModal = ({ isOpen, onClose, onConfirm, title = "Delete Event", message = "Are you sure you want to delete this event? This action cannot be undone." }) => {
+    const [isProcessing, setIsProcessing] = useState(false);
     if (!isOpen) return null;
 
     return (
@@ -32,7 +33,7 @@ const DeleteConfirmationModal = ({ isOpen, onClose, onConfirm, title = "Delete E
                             <AlertTriangle className="w-6 h-6 text-red-600" />
                         </div>
                         <div>
-                            <p className="text-gray-700 text-sm">{message}</p>
+                            <p className="text-gray-700 text-base">{message}</p>
                         </div>
                     </div>
                 </div>
@@ -47,14 +48,26 @@ const DeleteConfirmationModal = ({ isOpen, onClose, onConfirm, title = "Delete E
                         Cancel
                     </Button>
                     <Button
-                        onClick={() => {
-                            onConfirm();
-                            onClose();
+                        onClick={async () => {
+                            if (isProcessing) return;
+                            setIsProcessing(true);
+                            try {
+                                await onConfirm();
+                                // Ensure modal closes after successful confirm.
+                                try {
+                                    onClose && onClose();
+                                } catch (e) { }
+                            } catch (e) {
+                                // parent handles toast/errors
+                            } finally {
+                                setIsProcessing(false);
+                            }
                         }}
+                        disabled={isProcessing}
                         variant="primary"
                         className="flex-1 rounded-lg py-2 !bg-red-600 !border-red-600 hover:!bg-red-700"
                     >
-                        Delete
+                        {isProcessing ? 'Deleting...' : 'Delete'}
                     </Button>
                 </div>
             </div>

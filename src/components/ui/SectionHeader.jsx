@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 
 const SectionHeader = ({ 
   subtitle, 
@@ -24,7 +24,7 @@ const SectionHeader = ({
       )}
       
       {description && (
-        <p className="description">
+        <p className="description text-base sm:text-lg">
           {description}
         </p>
       )}

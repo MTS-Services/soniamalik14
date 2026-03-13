@@ -1,22 +1,22 @@
-import React from 'react'
+﻿import React from 'react'
 
 export default function ConfirmWithdrawalModal({ isOpen, onClose, onConfirm, amount, method }) {
   if (!isOpen) return null
 
   return (
-    <div className="fixed inset-0 bg-black/60 bg-opacity-50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-lg shadow-xl w-full max-w-md mx-auto">
+    <div onClick={onClose} className="fixed inset-0 bg-black/60 bg-opacity-50 flex items-center justify-center z-50 p-4">
+      <div onClick={(e) => e.stopPropagation()} className="bg-white rounded-lg shadow-xl w-full max-w-md mx-auto">
         <div className="p-6">
           <h2 className="text-xl font-bold text-gray-900 mb-6">Confirm Withdrawal</h2>
 
           <div className="space-y-4 mb-6">
             <div className="flex justify-between items-center">
-              <span className="text-sm text-gray-600">Amount:</span>
-              <span className="text-sm font-semibold text-gray-900">${amount}</span>
+              <span className="text-base text-gray-600">Amount:</span>
+              <span className="text-base font-semibold text-gray-900">${amount}</span>
             </div>
             <div className="flex justify-between items-center">
-              <span className="text-sm text-gray-600">Method:</span>
-              <span className="text-sm font-semibold text-gray-900">Bank Account ****{method.slice(-4)}</span>
+              <span className="text-base text-gray-600">Method:</span>
+              <span className="text-base font-semibold text-gray-900">Bank Account ****{method.slice(-4)}</span>
             </div>
           </div>
 

@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import Sidebar from './Sidebar';
 import UserDashboardSidebar from './UserDashboardSidebar';
 import { useAuth } from '../../context/AuthContext';
 import DashboardNavbar from './DashboardNavbar';
+import ScrollToTop from '../ScrollToTop.jsx';
 
 const DashboardLayout = () => {
     const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -23,6 +24,7 @@ const DashboardLayout = () => {
 
     return (
         <div className="flex h-screen overflow-hidden">
+            <ScrollToTop />
             {/* Sidebar */}
             {renderSidebar()}
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import Container from '../../../components/layout/Container';
 import PageHeader from '../../../components/ui/PageHeader';
 import MarketplaceCard from './components/MarketplaceCard';
@@ -10,7 +10,7 @@ export const sampleItems = [
   { id: 2, title: 'Pro Football Boots for Women', description: 'Comfortable and durable football boots designed for women. Brand new condition.', price: 120, condition: 'New', image: '/images/marketplace/image_3.jpg' },
   { id: 3, title: 'Lightweight Tennis Racket', description: 'Easy-grip, lightweight racket perfect for beginners to intermediate players. Swap option open.', price: 200, condition: 'New', image: '/images/marketplace/image_4.jpg' },
   { id: 4, title: 'Rugby Training Gear for Women', description: 'Reliable training gear suitable for women athletes. Used, strong and long-lasting.', price: 20, condition: 'Used', image: '/images/marketplace/image_5.png' },
-  { id: 5, title: "Women's Cricket Kit – Used", description: 'Complete cricket kit for women players. Good condition, ideal for practice sessions.', price: 20, condition: 'Used', image: '/images/marketplace/image_1.jpg' },
+  { id: 5, title: "Women's Cricket Kit â€“ Used", description: 'Complete cricket kit for women players. Good condition, ideal for practice sessions.', price: 20, condition: 'Used', image: '/images/marketplace/image_1.jpg' },
   { id: 6, title: "Elite Women's Football Studs", description: 'High-performance studs with strong grip and comfort. Lightly used.', price: 20, condition: 'Used', image: '/images/marketplace/image_5.png' },
   { id: 7, title: "Elite Women's Football Studs", description: 'High-performance studs with strong grip and comfort. Lightly used.', price: 20, condition: 'Used', image: '/images/marketplace/image_3.jpg' },
   { id: 8, title: "Elite Women's Football Studs", description: 'High-performance studs with strong grip and comfort. Lightly used.', price: 20, condition: 'Used', image: '/images/marketplace/image_4.jpg' },
@@ -71,12 +71,12 @@ const MarketPlace = () => {
           <div className="flex flex-col items-center justify-center py-16 px-4">
             <div className="text-center">
               <h3 className="text-xl font-semibold text-[#282828] mb-2">No Items Found</h3>
-              <p className="text-[#585858] text-sm mb-4">
+              <p className="text-[#585858] text-base mb-4">
                 We couldn't find any items matching your search.
               </p>
               <button
                 onClick={() => { setSearchQuery(''); setPage(1); }}
-                className="text-btn-primary hover:underline font-medium text-sm"
+                className="text-btn-primary hover:underline font-medium text-base"
               >
                 Clear search
               </button>

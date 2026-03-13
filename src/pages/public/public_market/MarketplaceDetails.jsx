@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+﻿import React, { useState, useRef, useEffect } from 'react';
 import { useLocation, useParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft, ChevronLeft, ChevronRight } from 'lucide-react';
 import Container from '../../../components/layout/Container';
@@ -128,7 +128,7 @@ const MarketplaceDetails = () => {
 
             <div className="lg:col-span-5">
               <h1 className="text-2xl font-bold text-[#1D1D1D]">{item.title || 'No information available'}</h1>
-              <p className="mt-4 text-sm text-[#323232]">{item.description || 'No information available'}</p>
+              <p className="mt-4 text-base text-[#323232]">{item.description || 'No information available'}</p>
 
               <div className="mt-6 border-t pt-6">
                 <div className="text-2xl font-bold text-[#1D1D1D]">${(item.price || 0).toFixed(2)}</div>
@@ -151,8 +151,8 @@ const MarketplaceDetails = () => {
                 <div className="mt-6 flex items-center gap-3">
                   <div className="h-9 w-9 rounded-full bg-gray-200" />
                   <div>
-                    <p className="text-sm font-medium text-[#1D1D1D]">{item.seller}</p>
-                    <p className="text-sm text-[#323232]">Player Kit seller</p>
+                    <p className="text-base font-medium text-[#1D1D1D]">{item.seller}</p>
+                    <p className="text-base text-[#323232]">Player Kit seller</p>
                   </div>
                 </div>
               </div>

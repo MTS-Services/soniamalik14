@@ -24,14 +24,13 @@
   --text-6xl: 60px;
   --text-7xl: 72px;
 
-
   /* ------ */
   /* COLORS */
   /* ------ */
   /* Core Colors */
   --color-primary: #f6bc09;
-  
-  --color-secondary: #E7F1F1;
+
+  --color-secondary: #e7f1f1;
   --color-accent: rgb(255, 255, 255);
   --color-background: #2b0731;
   --color-border-color: rgb(255, 255, 255);
@@ -43,26 +42,25 @@
   --text-color-title: #0d263c;
   --text-color-sidebarLink: #707070;
   --text-color-subtitle: #101010;
-  --text-color-btn: #1C1C1C;
-  --text-color-cardTitle: #06322E;
-  --text-color-description: #3B3B3B;
-  --text-color-tableText: #674E43;
+  --text-color-btn: #1c1c1c;
+  --text-color-cardTitle: #06322e;
+  --text-color-description: #3b3b3b;
+  --text-color-tableText: #674e43;
   --text-color-tableTh: #191919;
 
   --color-secondary-text: #656565;
   --text-color-navigation: #495572;
 
-
   /* dashboard all colors */
-  --color-dashboardTitle:#161616;
-  --color-dashboardProgress:#394C6B;
-  --color-dashboardPending:#E99F00;
+  --color-dashboardTitle: #161616;
+  --color-dashboardProgress: #394c6b;
+  --color-dashboardPending: #e99f00;
 
   /* Component Colors */
   --color-nav-bg: #fafdfd;
-  --color-btn-primary: #0F766E;
-  --color-btn-secondary: #15A398;
-  --color-loginInput: #B5D5D2;
+  --color-btn-primary: #0f766e;
+  --color-btn-secondary: #15a398;
+  --color-loginInput: #b5d5d2;
   --color-card: rgb(25, 25, 25);
   --color-cta: rgb(0, 122, 255);
   --color-cta-active: rgb(0, 102, 215);
@@ -93,9 +91,9 @@
     font-family: var(--font-primary);
   }
 
-.scroll-touch {
-  -webkit-overflow-scrolling: touch;
-}
+  .scroll-touch {
+    -webkit-overflow-scrolling: touch;
+  }
   /* ----- */
   /* LINKS */
   /* ----- */
@@ -128,15 +126,14 @@
     cursor: pointer;
   }
   body {
-    background: #F8FAFC;
+    background: #f8fafc;
     font-family: var(--font-primary);
+    overflow-x: hidden;
   }
 
   html {
     scroll-behavior: smooth;
   }
-
-
 
   /* ===== Custom Scrollbar ===== */
 
@@ -190,16 +187,15 @@
 /* COMPONENTS           */
 /* ==================== */
 @layer components {
-
   .herosubtitle {
-    @apply text-white/90 text-base lg:text-[20px] text-center;
+    @apply text-center text-base text-white/90 lg:text-[20px];
   }
-  .sectiontitle{
-    @apply font-semibold lg:text-[40px] text-[28px] leading-tight lg:leading-relaxed font-secondary text-[#313131];
+  .sectiontitle {
+    @apply font-secondary text-[28px] leading-tight font-semibold text-[#313131] lg:text-[40px] lg:leading-relaxed;
   }
-  
+
   .subtitle {
-    @apply font-semibold text-[22px] lg:text-[28px] leading-tight lg:leading-relaxed;
+    @apply text-[22px] leading-tight font-semibold lg:text-[28px] lg:leading-relaxed;
     color: var(--text-color-subtitle);
   }
   .description {
@@ -209,7 +205,7 @@
 
   /* cta section */
   .cta-title {
-    @apply font-semibold lg:text-[42px] lg:text-left text-center leading-tight md:text-3xl text-xl font-secondary text-white;
+    @apply font-secondary text-center text-xl leading-tight font-semibold text-white md:text-3xl lg:text-left lg:text-[42px];
   }
 
   /* BUTTONS */
@@ -233,14 +229,14 @@
   }
 
   /* adminDashboard */
-  .dashboardPy{
-    @apply p-4 lg:py-4 lg:px-8;
+  .dashboardPy {
+    @apply p-4 lg:px-8 lg:py-4;
   }
-  .dashboardSpaceY{
+  .dashboardSpaceY {
     @apply space-y-5 lg:space-y-6;
   }
-  .dashboardStatsGrid{
-    @apply grid grid-cols-1 gap-3 lg:gap-6 md:grid-cols-2 lg:grid-cols-4;
+  .dashboardStatsGrid {
+    @apply grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-4 lg:gap-6;
   }
 }
 

@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import clsx from 'clsx';
 
 const Card = ({ 
@@ -19,7 +19,7 @@ const Card = ({
   };
 
   const hoverStyles = hover 
-      ? 'hover:shadow-xl hover:border-btn-primary transition-all duration-300' 
+      ? 'hover:shadow-xl  transition-all duration-300' 
     : '';
 
   return (

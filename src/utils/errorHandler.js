@@ -1,4 +1,4 @@
-export const handleApiError = (error) => {
+﻿export const handleApiError = (error) => {
   console.log(error?.message || 'no found message!');
   if (error?.response) {
     return error.message || `Server error: ${error.response.status}`;

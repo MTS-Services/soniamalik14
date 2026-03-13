@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { ArrowLeft } from 'lucide-react';
 
 const ProductDetails = ({ product, onBack }) => {
@@ -7,44 +7,44 @@ const ProductDetails = ({ product, onBack }) => {
   }
 
   return (
-    <div className="flex-1 overflow-auto bg-gray-50 dashboardPy dashboardSpaceY">
+    <div className=" dashboardPy dashboardSpaceY">
       <div className="">
         {/* Back Button */}
         <button
           onClick={onBack}
-          className="flex items-center gap-2 text-[#0F766E]  transition-colors py-2 pb-2 px-4"
+          className="flex items-center gap-2 text-[#0F766E]  transition-colors py-2 pb-2 "
         >
           <ArrowLeft className="w-6 h-6 " />
-          <span className="text-sm font-medium">Back</span>
+          <span className="text-base font-medium">Back</span>
         </button>
 
         <div className=" rounded-lg overflow-hidden">
           {/* Images Grid */}
-        <div className="flex flex-wrap gap-4 px-4 py-2">
-     {product.images.map((image, index) => (
-    <div
-      key={index}
-      className="w-full sm:w-[48%] md:w-[32%] lg:w-[24%] aspect-video rounded-lg overflow-hidden bg-gray-200"
-    >
-      <img
-        src={image}
-        alt={`Product ${index + 1}`}
-        className="w-full h-full object-cover"
-      />
-    </div>
-  ))}
-</div>
+          <div className="flex flex-wrap gap-4  py-2">
+            {product.images.map((image, index) => (
+              <div
+                key={index}
+                className="w-full sm:w-[48%] md:w-[32%] lg:w-[24%] aspect-video rounded-lg overflow-hidden bg-gray-200"
+              >
+                <img
+                  src={image}
+                  alt={`Product ${index + 1}`}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            ))}
+          </div>
 
 
           {/* Content */}
-          <div className=" pb-6 px-4">
+          <div className=" pb-6 ">
             {/* Tags */}
             <div className="flex gap-2 my-3">
               <span className="inline-block px-3 py-2 bg-[#E7F1F1] text-[#0F766E] text-base  ">
                 {product.condition}
               </span>
               <span className="inline-block px-3 py-2 bg-[#E7F1F1] text-[#0F766E] text-base  ">
-               {product.conditionsUsed}
+                {product.conditionsUsed}
               </span>
             </div>
 
@@ -59,7 +59,7 @@ const ProductDetails = ({ product, onBack }) => {
             </p>
 
             {/* Details */}
-            <p className="text-gray-600 text-sm leading-relaxed mb-6">
+            <p className="text-gray-600 text-base leading-relaxed mb-6">
               {product.details}
             </p>
 

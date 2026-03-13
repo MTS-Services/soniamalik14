@@ -1,4 +1,4 @@
-import React from 'react'
+﻿import React from 'react'
 import { FiTag } from 'react-icons/fi'
 
 export default function ProductCard({ item, onEdit, onDelete }) {
@@ -21,15 +21,15 @@ export default function ProductCard({ item, onEdit, onDelete }) {
 
       <div className="px-4 pb-4 pt-1">
         <h3 className="text-lg font-semibold mb-2" style={{ color: '#161616' }}>{item.name}</h3>
-        <p className="text-sm mb-4 leading-relaxed" style={{ color: '#5B5B5B' }}>{item.description}</p>
+        <p className="text-base mb-4 leading-relaxed" style={{ color: '#5B5B5B' }}>{item.description}</p>
 
         <div className="mb-4">
           <div className="text-2xl font-extrabold" style={{ color: '#161616' }}>{item.price}</div>
         </div>
 
         <div className="grid grid-cols-2 gap-3">
-          <button onClick={() => onEdit && onEdit(item)} className="w-full py-2 rounded-md text-white text-sm" style={{ background: '#0F766E' }}>Edit</button>
-          <button onClick={() => onDelete && onDelete(item)} className="w-full py-2 rounded-md text-white text-sm" style={{ background: '#10B394' }}>Delete</button>
+          <button onClick={() => onEdit && onEdit(item)} className="w-full py-2 rounded-md text-white text-base" style={{ background: '#0F766E' }}>Edit</button>
+          <button onClick={() => onDelete && onDelete(item)} className="w-full py-2 rounded-md text-white text-base" style={{ background: '#10B394' }}>Delete</button>
         </div>
       </div>
     </div>

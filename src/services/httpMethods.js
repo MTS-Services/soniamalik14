@@ -1,4 +1,4 @@
-import axiosInstance from './axiosInstance';
+﻿import axiosInstance from './axiosInstance';
 
 // Basic HTTP method wrappers - no error handling or response processing
 // Response processing and error handling delegated to apiExecutor
@@ -12,6 +12,10 @@ export const POST = async (url, data, signal) => {
 
 export const PUT = async (url, data, signal) => {
   return axiosInstance.put(url, data, { signal });
+};
+
+export const PATCH = async (url, data, signal) => {
+  return axiosInstance.patch(url, data, { signal });
 };
 
 export const DELETE = async (url, signal) => {

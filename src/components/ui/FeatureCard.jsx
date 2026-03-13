@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 
 const FeatureCard = ({ 
   icon: Icon, 
@@ -19,7 +19,7 @@ const FeatureCard = ({
       <h3 className="subtitle text-cardTitle font-semibold text-xl md:text-2xl mb-3">{title}</h3>
       
       {/* Description */}
-      <p className="description md:w-xs">{description}</p>
+      <p className="description ">{description}</p>
     </div>
   );
 };

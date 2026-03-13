@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft, MapPin, Calendar, Phone, Mail } from 'lucide-react';
 import Container from '../../../components/layout/Container';
@@ -29,7 +29,7 @@ const EventDetails = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    alert('Application submitted — demo only');
+    alert('Application submitted â€” demo only');
   };
 
   return (
@@ -57,10 +57,10 @@ const EventDetails = () => {
                 <img src={'/images/detaisPage/01f66c1402399f2a42cf2599119d5d6e1549c7c9.jpg'} alt="thumb1" className="h-full w-full object-cover" />
               </div>
               <div className="h-52 overflow-hidden rounded-md sm:h-52 md:h-full">
-                <img src={'/images/detaisPage/01f66c1402399f2a42cf2599119d5d6e1549c7c9.jpg'}  alt="thumb2" className="h-full w-full object-cover" />
+                <img src={'/images/detaisPage/01f66c1402399f2a42cf2599119d5d6e1549c7c9.jpg'} alt="thumb2" className="h-full w-full object-cover" />
               </div>
               <div className="h-52 overflow-hidden rounded-md sm:h-52 md:h-full">
-                <img src={'/images/detaisPage/01f66c1402399f2a42cf2599119d5d6e1549c7c9.jpg'}  alt="thumb3" className="h-full w-full object-cover" />
+                <img src={'/images/detaisPage/01f66c1402399f2a42cf2599119d5d6e1549c7c9.jpg'} alt="thumb3" className="h-full w-full object-cover" />
               </div>
             </div>
           </div>
@@ -73,10 +73,10 @@ const EventDetails = () => {
               <div className="mt-4 flex items-center gap-6 text-[#323232]">
                 <div className="flex items-center gap-2">
                   <Calendar className="h-4 w-4" />
-                  <span className="text-sm">{event.date || 'No information available'}</span>
+                  <span className="text-base">{event.date || 'No information available'}</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="text-sm">{event.time || 'No information available'}</span>
+                  <span className="text-base">{event.time || 'No information available'}</span>
                 </div>
               </div>
 
@@ -88,7 +88,7 @@ const EventDetails = () => {
 
                 <div>
                   <p className="text-lg font-medium text-[#1D1D1D]">Skill Level:</p>
-                  <p className="mt-1 text-sm text-[#323232]">{event.skillLevel || 'No information available'}</p>
+                  <p className="mt-1 text-base text-[#323232]">{event.skillLevel || 'No information available'}</p>
                 </div>
 
                 <div>
@@ -106,31 +106,31 @@ const EventDetails = () => {
                 <h3 className="mb-4 text-lg font-bold text-[#1D1D1D]">Apply Information</h3>
                 <form onSubmit={handleSubmit} className="space-y-4">
                   <div>
-                    <label className="mb-2 block text-sm font-medium text-[#1D1D1D]">Full Name</label>
+                    <label className="mb-2 block text-base font-medium text-[#1D1D1D]">Full Name</label>
                     <input
                       type="text"
                       placeholder="Player"
                       required
-                      className="w-full rounded-md border-none bg-[#B5D5D2] px-4 py-3 text-sm text-[#1D1D1D] placeholder-[#5E5E5E] focus:outline-none"
+                      className="w-full rounded-md border-none bg-[#B5D5D2] px-4 py-3 text-base text-[#1D1D1D] placeholder-[#5E5E5E] focus:outline-none"
                     />
                   </div>
 
                   <div>
-                    <label className="mb-2 block text-sm font-medium text-[#1D1D1D]">Email</label>
+                    <label className="mb-2 block text-base font-medium text-[#1D1D1D]">Email</label>
                     <input
                       type="email"
                       placeholder="enter your email"
                       required
-                      className="w-full rounded-md border-none bg-[#B5D5D2] px-4 py-3 text-sm text-[#1D1D1D] placeholder-[#5E5E5E] focus:outline-none"
+                      className="w-full rounded-md border-none bg-[#B5D5D2] px-4 py-3 text-base text-[#1D1D1D] placeholder-[#5E5E5E] focus:outline-none"
                     />
                   </div>
 
                   <div>
-                    <label className="mb-2 block text-sm font-medium text-[#1D1D1D]">Phone Number</label>
+                    <label className="mb-2 block text-base font-medium text-[#1D1D1D]">Phone Number</label>
                     <input
                       type="tel"
                       placeholder="enter your phone number"
-                      className="w-full rounded-md border-none bg-[#B5D5D2] px-4 py-3 text-sm text-[#1D1D1D] placeholder-[#5E5E5E] focus:outline-none"
+                      className="w-full rounded-md border-none bg-[#B5D5D2] px-4 py-3 text-base text-[#1D1D1D] placeholder-[#5E5E5E] focus:outline-none"
                     />
                   </div>
 
@@ -144,21 +144,26 @@ const EventDetails = () => {
               </div>
 
             </div>
-
+            {/**map section */}
             <aside className="md:col-span-2">
-              <div className="rounded-md border border-[#DDEDEB] bg-white p-6 lg:sticky lg:top-40">
-                <div>
-                  <p className="text-sm font-medium text-[#1D1D1D]">Venue</p>
-                  <p className="mt-2 flex items-start gap-2 text-sm text-[#323232]">
+              <div className="rounded-md border border-[#91C0BC] bg-white p-6 lg:sticky lg:top-40">
+
+                <div className='mb-4'>
+                  <p className="text-base font-medium text-[#1D1D1D]">Venue</p>
+                  <p className="mt-2 flex items-start gap-2 text-base text-[#323232]">
                     <MapPin className="mt-1 h-4 w-4 text-[#323232]" />
-                    {event.venue ? <span>{event.venue} — </span> : null}
+                    {event.venue ? <span>{event.venue} â€” </span> : null}
                     <span>{event.locationText}</span>
                   </p>
                 </div>
+                {/* Map image to visually represent location (placeholder image) */}
+                <div className="mb-4 overflow-hidden rounded-md">
+                  <img src={'https://i.ibb.co.com/fY1frBX7/Rectangle-4319.png'} alt="map" className="w-full h-66 object-cover" />
+                </div>
 
                 <div className="mt-4">
-                  <p className="text-sm font-medium text-[#1D1D1D]">Contact Information</p>
-                  <div className="mt-2 space-y-1 text-sm text-[#323232]">
+                  <p className="text-base font-medium text-[#1D1D1D]">Contact Information</p>
+                  <div className="mt-2 space-y-1 text-base text-[#323232]">
                     <div className="flex items-center gap-2">
                       <Phone className="h-4 w-4 text-[#323232]" />
                       <span>{event.contactPhone || 'No information available'}</span>
@@ -179,7 +184,7 @@ const EventDetails = () => {
                         className="h-full w-full object-cover"
                       />
                     ) : (
-                      <span className="text-sm text-[#323232]">
+                      <span className="text-base text-[#323232]">
                         {(event.organizedBy || 'Org')
                           .split(' ')
                           .map((n) => n[0])
@@ -189,8 +194,8 @@ const EventDetails = () => {
                     )}
                   </div>
                   <div>
-                    <p className="text-sm font-medium text-[#1D1D1D]">Organized By</p>
-                    <p className="mt-1 text-sm text-[#323232]">
+                    <p className="text-base font-medium text-[#1D1D1D]">Organized By</p>
+                    <p className="mt-1 text-base text-[#323232]">
                       {event.organizedBy || 'No information available'}
                     </p>
                   </div>

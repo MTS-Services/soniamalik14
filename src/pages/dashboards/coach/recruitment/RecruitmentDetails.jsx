@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+﻿import React, { useEffect, useState } from 'react';
 import { Link, useLocation, useParams } from 'react-router-dom';
 import { ArrowLeft, MapPin, Calendar, Clock, Mail, Phone } from 'lucide-react';
 import ApplicationTable from './components/ApplicationTable';
@@ -50,7 +50,7 @@ const RecruitmentDetails = () => {
         <div className=" dashboardPy dashboardSpaceY  text-gray-800">
             {/* Back Button */}
             <div className="mb-4">
-                <Link to={backTarget} className="inline-flex items-center text-sm font-medium text-teal-600 hover:text-teal-700">
+                <Link to={backTarget} className="inline-flex items-center text-base font-medium text-teal-600 hover:text-teal-700">
                     <ArrowLeft className="w-4 h-4 mr-1" /> Back
                 </Link>
             </div>
@@ -74,24 +74,43 @@ const RecruitmentDetails = () => {
                         {item.title}
                     </h1>
 
-                    <div className="text-sm text-gray-600 leading-relaxed whitespace-pre-line mb-8">
+                
+                    <div className="mb-4">
+                        {/* Skill practice / short descriptor */}
+                        <p className="text-base text-gray-600 mb-2">
+                            {item.skillPractice || ''}
+                            {item.skillPractice && item.skillLevel ? ' Â· ' : ''}
+                            {item.skillLevel || ''}
+                        </p>
+
+                        {/* Location with pin */}
+                        <div className="flex items-center text-base text-gray-700 mb-4">
+                            <MapPin className="w-4 h-4 text-gray-500 mr-2" />
+                            <span className="">{item.location || item.venue || ''}</span>
+                        </div>
+
+                        {/* Sessions Day & Training Time as labeled rows */}
+                        <div className="space-y-2 text-base text-gray-700">
+                            <div className="flex items-start">
+                                <div className="w-36 font-bold text-gray-900">Sessions Day:</div>
+                                <div className="flex-1">{item.sessionsDay || item.date || ''}</div>
+                            </div>
+                            <div className="flex items-start">
+                                <div className="w-36 font-bold text-gray-900">Training Time:</div>
+                                <div className="flex-1">{item.trainingTime || item.time || ''}</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Session Overview */}
+                    <h2 className="text-lg font-semibold text-gray-900 mb-2">Session Overview</h2>
+                    <div className="text-base text-gray-600 leading-relaxed whitespace-pre-line mb-8">
                         {item.description}
                     </div>
 
-                    {/* Date & Time Section */}
-                    <div className="flex flex-col gap-3 mb-6">
-                        <div className="flex items-center gap-3 text-sm text-gray-700">
-                            <Calendar className="w-5 h-5 text-gray-500" />
-                            <span className="font-medium">{item.date}</span>
-                        </div>
-                        <div className="flex items-center gap-3 text-sm text-gray-700">
-                            <Clock className="w-5 h-5 text-gray-500" />
-                            <span className="font-medium">{item.time}</span>
-                        </div>
-                    </div>
 
                     {/* Event Attributes (Age, Sport, Skill, Deadline) */}
-                    <div className="space-y-4 text-sm text-gray-800 mb-8">
+                    <div className="space-y-4 text-base text-gray-800 mb-8">
                         <div>
                             <span className="font-bold block text-gray-900">Skill Level:</span>
                             <span>{item.skillLevel || 'N/A'}</span>
@@ -99,6 +118,14 @@ const RecruitmentDetails = () => {
                         <div>
                             <span className="font-bold block text-gray-900">Age Group:</span>
                             <span>{item.ageGroup || 'N/A'}</span>
+                        </div>
+                        <div>
+                            <span className="font-bold block text-gray-900">Experience Required:</span>
+                            <span>{item.experienceRequired || 'None'}</span>
+                        </div>
+                        <div>
+                            <span className="font-bold block text-gray-900">Equipment:</span>
+                            <span>{item.equipment || 'N/A'}</span>
                         </div>
                         <div>
                             <span className="font-bold block text-gray-900">Sport Type:</span>
@@ -136,16 +163,23 @@ const RecruitmentDetails = () => {
                             <span className="font-bold block text-gray-900">Posted By:</span>
                             <span>{item.postedBy || 'N/A'}</span>
                         </div>
-                        <div>
-                            <span className="font-bold block text-gray-900">Contact Email:</span>
-                            <span>{item.contactEmail || 'N/A'}</span>
+                        <div className="flex items-center gap-3">
+
+                            <div>
+                                <span className="font-bold block text-gray-900">Contact Email:</span>
+                                <span>{item.contactEmail || 'N/A'}</span>
+                            </div>
                         </div>
-                        <div>
-                            <span className="font-bold block text-gray-900">Phone:</span>
-                            <span>{item.phone || 'N/A'}</span>
+                        <div className="flex items-center gap-3">
+                            <div>
+                                <span className="font-bold block text-gray-900">Phone:</span>
+                                <span>{item.phone || 'N/A'}</span>
+                            </div>
                         </div>
                     </div>
-
+                    <div>
+                        <h1 className="text-2xl font-bold text-gray-900 mb-3">Applicant Information</h1>
+                    </div>
                     {/* Applicants Table */}
                     <div className="mb-8">
                         <ApplicationTable applicants={item.applicants || []} perPage={9} />

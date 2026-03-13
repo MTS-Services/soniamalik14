@@ -1,24 +1,121 @@
-import React from 'react';
+﻿import React, { useEffect, useState } from 'react';
 import { useLocation, useParams, useNavigate } from 'react-router-dom';
 import Container from '../../../components/layout/Container';
 import { FaArrowLeft } from 'react-icons/fa';
+import { GET } from '../../../services/httpMethods';
+import { ENDPOINT } from '../../../services/httpEndpoint';
+
+const normalizeArticle = (a) => {
+  const getContentString = (val) => {
+    if (!val && val !== 0) return '';
+    if (typeof val === 'string') return val;
+    if (val?.rendered && typeof val.rendered === 'string') return val.rendered;
+    if (val?.html && typeof val.html === 'string') return val.html;
+    try { return JSON.stringify(val); } catch { return ''; }
+  };
+
+  let contentHtml = getContentString(a.content) || getContentString(a.body) || getContentString(a.description) || getContentString(a.excerpt) || '';
+  const lower = contentHtml.toLowerCase();
+  if (lower.includes('constructvisualizerpayload') || lower.startsWith('function ')) {
+    contentHtml = getContentString(a.excerpt) || getContentString(a.description) || '';
+  }
+
+  return {
+    id: a.id,
+    title: a.title || a.name || '',
+    image: a.image ?? a.img ?? '',
+    date: a.publishedAt ? new Date(a.publishedAt).toLocaleDateString() : a.createdAt ? new Date(a.createdAt).toLocaleDateString() : a.date ?? '',
+    excerpt: a.excerpt ?? a.desc ?? a.summary ?? '',
+    content: contentHtml,
+    views: a.views ?? 0,
+    authorId: a.authorId ?? a.author ?? null,
+    raw: a,
+  };
+};
 
 const NewsDetails = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const params = useParams();
+  const { id } = params;
 
-  const article = location.state?.article || {
-    id: params.id || '1',
-    title: "Women's Football League Season 2025 Kicks Off",
-    date: 'Dec 1, 2025',
-    author: 'Emma Rose',
-    readingTime: '2 minute read',
-    image: '/images/login/image_3.jpg',
-    content: `The Women's Football League (WFL) Season 2025 has officially kicked off, ushering in a new wave of excitement, competition, and opportunity for women's football across the country. Featuring the nation's top clubs alongside emerging young talents, this season is widely expected to be one of the most competitive and engaging editions so far.
+  const [article, setArticle] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-The opening matches have already shown strong intensity, skillful gameplay, and a renewed hunger among teams to make their mark. Fans can expect thrilling encounters, standout performers, and memorable moments throughout the season.`,
-  };
+  useEffect(() => {
+    // Priority 1: use normalized state if available
+    if (location.state?.article) {
+      setArticle(normalizeArticle(location.state.article));
+      return;
+    }
+
+    // Priority 2: fetch from API and normalize
+    const fetchNewsById = async () => {
+      if (!id) return;
+      setLoading(true);
+      setError(null);
+      try {
+        const response = await GET(ENDPOINT.NEWS.DETAIL(id));
+        console.debug('[NewsDetails] GET', ENDPOINT.NEWS.DETAIL(id), response);
+
+        const payload = response?.data ?? response;
+        let newsData = null;
+
+        if (payload?.data && typeof payload.data === 'object' && !Array.isArray(payload.data)) {
+          newsData = payload.data;
+        } else if (Array.isArray(payload.data)) {
+          newsData = payload.data.find((x) => String(x.id) === String(id)) || payload.data[0];
+        } else if (Array.isArray(payload.pagination?.limit)) {
+          newsData = payload.pagination.limit.find((x) => String(x.id) === String(id)) || payload.pagination.limit[0];
+        } else if (payload?.result) {
+          newsData = payload.result;
+        } else {
+          newsData = payload;
+        }
+
+        setArticle(normalizeArticle(newsData));
+      } catch (err) {
+        const message = err?.response?.data?.message || err?.message || 'Failed to fetch news';
+        console.error('[NewsDetails] GET error', err);
+        setError(message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchNewsById();
+  }, [location.state, id]);
+
+  if (loading) {
+    return (
+      <section className="min-h-screen bg-[#F8FAFC] pb-8">
+        <Container>
+          <div className="text-center py-20 text-gray-600">Loading article...</div>
+        </Container>
+      </section>
+    );
+  }
+
+  if (error) {
+    return (
+      <section className="min-h-screen bg-[#F8FAFC] pb-8">
+        <Container>
+          <div className="text-center py-20 text-red-600">{error}</div>
+        </Container>
+      </section>
+    );
+  }
+
+  if (!article) {
+    return (
+      <section className="min-h-screen bg-[#F8FAFC] pb-8">
+        <Container>
+          <div className="text-center py-20 text-gray-600">Article not found</div>
+        </Container>
+      </section>
+    );
+  }
 
   return (
     <section className="min-h-screen bg-[#F8FAFC] pb-8">
@@ -31,17 +128,17 @@ The opening matches have already shown strong intensity, skillful gameplay, and 
               <div className="absolute top-6 left-6 z-20">
                 <button onClick={() => navigate(-1)} className="inline-flex items-center gap-2 bg-black/50 text-white px-3 py-1.5 rounded-md hover:bg-black/60 transition">
                   <FaArrowLeft />
-                  <span className="text-sm">Back</span>
+                  <span className="text-base">Back</span>
                 </button>
               </div>
 
               <div className="h-full flex flex-col justify-center items-start">
                 <h1 className="text-white text-3xl md:text-5xl font-bold leading-tight drop-shadow-lg max-w-3xl">{article.title}</h1>
 
-                <div className="mt-4 text-sm text-white/80 flex items-center gap-4">
-                  <span>by {article.author}</span>
-                  <span>—</span>
-                  <span>{article.readingTime}</span>
+                <div className="mt-4 text-base text-white/80 flex items-center gap-4">
+                  <span>{article.date}</span>
+                  <span>â€”</span>
+                  <span>{article.views ?? 0} views</span>
                 </div>
               </div>
             </div>
@@ -49,21 +146,7 @@ The opening matches have already shown strong intensity, skillful gameplay, and 
 
           <article className="mt-8">
             <div className="prose prose-sm md:prose-lg max-w-none text-[#333333]">
-              <p>{article.content}</p>
-
-              <div className="mt-10">
-                <blockquote className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-[#111111] leading-tight mb-8">
-                  WFL 2025 is more than a tournament — it is a movement shaping the future of women's football.
-                </blockquote>
-
-                <ul className="list-disc ml-6 space-y-6 text-[#333]">
-                  <li>Teams have entered the league after months of structured preparation, focusing heavily on tactical discipline, physical conditioning, and squad depth. Several clubs have strengthened their lineups with promising youth players and strategic signings, reflecting the league's growing emphasis on long-term development, sustainability, and performance consistency.</li>
-                  <li>Beyond the action on the pitch, the 2025 season highlights continued progress in women's sports. Improved infrastructure, increased media coverage, and stronger fan engagement are helping elevate the league's professional standards. The Women's Football League remains a vital platform for nurturing talent, empowering female athletes, and inspiring the next generation of footballers.</li>
-                  <li>As the season unfolds, fans can expect intense rivalries, high-quality performances, and memorable moments that will further elevate the profile of women's football nationwide and strengthen its impact on the sporting landscape.</li>
-                </ul>
-
-                <p className="mt-8">As the season unfolds, more detailed features and player interviews will be published here. Stay tuned for regular updates and insights.</p>
-              </div>
+              <div dangerouslySetInnerHTML={{ __html: article.content || article.excerpt }} />
             </div>
           </article>
         </div>

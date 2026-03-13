@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import Container from '../../../components/layout/Container';
 import PageHeader from '../../../components/ui/PageHeader';
 import DiscoverCard from './components/DiscoverCard';
@@ -70,12 +70,12 @@ const DiscoverView = () => {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
               <h3 className="text-xl font-semibold text-[#282828] mb-2">No Sports Found</h3>
-              <p className="text-[#363636] text-sm mb-4">
+              <p className="text-[#363636] text-base mb-4">
                 We couldn't find any {filter !== 'All' ? filter.toLowerCase() : 'sports'} matching your search.
               </p>
               <button 
                 onClick={() => setFilter('All')}
-                className="text-btn-primary hover:text-[#0d655d] font-medium text-sm"
+                className="text-btn-primary hover:text-[#0d655d] font-medium text-base"
               >
                 Clear filters
               </button>

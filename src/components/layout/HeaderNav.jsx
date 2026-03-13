@@ -1,3 +1,5 @@
+﻿
+
 import React from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { User, LogOut } from 'lucide-react';
@@ -19,8 +21,10 @@ const HeaderNav = ({ isMenuOpen, setIsMenuOpen }) => {
 
   const navigation = [
     { name: 'Home', href: '/' },
+
     { name: 'About', href: '/about' },
     { name: 'Discover', href: '/discover' },
+    // { name: 'Find Sport', href: '/find-sport' },
     { name: 'Community', href: '/community' },
     { name: 'Events', href: '/events' },
     { name: 'Marketplace', href: '/marketplace' },
@@ -30,6 +34,14 @@ const HeaderNav = ({ isMenuOpen, setIsMenuOpen }) => {
 
   const isActive = (path) => {
     if (path === '/') return location.pathname === '/';
+    // Treat checkout and order-confirmed as part of marketplace for active nav state
+    if (path === '/marketplace') {
+      return (
+        location.pathname.startsWith('/marketplace') ||
+        location.pathname === '/order-confirmed' ||
+        location.pathname === '/checkout'
+      );
+    }
     return location.pathname.startsWith(path);
   };
 
@@ -69,11 +81,10 @@ const HeaderNav = ({ isMenuOpen, setIsMenuOpen }) => {
               <Link
                 key={item.name}
                 to={item.href}
-                className={`text-sm font-normal transition-colors ${
-                  isActive(item.href)
-                    ? 'text-btn-primary border-btn-primary border-b-2 pb-1'
-                    : 'hover:text-btn-primary text-navigation'
-                }`}
+                className={`text-base xl:text-base font-normal transition-colors ${isActive(item.href)
+                  ? 'text-btn-primary border-btn-primary border-b-2 pb-1'
+                  : 'hover:text-btn-primary text-navigation'
+                  }`}
               >
                 {item.name}
               </Link>
@@ -85,39 +96,45 @@ const HeaderNav = ({ isMenuOpen, setIsMenuOpen }) => {
           <div className="flex items-center gap-3">
             {isAuthenticated && (
               <>
-                {/* <span className="text-sm text-gray-600">Welcome, {user?.name}</span> */}
-                <Button variant="secondary" size="xs" className="rounded-md text-xs py-1.5">
+                <Button
+                  variant="secondary"
+                  size="xs"
+                  className="rounded-md text-xs py-1.5"
+                  onClick={() => {
+                    navigate('/my-orders');
+                    setIsMenuOpen(false);
+                  }}
+                >
                   My Orders
                 </Button>
-                <button 
-                  onClick={handleLogout}
-                  className="p-2 hover:bg-gray-100 rounded-md"
-                  title="Logout"
+                <Button
+                  variant="secondary"
+                  size="xs"
+                  className="rounded-md text-xs py-1.5"
+                  onClick={handleProfileClick}
                 >
-                  <LogOut className="text-secondary-text h-5 w-5" />
-                </button>
-                <button onClick={handleProfileClick} className="p-2 hover:bg-gray-100 rounded-md">
-                  <CiUser className="text-secondary-text h-5 lg:w-7 lg:h-7 w-5" />
-                </button>
+                  Dashboard
+                </Button>
               </>
             )}
           </div>
         </div>
+      </Container>
 
-        {/* Mobile Navigation Menu */}
-        {isMenuOpen && (
-          <div className="border-t border-gray-200 pb-4 lg:hidden">
+      {/* Mobile Navigation Menu (full-width overlay) */}
+      {isMenuOpen && (
+        <div className="absolute left-0 right-0 top-full bg-white border-b border-gray-200 pb-4 shadow-xl lg:hidden z-[60]">
+          <Container>
             <nav className="flex flex-col space-y-1 pt-2">
               {navigation.map((item) => (
                 <Link
                   key={item.name}
                   to={item.href}
                   onClick={() => setIsMenuOpen(false)}
-                  className={`rounded-md px-3 py-2.5 text-sm lg:text-base font-medium transition-colors ${
-                    isActive(item.href)
-                      ? 'bg-secondary text-btn-primary'
-                      : 'text-navigation hover:bg-gray-100'
-                  }`}
+                  className={`rounded-md px-3 py-2.5 text-base lg:text-base font-medium transition-colors ${isActive(item.href)
+                    ? 'bg-secondary text-btn-primary'
+                    : 'text-navigation hover:bg-gray-100'
+                    }`}
                 >
                   {item.name}
                 </Link>
@@ -125,15 +142,28 @@ const HeaderNav = ({ isMenuOpen, setIsMenuOpen }) => {
               <div className="flex flex-col gap-2 pt-3">
                 {isAuthenticated ? (
                   <>
-                    {/* <div className="px-3 py-2 text-sm text-gray-600">
-                      Welcome, {user?.name}
-                    </div> */}
-                    <Button variant="secondary" className="w-full rounded-md">
+                    <Button
+                      variant="secondary"
+                      className="w-full rounded-md"
+                      onClick={() => {
+                        navigate('/my-orders');
+                        setIsMenuOpen(false);
+                      }}
+                    >
                       My Orders
                     </Button>
-                    <button 
+                    <Button
+                      variant="secondary"
+                      className="w-full rounded-md"
+                      onClick={() => {
+                        handleProfileClick();
+                      }}
+                    >
+                      Dashboard
+                    </Button>
+                    <button
                       onClick={handleLogout}
-                      className="text-red-600 flex items-center justify-center gap-2 rounded-md border border-red-300 px-4 py-2 text-sm font-medium hover:bg-red-50"
+                      className="text-red-600 flex items-center justify-center gap-2 rounded-md border border-red-300 px-4 py-2 text-base font-medium hover:bg-red-50"
                     >
                       <LogOut className="h-4 w-4" />
                       Logout
@@ -148,11 +178,15 @@ const HeaderNav = ({ isMenuOpen, setIsMenuOpen }) => {
                 )}
               </div>
             </nav>
-          </div>
-        )}
-      </Container>
+          </Container>
+        </div>
+      )}
     </div>
   );
 };
 
 export default HeaderNav;
+
+
+
+

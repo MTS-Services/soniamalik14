@@ -1,4 +1,4 @@
-import { MessageSquare } from 'lucide-react';
+﻿import { MessageSquare } from 'lucide-react';
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom';
 
@@ -41,7 +41,7 @@ const ProviderThread = () => {
                 <div className="flex items-start justify-between mb-8">
                     <div>
                         <h1 className="text-3xl font-bold text-gray-900 mb-2">Community Forum</h1>
-                        <p className="text-gray-600 text-sm">Connect, chat, and support each other.</p>
+                        <p className="text-gray-600 text-base">Connect, chat, and support each other.</p>
                     </div>
 
                 </div>
@@ -71,7 +71,7 @@ const ProviderThread = () => {
                             </p>
 
                             {/* Reply Count */}
-                            <div className="flex items-center text-gray-500 text-sm">
+                            <div className="flex items-center text-gray-500 text-base">
                                 <MessageSquare
                                  size={16} className="mr-2" />
                                 <span>{thread.replies} Reply</span>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import Button from '../../../../components/ui/Button';
 
 
@@ -20,7 +20,7 @@ const CoachFilter = ({ onFilter, active = 'All' }) => {
                         placeholder="Search By event name"
                         value={query}
                         onChange={(e) => setQuery(e.target.value)}
-                        className="w-full bg-transparent outline-none text-sm text-gray-700 placeholder-gray-400"
+                        className="w-full bg-transparent outline-none text-base text-gray-700 placeholder-gray-400"
                     />
                 </div>
 
@@ -29,7 +29,7 @@ const CoachFilter = ({ onFilter, active = 'All' }) => {
                     <select
                         value={status}
                         onChange={(e) => setStatus(e.target.value)}
-                        className="w-full bg-white rounded-lg px-4 py-2.5 shadow-sm border border-gray-200 outline-none text-sm text-gray-700"
+                        className="w-full bg-white rounded-lg px-4 py-2.5 shadow-sm border border-gray-200 outline-none text-base text-gray-700"
                     >
                         {types.map((t) => (
                             <option key={t} value={t}>

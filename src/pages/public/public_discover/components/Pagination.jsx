@@ -1,3 +1,3 @@
-import Pagination from '../../../../components/ui/Pagination';
+﻿import Pagination from '../../../../components/ui/Pagination';
 
 export default Pagination;

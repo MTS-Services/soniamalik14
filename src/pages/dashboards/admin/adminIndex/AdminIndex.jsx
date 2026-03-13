@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { DollarSign, Users, TrendingUp, FileText, ChevronDown } from 'lucide-react';
 import {
   AreaChart,
@@ -155,11 +155,11 @@ const AdminIndex = () => {
   const getStatusColor = (status) => {
     switch (status) {
       case 'Completed':
-        return 'bg-green-600 text-white';
+        return 'bg-[#0F766E] text-white';
       case 'Pending':
-        return 'bg-amber-500 text-white';
+        return 'bg-[#E99F00] text-white';
       case 'In Progress':
-        return 'bg-blue-600 text-white';
+        return 'bg-[#394C6B] text-white';
       default:
         return 'bg-gray-500 text-white';
     }
@@ -169,35 +169,33 @@ const AdminIndex = () => {
 
   const renderTableRow = (request) => (
     <>
-      <td className="px-4 py-4 text-sm text-gray-900">{request.name}</td>
-      <td className="px-4 py-4 text-sm text-gray-600">{request.phone}</td>
-      <td className="px-4 py-4 text-sm text-gray-600">{request.email}</td>
-      <td className="px-4 py-4 text-sm text-gray-900 font-medium">{request.account}</td>
+      <td className="px-4 py-4 text-base text-gray-900">{request.name}</td>
+      <td className="px-4 py-4 text-base text-gray-600">{request.phone}</td>
+      <td className="px-4 py-4 text-base text-gray-600">{request.email}</td>
+      <td className="px-4 py-4 text-base text-gray-900 font-medium">{request.account}</td>
       <td className="px-4 py-4">
         <div className="relative dropdown-container">
           <button
             onClick={() => toggleDropdown(request.id)}
-            className={`inline-flex items-center justify-between w-40 rounded-md px-4 py-2 text-sm font-medium transition-all hover:shadow-md ${getStatusColor(
+            className={`inline-flex items-center justify-between w-40 rounded-md px-4 py-2 text-base font-medium transition-all hover:shadow-md ${getStatusColor(
               request.status
             )}`}
           >
             {request.status}
-            <ChevronDown className={`h-4 w-4 transition-transform ${
-              openDropdown === request.id ? 'rotate-180' : ''
-            }`} />
+            <ChevronDown className={`h-4 w-4 transition-transform ${openDropdown === request.id ? 'rotate-180' : ''
+              }`} />
           </button>
-          
+
           {openDropdown === request.id && (
             <div className="absolute right-0 top-full mt-1 w-40 bg-white border border-gray-200 rounded-md shadow-lg z-50">
               {statusOptions.map((option) => (
                 <button
                   key={option}
                   onClick={() => handleStatusChange(request.id, option)}
-                  className={`w-full text-left px-4 py-2 text-sm hover:bg-gray-50 first:rounded-t-md last:rounded-b-md transition-colors ${
-                    request.status === option 
-                      ? 'bg-gray-100 font-medium text-gray-900' 
-                      : 'text-gray-700'
-                  }`}
+                  className={`w-full text-left px-4 py-2 text-base hover:bg-gray-50 first:rounded-t-md last:rounded-b-md transition-colors ${request.status === option
+                    ? 'bg-gray-100 font-medium text-gray-900'
+                    : 'text-gray-700'
+                    }`}
                 >
                   {option}
                 </button>
@@ -215,8 +213,8 @@ const AdminIndex = () => {
         <div className="flex justify-between items-start">
           <h3 className="font-semibold text-base text-gray-900">{request.name}</h3>
         </div>
-        
-        <div className="space-y-2 text-sm">
+
+        <div className="space-y-2 text-base">
           <div className="flex justify-between">
             <span className="text-gray-500">Phone:</span>
             <span className="font-medium text-gray-900">{request.phone}</span>
@@ -230,32 +228,30 @@ const AdminIndex = () => {
             <span className="font-medium text-gray-900">{request.account}</span>
           </div>
         </div>
-        
+
         <div className="pt-2">
           <div className="relative dropdown-container">
             <button
               onClick={() => toggleDropdown(request.id)}
-              className={`inline-flex items-center justify-between w-full rounded-md px-4 py-2 text-sm font-medium transition-all hover:shadow-md ${getStatusColor(
+              className={`inline-flex items-center justify-between w-full rounded-md px-4 py-2 text-base font-medium transition-all hover:shadow-md ${getStatusColor(
                 request.status
               )}`}
             >
               {request.status}
-              <ChevronDown className={`h-4 w-4 transition-transform ${
-                openDropdown === request.id ? 'rotate-180' : ''
-              }`} />
+              <ChevronDown className={`h-4 w-4 transition-transform ${openDropdown === request.id ? 'rotate-180' : ''
+                }`} />
             </button>
-            
+
             {openDropdown === request.id && (
               <div className="absolute right-0 top-full mt-1 w-full bg-white border border-gray-200 rounded-md shadow-lg z-50">
                 {statusOptions.map((option) => (
                   <button
                     key={option}
                     onClick={() => handleStatusChange(request.id, option)}
-                    className={`w-full text-left px-4 py-2 text-sm hover:bg-gray-50 first:rounded-t-md last:rounded-b-md transition-colors ${
-                      request.status === option 
-                        ? 'bg-gray-100 font-medium text-gray-900' 
-                        : 'text-gray-700'
-                    }`}
+                    className={`w-full text-left px-4 py-2 text-base hover:bg-gray-50 first:rounded-t-md last:rounded-b-md transition-colors ${request.status === option
+                      ? 'bg-gray-100 font-medium text-gray-900'
+                      : 'text-gray-700'
+                      }`}
                   >
                     {option}
                   </button>
@@ -276,7 +272,7 @@ const AdminIndex = () => {
         subtitle="Track loan progress here. You almost reach a goal"
         right={
           <div className="flex items-center gap-3">
-            <select className="rounded-lg border border-gray-300 px-3 py-1.5 text-sm text-gray-600">
+            <select className="rounded-lg border border-gray-300 px-3 py-1.5 text-base text-gray-600">
               <option>Last 30 days</option>
               <option>Last 7 days</option>
               <option>Year to date</option>
@@ -303,14 +299,14 @@ const AdminIndex = () => {
       {/* Revenue Overview and Event Request */}
       <div className="grid grid-cols-1 gap-3 lg:gap-6 lg:grid-cols-3">
         {/* Revenue Overview */}
-        <div className="rounded-lg bg-white p-6 shadow-sm lg:col-span-2">
-          <div className="mb-6 flex items-center justify-between">
+        <div className="rounded-lg bg-white p-6 shadow-sm lg:col-span-2 min-w-0">
+          <div className="mb-6 flex flex-col md:flex-row md:items-center md:justify-between gap-2">
             <h2 className="text-lg font-semibold text-gray-900">Revenue Overview</h2>
-            <select className="rounded-lg border border-gray-300 px-3 py-1.5 text-sm text-gray-600">
+            <select className="rounded-lg border border-gray-300 px-3 py-1.5 text-base text-gray-600 self-start md:self-auto">
               <option>Yearly Revenue Statistics</option>
             </select>
           </div>
-          <ResponsiveContainer width="100%" height={300}>
+          <ResponsiveContainer width="100%" height={260}>
             <AreaChart data={chartData}>
               <defs>
                 <linearGradient id="colorValue" x1="0" y1="0" x2="0" y2="1">
@@ -344,7 +340,7 @@ const AdminIndex = () => {
         </div>
 
         {/* Event Request */}
-        <div className="rounded-lg bg-white p-6 shadow-sm">
+        <div className="rounded-lg bg-white p-6 shadow-sm min-w-0">
           <h2 className="mb-6 text-lg font-semibold text-gray-900">Event Request</h2>
           <div className="mb-6 space-y-4">
             {eventRequests.map((request, index) => (
@@ -354,11 +350,11 @@ const AdminIndex = () => {
                     R
                   </div>
                   <div>
-                    <div className="text-sm font-medium text-gray-900">{request.club}</div>
+                    <div className="text-base font-medium text-gray-900">{request.club}</div>
                     <div className="text-xs text-gray-500">{request.date}</div>
                   </div>
                 </div>
-                <button className="text-btn-primary text-sm font-medium hover:opacity-80">
+                <button className="text-btn-primary text-base font-medium hover:opacity-80">
                   {request.status}
                 </button>
               </div>
@@ -371,10 +367,10 @@ const AdminIndex = () => {
       </div>
 
       {/* Payout Request Table */}
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200">
-        <div className="p-6">
-          <DashboardHeader title="Payout Request" subtitle="Manage payout requests and status updates" className="mb-6" />
-          
+      <div className="">
+        <div className="">
+          <DashboardHeader title="Payout Request" className="mb-6" />
+
           {/* Mobile Card View */}
           <div className="md:hidden space-y-3">
             {payoutRequests.map((request, index) => renderPayoutCard(request, index))}
@@ -392,9 +388,14 @@ const AdminIndex = () => {
           {/* Desktop Table View */}
           <div className='hidden md:block'>
             <div className="overflow-hidden border border-gray-200 rounded-lg">
-              <Table columns={tableColumns} data={payoutRequests} renderRow={renderTableRow} />
-            </div>
-            <div className="pt-4">
+              <Table
+                columns={tableColumns}
+                data={payoutRequests}
+                renderRow={renderTableRow}
+                headerClass="bg-[#E7F1F1]"
+                thClass="text-left text-xs text-[#0F766E] font-medium uppercase px-4 py-3"
+              />
+
               <TablePagination
                 currentPage={currentPage}
                 totalPages={1}

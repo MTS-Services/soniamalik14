@@ -1,119 +1,149 @@
-import React, { useEffect, useState } from 'react';
+﻿import React, { useEffect, useState } from 'react';
 import { useParams, useLocation, Link } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
 import { ArrowLeft } from 'lucide-react';
-import { fetchServices } from '../../../../features/service/serviceApi';
-import { selectAllServices } from '../../../../features/service/serviceSlice';
-import SessionsTable from './components/SessionsTable';
+import { GET } from '../../../../services/httpMethods';
+import { ENDPOINT } from '../../../../services/httpEndpoint';
+import BookingsTable from '../../shared/eventAnalytics/components/BookingsTable';
 
 const ServiceDetails = () => {
     const { id } = useParams();
     const { state } = useLocation();
 
-    const dispatch = useDispatch();
-    const servicesList = useSelector(selectAllServices) || [];
-    const [item, setItem] = useState(state?.item || null);
-    const loading = useSelector((s) => s.service.services.loading);
-    const error = useSelector((s) => s.service.services.error);
+    const [item, setItem] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+    const [imageError, setImageError] = useState(false);
 
     useEffect(() => {
-        if (servicesList.length === 0) {
-            dispatch(fetchServices()).catch(() => { });
-        }
-    }, [dispatch, servicesList.length]);
+        let mounted = true;
 
-    useEffect(() => {
-        if (state?.item) {
-            setItem(state.item);
-        } else if (servicesList.length > 0) {
-            const found = servicesList.find(s => String(s.id) === String(id));
-            setItem(found || null);
-        }
-    }, [state, id, servicesList]);
+        const loadServiceDetail = async () => {
+            // Always fetch from API to get full details including bookings
+            // The list endpoint only returns _count.bookings, not the actual bookings array
+            setLoading(true);
+            setError(null);
+
+            try {
+                const res = await GET(ENDPOINT.SERVICES.DETAIL(id));
+
+                // Console log the full response
+                // eslint-disable-next-line no-console
+                console.log('[ServiceDetails] Full API Response:', res);
+
+                let payload = res?.data;
+
+                // eslint-disable-next-line no-console
+                console.log('[ServiceDetails] Payload after res?.data:', payload);
+
+                // Store bookings before any extraction
+                let bookingsData = null;
+
+                // Check for bookings at each level
+                if (payload?.bookings) {
+                    bookingsData = payload.bookings;
+                    // eslint-disable-next-line no-console
+                    console.log('[ServiceDetails] Found bookings at root level:', bookingsData);
+                }
+
+                // Handle different response structures
+                if (payload && payload.data) {
+                    // Check if bookings exist at this level before extracting
+                    if (!bookingsData && payload.data.bookings) {
+                        bookingsData = payload.data.bookings;
+                    }
+                    payload = payload.data;
+                }
+
+                if (payload && payload.service) {
+                    // Check if bookings exist at this level before extracting
+                    if (!bookingsData && payload.service.bookings) {
+                        bookingsData = payload.service.bookings;
+                    }
+                    payload = payload.service;
+                }
+
+                // Ensure bookings are attached to the final payload
+                if (bookingsData && !payload.bookings) {
+                    payload.bookings = bookingsData;
+                    // eslint-disable-next-line no-console
+                    console.log('[ServiceDetails] Attached bookings to payload');
+                }
+
+                // eslint-disable-next-line no-console
+                console.log('[ServiceDetails] Final payload:', payload);
+                // eslint-disable-next-line no-console
+                console.log('[ServiceDetails] Final Bookings:', payload?.bookings);
+
+                if (mounted) {
+                    setItem(payload || null);
+                }
+            } catch (err) {
+                if (mounted) {
+                    setError(err?.response?.data?.message || err.message || 'Failed to load service');
+                }
+            } finally {
+                if (mounted) {
+                    setLoading(false);
+                }
+            }
+        };
+
+        loadServiceDetail();
+
+        return () => {
+            mounted = false;
+        };
+    }, [id]);
 
     const backTarget = state?.from === 'service' ? '/provider/service' : '/provider/service';
 
-    // Fallback data
-    const fallbackService = {
-        id,
-        name: 'Women\'s Sports Physio',
-        type: 'Physio',
-        phone: '(201) 555-0101',
-        image: 'https://i.ibb.co.com/gFM5hXZb/Rectangle-2324.png',
-        tag: 'Physios',
-        title: 'Women\'s Sports Physio',
-        location: 'Dhaka',
-        days: 'Monday, Wednesday, Friday',
-        time: '4:00 PM – 8:00 PM',
-        category: 'Physio',
-        status: 'Active',
-        visibility: 'Live for women athletes',
-        availableDays: 'Monday, Wednesday, Friday',
-        timeSlots: '4:00 PM - 8:00 PM',
-        description: `This physiotherapy service is designed specifically for women athletes who play sports like cricket, football, futsal and other physical games.
-
-It helps prevent injuries, improve performance, and support recovery so players can stay fit and confident.`,
-        whoIsFor: [
-            'Women athletes',
-            'Age 16+',
-            'All skill levels',
-            'Players from cricket, football, futsal, badminton and more'
-        ],
-        sessions: [
-            { id: 's1', user: 'Darlene Robertson', service: 'Physio', date: 'Jan 10', status: 'Completed' },
-            { id: 's2', user: 'Jane Cooper', service: 'Physio', date: 'Jan 10', status: 'Upcoming' },
-            { id: 's3', user: 'Savannah Nguyen', service: 'Physio', date: 'Jan 10', status: 'Completed' }
-        ]
-    };
-
-    const service = item || fallbackService;
-
     if (loading) return <div className="dashboardPy">Loading service...</div>;
     if (error) return <div className="dashboardPy text-red-600">Error: {error}</div>;
-    if (!service) return <div className="dashboardPy">Service not found.</div>;
+    if (!item) return <div className="dashboardPy">Service not found.</div>;
 
     return (
         <div className="dashboardPy dashboardSpaceY text-gray-800">
             {/* Back Button */}
             <div className="mb-4">
-                <Link to={backTarget} className="inline-flex items-center text-sm font-medium text-teal-600 hover:text-teal-700">
+                <Link to={backTarget} className="inline-flex items-center text-base font-medium text-teal-600 hover:text-teal-700">
                     <ArrowLeft className="w-4 h-4 mr-1" /> Back
                 </Link>
             </div>
 
             {/* Hero Image */}
             <div className="w-full h-64 md:h-[620px] relative object-cover rounded-xl overflow-hidden mb-6">
-                <img
-                    src={service.image}
-                    alt={service.name}
-                    className="w-full h-full object-cover"
-                />
+                {item.image && !imageError ? (
+                    <img
+                        src={item.image}
+                        alt={item.name || item.title}
+                        onError={() => setImageError(true)}
+                        className="w-full h-full object-cover"
+                    />
+                ) : (
+                    <div className="w-full h-full bg-gray-200 flex items-center justify-center text-gray-500">
+                        <span>No image</span>
+                    </div>
+                )}
             </div>
 
             {/* Service Title */}
             <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-6">
-                {service.name || service.title}
+                {item.name || item.title}
             </h1>
 
             {/* Metadata Fields */}
             <div className="space-y-3 text-base text-gray-800 mb-8">
                 <div>
-                    <span className=" block text-gray-900"> <span className='font-semibold'>Category: </span>{service.category || service.type}</span>
-                    
+                    <span className=" block text-gray-900"> <span className='font-semibold'>Category: </span>{item.category || item.type || item.serviceType || 'N/A'}</span>
                 </div>
                 <div>
-                    <span className=" block text-gray-900"><span className='font-semibold'>Status:</span>{service.status || 'Active'}</span>
-                    
+                    <span className=" block text-gray-900"><span className='font-semibold'>Status: </span>{item.status || 'Active'}</span>
                 </div>
                 <div>
-                    <span className=" block text-gray-900"><span className='font-semibold'>Visibility:</span>{service.visibility || 'Live for women athletes'}</span>
-                  
+                    <span className=" block text-gray-900"><span className='font-semibold'>Visibility: </span>{item.isApproved ? 'Live' : 'Pending Approval'}</span>
                 </div>
                 <div>
-                    <span className=" block text-gray-900"><span className='font-semibold'>Available Days:</span>{service.availableDays || service.days}</span>
-                </div>
-                <div>
-                    <span className=" block text-gray-900"><span className='font-semibold'>Time Slots:</span>{service.timeSlots || service.time}</span>
+                    <span className=" block text-gray-900"><span className='font-semibold'>Available Days: </span>{item.availableDays || item.days || 'Not specified'}</span>
                 </div>
             </div>
 
@@ -121,24 +151,67 @@ It helps prevent injuries, improve performance, and support recovery so players 
             <div className="mb-8">
                 <h2 className="text-xl font-bold text-gray-900 mb-3">About This Service</h2>
                 <div className="text-base md:w-2xl text-gray-600 leading-relaxed whitespace-pre-line">
-                    {service.description || 'This service provides professional support for women athletes.'}
+                    {item.description || 'No description available.'}
                 </div>
             </div>
 
             {/* Who This Service Is For */}
             <div className="mb-8">
                 <h2 className="text-xl font-bold text-gray-900 mb-3">Who This Service Is For</h2>
-                <ul className="list-disc list-inside text-sm text-gray-600 space-y-1">
-                    {(service.whoIsFor || []).map((item, idx) => (
-                        <li key={idx}>{item}</li>
-                    ))}
-                </ul>
+                {item.whoServiceFor ? (
+                    <div className="text-base text-gray-700">{item.whoServiceFor}</div>
+                ) : item.whoIsFor && Array.isArray(item.whoIsFor) && item.whoIsFor.length > 0 ? (
+                    <ul className="list-disc list-inside text-base text-gray-600 space-y-1">
+                        {item.whoIsFor.map((who, idx) => (
+                            <li key={idx}>{who}</li>
+                        ))}
+                    </ul>
+                ) : (
+                    <div className="text-base text-gray-600">Not specified.</div>
+                )}
             </div>
 
-            {/* Active Sessions Table */}
+            {/* Bookings Table */}
             <div className="mb-8">
-                <h2 className="text-xl font-bold text-gray-900 mb-4">Active Sessions</h2>
-                <SessionsTable sessions={service.sessions || []} resultsPerPage={6} />
+                <h2 className="text-xl font-bold text-gray-900 mb-3">Bookings</h2>
+                {/* eslint-disable-next-line no-console */}
+                {console.log('[ServiceDetails][RENDER] Full item object:', item)}
+                {/* eslint-disable-next-line no-console */}
+                {console.log('[ServiceDetails][RENDER] item.bookings:', item.bookings)}
+                {/* eslint-disable-next-line no-console */}
+                {console.log('[ServiceDetails][RENDER] item.bookings type:', typeof item.bookings)}
+                {/* eslint-disable-next-line no-console */}
+                {console.log('[ServiceDetails][RENDER] is Array?', Array.isArray(item.bookings))}
+                {/* eslint-disable-next-line no-console */}
+                {console.log('[ServiceDetails][RENDER] length?', item.bookings?.length)}
+
+                {item.bookings && Array.isArray(item.bookings) && item.bookings.length > 0 ? (
+                    <>
+                        {/* eslint-disable-next-line no-console */}
+                        {console.log('[ServiceDetails][RENDER] Mapped bookings:', item.bookings.map(b => ({
+                            name: b.fullName || b.name || 'Guest',
+                            phone: b.phoneNumber || b.phone || '-',
+                            email: b.email || '-',
+                            raw: b
+                        })))}
+                        <BookingsTable
+                            bookings={item.bookings.map(b => ({
+                                name: b.fullName || b.name || 'Guest',
+                                phone: b.phoneNumber || b.phone || '-',
+                                email: b.email || '-',
+                            }))}
+                            resultsPerPage={6}
+                        />
+                    </>
+                ) : (
+                    <>
+                        {/* eslint-disable-next-line no-console */}
+                        {console.log('[ServiceDetails][RENDER] No bookings - showing empty state')}
+                        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-8 text-center">
+                            <p className="text-gray-500 text-base">No bookings yet.</p>
+                        </div>
+                    </>
+                )}
             </div>
         </div>
     );

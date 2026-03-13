@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import Card from '../../../../components/ui/Card';
 import Button from '../../../../components/ui/Button';
 import { Link } from 'react-router-dom';
@@ -28,7 +28,7 @@ const MarketplaceCard = ({ item }) => {
       {/* Content */}
       <div className="pt-2 flex flex-col flex-1">
         <h3 className="text-[#282828] font-semibold text-base mb-1 line-clamp-1">{item.title}</h3>
-        <p className="text-sm text-[#585858] mb-3 line-clamp-2 flex-1">{item.description}</p>
+        <p className="text-base text-[#585858] mb-3 line-clamp-2 flex-1">{item.description}</p>
         <div className="text-lg font-bold text-[#282828] mb-3">${item.price.toFixed(2)}</div>
         <div className="mt-2 flex gap-2">
           <Link to={`/marketplace/${item.id}`} state={{ item }} className="flex-1">

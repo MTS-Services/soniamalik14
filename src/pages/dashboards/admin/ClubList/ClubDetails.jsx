@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { ArrowLeft, ChevronLeft, MapPin, X } from 'lucide-react';
 import ClubListDetailsc from './ClubListDetailsc';
 
@@ -79,7 +79,7 @@ export default function ClubDetails({ product, onBack }) {
           className="flex items-center gap-2   text-[#0F766E] transition-colors"
         >
           <ArrowLeft className="h-6 w-6" />
-          <span className="text-sm font-medium">Back</span>
+          <span className="text-base font-medium">Back</span>
         </button>
       </div>
 
@@ -108,7 +108,7 @@ export default function ClubDetails({ product, onBack }) {
 
         {/* Gallery */}
         <div className="mb-6">
-          {/* <a href="#" className="text-teal-600 hover:text-teal-700 text-sm font-medium">See All</a> */}
+          {/* <a href="#" className="text-teal-600 hover:text-teal-700 text-base font-medium">See All</a> */}
           <div className="mt-3 grid grid-cols-3 gap-3">
             {galleryImages.map((image) => (
               <img

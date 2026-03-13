@@ -1,4 +1,4 @@
-// Email validation
+﻿// Email validation
 export const isValidEmail = (email = '') => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
 // Password validation

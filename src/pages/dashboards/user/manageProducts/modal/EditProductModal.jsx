@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+﻿import React, { useEffect, useRef, useState } from 'react'
 import { FiX, FiUpload } from 'react-icons/fi'
 
 export default function EditProductModal({ open, onClose, product = {} }) {
@@ -64,32 +64,32 @@ export default function EditProductModal({ open, onClose, product = {} }) {
 
           <div className="space-y-4">
             <div>
-              <label className="block text-sm mb-1 text-[#5B5B5B]">Title</label>
-              <input value={title} onChange={(e) => setTitle(e.target.value)} placeholder="enter title" className="w-full border border-gray-200 rounded px-3 py-2 text-sm" />
+              <label className="block text-base mb-1 text-[#5B5B5B]">Title</label>
+              <input value={title} onChange={(e) => setTitle(e.target.value)} placeholder="enter title" className="w-full border border-gray-200 rounded px-3 py-2 text-base" />
             </div>
 
             <div>
-              <label className="block text-sm mb-1 text-[#5B5B5B]">Description</label>
-              <textarea value={description} onChange={(e) => setDescription(e.target.value)} placeholder="enter description" className="w-full border border-gray-200 rounded px-3 py-2 text-sm min-h-[90px]" />
+              <label className="block text-base mb-1 text-[#5B5B5B]">Description</label>
+              <textarea value={description} onChange={(e) => setDescription(e.target.value)} placeholder="enter description" className="w-full border border-gray-200 rounded px-3 py-2 text-base min-h-[90px]" />
             </div>
 
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className="block text-sm mb-1 text-[#5B5B5B]">Condition</label>
-                <select value={condition} onChange={(e) => setCondition(e.target.value)} className="w-full border border-gray-200 rounded px-3 py-2 text-sm">
+                <label className="block text-base mb-1 text-[#5B5B5B]">Condition</label>
+                <select value={condition} onChange={(e) => setCondition(e.target.value)} className="w-full border border-gray-200 rounded px-3 py-2 text-base">
                   <option>New</option>
                   <option>Used</option>
                 </select>
               </div>
 
               <div>
-                <label className="block text-sm mb-1 text-[#5B5B5B]">Price</label>
-                <input value={price} onChange={(e) => setPrice(e.target.value)} placeholder="" className="w-full border border-gray-200 rounded px-3 py-2 text-sm" />
+                <label className="block text-base mb-1 text-[#5B5B5B]">Price</label>
+                <input value={price} onChange={(e) => setPrice(e.target.value)} placeholder="" className="w-full border border-gray-200 rounded px-3 py-2 text-base" />
               </div>
             </div>
 
             <div>
-              <label className="block text-sm mb-2 text-[#5B5B5B]">Upload Image</label>
+              <label className="block text-base mb-2 text-[#5B5B5B]">Upload Image</label>
 
               <input ref={fileInputRef} type="file" accept="image/*" className="hidden" onChange={handleFileChange} />
 
@@ -106,7 +106,7 @@ export default function EditProductModal({ open, onClose, product = {} }) {
                 ) : (
                   <>
                     <FiUpload className="w-7 h-7 text-[#10B394] mb-2" />
-                    <div className="text-sm font-medium text-[#0F766E]">Upload Image</div>
+                    <div className="text-base font-medium text-[#0F766E]">Upload Image</div>
                     <div className="text-xs text-gray-400 mt-1">JPEG files accepted. Max 100MB</div>
                   </>
                 )}
@@ -114,7 +114,7 @@ export default function EditProductModal({ open, onClose, product = {} }) {
             </div>
 
             <div className="pt-2">
-              <button type="submit" className="bg-[#0F766E] text-white px-4 py-2 rounded text-sm">Save Changes</button>
+              <button type="submit" className="bg-[#0F766E] text-white px-4 py-2 rounded text-base">Save Changes</button>
             </div>
           </div>
         </form>

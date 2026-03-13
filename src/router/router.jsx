@@ -1,12 +1,15 @@
-import { createBrowserRouter, createRoutesFromElements, Route } from 'react-router-dom';
+﻿import { createBrowserRouter, createRoutesFromElements, Route } from 'react-router-dom';
 import RootLayout from '../components/layout/RootLayout.jsx';
 
 import HomeView from '../pages/public/public_Home/HomeView';
 import AboutView from '../pages/public/public_about/AboutView';
 import DiscoverView from '../pages/public/public_discover/DiscoverView';
 import DiscoverDetails from '../pages/public/public_discover/DiscoverDetails';
+import FindSport from '../pages/public/public_FindSport/FindSport';
+import FindSportDetails from '../pages/public/public_FindSport/components/FindSportDetails';
 import SigninView from '../pages/public/public_login/SigninView.jsx';
 import RegisterView from '../pages/public/public_login/SignUpView.jsx';
+import VerifyEmailView from '../pages/public/public_login/VerifyEmailView.jsx';
 import ForgotPasswordView from '../pages/public/public_login/ForgotPasswordView.jsx';
 import OtpVerificationView from '../pages/public/public_login/OtpVerificationView.jsx';
 import ResetPasswordView from '../pages/public/public_login/ResetPasswordView.jsx';
@@ -41,10 +44,14 @@ import AdminIndex from '../pages/dashboards/admin/adminIndex/AdminIndex.jsx';
 import EventDetails from '../pages/dashboards/admin/EventDetails/AdminEventDetails.jsx';
 import ProductRequested from '../pages/dashboards/admin/ProductRequested/ProductRequested.jsx';
 import OrderList from '../pages/dashboards/admin/OrderList/OrderList.jsx';
+import Sports from '../pages/dashboards/admin/Sports/Sports.jsx';
 import CoachEvent from '../pages/dashboards/coach/event/CoachEvent.jsx';
 import CoachEventDetails from '../pages/dashboards/coach/event/EventDetails.jsx';
 import EventAnalytics from '../pages/dashboards/coach/eventAnalytics/EventAnalytics.jsx';
 import Thread from '../pages/dashboards/coach/thread/Thread.jsx';
+import EventAnallyticsDetails from '../pages/dashboards/shared/eventAnalytics/EventAnallyticsDetails.jsx';
+import AdminThread from '../pages/dashboards/admin/Thread/Thread.jsx';
+import AdminThreadDetails from '../pages/dashboards/admin/Thread/ThreadDetails.jsx';
 import ThreadDetails from '../pages/dashboards/coach/thread/ThreadDetails.jsx';
 import Recruitment from '../pages/dashboards/coach/recruitment/Recruitment.jsx';
 import RecruitmentDetails from '../pages/dashboards/coach/recruitment/RecruitmentDetails.jsx';
@@ -54,6 +61,8 @@ import ProviderServiceDetails from '../pages/dashboards/provider/service/Service
 import ServiceAnalytics from '../pages/dashboards/provider/serviceAnalytics/ServiceAnalytics.jsx';
 import ProviderThread from '../pages/dashboards/provider/thread/ProviderThread.jsx';
 import ProviderThreadDetails from '../pages/dashboards/provider/thread/ProviderThreadDetails.jsx';
+import ProviderSettings from '../pages/dashboards/provider/ProviderSettings.jsx';
+import MyOrders from '../pages/myOrders/MyOrders.jsx';
 
 // User Dashboard Pages
 import DashboardOverview from '../pages/dashboards/user/dashboardOverview/DashboardOverview.jsx';
@@ -67,6 +76,9 @@ import ServiceProviderDetails from '../pages/dashboards/admin/ServiceProviderLis
 import AdminFinances from '../pages/dashboards/admin/finances/AdminFinances.jsx';
 import RoleMatrix from '../pages/dashboards/admin/role_matrix/RoleMatrix.jsx';
 import AdminSettings from '../pages/dashboards/admin/settings/Settings.jsx';
+import AdminNews from '../pages/dashboards/admin/news/adminNews.jsx';
+import ServiceRequested from '../pages/dashboards/admin/ServiceRequested/ServiceRequested.jsx';
+import MarketPlaceView from '../pages/public/public_market/MarketPlaceView.jsx';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -75,22 +87,26 @@ const router = createBrowserRouter(
       <Route path="/register" element={<RegisterView />} />
       <Route path="/forgot-password" element={<ForgotPasswordView />} />
       <Route path="/otp-verification" element={<OtpVerificationView />} />
+      <Route path="/verify-email" element={<VerifyEmailView />} />
       <Route path="/reset-password" element={<ResetPasswordView />} />
       <Route path="/unauthorized" element={<Unauthorized />} />
 
       <Route path="/" element={<RootLayout />}>
         <Route index element={<HomeView />} />
         <Route path="about" element={<AboutView />} />
+        <Route path="find-sport" element={<FindSport />} />
+        <Route path="find-sport/:id" element={<FindSportDetails />} />
         <Route path="discover" element={<DiscoverView />} />
         <Route path="discover/:type/:id" element={<DiscoverDetails />} />
         <Route path="community" element={<CommunityView />} />
         <Route path="community/:id" element={<CommunityDetails />} />
         <Route path="events" element={<EventView />} />
         <Route path="events/:id" element={<EventDetailsPage />} />
-        <Route path="marketplace" element={<MarketPlace />} />
-        <Route path="marketplace/:id" element={<MarketplaceDetails />} />
+        <Route path="marketplace" element={<MarketPlaceView />} />
+        {/* <Route path="marketplace/:id" element={<MarketplaceDetails />} /> */}
         <Route path="checkout" element={<Checkout />} />
         <Route path="order-confirmed" element={<OrderConfirmed />} />
+        <Route path="my-orders" element={<MyOrders />} />
         <Route path="services" element={<ServiceView />} />
         <Route path="services/:id" element={<ServiceDetails />} />
         <Route path="news" element={<NewsView />} />
@@ -123,12 +139,16 @@ const router = createBrowserRouter(
         <Route path="event-details" element={<EventDetails />} />
         <Route path="product-request" element={<ProductRequested />} />
         <Route path="order" element={<OrderList />} />
-        <Route path="thread" element={<Thread />} />
+        <Route path="sports" element={<Sports />} />
+        <Route path="thread" element={<AdminThread />} />
+        <Route path="thread/:id" element={<AdminThreadDetails />} />
         <Route path="club" element={<ClubList />} />
         <Route path="service" element={<ServiceProviderList />} />
         <Route path="service/:id" element={<ServiceProviderDetails />} />
+        <Route path="service-request" element={<ServiceRequested />} />
         <Route path="finances" element={<AdminFinances />} />
         <Route path="role-matrix" element={<RoleMatrix />} />
+        <Route path="news" element={<AdminNews />} />
         <Route path="settings" element={<AdminSettings />} />
       </Route>
 
@@ -145,11 +165,13 @@ const router = createBrowserRouter(
         <Route path="event" element={<ProviderEvent />} />
         <Route path="event/:id" element={<ProviderEventDetails />} />
         <Route path="event-analytics" element={<ProviderEventAnalytics />} />
+        <Route path="event-analytics/event/:id" element={<EventAnallyticsDetails />} />
         <Route path="thread" element={<ProviderThread />} />
         <Route path="thread/:id" element={<ProviderThreadDetails />} />
         <Route path="service" element={<ProviderService />} />
         <Route path="service/:id" element={<ProviderServiceDetails />} />
         <Route path="service-analytics" element={<ServiceAnalytics />} />
+        <Route path="settings" element={<ProviderSettings />} />
       </Route>
 
       {/* Coach Dashboard - Protected */}
@@ -165,6 +187,7 @@ const router = createBrowserRouter(
         <Route path="event" element={<CoachEvent />} />
         <Route path="event/:id" element={<CoachEventDetails />} />
         <Route path="event-analytics" element={<EventAnalytics />} />
+        <Route path="event-analytics/event/:id" element={<EventAnallyticsDetails />} />
         <Route path="thread" element={<Thread />} />
         <Route path="thread/:id" element={<ThreadDetails />} />
         <Route path="recruitment" element={<Recruitment />} />

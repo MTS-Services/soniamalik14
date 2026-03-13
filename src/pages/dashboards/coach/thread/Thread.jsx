@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { MessageSquare, X } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
@@ -47,7 +47,7 @@ export default function Thread() {
                 <div className="flex items-start justify-between mb-8">
                     <div>
                         <h1 className="text-3xl font-bold text-gray-900 mb-2">Community Forum</h1>
-                        <p className="text-gray-600 text-sm">Connect, chat, and support each other.</p>
+                        <p className="text-gray-600 text-base">Connect, chat, and support each other.</p>
                     </div>
                    
                 </div>
@@ -72,12 +72,12 @@ export default function Thread() {
                             </h2>
 
                             {/* Description */}
-                            <p className="text-sm text-gray-600 mb-4">
+                            <p className="text-base text-gray-600 mb-4">
                                 {thread.description}
                             </p>
 
                             {/* Reply Count */}
-                            <div className="flex items-center text-gray-500 text-sm">
+                            <div className="flex items-center text-gray-500 text-base">
                                 <MessageSquare size={16} className="mr-2" />
                                 <span>{thread.replies} Reply</span>
                             </div>

@@ -1,14 +1,60 @@
-// Route Paths
+﻿// Route Paths
 export const ENDPOINT = {
   PUBLIC: {
     HOME: '/',
     LOGIN: '/login',
     REGISTER: '/register',
-    PRODUCTS: '/api/products?limit=5',
+    // PRODUCTS: '/api/products?limit=5',
   },
   PRIVATE: {
     DASHBOARD: '/dashboard',
     PROFILE: '/profile',
     SETTINGS: '/settings',
+  },
+  NEWS: {
+    LIST: '/api/news',
+    CREATE: '/api/news',
+    UPDATE: (id) => `/api/news/${id}`,
+    DELETE: (id) => `/api/news/${id}`,
+    DETAIL: (id) => `/api/news/${id}`,
+  },
+  AUTH: {
+    LOGIN: '/api/auth/login',
+    ME: '/api/auth/me',
+    LOGOUT: '/api/auth/logout',
+    FORGOT_PASSWORD: '/api/auth/forgot-password',
+    REGISTER: '/api/auth/register',
+    VERIFY_OTP: '/api/auth/verify-otp',
+    RESET_PASSWORD: '/api/auth/reset-password',
+    VERIFY_EMAIL: '/api/auth/verify-email',
+    CHANGE_PASSWORD: '/api/auth/change-password',
+  },
+  USER: {
+    UPDATE: (userId) => `/api/users/${userId}`,
+    BILLING_ADDRESS: (userId) => `/api/users/${userId}/billing-address`,
+    SHIPPING_ADDRESS: (userId) => `/api/users/${userId}/shipping-address`,
+  },
+  SERVICES: {
+    LIST: '/api/services',
+    APPROVED: '/api/services?isApproved=true',
+    PENDING: '/api/services?status=PENDING_APPROVAL',
+    PROVIDER_SERVICES: (providerId) => `/api/services?providerId=${providerId}`,
+    CREATE: '/api/services',
+    DETAIL: (id) => `/api/services/${id}`,
+    UPDATE: (id) => `/api/services/${id}`,
+    DELETE: (id) => `/api/services/${id}`,
+    APPROVE: (id) => `/api/services/${id}/approve`,
+    REJECT: (id) => `/api/services/${id}/reject`,
+    APPROVAL_STATUS: (id) => `/api/services/${id}/approval-status`,
+  },
+  EVENTS: {
+    LIST: '/api/events',
+    MY_LIST: '/api/events/my/list',
+    ANALYTICS: '/api/events/analytics',
+    CREATE: '/api/events',
+    DETAIL: (id) => `/api/events/${id}`,
+    UPDATE: (id) => `/api/events/${id}`,
+    DELETE: (id) => `/api/events/${id}`,
+    APPROVAL_STATUS: (id) => `/api/events/${id}/approval-status`,
   },
 };

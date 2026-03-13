@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { Link, NavLink, useNavigate, useLocation } from 'react-router-dom';
 import {
     LayoutDashboard,
@@ -17,6 +17,9 @@ import {
     Heart,
     X,
     Settings,
+    CirclePlus,
+    LandPlot,
+    Newspaper,
 } from 'lucide-react';
 import { useAuth, ROLES } from '../../context/AuthContext';
 
@@ -30,9 +33,12 @@ const getMenuItems = (role, basePath) => {
         { id: 'order', label: 'Order', icon: <ShoppingCart className="w-5 h-5" />, path: `${basePath}/order` },
         { id: 'thread', label: 'Thread', icon: <MessageSquare className="w-5 h-5" />, path: `${basePath}/thread` },
         { id: 'club', label: 'Club', icon: <Users className="w-5 h-5" />, path: `${basePath}/club` },
-        { id: 'service', label: 'Service', icon: <Wrench className="w-5 h-5" />, path: `${basePath}/service` },
+        { id: 'sports', label: 'Sports', icon: <LandPlot className="w-5 h-5" />, path: `${basePath}/sports` },
+        // { id: 'service', label: 'Service', icon: <Wrench className="w-5 h-5" />, path: `${basePath}/service` },
+        { id: 'service-request', label: 'Service Request', icon: <Wrench className="w-5 h-5" />, path: `${basePath}/service-request` },
         { id: 'finances', label: 'Finances', icon: <DollarSign className="w-5 h-5" />, path: `${basePath}/finances` },
-        { id: 'role-matrix', label: 'Role Matrix', icon: <Shield className="w-5 h-5" />, path: `${basePath}/role-matrix` },
+        // { id: 'role-matrix', label: 'Role Matrix', icon: <Shield className="w-5 h-5" />, path: `${basePath}/role-matrix` },
+        { id: 'News', label: 'News', icon: <Newspaper className="w-5 h-5" />, path: `${basePath}/news` },
         { id: 'settings', label: 'Settings', icon: <Settings className="w-5 h-5" />, path: `${basePath}/settings` },
     ];
 
@@ -40,8 +46,9 @@ const getMenuItems = (role, basePath) => {
         { id: 'dashboard', label: 'Event', icon: <Calendar className="w-5 h-5" />, path: `${basePath}` },
         { id: 'event-analytics', label: 'Event Analytics', icon: <BarChart3 className="w-5 h-5" />, path: `${basePath}/event-analytics` },
         { id: 'thread', label: 'Thread', icon: <MessageSquare className="w-5 h-5" />, path: `${basePath}/thread` },
-        { id: 'service', label: 'Service', icon: <Wrench className="w-5 h-5" />, path: `${basePath}/service` },
-        { id: 'service-analytics', label: 'Service Analytics', icon: <BarChart3 className="w-5 h-5" />, path: `${basePath}/service-analytics` },
+        { id: 'service', label: 'Add Listing', icon: <CirclePlus className="w-5 h-5" />, path: `${basePath}/service` },
+        // { id: 'service-analytics', label: 'Service Analytics', icon: <BarChart3 className="w-5 h-5" />, path: `${basePath}/service-analytics` },
+        { id: 'settings', label: 'Settings', icon: <Settings className="w-5 h-5" />, path: `${basePath}/settings` },
     ];
 
     const coachMenu = [
@@ -49,7 +56,7 @@ const getMenuItems = (role, basePath) => {
         { id: 'event', label: 'Event', icon: <Calendar className="w-5 h-5" />, path: `${basePath}/event` },
         { id: 'event-analytics', label: 'Event Analytics', icon: <BarChart3 className="w-5 h-5" />, path: `${basePath}/event-analytics` },
         { id: 'thread', label: 'Thread', icon: <MessageSquare className="w-5 h-5" />, path: `${basePath}/thread` },
-        { id: 'recruitment', label: 'Recruitment', icon: <UserPlus className="w-5 h-5" />, path: `${basePath}/recruitment` },
+        { id: 'recruitment', label: 'Add Listing', icon: <UserPlus className="w-5 h-5" />, path: `${basePath}/recruitment` },
     ];
 
     switch (role) {
@@ -108,7 +115,7 @@ const Sidebar = ({ isOpen, onClose }) => {
 
     const handleNavClick = () => {
         // Close sidebar on mobile when a nav item is clicked
-        if (window.innerWidth < 1024) {
+        if (isOpen) {
             onClose?.();
         }
     };
@@ -174,12 +181,12 @@ const Sidebar = ({ isOpen, onClose }) => {
                                         extraActive = true;
                                     }
                                     const active = isActive || extraActive;
-                                    return `w-full flex items-center gap-3 font-medium text-sm px-5 py-3 rounded-none ${active ? 'bg-btn-primary text-white' : 'text-sidebarLink hover:bg-gray-50'
+                                    return `w-full flex items-center gap-3 font-medium text-base px-5 py-3 rounded-none ${active ? 'bg-btn-primary text-white' : 'text-sidebarLink hover:bg-gray-50'
                                         }`;
                                 }}
                             >
                                 <span className="flex items-center">{item.icon}</span>
-                                <span className="text-sm font-medium">{item.label}</span>
+                                <span className="text-base font-medium">{item.label}</span>
                             </NavLink>
                         </div>
                     ))}
@@ -192,7 +199,7 @@ const Sidebar = ({ isOpen, onClose }) => {
                         className="w-full flex items-center gap-3 px-4 py-3 text-btn-primary hover:bg-gray-50 rounded-none"
                     >
                         <LogOut className="w-5 h-5" />
-                        <span className="text-sm font-medium">Log Out</span>
+                        <span className="text-base font-medium">Log Out</span>
                     </button>
                 </div>
             </aside>

@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react'
+﻿import React, { useState, useRef } from 'react'
 import PageHeader from '../../../../components/ui/PageHeader'
 import Card from '../../../../components/ui/Card'
 import { Camera } from 'lucide-react'
@@ -90,42 +90,42 @@ const EditProfile = () => {
                                     <div className="flex-1">
                                         <div className="grid grid-cols-1 gap-4">
                                             <div>
-                                                <label className="block text-sm text-gray-700 mb-1">Club Name</label>
+                                                <label className="block text-base text-gray-700 mb-1">Club Name</label>
                                                 <input name="clubName" value={form.clubName} onChange={handleChange} className="w-full border border-gray-300 rounded-md px-3 py-2" />
                                             </div>
 
                                             <div>
-                                                <label className="block text-sm text-gray-700 mb-1">About Club</label>
+                                                <label className="block text-base text-gray-700 mb-1">About Club</label>
                                                 <textarea name="about" value={form.about} onChange={handleChange} rows={5} className="w-full border border-gray-300 rounded-md px-3 py-2" />
                                             </div>
 
                                             <div>
-                                                <label className="block text-sm text-gray-700 mb-1">Email</label>
+                                                <label className="block text-base text-gray-700 mb-1">Email</label>
                                                 <input name="email" value={form.email} onChange={handleChange} className="w-full border border-gray-300 rounded-md px-3 py-2" />
                                             </div>
 
                                             <div>
-                                                <label className="block text-sm text-gray-700 mb-1">Phone Number</label>
+                                                <label className="block text-base text-gray-700 mb-1">Phone Number</label>
                                                 <input name="phone" value={form.phone} onChange={handleChange} className="w-full border border-gray-300 rounded-md px-3 py-2" />
                                             </div>
 
                                             <div>
-                                                <label className="block text-sm text-gray-700 mb-1">Location</label>
+                                                <label className="block text-base text-gray-700 mb-1">Location</label>
                                                 <input name="location" value={form.location} onChange={handleChange} className="w-full border border-gray-300 rounded-md px-3 py-2" />
                                             </div>
 
                                             <div>
-                                                <label className="block text-sm text-gray-700 mb-1">Old Password</label>
+                                                <label className="block text-base text-gray-700 mb-1">Old Password</label>
                                                 <input name="oldPassword" type="password" value={form.oldPassword} onChange={handleChange} className="w-full border border-gray-300 rounded-md px-3 py-2" />
                                             </div>
 
                                             <div>
-                                                <label className="block text-sm text-gray-700 mb-1">New Password</label>
+                                                <label className="block text-base text-gray-700 mb-1">New Password</label>
                                                 <input name="newPassword" type="password" value={form.newPassword} onChange={handleChange} className="w-full border border-gray-300 rounded-md px-3 py-2" />
                                             </div>
 
                                             <div>
-                                                <label className="block text-sm text-gray-700 mb-1">Confirm New Password</label>
+                                                <label className="block text-base text-gray-700 mb-1">Confirm New Password</label>
                                                 <input name="confirmPassword" type="password" value={form.confirmPassword} onChange={handleChange} className="w-full border border-gray-300 rounded-md px-3 py-2" />
                                             </div>
                                         </div>

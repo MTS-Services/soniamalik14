@@ -1,6 +1,9 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowRight, ArrowLeft, Eye, EyeOff } from 'lucide-react';
+import { POST } from '../../../services/httpMethods';
+import { ENDPOINT } from '../../../services/httpEndpoint';
+import { toast } from 'react-toastify';
 
 const ResetPasswordView = () => {
   const navigate = useNavigate();
@@ -8,6 +11,7 @@ const ResetPasswordView = () => {
     password: '',
     confirmPassword: '',
   });
+  const [otp, setOtp] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [errors, setErrors] = useState({});
@@ -16,7 +20,7 @@ const ResetPasswordView = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
-    
+
     // Clear error for this field
     if (errors[name]) {
       setErrors(prev => ({ ...prev, [name]: '' }));
@@ -25,6 +29,10 @@ const ResetPasswordView = () => {
 
   const validateForm = () => {
     const newErrors = {};
+
+    if (!otp) {
+      newErrors.otp = 'OTP is required';
+    }
 
     if (!formData.password) {
       newErrors.password = 'Password is required';
@@ -44,16 +52,31 @@ const ResetPasswordView = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
+
     if (validateForm()) {
       setLoading(true);
 
-      // Simulate API call
-      setTimeout(() => {
-        setLoading(false);
-        alert('Password reset successfully!');
-        navigate('/signin');
-      }, 1000);
+      (async () => {
+        try {
+          const email = localStorage.getItem('forgot_email');
+          const body = {
+            email: email || undefined,
+            otp: otp,
+            newPassword: formData.password,
+          };
+
+          await POST(ENDPOINT.AUTH.RESET_PASSWORD, body);
+          setLoading(false);
+          localStorage.removeItem('forgot_email');
+          toast.success('Password reset successfully. Please sign in.');
+          navigate('/signin');
+        } catch (err) {
+          setLoading(false);
+          const message = err?.response?.data?.message || err?.message || 'Password reset failed';
+          setErrors({ form: message });
+          toast.error(message);
+        }
+      })();
     }
   };
 
@@ -63,7 +86,7 @@ const ResetPasswordView = () => {
         {/* Back Button */}
         <button
           onClick={() => navigate(-1)}
-          className="mb-4 flex items-center gap-2 text-btn-primary hover:text-[#0d655d] font-medium text-sm transition-colors"
+          className="mb-4 flex items-center gap-2 text-btn-primary hover:text-[#0d655d] font-medium text-base transition-colors"
         >
           <ArrowLeft className="w-4 h-4" />
           Back
@@ -73,7 +96,7 @@ const ResetPasswordView = () => {
           <h1 className="text-2xl md:text-3xl font-bold text-[#282828] text-center mb-3">
             Reset Password
           </h1>
-          <p className="text-[#666666] text-sm text-center">
+          <p className="text-[#666666] text-base text-center">
             Duis sagittis molestie tellus, at eleifend sapien pellque quis. Fusce lorem nunc, fringilla sit amet nunc.
           </p>
         </div>
@@ -81,7 +104,19 @@ const ResetPasswordView = () => {
         <form onSubmit={handleSubmit} className="space-y-5">
           {/* Password Field */}
           <div>
-            <label className="block text-[#282828] font-medium mb-2 text-sm">
+            <label className="block text-[#282828] font-medium mb-2 text-base">OTP</label>
+            <input
+              type="text"
+              value={otp}
+              onChange={(e) => setOtp(e.target.value)}
+              placeholder="Enter OTP"
+              className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-btn-primary focus:border-transparent transition-all text-base text-gray-700 placeholder-gray-400"
+            />
+            {errors.otp && <p className="text-red-500 text-xs mt-1">{errors.otp}</p>}
+          </div>
+
+          <div>
+            <label className="block text-[#282828] font-medium mb-2 text-base">
               Password
             </label>
             <div className="relative">
@@ -91,7 +126,7 @@ const ResetPasswordView = () => {
                 placeholder="8+ characters"
                 value={formData.password}
                 onChange={handleChange}
-                className="w-full px-4 py-3 pr-12 bg-white border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-btn-primary focus:border-transparent transition-all text-sm text-gray-700 placeholder-gray-400"
+                className="w-full px-4 py-3 pr-12 bg-white border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-btn-primary focus:border-transparent transition-all text-base text-gray-700 placeholder-gray-400"
               />
               <button
                 type="button"
@@ -112,7 +147,7 @@ const ResetPasswordView = () => {
 
           {/* Confirm Password Field */}
           <div>
-            <label className="block text-[#282828] font-medium mb-2 text-sm">
+            <label className="block text-[#282828] font-medium mb-2 text-base">
               Confirm Password
             </label>
             <div className="relative">
@@ -122,7 +157,7 @@ const ResetPasswordView = () => {
                 placeholder=""
                 value={formData.confirmPassword}
                 onChange={handleChange}
-                className="w-full px-4 py-3 pr-12 bg-white border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-btn-primary focus:border-transparent transition-all text-sm text-gray-700 placeholder-gray-400"
+                className="w-full px-4 py-3 pr-12 bg-white border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-btn-primary focus:border-transparent transition-all text-base text-gray-700 placeholder-gray-400"
               />
               <button
                 type="button"
@@ -145,7 +180,7 @@ const ResetPasswordView = () => {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-btn-primary hover:bg-[#0d655d] text-white py-3 rounded-lg font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 uppercase text-sm tracking-wide"
+            className="w-full bg-btn-primary hover:bg-[#0d655d] text-white py-3 rounded-lg font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 uppercase text-base tracking-wide"
           >
             {loading ? 'RESETTING...' : 'RESET PASSWORD'}
             <ArrowRight className="w-5 h-5" />

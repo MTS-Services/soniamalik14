@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+﻿import React, { useState } from 'react';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { Eye, EyeOff } from 'lucide-react';
 import { useAuth, ROLES } from '../../../context/AuthContext';
 import { FaArrowLeft } from 'react-icons/fa';
 
 const LoginView = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { login } = useAuth();
   const [formData, setFormData] = useState({
     email: '',
@@ -20,33 +21,44 @@ const LoginView = () => {
     setError(''); // Clear error when user types
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError('');
 
-    // Role-based login
-    const result = login(formData.email, formData.password);
-    
-    setTimeout(() => {
+    try {
+      const result = await login(formData.email, formData.password);
       setLoading(false);
+
       if (result.success) {
-        // Redirect: regular `user` -> home, other roles -> their dashboards
-        if (result.role === ROLES.USER) {
+        const intended = location?.state?.from;
+        const userRoleRaw = result.user?.role || result.role || '';
+        const role = String(userRoleRaw).toLowerCase();
+
+        if (intended) {
+          navigate(intended, { replace: true });
+          return;
+        }
+
+        if (role === ROLES.USER) {
           navigate('/');
-        } else if (result.role === ROLES.ADMIN) {
+        } else if (role === ROLES.ADMIN) {
           navigate('/admin');
-        } else if (result.role === ROLES.PROVIDER) {
+        } else if (role === ROLES.PROVIDER) {
           navigate('/provider');
-        } else if (result.role === ROLES.COACH) {
+        } else if (role === ROLES.COACH) {
           navigate('/coach');
         } else {
           navigate('/dashboard');
         }
       } else {
-        setError(result.message);
+        setError(result.message || 'Login failed');
       }
-    }, 500);
+    } catch (err) {
+      setLoading(false);
+      const message = err?.message || 'Login failed';
+      setError(message);
+    }
   };
 
   return (
@@ -56,14 +68,14 @@ const LoginView = () => {
         <div className="w-full max-w-md">
           <div className="mb-8">
             <div className="mb-4">
-              <Link to="/" className="inline-flex items-center text-sm gap-1 text-btn-primary hover:text-[#0d655d] font-medium">
+              <Link to="/" className="inline-flex items-center text-base gap-1 text-btn-primary hover:text-[#0d655d] font-medium">
                 <FaArrowLeft /> Back to Home
               </Link>
             </div>
             <h1 className="text-3xl md:text-4xl font-bold text-[#282828] mb-2">
               Welcome Back
             </h1>
-            <p className="text-[#363636] text-sm md:text-base">
+            <p className="text-[#363636] text-base md:text-base">
               Sign in to access your dashboard
             </p>
           </div>
@@ -71,13 +83,13 @@ const LoginView = () => {
           <form onSubmit={handleSubmit} className="space-y-5">
             {/* Error Message */}
             {error && (
-              <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-lg text-sm">
+              <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-lg text-base">
                 {error}
               </div>
             )}
 
             {/* Demo Credentials Info */}
-            <div className="bg-blue-50 border border-blue-200 text-blue-700 px-4 py-3 rounded-lg text-sm">
+            {/* <div className="bg-blue-50 border border-blue-200 text-blue-700 px-4 py-3 rounded-lg text-base">
               <p className="font-semibold mb-2">Demo Credentials (Password: demo123)</p>
               <div className="space-y-1 text-xs">
                 <p><strong>Admin:</strong> admin@essahub.com</p>
@@ -85,11 +97,11 @@ const LoginView = () => {
                 <p><strong>Coach:</strong> coach@essahub.com</p>
                 <p><strong>User:</strong> user@essahub.com</p>
               </div>
-            </div>
+            </div> */}
 
             {/* Email Field */}
             <div>
-              <label htmlFor="email" className="block text-[#282828] font-medium mb-2 text-sm md:text-base">
+              <label htmlFor="email" className="block text-[#282828] font-medium mb-2 text-base md:text-base">
                 Email
               </label>
               <input
@@ -99,14 +111,14 @@ const LoginView = () => {
                 value={formData.email}
                 onChange={handleChange}
                 placeholder="admin@essahub.com"
-                className="w-full px-4 py-3 bg-loginInput rounded-lg outline-none focus:ring-2 focus:ring-btn-primary transition-all text-sm text-gray-700 placeholder-[#747474]"
+                className="w-full px-4 py-3 bg-loginInput rounded-lg outline-none focus:ring-2 focus:ring-btn-primary transition-all text-base text-gray-700 placeholder-[#747474]"
                 required
               />
             </div>
 
             {/* Password Field */}
             <div>
-              <label htmlFor="password" className="block text-[#282828] font-medium mb-2 text-sm md:text-base">
+              <label htmlFor="password" className="block text-[#282828] font-medium mb-2 text-base md:text-base">
                 Password
               </label>
               <div className="relative">
@@ -116,8 +128,8 @@ const LoginView = () => {
                   name="password"
                   value={formData.password}
                   onChange={handleChange}
-                  placeholder="•••• •••• ••••"
-                  className="w-full px-4 py-3 pr-12 bg-loginInput rounded-lg outline-none focus:ring-2 focus:ring-btn-primary transition-all text-sm text-gray-700 placeholder-[#747474]"
+                  placeholder="... ... ... ..."
+                  className="w-full px-4 py-3 pr-12 bg-loginInput rounded-lg outline-none focus:ring-2 focus:ring-btn-primary transition-all text-base text-gray-700 placeholder-[#747474]"
                   required
                 />
                 <button
@@ -133,9 +145,9 @@ const LoginView = () => {
                 </button>
               </div>
               <div className="mt-2 text-right">
-                <Link 
-                  to="/forgot-password" 
-                  className="text-sm text-btn-primary hover:text-[#0d655d] font-medium"
+                <Link
+                  to="/forgot-password"
+                  className="text-base text-btn-primary hover:text-[#0d655d] font-medium"
                 >
                   Forgot Password?
                 </Link>
@@ -153,9 +165,9 @@ const LoginView = () => {
 
             {/* Create Account Section */}
             <div className="text-center pt-4">
-              <p className="text-sm text-[#363636] mb-3">Don't have account</p>
+              <p className="text-base text-[#363636] mb-3">Don't have account</p>
               <Link
-                to="/signup"
+                to="/register"
                 className="block w-full border-2 border-btn-primary text-btn-primary hover:bg-btn-primary hover:text-white py-3 rounded-lg font-medium transition-all"
               >
                 CREATE ACCOUNT
@@ -173,23 +185,23 @@ const LoginView = () => {
             {/* Column 1 */}
             <div className="flex flex-col gap-4 pt-8">
               <div className="rounded-[100px] overflow-hidden h-84 bg-gray-200 ">
-                <img 
-                  src="/images/login/image_1.jpg" 
-                  alt="Player" 
+                <img
+                  src="/images/login/image_1.jpg"
+                  alt="Player"
                   className="w-full h-full object-cover"
                 />
               </div>
               <div className="rounded-[100px] overflow-hidden h-64 bg-gray-200">
-                <img 
-                  src="/images/login/image_2.jpg" 
-                  alt="Player" 
+                <img
+                  src="/images/login/image_2.jpg"
+                  alt="Player"
                   className="w-full h-full object-cover"
                 />
               </div>
               <div className="rounded-[100px] overflow-hidden h-56 bg-gray-100 border-2 border-[#5EA39E]">
-                <img 
-                  src="/images/login/image_3.jpg" 
-                  alt="Player" 
+                <img
+                  src="/images/login/image_3.jpg"
+                  alt="Player"
                   className="w-full h-full object-cover"
                 />
               </div>
@@ -198,23 +210,23 @@ const LoginView = () => {
             {/* Column 2 */}
             <div className="flex flex-col gap-4">
               <div className="rounded-[100px] overflow-hidden h-72 bg-gray-200">
-                <img 
-                  src="/images/login/image_4.jpg" 
-                  alt="Player" 
+                <img
+                  src="/images/login/image_4.jpg"
+                  alt="Player"
                   className="w-full h-full object-cover"
                 />
               </div>
               <div className="rounded-[100px] overflow-hidden h-68 bg-gray-200">
-                <img 
-                  src="/images/login/image_5.jpg" 
-                  alt="Player" 
+                <img
+                  src="/images/login/image_5.jpg"
+                  alt="Player"
                   className="w-full h-full object-cover"
                 />
               </div>
               <div className="rounded-[100px] overflow-hidden h-72 bg-gray-200">
-                <img 
-                  src="/images/login/image_6.jpg" 
-                  alt="Player" 
+                <img
+                  src="/images/login/image_6.jpg"
+                  alt="Player"
                   className="w-full h-full object-cover"
                 />
               </div>
@@ -223,23 +235,23 @@ const LoginView = () => {
             {/* Column 3 */}
             <div className="flex flex-col gap-4 pt-16">
               <div className="rounded-[100px] overflow-hidden h-56 bg-gray-200">
-                <img 
-                  src="/images/login/image_7.jpg" 
-                  alt="Player" 
+                <img
+                  src="/images/login/image_7.jpg"
+                  alt="Player"
                   className="w-full h-full object-cover"
                 />
               </div>
               <div className="rounded-[100px] overflow-hidden h-64 bg-gray-200">
-                <img 
-                  src="/images/login/image_8.jpg" 
-                  alt="Player" 
+                <img
+                  src="/images/login/image_8.jpg"
+                  alt="Player"
                   className="w-full h-full object-cover"
                 />
               </div>
               <div className="rounded-[100px] overflow-hidden h-84 bg-gray-100 border-2 border-[#5EA39E]">
-                <img 
-                  src="/images/login/image_9.jpg" 
-                  alt="Player" 
+                <img
+                  src="/images/login/image_9.jpg"
+                  alt="Player"
                   className="w-full h-full object-cover"
                 />
               </div>

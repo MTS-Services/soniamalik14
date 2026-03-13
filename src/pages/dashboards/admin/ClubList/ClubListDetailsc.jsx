@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { MoreVertical } from 'lucide-react';
 import DashboardHeader from '../../../../components/ui/DashboardHeader';
 import Table from '../../../../components/ui/Table';
@@ -231,7 +231,7 @@ const ActiveData = [
       <td className="px-4 py-4 ">{event.interested}</td>
       <td className="px-4 py-4">
         <span
-          className="text-sm font-medium text-[#0F766E]"
+          className="text-base font-medium text-[#0F766E]"
           style={{ color: event.status === 'Approved' ? 'var(--color-btn-primary)' : 'var(--color-dashboardPending)' }}
         >
           {event.status}
@@ -247,7 +247,7 @@ const ActiveData = [
       <td className="px-4 py-4">{member.role}</td>
       <td className="px-4 py-4">{member.joined}</td>
       <td className="px-4 py-4">
-        <span className="text-sm font-medium" style={{ color: member.status === 'Active' ? 'var(--color-btn-primary)' : 'var(--color-dashboardPending)' }}>
+        <span className="text-base font-medium" style={{ color: member.status === 'Active' ? 'var(--color-btn-primary)' : 'var(--color-dashboardPending)' }}>
           {member.status}
         </span>
       </td>

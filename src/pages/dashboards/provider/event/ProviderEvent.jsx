@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import Event from '../../shared/event/Event';
 
 const ProviderEvent = () => {

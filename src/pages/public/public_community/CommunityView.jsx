@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../context/AuthContext';
 import CategorySidebar from './components/CategorySidebar';
@@ -75,7 +75,7 @@ const CommunityView = () => {
     {
       id: 8,
       author: 'Ralph Edwards',
-      title: 'Women in Football – Stories & Inspiration',
+      title: 'Women in Football â€“ Stories & Inspiration',
       description: 'Share journeys, success stories, and motivation for women in football.',
       replies: 4,
       avatar: '/images/avatars/user8.jpg'
