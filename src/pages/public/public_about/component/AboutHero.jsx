@@ -8,7 +8,7 @@ const AboutHero = () => {
   return (
     <div
       style={{ backgroundImage: backgroundImageUrl ? `url(${backgroundImageUrl})` : 'none' }}
-      className="relative flex w-auto items-center justify-center bg-cover bg-center lg:h-200"
+      className="relative flex w-auto items-center justify-center bg-cover bg-center h-100 sm:h-160 md:h-180 lg:h-200"
     >
       <div className="absolute inset-0 z-0 bg-black opacity-30"></div>
       <Container className="relative z-10 py-10 lg:py-0">
