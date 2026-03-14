@@ -204,7 +204,7 @@ const EventDetails = () => {
                 <p className="text-base mb-4 text-[#1A1D1F] ">Ask the organiser a question</p>
                 <form onSubmit={handleSendMessage} className="flex flex-col flex-1">
                   <textarea 
-                    className="w-full flex-1 bg-[#B5D5D2] rounded-xl p-4 text-[14px] text-[#1A1D1F] placeholder-[#4A5565] border-none focus:ring-1 focus:ring-[#147B6B] resize-none mb-4"
+                    className="w-full flex-1 bg-[#B5D5D2] rounded-xl p-4 text-base text-[#1A1D1F] placeholder-[#4A5565] border-none focus:ring-1 focus:ring-[#147B6B] resize-none mb-4"
                     placeholder="Write your message"
                     required
                   ></textarea>
