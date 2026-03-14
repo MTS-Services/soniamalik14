@@ -22,8 +22,9 @@ const DiscoverDetails = () => {
     time: '10:00 - 12:00',
     image: '/images/detaisPage/detailsBanner.png', 
     avatar: '/images/detaisPage/coachAvatar.png', 
-    mapImage: '/images/detaisPage/mapPlaceholder.png', 
+    mapImage: 'https://i.ibb.co.com/ZRNpWQng/1579279c93526af38385f21a2041e29aeb2f2ae5.png', 
     about: 'This weekly women’s cricket nets session is designed for players who want to improve their skills in a relaxed and supportive environment. Whether you’re completely new to cricket or returning after a break, this session provides a safe space to learn, practice, and enjoy the game at your own pace.',
+    
   };
 
   const handleSendMessage = (e) => {
@@ -84,7 +85,7 @@ const DiscoverDetails = () => {
           {/* Session Details Card */}
           <div className="bg-white rounded-lg p-6 md:p-8 mb-8 shadow-sm border border-gray-100">
             <h2 className="text-xl font-bold text-[#000000] mb-3">Session Details</h2>
-            <div className="text-[#272727]  text-base  ">
+            <div className="text-[#272727]  text-base md:max-w-7xl">  
               {item.about}
             </div>
 
@@ -98,17 +99,17 @@ const DiscoverDetails = () => {
             
             {/* Column 1: Session Overview */}
             <div>
-              <h3 className="text-[17px] font-bold text-[#1A1D1F] mb-4">Session Overview</h3>
+              <h3 className="text-xl font-semibold text-[#1A1D1F] mb-4">Session Overview</h3>
               <div className="space-y-3 mb-6">
                 
                 {/* Info Row: Sport */}
-                <div className="flex items-center gap-4 bg-white p-3.5 rounded-xl border border-gray-100 shadow-sm">
+                <div className="flex items-center gap-4 bg-white p-3.5 rounded-lg border border-gray-100 shadow-sm">
                   <div className="w-10 h-10 rounded-full bg-[#EAF2F1] flex items-center justify-center text-[#147B6B]">
                     <Medal className="w-5 h-5" />
                   </div>
                   <div>
-                    <p className="text-[13px] text-gray-500 font-medium mb-0.5">Sport</p>
-                    <p className="text-[15px] font-semibold text-[#1A1D1F]">{item.sport || 'Cricket'}</p>
+                    <p className="text-base text-[#101828] font-medium mb-0.5">Sport</p>
+                    <p className="text-base  text-[#4A5565]">{item.sport || 'Cricket'}</p>
                   </div>
                 </div>
 
@@ -118,8 +119,8 @@ const DiscoverDetails = () => {
                     <Calendar className="w-5 h-5" />
                   </div>
                   <div>
-                    <p className="text-[13px] text-gray-500 font-medium mb-0.5">Session Type</p>
-                    <p className="text-[15px] font-semibold text-[#1A1D1F]">{item.type}</p>
+                    <p className="text-base text-[#101828] font-medium mb-0.5">Session Type</p>
+                    <p className="text-base  text-[#4A5565]">{item.type}</p>
                   </div>
                 </div>
 
@@ -129,8 +130,8 @@ const DiscoverDetails = () => {
                     <Users className="w-5 h-5" />
                   </div>
                   <div>
-                    <p className="text-[13px] text-gray-500 font-medium mb-0.5">Suitable For</p>
-                    <p className="text-[15px] font-semibold text-[#1A1D1F]">{item.suitableFor}</p>
+                    <p className="text-base text-[#101828] font-medium mb-0.5">Suitable For</p>
+                    <p className="text-base  text-[#4A5565]">{item.suitableFor}</p>
                   </div>
                 </div>
 
@@ -140,8 +141,8 @@ const DiscoverDetails = () => {
                     <Users className="w-5 h-5" />
                   </div>
                   <div>
-                    <p className="text-[13px] text-gray-500 font-medium mb-0.5">Women's only</p>
-                    <p className="text-[15px] font-semibold text-[#1A1D1F]">{item.womensOnly}</p>
+                    <p className="text-base text-[#101828] font-medium mb-0.5">Women's only</p>
+                    <p className="text-base  text-[#4A5565]">{item.womensOnly}</p>
                   </div>
                 </div>
 
@@ -149,10 +150,10 @@ const DiscoverDetails = () => {
               
               {/* Action Buttons */}
               <div className="flex flex-wrap gap-3">
-                <button className="bg-[#147B6B] hover:bg-[#0D655D] text-white px-5 py-2.5 rounded-lg text-sm font-medium transition-colors">
+                <button className="bg-[#0F766E] hover:bg-[#0D655D] text-white px-4 py-2.5 rounded-lg text-sm font-medium transition-colors">
                   Book Your Place
                 </button>
-                <button className="bg-[#147B6B] hover:bg-[#0D655D] text-white px-5 py-2.5 rounded-lg text-sm font-medium transition-colors">
+                <button className="bg-[#0F766E] hover:bg-[#0D655D] text-white px-5 py-2.5 rounded-lg text-sm font-medium transition-colors">
                   Register Interest
                 </button>
               </div>
@@ -160,28 +161,28 @@ const DiscoverDetails = () => {
 
             {/* Column 2: Venue Information */}
             <div>
-              <h3 className="text-[17px] font-bold text-[#1A1D1F] mb-4">Venue Information</h3>
-              <div className="bg-white p-6 rounded-[20px] shadow-sm border border-gray-100 h-[380px] flex flex-col">
+              <h3 className="text-xl font-semibold text-[#1A1D1F] mb-4">Venue Information</h3>
+              <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-100 h-[400px] flex flex-col">
                 <div className="space-y-3 mb-6 flex-1">
-                  <p className="text-[14px] flex">
-                    <span className="text-gray-500 w-28 shrink-0">Venue Name:</span> 
-                    <span className="font-medium text-[#1A1D1F] truncate">{item.location}</span>
+                  <p className="text-base flex">
+                    <span className="text-[#1A1D1F] w-28 shrink-0 font-medium">Venue Name:</span> 
+                    <span className=" text-[#1A1D1F] truncate">{item.location}</span>
                   </p>
-                  <p className="text-[14px] flex">
-                    <span className="text-gray-500 w-28 shrink-0">Postcode:</span> 
-                    <span className="font-medium text-[#1A1D1F]">{item.postcode}</span>
+                  <p className="text-base flex">
+                    <span className="text-[#1A1D1F] w-28 shrink-0 font-medium">Postcode:</span> 
+                    <span className=" text-[#1A1D1F]">{item.postcode}</span>
                   </p>
-                  <p className="text-[14px] flex">
-                    <span className="text-gray-500 w-28 shrink-0">Town/City:</span> 
-                    <span className="font-medium text-[#1A1D1F]">{item.town}</span>
+                  <p className="text-base flex">
+                    <span className="text-[#1A1D1F] w-28 shrink-0 font-medium">Town/City:</span> 
+                    <span className=" text-[#1A1D1F]">{item.town}</span>
                   </p>
-                  <p className="text-[14px] flex">
-                    <span className="text-gray-500 w-28 shrink-0">Session Days:</span> 
-                    <span className="font-medium text-[#1A1D1F]">{item.day}</span>
+                  <p className="text-base flex">
+                    <span className="text-[#1A1D1F] w-28 shrink-0 font-medium">Session Days:</span> 
+                    <span className=" text-[#1A1D1F]">{item.day}</span>
                   </p>
-                  <p className="text-[14px] flex">
-                    <span className="text-gray-500 w-28 shrink-0">Session Time:</span> 
-                    <span className="font-medium text-[#1A1D1F]">{item.time}</span>
+                  <p className="text-base flex">
+                    <span className="text-[#1A1D1F] w-28 shrink-0 font-medium">Session Time:</span> 
+                    <span className=" text-[#1A1D1F]">{item.time}</span>
                   </p>
                 </div>
                 
@@ -198,18 +199,18 @@ const DiscoverDetails = () => {
 
             {/* Column 3: Contact Organiser */}
             <div>
-              <h3 className="text-[17px] font-bold text-[#1A1D1F] mb-4">Contact Organiser</h3>
-              <div className="bg-[#E7F1F1] p-6 rounded-[20px] h-[380px] flex flex-col">
-                <p className="text-[15px] mb-4 text-[#1A1D1F] font-medium">Ask the organiser a question</p>
+              <h3 className="text-xl font-semibold text-[#1A1D1F] mb-4">Contact Organiser</h3>
+              <div className="bg-[#E7F1F1] p-4 rounded-lg h-[400px] flex flex-col">
+                <p className="text-base mb-4 text-[#1A1D1F] ">Ask the organiser a question</p>
                 <form onSubmit={handleSendMessage} className="flex flex-col flex-1">
                   <textarea 
-                    className="w-full flex-1 bg-[#C8DFDB] rounded-xl p-4 text-[14px] text-[#1A1D1F] placeholder-gray-500/70 border-none focus:ring-1 focus:ring-[#147B6B] resize-none mb-4"
+                    className="w-full flex-1 bg-[#B5D5D2] rounded-xl p-4 text-base text-[#1A1D1F] placeholder-gray-500/70 border-none focus:ring-1 focus:ring-[#147B6B] resize-none mb-4"
                     placeholder="Write your message"
                     required
                   ></textarea>
                   <button 
                     type="submit"
-                    className="bg-[#147B6B] hover:bg-[#0D655D] text-white px-5 py-2.5 rounded-lg text-sm font-medium transition-colors w-fit"
+                    className="bg-[#0F766E] hover:bg-[#0F766E] text-white px-5 py-2.5 rounded-lg text-sm font-medium transition-colors w-fit"
                   >
                     Send message
                   </button>
