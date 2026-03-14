@@ -40,7 +40,7 @@ const DiscoverDetails = () => {
           {/* Hero Banner Section */}
           <div className="relative mb-16">
             {/* Banner Image */}
-            <div className="w-full h-[250px] md:h-[800px] rounded-2xl overflow-hidden shadow-sm">
+            <div className="w-full h-62.5 md:h-150 rounded-2xl overflow-hidden shadow-sm">
               {item.image ? (
                 <img src={item.image} alt={item.title} className="w-full h-full object-cover" />
               ) : (
