@@ -4,6 +4,7 @@ import { useAuth } from '../../../context/AuthContext';
 import CategorySidebar from './components/CategorySidebar';
 import ForumTopicCard from './components/ForumTopicCard';
 import StartADiscussion from './components/StartADiscussion';
+import ShareAnExperienceModal from './components/ShareAnExperienceModal';
 import AskAQuestionModal from './components/AskAQuestionModal';
 import AddPostModal from './components/AddPostModal';
 import Button from '../../../components/ui/Button';
@@ -263,7 +264,13 @@ const CommunityView = () => {
       </Container>
 
       <StartADiscussion
-        isOpen={showModal && (activeCategory === 'Stories & Experiences' || activeCategory === 'All Discussion')}
+        isOpen={showModal && activeCategory === 'All Discussion'}
+        onClose={() => setShowModal(false)}
+        onSubmit={handleShareExperience}
+      />
+
+      <ShareAnExperienceModal
+        isOpen={showModal && activeCategory === 'Stories & Experiences'}
         onClose={() => setShowModal(false)}
         onSubmit={handleShareExperience}
       />
