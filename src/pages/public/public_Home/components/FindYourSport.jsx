@@ -11,7 +11,7 @@ const tiles = [
 
 const FindYourSport = () => {
     return (
-        <section className="py-14 lg:py-16 bg-[#E7F1F1]">
+        <section className="py-10 sm:py-16 lg:py-20 bg-[#E7F1F1]">
             <Container>
                 <div className="text-center mb-4 lg:mb-6">
                   <h2 className="font-bold text-[#0B544E]  text-2xl sm:text-3xl md:text-4xl lg:text-5xl " >

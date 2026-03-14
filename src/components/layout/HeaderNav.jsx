@@ -96,7 +96,7 @@ const HeaderNav = ({ isMenuOpen, setIsMenuOpen }) => {
           <div className="flex items-center gap-3">
             {isAuthenticated && (
               <>
-                <Button
+                {/* <Button
                   variant="secondary"
                   size="xs"
                   className="rounded-md text-xs py-1.5"
@@ -106,10 +106,10 @@ const HeaderNav = ({ isMenuOpen, setIsMenuOpen }) => {
                   }}
                 >
                   My Orders
-                </Button>
+                </Button> */}
                 <Button
-                  variant="secondary"
-                  size="xs"
+                  variant="primary"
+                  size="sm"
                   className="rounded-md text-xs py-1.5"
                   onClick={handleProfileClick}
                 >
@@ -142,7 +142,7 @@ const HeaderNav = ({ isMenuOpen, setIsMenuOpen }) => {
               <div className="flex flex-col gap-2 pt-3">
                 {isAuthenticated ? (
                   <>
-                    <Button
+                    {/* <Button
                       variant="secondary"
                       className="w-full rounded-md"
                       onClick={() => {
@@ -151,7 +151,7 @@ const HeaderNav = ({ isMenuOpen, setIsMenuOpen }) => {
                       }}
                     >
                       My Orders
-                    </Button>
+                    </Button> */}
                     <Button
                       variant="secondary"
                       className="w-full rounded-md"

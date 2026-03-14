@@ -21,10 +21,10 @@ const steps = [
 
 const HowItWorks = () => {
   return (
-    <section className="bg-white py-20 px-4 sm:px-6 lg:px-8 font-sans">
+    <section className="bg-white py-10 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-8 font-sans">
       <div className="max-w-6xl mx-auto">
         {/* Section Header */}
-        <h2 className="text-4xl font-bold text-center text-[#0B544E] mb-24">
+        <h2 className="text-4xl font-bold text-center text-[#0B544E] mb-10 md:mb-24">
           How it works
         </h2>
 

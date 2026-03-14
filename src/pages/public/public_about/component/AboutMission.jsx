@@ -1,4 +1,5 @@
-﻿import React from 'react';
+﻿
+import React from 'react';
 import Container from '../../../../components/layout/Container';
 
 const AboutMission = () => {
@@ -22,18 +23,18 @@ const AboutMission = () => {
                 easier to feel part of.
               </p>
 
-              <p className="text-[15px] md:text-base text-[#1A1D1F] leading-relaxed">
+              <p className="text-base md:text-xl text-[#1A1D1F] leading-relaxed">
                 For many women, opportunities aren't always visible. Information can
                 be scattered, local sessions can be hard to discover, and starting or
                 returning can feel daunting.
               </p>
 
-              <p className="text-[15px] md:text-base text-[#1A1D1F] leading-relaxed">
+              <p className="text-base md:text-xl text-[#1A1D1F] leading-relaxed">
                 ESSA Hub brings local sport, community and women-focused services
                 into one place.
               </p>
 
-              <p className="text-[15px] md:text-base text-[#1A1D1F] font-bold">
+              <p className="text-base md:text-xl text-[#1A1D1F] font-bold">
                 Built for women. Led by women. Focused on participation.
               </p>
             </div>
@@ -46,7 +47,7 @@ const AboutMission = () => {
               {/* Left Column */}
               <div className="flex flex-col gap-3 md:gap-5 lg:gap-6">
                 {/* Football field - Tall image (Height increased for md/lg, original for xl) */}
-                <div className="w-full aspect-[3/4] md:aspect-[2/3] lg:aspect-[2/3.2] xl:aspect-[2.5/3] rounded-2xl md:rounded-[24px] overflow-hidden shadow-sm">
+                <div className="w-full aspect-[3/4] md:aspect-[2/3] lg:aspect-[2/3.2] xl:aspect-[3.5/3] rounded-2xl md:rounded-[24px] overflow-hidden shadow-sm">
                   <img
                     src="https://i.ibb.co.com/HTH1JGdM/8566dfd34f75b216152413d0df32b95e7a8e5cde.png"
                     alt="Football field"
@@ -76,7 +77,7 @@ const AboutMission = () => {
                 </div>
 
                 {/* Basketball player - Tall image (Height increased for md/lg, original for xl) */}
-                <div className="w-full aspect-[3/4] md:aspect-[2/3] lg:aspect-[2/3.2] xl:aspect-[2.5/3] rounded-2xl md:rounded-[24px] overflow-hidden shadow-sm">
+                <div className="w-full aspect-[3/4] md:aspect-[2/3] lg:aspect-[2/3.2] xl:aspect-[3.5/3] rounded-2xl md:rounded-[24px] overflow-hidden shadow-sm">
                   <img
                     src="https://i.ibb.co.com/nswVb7Lc/e186ad5a2a26d6d1df719ecff7b35da792473089.jpg"
                     alt="Basketball player"

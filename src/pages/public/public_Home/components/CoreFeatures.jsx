@@ -76,7 +76,7 @@ const HubCard = ({ title, description, image, alt }) => {
 export default function CoreFeatures() {
   return (
     <section
-      className="bg-[#E7F1F199] h-auto w-full px-4 sm:px-6 lg:px-8 flex flex-col items-center justify-center py-12 sm:py-16 lg:py-20"
+      className="bg-[#E7F1F199] h-auto w-full px-4 sm:px-6 lg:px-8 flex flex-col items-center justify-center py-10 sm:py-16 lg:py-20"
       
       aria-labelledby="essa-hub-heading"
     >
