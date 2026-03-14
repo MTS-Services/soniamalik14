@@ -5,8 +5,8 @@ import HomeView from '../pages/public/public_Home/HomeView';
 import AboutView from '../pages/public/public_about/AboutView';
 import DiscoverView from '../pages/public/public_discover/DiscoverView';
 import DiscoverDetails from '../pages/public/public_discover/DiscoverDetails';
-import FindSport from '../pages/public/public_FindSport/FindSport';
-import FindSportDetails from '../pages/public/public_FindSport/components/FindSportDetails';
+// import FindSport from '../pages/public/public_FindSport/FindSport';
+// import FindSportDetails from '../pages/public/public_FindSport/components/FindSportDetails';
 import SigninView from '../pages/public/public_login/SigninView.jsx';
 import RegisterView from '../pages/public/public_login/SignUpView.jsx';
 import VerifyEmailView from '../pages/public/public_login/VerifyEmailView.jsx';
@@ -94,8 +94,8 @@ const router = createBrowserRouter(
       <Route path="/" element={<RootLayout />}>
         <Route index element={<HomeView />} />
         <Route path="about" element={<AboutView />} />
-        <Route path="find-sport" element={<FindSport />} />
-        <Route path="find-sport/:id" element={<FindSportDetails />} />
+        {/* <Route path="find-sport" element={<FindSport />} />
+        <Route path="find-sport/:id" element={<FindSportDetails />} /> */}
         <Route path="discover" element={<DiscoverView />} />
         <Route path="discover/:type/:id" element={<DiscoverDetails />} />
         <Route path="community" element={<CommunityView />} />

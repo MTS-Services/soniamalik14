@@ -7,31 +7,31 @@ import DiscoverCard from './components/DiscoverCard';
 import Pagination from './components/Pagination';
 
 const sample = Array.from({ length: 9 }).map((_, i) => ({
-  id: i + 1,
-  title: ['Woking Warriors FC', 'Beginner Basics Boot Camp', 'Weekly 5-a-Side Session'][i % 3],
-  type: ['Clubs', 'Training', 'Sessions'][i % 3],
-  day: 'Monday, Wednesday',
-  time: '19:00 - 21:00',
-  location: '2972 Wetherden Rd, Santa Ana, Illinois 85486',
-  summary: 'Login to see contact details & ability requirements',
-  image: ['/player1.png', '/player2.png', '/player3.jpg'][i % 3],
-  about: 'Woking Warriors FC is a women-focused football club committed to developing talent, teamwork, and confidence. We provide a supportive environment for players to grow both on and off the field.',
-  homeGround: 'Woking Community Football Stadium',
-  level: 'Beginner to Intermediate',
-  ageGroup: '16+ Years',
-  experienceRequired: 'Basic football knowledge preferred (not mandatory)',
-  trainingFrequency: '2 days per week',
-  matchSchedule: 'Weekend matches & friendly games',
-  seasonDuration: '6 months',
-  headCoach: 'Sarah Williams',
-  coachingStyle: 'Fitness-focused, tactical & player-friendly',
-  trialRequired: 'Yes',
-  trialDate: '15 September 2025',
-  trialTime: '6:30 PM',
-  trialLocation: 'Woking Community Football Stadium',
-  postedBy: 'Woking Warriors FC (Club Owner)',
-  contactEmail: 'info@wokingwarriorsfc.com',
-  phone: '+1 234 567 890',
+      id: i + 1,
+      title: ['Woking Warriors FC', 'Beginner Basics Boot Camp', 'Weekly 5-a-Side Session'][i % 3],
+      type: ['Clubs', 'Training', 'Sessions'][i % 3],
+      day: 'Monday, Wednesday',
+      time: '19:00 - 21:00',
+      location: '2972 Wetherden Rd, Santa Ana, Illinois 85486',
+      summary: 'Login to see contact details & ability requirements',
+      image: ['/player1.png', '/player2.png', '/player3.jpg'][i % 3],
+      about: 'Woking Warriors FC is a women-focused football club committed to developing talent, teamwork, and confidence. We provide a supportive environment for players to grow both on and off the field.',
+      homeGround: 'Woking Community Football Stadium',
+      level: 'Beginner to Intermediate',
+      ageGroup: '16+ Years',
+      experienceRequired: 'Basic football knowledge preferred (not mandatory)',
+      trainingFrequency: '2 days per week',
+      matchSchedule: 'Weekend matches & friendly games',
+      seasonDuration: '6 months',
+      headCoach: 'Sarah Williams',
+      coachingStyle: 'Fitness-focused, tactical & player-friendly',
+      trialRequired: 'Yes',
+      trialDate: '15 September 2025',
+      trialTime: '6:30 PM',
+      trialLocation: 'Woking Community Football Stadium',
+      postedBy: 'Woking Warriors FC (Club Owner)',
+      contactEmail: 'info@wokingwarriorsfc.com',
+      phone: '+1 234 567 890',
 }));
 
 const DiscoverView = () => {
@@ -70,13 +70,13 @@ const DiscoverView = () => {
       <Container>
         <div className="mb-8">
           <PageHeader title="Find your sport" />
-
+          
           {/* New Filter Section Added Here */}
           <div className="mt-4 bg-[#E7F1F1] p-4 rounded-lg inline-flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
-
+            
             {/* Select Sports Dropdown */}
             <div className="relative w-full sm:w-[180px]">
-              <select
+              <select 
                 value={selectedSport}
                 onChange={(e) => {
                   setSelectedSport(e.target.value);
@@ -110,7 +110,7 @@ const DiscoverView = () => {
 
             {/* Distance Dropdown */}
             <div className="relative w-full sm:w-[140px]">
-              <select
+              <select 
                 value={distance}
                 onChange={(e) => {
                   setDistance(e.target.value);
@@ -129,7 +129,7 @@ const DiscoverView = () => {
                 </svg>
               </div>
             </div>
-
+            
           </div>
         </div>
 
@@ -153,7 +153,7 @@ const DiscoverView = () => {
               <p className="text-[#363636] text-base mb-4">
                 We couldn't find any sports matching your search criteria.
               </p>
-              <button
+              <button 
                 onClick={() => {
                   setSelectedSport('');
                   setLocation('');
