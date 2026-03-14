@@ -34,8 +34,8 @@ const ShareAnExperienceModal = ({ isOpen, onClose, onSubmit }) => {
     if (!isOpen) return null;
 
     return (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-            <div className="bg-white rounded-lg max-w-md w-full max-h-[90vh] overflow-y-auto">
+        <div className="fixed inset-0 bg-black/80 bg-opacity-50 flex items-center justify-center z-50 p-4">
+            <div className="bg-white rounded-lg max-w-xl w-full max-h-[90vh] overflow-y-auto">
                 {/* Header */}
                 <div className="flex justify-between items-center p-6 border-b border-gray-200">
                     <h2 className="text-lg font-semibold text-gray-900">Share An Experience</h2>
@@ -51,7 +51,7 @@ const ShareAnExperienceModal = ({ isOpen, onClose, onSubmit }) => {
                 <div className="p-6 space-y-6">
                     {/* Thread Title */}
                     <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">Thread Title</label>
+                        <label className="block text-base font-medium text-gray-700 mb-2">Thread Title</label>
                         <input
                             type="text"
                             placeholder="Write title"
@@ -63,7 +63,7 @@ const ShareAnExperienceModal = ({ isOpen, onClose, onSubmit }) => {
 
                     {/* Description */}
                     <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">Description</label>
+                        <label className="block text-base font-medium text-gray-700 mb-2">Description</label>
                         <textarea
                             placeholder="Write description"
                             value={description}
