@@ -7,8 +7,8 @@ const LoginModal = ({ isOpen, onClose, onLoginClick }) => {
         <div className="fixed inset-0 bg-black/80 bg-opacity-50 flex items-center justify-center z-50">
             <div className="bg-white rounded-lg p-8 max-w-sm w-full mx-4 shadow-lg">
                 <div className="text-center">
-                    <p className="text-gray-700 text-base mb-6">
-                        To contact this club or register interest, please log in.
+                    <p className="text-gray-700 text-xl font-semibold mb-6">
+                       To contact this club or register interest, please log in.
                     </p>
                     <button
                         onClick={onLoginClick}
