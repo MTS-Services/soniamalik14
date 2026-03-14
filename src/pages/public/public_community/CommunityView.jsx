@@ -18,6 +18,7 @@ const CommunityView = () => {
   const [showShareModal, setShowShareModal] = useState(false);
 
   const sports = ['All', 'Football', 'Netball', 'Padel', 'Squash', 'Cricket', 'Multi-Sport', 'Not sport-specific'];
+  const itemsPerPage = 6;
 
   const handleShareExperience = (formData) => {
     console.log('New thread created:', formData);
@@ -74,8 +75,86 @@ const CommunityView = () => {
       description: 'Talk about injury prevention, recovery tips, and player health.',
       replies: 4,
       avatar: '/images/avatars/user3.jpg'
+    },
+    {
+      id: 4,
+      author: 'Ralph Edwards',
+      title: 'Players Needed for Our Team',
+      description: 'Post trial details, required positions, and team information.',
+      replies: 4,
+      avatar: '/images/avatars/user4.jpg'
+    },
+    {
+      id: 5,
+      author: 'Ralph Edwards',
+      title: "Women's Football Event Announcements",
+      description: 'Share upcoming tournaments, trials, friendly matches, or events.',
+      replies: 4,
+      avatar: '/images/avatars/user5.jpg'
+    },
+    {
+      id: 6,
+      author: 'Ralph Edwards',
+      title: 'Club Management & Team Building',
+      description: 'Discuss team management, scheduling, and player development.',
+      replies: 4,
+      avatar: '/images/avatars/user6.jpg'
+    },
+    {
+      id: 7,
+      author: 'Ralph Edwards',
+      title: 'Physio, Fitness & Nutrition Support',
+      description: 'Offer physiotherapy, fitness training, and nutrition services.',
+      replies: 4,
+      avatar: '/images/avatars/user7.jpg'
+    },
+    {
+      id: 8,
+      author: 'Ralph Edwards',
+      title: 'Women in Football – Stories & Inspiration',
+      description: 'Share journeys, success stories, and motivation for women in football.',
+      replies: 4,
+      avatar: '/images/avatars/user8.jpg'
+    },
+    {
+      id: 9,
+      author: 'Ralph Edwards',
+      title: 'Challenges Faced by Women Footballers',
+      description: 'Discuss common challenges and support each other with solutions.',
+      replies: 4,
+      avatar: '/images/avatars/user9.jpg'
+    },
+    {
+      id: 10,
+      author: 'Ralph Edwards',
+      title: 'Mental Health & Wellbeing',
+      description: 'Discuss mental strength, dealing with pressure, and player wellness.',
+      replies: 4,
+      avatar: '/images/avatars/user10.jpg'
+    },
+    {
+      id: 11,
+      author: 'Ralph Edwards',
+      title: 'Sponsorship & Funding Opportunities',
+      description: 'Share information about sponsorships, grants, and funding for clubs.',
+      replies: 4,
+      avatar: '/images/avatars/user11.jpg'
+    },
+    {
+      id: 12,
+      author: 'Ralph Edwards',
+      title: 'Youth Development Programs',
+      description: 'Discuss grassroots development and youth engagement in sports.',
+      replies: 4,
+      avatar: '/images/avatars/user12.jpg'
     }
   ];
+
+  // Calculate pagination
+  const totalPages = Math.ceil(topics.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const paginatedTopics = topics.slice(startIndex, endIndex);
 
   return (
     <div className="min-h-screen bg-gray-50 py-6 lg:py-8">
@@ -93,7 +172,7 @@ const CommunityView = () => {
 
           {/* Main Content */}
           <div className="lg:col-span-3">
-            
+
             {/* Dynamic Header Section */}
             <div className="flex flex-col sm:flex-row justify-between items-start mb-6 gap-4">
               <div className={currentHeader.titleClass}>
@@ -117,11 +196,10 @@ const CommunityView = () => {
                     <button
                       key={sport}
                       onClick={() => setActiveSport(sport)}
-                      className={`px-4 py-2 rounded-lg text-sm md:text-base font-medium transition-colors ${
-                        activeSport === sport
+                      className={`px-4 py-2 rounded-lg text-sm md:text-base font-medium transition-colors ${activeSport === sport
                           ? 'bg-[#147B6B] text-white'
                           : 'bg-[#91C0BC] text-[#242424] hover:bg-[#7db0ac]'
-                      }`}
+                        }`}
                     >
                       {sport}
                     </button>
@@ -154,7 +232,7 @@ const CommunityView = () => {
             )}
 
             <div className="space-y-2 lg:space-y-4 mb-8">
-              {topics.map((topic) => (
+              {paginatedTopics.map((topic) => (
                 <ForumTopicCard
                   key={topic.id}
                   topic={topic}
@@ -163,11 +241,13 @@ const CommunityView = () => {
               ))}
             </div>
 
-            <Pagination
-              page={currentPage}
-              total={10}
-              onChange={setCurrentPage}
-            />
+            {totalPages > 1 && (
+              <Pagination
+                page={currentPage}
+                total={totalPages}
+                onChange={setCurrentPage}
+              />
+            )}
           </div>
         </div>
       </Container>
