@@ -3,7 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../context/AuthContext';
 import CategorySidebar from './components/CategorySidebar';
 import ForumTopicCard from './components/ForumTopicCard';
-import ShareExperienceModal from './components/ShareExperienceModal';
+import StartADiscussion from './components/StartADiscussion';
+import AskAQuestionModal from './components/AskAQuestionModal';
+import AddPostModal from './components/AddPostModal';
 import Button from '../../../components/ui/Button';
 import Pagination from '../../../components/ui/Pagination';
 import Container from '../../../components/layout/Container';
@@ -15,13 +17,21 @@ const CommunityView = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [activeSport, setActiveSport] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
-  const [showShareModal, setShowShareModal] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   const sports = ['All', 'Football', 'Netball', 'Padel', 'Squash', 'Cricket', 'Multi-Sport', 'Not sport-specific'];
   const itemsPerPage = 6;
 
   const handleShareExperience = (formData) => {
     console.log('New thread created:', formData);
+  };
+
+  const handleOpenModal = () => {
+    if (isAuthenticated) {
+      setShowModal(true);
+    } else {
+      navigate('/signin');
+    }
   };
 
   // Dynamic configuration for Header & Button based on active category
@@ -182,7 +192,7 @@ const CommunityView = () => {
               <Button
                 variant="primary"
                 className="rounded-md w-full sm:w-auto shrink-0 bg-[#147B6B] hover:bg-[#0D655D] text-white px-6 py-2.5 font-medium transition-colors"
-                onClick={() => (isAuthenticated ? setShowShareModal(true) : navigate('/signin'))}
+                onClick={handleOpenModal}
               >
                 {isAuthenticated ? currentHeader.buttonText : 'Log in To Post'}
               </Button>
@@ -197,8 +207,8 @@ const CommunityView = () => {
                       key={sport}
                       onClick={() => setActiveSport(sport)}
                       className={`px-4 py-2 rounded-lg text-sm md:text-base font-medium transition-colors ${activeSport === sport
-                          ? 'bg-[#147B6B] text-white'
-                          : 'bg-[#91C0BC] text-[#242424] hover:bg-[#7db0ac]'
+                        ? 'bg-[#147B6B] text-white'
+                        : 'bg-[#91C0BC] text-[#242424] hover:bg-[#7db0ac]'
                         }`}
                     >
                       {sport}
@@ -252,9 +262,21 @@ const CommunityView = () => {
         </div>
       </Container>
 
-      <ShareExperienceModal
-        isOpen={showShareModal}
-        onClose={() => setShowShareModal(false)}
+      <StartADiscussion
+        isOpen={showModal && (activeCategory === 'Stories & Experiences' || activeCategory === 'All Discussion')}
+        onClose={() => setShowModal(false)}
+        onSubmit={handleShareExperience}
+      />
+
+      <AskAQuestionModal
+        isOpen={showModal && activeCategory === 'Questions & Advice'}
+        onClose={() => setShowModal(false)}
+        onSubmit={handleShareExperience}
+      />
+
+      <AddPostModal
+        isOpen={showModal && activeCategory === 'Match & event support'}
+        onClose={() => setShowModal(false)}
         onSubmit={handleShareExperience}
       />
     </div>

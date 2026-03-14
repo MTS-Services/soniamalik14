@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 
-const ShareExperienceModal = ({ isOpen, onClose, onSubmit }) => {
+const AskAQuestionModal = ({ isOpen, onClose, onSubmit }) => {
     const [threadTitle, setThreadTitle] = useState('');
     const [description, setDescription] = useState('');
     const [selectedSport, setSelectedSport] = useState('');
     const [selectedTopics, setSelectedTopics] = useState([]);
 
     const sports = ['Football', 'Netball', 'Padel', 'Squash', 'Cricket', 'Multi-Sport', 'Not sport-specific'];
-    const topics = ['New to sport', 'Returning to sport', 'Nerves & confidence', 'Injury', 'Hormonal health', 'Kit & gear', 'General'];
+    const topics = ['New To Sport', 'Returning to sport', 'Nerves & confidence', 'Injury', 'Hormonal health', 'Kit & gear', 'General'];
 
     const handleTopicToggle = (topic) => {
         setSelectedTopics((prev) =>
@@ -23,7 +23,6 @@ const ShareExperienceModal = ({ isOpen, onClose, onSubmit }) => {
                 sport: selectedSport,
                 topics: selectedTopics,
             });
-            // Reset form
             setThreadTitle('');
             setDescription('');
             setSelectedSport('');
@@ -35,11 +34,11 @@ const ShareExperienceModal = ({ isOpen, onClose, onSubmit }) => {
     if (!isOpen) return null;
 
     return (
-        <div className="fixed inset-0 bg-black/80 bg-opacity-50 flex items-center justify-center z-50 p-4">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
             <div className="bg-white rounded-lg max-w-md w-full max-h-[90vh] overflow-y-auto">
                 {/* Header */}
                 <div className="flex justify-between items-center p-6 border-b border-gray-200">
-                    <h2 className="text-xl font-semibold text-gray-900">Share An Experience</h2>
+                    <h2 className="text-xl font-semibold text-gray-900">Ask a Question</h2>
                     <button
                         onClick={onClose}
                         className="text-gray-400 hover:text-gray-600 text-2xl leading-none"
@@ -128,4 +127,4 @@ const ShareExperienceModal = ({ isOpen, onClose, onSubmit }) => {
     );
 };
 
-export default ShareExperienceModal;
+export default AskAQuestionModal;
