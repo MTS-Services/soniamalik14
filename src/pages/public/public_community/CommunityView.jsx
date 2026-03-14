@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../context/AuthContext';
 import CategorySidebar from './components/CategorySidebar';
 import ForumTopicCard from './components/ForumTopicCard';
+import ShareExperienceModal from './components/ShareExperienceModal';
 import Button from '../../../components/ui/Button';
 import Pagination from '../../../components/ui/Pagination';
 import Container from '../../../components/layout/Container';
@@ -13,6 +14,17 @@ const CommunityView = () => {
   const navigate = useNavigate();
   const [activeCategory, setActiveCategory] = useState('All Discussion');
   const [currentPage, setCurrentPage] = useState(1);
+  const [activeSport, setActiveSport] = useState('All');
+  const [searchQuery, setSearchQuery] = useState('');
+  const [showShareModal, setShowShareModal] = useState(false);
+
+  const sports = ['All', 'Football', 'Netball', 'Padel', 'Squash', 'Cricket', 'Multi-Sport', 'Not sport-specific'];
+
+  const handleShareExperience = (formData) => {
+    // Handle the form submission
+    console.log('New thread created:', formData);
+    // You can add API call here to save the thread
+  };
 
   // Sample forum topics data
   const topics = [
@@ -120,11 +132,56 @@ const CommunityView = () => {
               <Button
                 variant="primary"
                 className="rounded-md mt-4 sm:mt-0 w-full sm:w-auto"
-                onClick={() => (isAuthenticated ? navigate('/community/new') : navigate('/signin'))}
+                onClick={() => (isAuthenticated ? setShowShareModal(true) : navigate('/signin'))}
               >
-                {isAuthenticated ? 'Post a thread' : 'Log in To Post'}
+                {isAuthenticated ? 'Ask Or Share' : 'Log in To Post'}
               </Button>
             </div>
+
+            {/* Filter & Search Section - Show only when logged in */}
+            {isAuthenticated && (
+              <div className=" mb-6">
+                {/* Sport Filter Buttons */}
+                <div className="flex flex-wrap gap-2 md:gap-4 mb-4">
+                  {sports.map((sport) => (
+                    <button
+                      key={sport}
+                      onClick={() => setActiveSport(sport)}
+                      className={`px-4 py-2 rounded-lg text-base font-medium transition-colors ${activeSport === sport
+                        ? 'bg-btn-primary text-white'
+                        : 'bg-[#91C0BC] text-[#242424] '
+                        }`}
+                    >
+                      {sport}
+                    </button>
+                  ))}
+                </div>
+
+                {/* Search Bar */}
+                <div className="relative">
+                  <input
+                    type="text"
+                    placeholder="Search for anything..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="w-full px-4 py-3 pl-4 pr-10 rounded-lg bg-white border border-gray-200 outline-none focus:ring-2 focus:ring-btn-primary focus:border-transparent"
+                  />
+                  <svg
+                    className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                    />
+                  </svg>
+                </div>
+              </div>
+            )}
 
             <div className="space-y-2 lg:space-y-4">
               {topics.map((topic) => (
@@ -145,6 +202,13 @@ const CommunityView = () => {
           </div>
         </div>
       </Container>
+
+      {/* Share Experience Modal */}
+      <ShareExperienceModal
+        isOpen={showShareModal}
+        onClose={() => setShowShareModal(false)}
+        onSubmit={handleShareExperience}
+      />
     </div>
   );
 };
