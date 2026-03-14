@@ -7,7 +7,6 @@ import ShareExperienceModal from './components/ShareExperienceModal';
 import Button from '../../../components/ui/Button';
 import Pagination from '../../../components/ui/Pagination';
 import Container from '../../../components/layout/Container';
-import SectionHeader from '../../../components/ui/SectionHeader';
 
 const CommunityView = () => {
   const { isAuthenticated } = useAuth();
@@ -21,12 +20,36 @@ const CommunityView = () => {
   const sports = ['All', 'Football', 'Netball', 'Padel', 'Squash', 'Cricket', 'Multi-Sport', 'Not sport-specific'];
 
   const handleShareExperience = (formData) => {
-    // Handle the form submission
     console.log('New thread created:', formData);
-    // You can add API call here to save the thread
   };
 
-  // Sample forum topics data
+  // Dynamic configuration for Header & Button based on active category
+  const headerConfig = {
+    'All Discussion': {
+      title: 'ESSA Community',
+      buttonText: 'Ask Or Share',
+      titleClass: 'text-[32px] font-bold text-[#1A1D1F]',
+    },
+    'Stories & Experiences': {
+      title: 'A space to share moments, reflections and stories from your time in sport.',
+      buttonText: 'Share an Experience',
+      titleClass: 'text-[18px] lg:text-[20px] font-medium text-[#1A1D1F] max-w-2xl leading-relaxed',
+    },
+    'Questions & Advice': {
+      title: "Ask for advice, reassurance, or perspectives from others who've been there.",
+      buttonText: 'Question',
+      titleClass: 'text-[18px] lg:text-[20px] font-medium text-[#1A1D1F] max-w-2xl leading-relaxed',
+    },
+    'Match & event support': {
+      title: 'Need a last-minute sub, referee, or extra help for a match or event? Post here for short-term support from the community.',
+      buttonText: 'Add Post',
+      titleClass: 'text-[18px] lg:text-[20px] font-medium text-[#1A1D1F] max-w-3xl leading-relaxed',
+    }
+  };
+
+  // Fallback to 'All Discussion' if category doesn't match perfectly
+  const currentHeader = headerConfig[activeCategory] || headerConfig['All Discussion'];
+
   const topics = [
     {
       id: 1,
@@ -51,63 +74,12 @@ const CommunityView = () => {
       description: 'Talk about injury prevention, recovery tips, and player health.',
       replies: 4,
       avatar: '/images/avatars/user3.jpg'
-    },
-    {
-      id: 4,
-      author: 'Ralph Edwards',
-      title: 'Players Needed for Our Team',
-      description: 'Post trial details, required positions, and team information.',
-      replies: 4,
-      avatar: '/images/avatars/user4.jpg'
-    },
-    {
-      id: 5,
-      author: 'Ralph Edwards',
-      title: "Women's Football Event Announcements",
-      description: 'Share upcoming tournaments, trials, friendly matches, or events.',
-      replies: 4,
-      avatar: '/images/avatars/user5.jpg'
-    },
-    {
-      id: 6,
-      author: 'Ralph Edwards',
-      title: 'Club Management & Team Building',
-      description: 'Discuss team management, scheduling, and player development.',
-      replies: 4,
-      avatar: '/images/avatars/user6.jpg'
-    },
-    {
-      id: 7,
-      author: 'Ralph Edwards',
-      title: 'Physio, Fitness & Nutrition Support',
-      description: 'Offer physiotherapy, fitness training, and nutrition services.',
-      replies: 4,
-      avatar: '/images/avatars/user7.jpg'
-    },
-    {
-      id: 8,
-      author: 'Ralph Edwards',
-      title: 'Women in Football â€“ Stories & Inspiration',
-      description: 'Share journeys, success stories, and motivation for women in football.',
-      replies: 4,
-      avatar: '/images/avatars/user8.jpg'
-    },
-    {
-      id: 9,
-      author: 'Ralph Edwards',
-      title: 'Challenges Faced by Women Footballers',
-      description: 'Discuss common challenges and support each other with solutions.',
-      replies: 4,
-      avatar: '/images/avatars/user9.jpg'
     }
   ];
 
   return (
     <div className="min-h-screen bg-gray-50 py-6 lg:py-8">
       <Container>
-        {/* Header */}
-
-        {/* Main Content Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-3 lg:gap-6">
           {/* Left Sidebar - Categories */}
           <div className="lg:col-span-1">
@@ -119,52 +91,50 @@ const CommunityView = () => {
             </div>
           </div>
 
-          {/* Main Content - Forum Topics */}
+          {/* Main Content */}
           <div className="lg:col-span-3">
-            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-3 ">
-              <SectionHeader
-                title="ESSA Community"
-                className='text-3xl'
-                align="left"
-              />
+            
+            {/* Dynamic Header Section */}
+            <div className="flex flex-col sm:flex-row justify-between items-start mb-6 gap-4">
+              <div className={currentHeader.titleClass}>
+                {currentHeader.title}
+              </div>
 
-              {/* Login/Post Button */}
               <Button
                 variant="primary"
-                className="rounded-md mt-4 sm:mt-0 w-full sm:w-auto"
+                className="rounded-md w-full sm:w-auto shrink-0 bg-[#147B6B] hover:bg-[#0D655D] text-white px-6 py-2.5 font-medium transition-colors"
                 onClick={() => (isAuthenticated ? setShowShareModal(true) : navigate('/signin'))}
               >
-                {isAuthenticated ? 'Ask Or Share' : 'Log in To Post'}
+                {isAuthenticated ? currentHeader.buttonText : 'Log in To Post'}
               </Button>
             </div>
 
-            {/* Filter & Search Section - Show only when logged in */}
+            {/* Filter & Search Section */}
             {isAuthenticated && (
-              <div className=" mb-6">
-                {/* Sport Filter Buttons */}
+              <div className="mb-6">
                 <div className="flex flex-wrap gap-2 md:gap-4 mb-4">
                   {sports.map((sport) => (
                     <button
                       key={sport}
                       onClick={() => setActiveSport(sport)}
-                      className={`px-4 py-2 rounded-lg text-base font-medium transition-colors ${activeSport === sport
-                        ? 'bg-btn-primary text-white'
-                        : 'bg-[#91C0BC] text-[#242424] '
-                        }`}
+                      className={`px-4 py-2 rounded-lg text-sm md:text-base font-medium transition-colors ${
+                        activeSport === sport
+                          ? 'bg-[#147B6B] text-white'
+                          : 'bg-[#91C0BC] text-[#242424] hover:bg-[#7db0ac]'
+                      }`}
                     >
                       {sport}
                     </button>
                   ))}
                 </div>
 
-                {/* Search Bar */}
                 <div className="relative">
                   <input
                     type="text"
                     placeholder="Search for anything..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="w-full px-4 py-3 pl-4 pr-10 rounded-lg bg-white border border-gray-200 outline-none focus:ring-2 focus:ring-btn-primary focus:border-transparent"
+                    className="w-full px-4 py-3 pl-4 pr-10 rounded-lg bg-white border border-gray-200 outline-none focus:ring-2 focus:ring-[#147B6B] focus:border-transparent text-[15px]"
                   />
                   <svg
                     className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400"
@@ -183,7 +153,7 @@ const CommunityView = () => {
               </div>
             )}
 
-            <div className="space-y-2 lg:space-y-4">
+            <div className="space-y-2 lg:space-y-4 mb-8">
               {topics.map((topic) => (
                 <ForumTopicCard
                   key={topic.id}
@@ -193,7 +163,6 @@ const CommunityView = () => {
               ))}
             </div>
 
-            {/* Pagination */}
             <Pagination
               page={currentPage}
               total={10}
@@ -203,7 +172,6 @@ const CommunityView = () => {
         </div>
       </Container>
 
-      {/* Share Experience Modal */}
       <ShareExperienceModal
         isOpen={showShareModal}
         onClose={() => setShowShareModal(false)}
