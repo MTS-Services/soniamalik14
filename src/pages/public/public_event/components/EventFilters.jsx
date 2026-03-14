@@ -1,49 +1,54 @@
-﻿import React from 'react';
-import Card from '../../../../components/ui/Card';
-import { Filter } from 'lucide-react';
+﻿
 
-const SectionBox = ({ title, children }) => (
-  <div className="mb-4">
-    <div className="text-base font-medium mb-2">{title}</div>
-    <div className="bg-white border border-[#B5D5D2] rounded-md p-3">{children}</div>
+import React from 'react';
+import { ListFilter } from 'lucide-react';
+
+// Reusable wrapper for the filter sections
+const FilterSection = ({ title, children, icon: Icon }) => (
+  <div className="bg-white border border-[#CDE1DF] rounded-lg p-4 mb-4 shadow-sm">
+    <div className="flex items-center justify-between mb-3.5">
+      <h3 className="text-[15px] font-bold text-[#14322F]">{title}</h3>
+      {Icon && <Icon className="w-[18px] h-[18px] text-[#14322F]" />}
+    </div>
+    {children}
   </div>
 );
 
 const EventFilters = ({ filters = {}, onChange = () => { } }) => {
   const update = (patch) => onChange({ ...filters, ...patch });
 
-  const toggleType = (type) => {
-    const set = new Set(filters.eventTypes || []);
-    if (set.has(type)) set.delete(type); else set.add(type);
-    update({ eventTypes: Array.from(set) });
-  };
-
-  const toggleDate = (d) => {
-    const set = new Set(filters.date || []);
-    if (set.has(d)) set.delete(d); else set.add(d);
-    update({ date: Array.from(set) });
+  // Generic toggler for checkbox arrays
+  const toggleArrayFilter = (key, value) => {
+    const currentList = filters[key] || [];
+    const set = new Set(currentList);
+    if (set.has(value)) {
+      set.delete(value);
+    } else {
+      set.add(value);
+    }
+    update({ [key]: Array.from(set) });
   };
 
   return (
-    <div className="space-y-4">
-      <Card className="p-3" style={{ borderColor: '#B5D5D2' }}>
-        <div className="flex items-center justify-between mb-3">
-          <div className="font-semibold">Filters</div>
-
+    <div className="w-full">
+      {/* City/Area Filter */}
+      <FilterSection title="Filters" icon={ListFilter}>
+        <div>
+          <label className="block text-base text-[#1A1D1F] mb-1.5">
+            City/Area
+          </label>
+          <input
+            value={filters.city || ''}
+            onChange={(e) => update({ city: e.target.value })}
+            placeholder="City, area or postcode"
+            className="w-full bg-[#F8F9F9] border-none rounded-md px-3 py-2 text-base placeholder-gray-400 focus:ring-1 focus:ring-[#147B6B] outline-none"
+          />
         </div>
-        <label className='pb2 mb-2 block text-base font-medium text-[#1D1D1D]'>
-          City/Area
-        </label>
-        <input
-          value={filters.city || ''}
-          onChange={(e) => update({ city: e.target.value })}
-          placeholder="Search by city/area"
-          className="w-full bg-gray-100 rounded-md p-2 text-base"
-        />
-      </Card>
+      </FilterSection>
 
-      <SectionBox title="Event Type">
-        <div className="space-y-2 text-base">
+      {/* Event Type */}
+      <FilterSection title="Event Type">
+        <div className="space-y-3">
           {[
             'All events',
             'Workshops & learning',
@@ -51,65 +56,66 @@ const EventFilters = ({ filters = {}, onChange = () => { } }) => {
             'Tournaments & competitions',
             'Community & campaigns',
           ].map((t) => (
-            <label key={t} className="flex items-center gap-2">
+            <label key={t} className="flex items-center gap-2.5 cursor-pointer group">
               <input
                 type="checkbox"
                 checked={(filters.eventTypes || []).includes(t)}
-                onChange={() => toggleType(t)}
+                onChange={() => toggleArrayFilter('eventTypes', t)}
+                className="w-[15px] h-[15px] rounded-sm border-gray-400 text-[#147B6B] focus:ring-[#147B6B] cursor-pointer"
               />
-              {t}
+              <span className="text-[13px] text-[#1A1D1F] leading-none mt-0.5 group-hover:text-[#147B6B] transition-colors">{t}</span>
             </label>
           ))}
         </div>
-      </SectionBox>
+      </FilterSection>
 
-      <SectionBox title="Date">
-        <div className="space-y-2 text-base">
+      {/* Date */}
+      <FilterSection title="Date">
+        <div className="space-y-3">
           {['Upcoming', 'This Week', 'This Month'].map((d) => (
-            <label key={d} className="flex items-center gap-2">
+            <label key={d} className="flex items-center gap-2.5 cursor-pointer group">
               <input
                 type="checkbox"
                 checked={(filters.date || []).includes(d)}
-                onChange={() => toggleDate(d)}
+                onChange={() => toggleArrayFilter('date', d)}
+                className="w-[15px] h-[15px] rounded-sm border-gray-400 text-[#147B6B] focus:ring-[#147B6B] cursor-pointer"
               />
-              {d}
+              <span className="text-[13px] text-[#1A1D1F] leading-none mt-0.5 group-hover:text-[#147B6B] transition-colors">{d}</span>
             </label>
           ))}
         </div>
-      </SectionBox>
+      </FilterSection>
 
-      <SectionBox title="Sport (optional)">
-        <div className="text-base">
-          <select
-            value={filters.sport || ''}
-            onChange={(e) => update({ sport: e.target.value })}
-            className="w-full bg-gray-100 rounded-md p-2 text-base"
-          >
-            <option value="">All sports</option>
-            <option value="football">Football</option>
-            <option value="netball">Netball</option>
-            <option value="squash">Squash</option>
-            <option value="padel">Padel</option>
-            <option value="cricket">Cricket</option>
-            <option value="multi">Multi-sport</option>
-          </select>
+      {/* Sport (Converted to Checkboxes as per image) */}
+      <FilterSection title="Sport">
+        <div className="space-y-3">
+          {[
+            'Football',
+            'Squash',
+            'Rugby',
+            'Netball',
+            'Cricket',
+            'Padel',
+            'Tennis',
+            'Badminton',
+            'Golf',
+            'Running',
+            'Multi-Sport',
+            'Not sport-specific',
+          ].map((s) => (
+            <label key={s} className="flex items-center gap-2.5 cursor-pointer group">
+              <input
+                type="checkbox"
+                // Checking if it's in an array since we converted this from a single string select
+                checked={Array.isArray(filters.sport) ? filters.sport.includes(s) : filters.sport === s}
+                onChange={() => toggleArrayFilter('sport', s)}
+                className="w-[15px] h-[15px] rounded-sm border-gray-400 text-[#147B6B] focus:ring-[#147B6B] cursor-pointer"
+              />
+              <span className="text-[13px] text-[#1A1D1F] leading-none mt-0.5 group-hover:text-[#147B6B] transition-colors">{s}</span>
+            </label>
+          ))}
         </div>
-      </SectionBox>
-
-      {/* <SectionBox title="Organizer">
-        <div className="space-y-2 text-base">
-          <label className="flex items-center gap-2"><input type="checkbox" /> Club</label>
-          <label className="flex items-center gap-2"><input type="checkbox" /> Community</label>
-        </div>
-      </SectionBox>
-
-      <SectionBox title="Skill Level">
-        <div className="space-y-2 text-base">
-          <label className="flex items-center gap-2"><input type="checkbox" /> Beginner</label>
-          <label className="flex items-center gap-2"><input type="checkbox" /> Intermediate</label>
-          <label className="flex items-center gap-2"><input type="checkbox" /> Advanced</label>
-        </div>
-      </SectionBox> */}
+      </FilterSection>
     </div>
   );
 };

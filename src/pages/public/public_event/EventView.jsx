@@ -1,7 +1,5 @@
-﻿
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import Container from '../../../components/layout/Container';
-import SectionHeader from '../../../components/ui/SectionHeader';
 import { Search, X, Filter } from 'lucide-react';
 import EventFilters from './components/EventFilters';
 import EventCard from './components/EventCard';
@@ -69,50 +67,37 @@ const EventView = () => {
     const paged = filtered.slice((page - 1) * perPage, page * perPage);
 
     return (
-        <div className="min-h-screen bg-gray-50 py-6 lg:py-8">
+        <div className="min-h-screen bg-gray-50 py-6 lg:py-10">
             <Container>
-                {/* Header Section */}
-                <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center mb-6 gap-4">
-                    <div className="flex-1">
-                        <SectionHeader
-                            title="Football Events for Women"
-                            description="Discover upcoming matches, trials, tournaments, and community events."
-                            align="left"
-                        />
-                    </div>
+                {/* Custom Header Section */}
+                <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center mb-6 lg:mb-8 gap-4">
 
-                    <div className="w-full lg:w-1/3">
-                        {/* Desktop Search */}
-                        {/* <div className="hidden lg:flex items-center bg-white rounded-lg px-4 py-2.5 border border-[#5EA39E]">
-                            <Search className="w-4 h-4 text-[#5EA39E] shrink-0" />
+                    <h1 className="text-3xl lg:text-[40px] font-semibold text-subtitle">
+                        Women-focused events and workshops
+                    </h1>
+
+                    <div className="flex items-center gap-2 w-full lg:w-auto">
+                        {/* Search Input */}
+                        <div className="relative w-full lg:w-[550px]">
+                            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <Search className="w-4 h-4 text-gray-400" />
+                            </div>
                             <input
                                 type="search"
                                 placeholder="Search by event name or location"
                                 value={filters.city}
                                 onChange={(e) => { setFilters({ ...filters, city: e.target.value }); setPage(1); }}
-                                className="ml-3 w-full outline-none text-base text-gray-700 placeholder-[#747474]"
+                                className="w-full pl-9 pr-4 py-2.5 bg-white border border-gray-200 rounded-md focus:outline-none focus:ring-1 focus:ring-[#5EA39E] focus:border-[#5EA39E] text-[14px] text-gray-800 placeholder-gray-400 shadow-sm transition-shadow"
                             />
-                        </div> */}
-
-                        {/* Mobile Search & Filter Button */}
-                        <div className="lg:hidden flex items-center gap-2 w-full">
-                            <div className="flex items-center bg-white rounded-lg px-3 py-2 border border-[#5EA39E] flex-1">
-                                <Search className="w-4 h-4 text-[#5EA39E] shrink-0" />
-                                <input
-                                    type="search"
-                                    placeholder="Search events..."
-                                    value={filters.city}
-                                    onChange={(e) => { setFilters({ ...filters, city: e.target.value }); setPage(1); }}
-                                    className="ml-2 w-full outline-none text-base text-gray-700"
-                                />
-                            </div>
-                            <button
-                                onClick={() => setShowFilters(true)}
-                                className="bg-[#5EA39E] text-white rounded-lg p-2.5 flex items-center justify-center shadow-sm"
-                            >
-                                <Filter className="w-5 h-5" />
-                            </button>
                         </div>
+
+                        {/* Mobile Filter Button */}
+                        <button
+                            onClick={() => setShowFilters(true)}
+                            className="lg:hidden bg-[#5EA39E] text-white rounded-md p-2.5 flex items-center justify-center shrink-0 shadow-sm"
+                        >
+                            <Filter className="w-5 h-5" />
+                        </button>
                     </div>
                 </div>
 
