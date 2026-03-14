@@ -1,6 +1,6 @@
 ﻿import React from 'react';
 import { useLocation, useParams, useNavigate } from 'react-router-dom';
-import { ArrowLeft, MapPin } from 'lucide-react';
+import { ArrowLeft, Heart, Medal, Calendar, Users } from 'lucide-react';
 import Container from '../../../components/layout/Container';
 
 const DiscoverDetails = () => {
@@ -9,383 +9,214 @@ const DiscoverDetails = () => {
   const navigate = useNavigate();
   const item = location.state?.item || {
     id,
-    title: 'Woking Warriors FC',
-    type: 'Women\'s Football Club',
-    location: '2118 Thornridge Cir. Syracuse, Connecticut 35624',
-    day: 'Monday, Wednesday',
-    time: '7:00 PM â€“ 9:00 PM',
-    homeGround: 'Woking Community Football Stadium',
-    image: '/images/detaisPage/detailsBanner.png',
-    image2: '/images/detaisPage/sideImage1.png',
-    image3: '/images/detaisPage/sideImage1.png',
-    about:
-      'Woking Warriors FC is a women-focused football club committed to developing talent, teamwork, and confidence. We provide a supportive environment for players to grow both on and off the field.',
-    contactEmail: 'info@wokingwarriorsfc.com',
-    phone: '+1 234 567 890',
-    level: 'Beginner to Intermediate',
-    ageGroup: '16+ Years',
-    experienceRequired: 'Basic football knowledge preferred (not mandatory)',
-    trainingFrequency: '2 days per week',
-    matchSchedule: 'Weekend matches & friendly games',
-    seasonDuration: '6 months',
-    headCoach: 'Sarah Williams',
-    coachingStyle: 'Fitness-focused, tactical & player-friendly',
-    trialRequired: 'Yes',
-    trialDate: '15 September 2025',
-    trialTime: '6:30 PM',
-    trialLocation: 'Woking Community Football Stadium',
-    postedBy: 'Woking Warriors FC (Club Owner)',
+    title: 'Weekly Women’s Cricket Nets Session',
+    coach: 'John Doe',
+    type: 'Recreational',
+    sport: 'Cricket',
+    suitableFor: 'New to the sport',
+    womensOnly: 'Yes',
+    location: 'Bashundhara turbo tough',
+    postcode: '222300',
+    town: 'London',
+    day: 'Saturday',
+    time: '10:00 - 12:00',
+    image: '/images/detaisPage/detailsBanner.png', 
+    avatar: '/images/detaisPage/coachAvatar.png', 
+    mapImage: '/images/detaisPage/mapPlaceholder.png', 
+    about: 'This weekly women’s cricket nets session is designed for players who want to improve their skills in a relaxed and supportive environment. Whether you’re completely new to cricket or returning after a break, this session provides a safe space to learn, practice, and enjoy the game at your own pace.',
   };
 
-  const handleSubmit = (e) => {
+  const handleSendMessage = (e) => {
     e.preventDefault();
-    alert('Interest submitted â€” demo only');
+    alert('Message sent — demo only');
   };
 
   return (
-    <div className="bg-[#F8FAFC] min-h-screen">
+    <div className="bg-[#F8FAFC] min-h-screen pb-16">
       <Container>
-        <div className="py-4 md:py-6 lg:py-8">
-          {/* Back Button */}
-          <button
-            onClick={() => navigate(-1)}
-            className="flex items-center gap-2 text-[#323232] hover:text-[#1D1D1D] mb-4 md:mb-6"
-          >
-            <ArrowLeft className="w-5 h-5" />
-            <span className="font-medium">Back</span>
-          </button>
-
-          {/* Hero Image */}
-          <div className="w-full h-64 md:h-96 lg:h-screen rounded-lg overflow-hidden mb-4 md:mb-6">
-            <img src={item.image} alt={item.title} className="w-full h-full object-cover" />
-          </div>
-
-          {/* Two Images Side by Side */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6 md:mb-8">
-            <div className="h-48 md:h-72 rounded-md overflow-hidden">
-              <img src={item.image2 || item.image} alt="Club" className="w-full h-full object-cover" />
-            </div>
-            <div></div>
-            <div className="h-48 md:h-72 rounded-md overflow-hidden">
-              <img src={item.image3 || item.image} alt="Club" className="w-full h-full object-cover" />
-            </div>
-          </div>
-
-          {/* Main Content Grid */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
-            {/* Left Content - Club / Session Details */}
-            <div className="lg:col-span-2 space-y-5">
-              {String(item.type).toLowerCase() === 'sessions' ? (
-                // Sessions layout
-                <>
-                  <div>
-                    <p className="font-normal text-[#1D1D1D] text-2xl">
-                      <span className="font-semibold">Session:</span> {item.title || 'No information available'}
-                    </p>
-                    <p className="text-base font-normal text-[#1D1D1D] mt-1">
-                      <span className="font-semibold">Type:</span> {item.type || 'No information available'}
-                    </p>
-                    <div className="flex items-start gap-2 text-[#1D1D1D] mt-1">
-                      <MapPin className="w-4 h-4 mt-1 shrink-0" />
-                      <span className="text-base font-normal">{item.location || 'No information available'}</span>
-                    </div>
-
-                    <div className="mt-2">
-                      <p className="text-base font-normal text-[#1D1D1D]"><span className="font-semibold">Sessions Day:</span> {item.day || item.sessionDay || 'No information available'}</p>
-                      <p className="text-base font-normal text-[#1D1D1D]"><span className="font-semibold">Training Time:</span> {item.time || item.trainingTime || 'No information available'}</p>
-                    </div>
-                  </div>
-
-                  <div className="mt-3">
-                    <h2 className="text-lg font-bold text-[#1D1D1D] mb-2">Session Overview</h2>
-                    <p className="text-base font-normal text-[#1D1D1D] leading-relaxed">{item.sessionOverview || item.about || 'No information available'}</p>
-                  </div>
-
-                  <div className="mt-4">
-                    <div>
-                      <h3 className="text-lg font-bold text-[#1D1D1D] mb-1">Skill Level:</h3>
-                      <p className="text-base font-normal text-[#1D1D1D]">{item.level || 'No information available'}</p>
-                    </div>
-
-                    <div className="mt-3">
-                      <h3 className="text-lg font-bold text-[#1D1D1D] mb-1">Age Group:</h3>
-                      <p className="text-base font-normal text-[#1D1D1D]">{item.ageGroup || 'No information available'}</p>
-                    </div>
-
-                    <div className="mt-3">
-                      <h3 className="text-lg font-bold text-[#1D1D1D] mb-1">Experience Required:</h3>
-                      <p className="text-base font-normal text-[#1D1D1D]">{item.experienceRequired || 'No information available'}</p>
-                    </div>
-
-                    <div className="mt-3">
-                      <h3 className="text-lg font-bold text-[#1D1D1D] mb-1">Equipment:</h3>
-                      <p className="text-base font-normal text-[#1D1D1D]">{item.equipment || 'No information available'}</p>
-                    </div>
-
-                    <div className="mt-3">
-                      <h3 className="text-lg font-bold text-[#1D1D1D] mb-1">Training Frequency:</h3>
-                      <p className="text-base font-normal text-[#1D1D1D]">{item.trainingFrequency || 'No information available'}</p>
-                    </div>
-
-                    <h3 className="text-lg font-bold text-[#1D1D1D] mb-2 mt-6">Session Format</h3>
-                    {Array.isArray(item.sessionFormat) && item.sessionFormat.length > 0 ? (
-                      <ul className="list-disc pl-5 space-y-1 text-base font-normal text-[#1D1D1D]">
-                        {item.sessionFormat.map((s, idx) => (
-                          <li key={idx}>{s}</li>
-                        ))}
-                      </ul>
-                    ) : (
-                      <p className="text-base font-normal text-[#1D1D1D]">{item.sessionFormatText || 'No information available'}</p>
-                    )}
-                  </div>
-
-                  <div className="mt-4">
-                    <div>
-                      <h3 className="text-lg font-bold text-[#1D1D1D] mb-1">Season Duration:</h3>
-                      <p className="text-base font-normal text-[#1D1D1D]">{item.seasonDuration || 'No information available'}</p>
-                    </div>
-
-                    <div className="mt-3">
-                      <h3 className="text-lg font-bold text-[#1D1D1D] mb-1">Head Coach:</h3>
-                      <p className="text-base font-normal text-[#1D1D1D]">{item.headCoach || 'No information available'}</p>
-                    </div>
-
-                    <div className="mt-3">
-                      <h3 className="text-lg font-bold text-[#1D1D1D] mb-1">Coaching Style:</h3>
-                      <p className="text-base font-normal text-[#1D1D1D]">{item.coachingStyle || 'No information available'}</p>
-                    </div>
-
-                    <div className="mt-3">
-                      <h3 className="text-lg font-bold text-[#1D1D1D] mb-1">Trial Location:</h3>
-                      <p className="text-base font-normal text-[#1D1D1D]">{item.trialLocation || 'No information available'}</p>
-                    </div>
-                  </div>
-
-                  <div className="mt-4">
-                    <div>
-                      <h3 className="text-lg font-bold text-[#1D1D1D] mb-1">Posted By:</h3>
-                      <p className="text-base font-normal text-[#1D1D1D]">{item.postedBy || 'No information available'}</p>
-                    </div>
-
-                    <div className="mt-3">
-                      <h3 className="text-lg font-bold text-[#1D1D1D] mb-1">Contact Email:</h3>
-                      <p className="text-base font-normal text-[#1D1D1D]">{item.contactEmail || 'No information available'}</p>
-                    </div>
-
-                    <div className="mt-3">
-                      <h3 className="text-lg font-bold text-[#1D1D1D] mb-1">Phone:</h3>
-                      <p className="text-base font-normal text-[#1D1D1D]">{item.phone || 'No information available'}</p>
-                    </div>
-                  </div>
-                </>
+        <div className="py-4 md:py-8">
+          
+          {/* Hero Banner Section */}
+          <div className="relative mb-16">
+            {/* Banner Image */}
+            <div className="w-full h-[250px] md:h-[800px] rounded-2xl overflow-hidden shadow-sm">
+              {item.image ? (
+                <img src={item.image} alt={item.title} className="w-full h-full object-cover" />
               ) : (
-                // Clubs / Training layout
-                <>
-                  <div>
-                    <p className="font-normal text-[#1D1D1D] text-2xl">
-                      <span className="font-semibold">Club Name:</span> {item.title || 'No information available'}
-                    </p>
-                    <p className="text-base font-normal text-[#1D1D1D] mt-1">
-                      <span className="font-semibold">Club Type:</span> {item.type || 'No information available'}
-                    </p>
-                    <div className="flex items-start gap-2 text-[#1D1D1D] mt-1">
-                      <MapPin className="w-4 h-4 mt-1 shrink-0" />
-                      <span className="text-base font-normal">{item.location || 'No information available'}</span>
-                    </div>
-                  </div>
-
-                  <div className="space-y-1">
-                    <p className="text-base font-normal text-[#1D1D1D]">
-                      <span className="font-semibold">Training Days:</span> {item.day || 'No information available'}
-                    </p>
-                    <p className="text-base font-normal text-[#1D1D1D]">
-                      <span className="font-semibold">Training Time:</span> {item.time || 'No information available'}
-                    </p>
-                    <p className="text-base font-normal text-[#1D1D1D]">
-                      <span className="font-semibold">Home Ground:</span> {item.homeGround || 'No information available'}
-                    </p>
-                  </div>
-
-                  <div>
-                    <h2 className="text-lg font-bold text-[#1D1D1D] mb-2">About the Club</h2>
-                    <p className="text-base font-normal text-[#1D1D1D] leading-relaxed max-w-xl">{item.about || 'No information available'}</p>
-                  </div>
-
-                  <div>
-                    <h3 className="text-lg font-bold text-[#1D1D1D] mb-2">We Are Looking For:</h3>
-                    <ul className="list-disc pl-5 space-y-1 text-base font-normal text-[#1D1D1D]">
-                      <li>Midfielder</li>
-                      <li>Defender</li>
-                      <li>Goalkeeper</li>
-                    </ul>
-                  </div>
-
-                  <div>
-                    <h3 className="text-lg font-bold text-[#1D1D1D] mb-1">Skill Level:</h3>
-                    <p className="text-base font-normal text-[#1D1D1D]">{item.level || 'No information available'}</p>
-                  </div>
-
-                  <div>
-                    <h3 className="text-lg font-bold text-[#1D1D1D] mb-1">Age Group:</h3>
-                    <p className="text-base font-normal text-[#1D1D1D]">{item.ageGroup || 'No information available'}</p>
-                  </div>
-
-                  <div>
-                    <h3 className="text-lg font-bold text-[#1D1D1D] mb-1">Experience Required:</h3>
-                    <p className="text-base font-normal text-[#1D1D1D]">{item.experienceRequired || 'No information available'}</p>
-                  </div>
-
-                  <div>
-                    <h3 className="text-lg font-bold text-[#1D1D1D] mb-1">Training Frequency:</h3>
-                    <p className="text-base font-normal text-[#1D1D1D]">{item.trainingFrequency || 'No information available'}</p>
-                  </div>
-
-                  <div>
-                    <h3 className="text-lg font-bold text-[#1D1D1D] mb-1">Match Schedule:</h3>
-                    <p className="text-base font-normal text-[#1D1D1D]">{item.matchSchedule || 'No information available'}</p>
-                  </div>
-
-                  <div>
-                    <h3 className="text-lg font-bold text-[#1D1D1D] mb-1">Season Duration:</h3>
-                    <p className="text-base font-normal text-[#1D1D1D]">{item.seasonDuration || 'No information available'}</p>
-                  </div>
-
-                  <div>
-                    <h3 className="text-lg font-bold text-[#1D1D1D] mb-2">What We Offer</h3>
-                    <ul className="list-disc pl-5 space-y-1 text-base font-normal text-[#1D1D1D]">
-                      <li>Professional coaching</li>
-                      <li>Regular match exposure</li>
-                      <li>Safe & women-only environment</li>
-                      <li>Skill development sessions</li>
-                      <li>Team jerseys & equipment support</li>
-                    </ul>
-                  </div>
-
-                  <div>
-                    <h3 className="text-lg font-bold text-[#1D1D1D] mb-1">Head Coach:</h3>
-                    <p className="text-base font-normal text-[#1D1D1D]">{item.headCoach || 'No information available'}</p>
-                  </div>
-
-                  <div>
-                    <h3 className="text-lg font-bold text-[#1D1D1D] mb-1">Coaching Style:</h3>
-                    <p className="text-base font-normal text-[#1D1D1D]">{item.coachingStyle || 'No information available'}</p>
-                  </div>
-
-                  <div>
-                    <h3 className="text-lg font-bold text-[#1D1D1D] mb-1">Trial Required:</h3>
-                    <p className="text-base font-normal text-[#1D1D1D]">{item.trialRequired || 'No information available'}</p>
-                  </div>
-
-                  <div>
-                    <h3 className="text-lg font-bold text-[#1D1D1D] mb-1">Trial Date:</h3>
-                    <p className="text-base font-normal text-[#1D1D1D]">{item.trialDate || 'No information available'}</p>
-                  </div>
-
-                  <div>
-                    <h3 className="text-lg font-bold text-[#1D1D1D] mb-1">Trial Time:</h3>
-                    <p className="text-base font-normal text-[#1D1D1D]">{item.trialTime || 'No information available'}</p>
-                  </div>
-
-                  <div>
-                    <h3 className="text-lg font-bold text-[#1D1D1D] mb-1">Trial Location:</h3>
-                    <p className="text-base font-normal text-[#1D1D1D]">{item.trialLocation || 'No information available'}</p>
-                  </div>
-
-                  <div>
-                    <h3 className="text-lg font-bold text-[#1D1D1D] mb-1">Posted By:</h3>
-                    <p className="text-base font-normal text-[#1D1D1D]">{item.postedBy || 'No information available'}</p>
-                  </div>
-
-                  <div>
-                    <h3 className="text-lg font-bold text-[#1D1D1D] mb-1">Contact Email:</h3>
-                    <p className="text-base font-normal text-[#1D1D1D]">{item.contactEmail || 'No information available'}</p>
-                  </div>
-
-                  <div>
-                    <h3 className="text-lg font-bold text-[#1D1D1D] mb-1">Phone:</h3>
-                    <p className="text-base font-normal text-[#1D1D1D]">{item.phone || 'No information available'}</p>
-                  </div>
-                </>
+                <div className="w-full h-full bg-gray-300"></div>
               )}
             </div>
 
-            {/* Right Sidebar - Register Interest Form */}
-            <aside className="lg:col-span-1">
-              <div className="bg-[#E7F1F1] rounded-lg p-6 lg:sticky lg:top-40 lg:max-h-[calc(100vh-2rem)] lg:overflow-y-auto">
-                <h2 className="text-xl font-bold text-[#1D1D1D] mb-6">Register Interest</h2>
-                <form onSubmit={handleSubmit} className="space-y-4">
-                  {/* Full Name */}
-                  <div>
-                    <label className="block text-base font-medium text-[#1D1D1D] mb-2">Full Name</label>
-                    <input
-                      type="text"
-                      placeholder="Player"
-                      className="w-full px-4 py-3 rounded-md bg-loginInput border-none text-base text-[#1D1D1D] placeholder-[#5E5E5E] focus:outline-none focus:ring-2 focus:ring-btn-primary"
-                      required
-                    />
-                  </div>
+            {/* Overlaid Back Button */}
+            <button
+              onClick={() => navigate(-1)}
+              className="absolute top-4 left-4 flex items-center gap-2 bg-black/20 hover:bg-black/40 backdrop-blur-sm text-white px-4 py-2 rounded-full transition-all text-sm font-medium"
+            >
+              <ArrowLeft className="w-4 h-4" />
+              Back
+            </button>
 
-                  {/* Email */}
-                  <div>
-                    <label className="block text-base font-medium text-[#1D1D1D] mb-2">Email</label>
-                    <input
-                      type="email"
-                      placeholder="enter your email"
-                      className="w-full px-4 py-3 rounded-md bg-loginInput border-none text-base text-[#1D1D1D] placeholder-[#5E5E5E] focus:outline-none focus:ring-2 focus:ring-btn-primary"
-                      required
-                    />
-                  </div>
+            {/* Overlaid Favorite/Heart Button */}
+            <button className="absolute top-4 right-4 bg-black/20 hover:bg-black/40 backdrop-blur-sm text-white p-2.5 rounded-full transition-all">
+              <Heart className="w-4 h-4" />
+            </button>
 
-                  {/* Phone Number */}
-                  <div>
-                    <label className="block text-base font-medium text-[#1D1D1D] mb-2">Phone Number</label>
-                    <input
-                      type="tel"
-                      placeholder="enter your phone number"
-                      className="w-full px-4 py-3 rounded-md bg-loginInput border-none text-base text-[#1D1D1D] placeholder-[#5E5E5E] focus:outline-none focus:ring-2 focus:ring-btn-primary"
-                    />
-                  </div>
+            {/* Overlaid Avatar Picture */}
+            <div className="absolute -bottom-10 left-6 md:left-10 w-20 h-20 md:w-24 md:h-24 rounded-full border-4 border-[#F8FAFC] overflow-hidden bg-gray-200">
+              {item.avatar ? (
+                <img src={item.avatar} alt={item.coach} className="w-full h-full object-cover" />
+              ) : (
+                <img src={item.image} alt="fallback" className="w-full h-full object-cover" /> // fallback
+              )}
+            </div>
+          </div>
 
-                  {/* Position */}
-                  <div>
-                    <label className="block text-base font-medium text-[#1D1D1D] mb-2">Position</label>
-                    <input
-                      type="text"
-                      placeholder="write your position"
-                      className="w-full px-4 py-3 rounded-md bg-loginInput border-none text-base text-[#1D1D1D] placeholder-[#5E5E5E] focus:outline-none focus:ring-2 focus:ring-btn-primary"
-                    />
-                  </div>
+          {/* Title & Coach Info */}
+          <div className="px-2 md:px-4 mb-8">
+            <h1 className="text-2xl md:text-[32px] font-bold text-[#1A1D1F] leading-tight">
+              {item.title}
+            </h1>
+            <p className="text-[#33383F] mt-2 text-base">
+              Coach: <span className="font-bold">{item.coach || item.headCoach}</span>
+            </p>
+          </div>
 
-                  {/* Skill Level */}
-                  <div>
-                    <label className="block text-base font-medium text-[#1D1D1D] mb-2">Skill Level</label>
-                    <select className="w-full px-4 py-3 rounded-md bg-loginInput border-none text-base text-[#1D1D1D] focus:outline-none focus:ring-2 focus:ring-btn-primary">
-                      <option>Beginner</option>
-                      <option>Intermediate</option>
-                      <option>Advanced</option>
-                    </select>
-                  </div>
+          {/* Session Details Card */}
+          <div className="bg-white rounded-lg p-6 md:p-8 mb-8 shadow-sm border border-gray-100">
+            <h2 className="text-xl font-bold text-[#000000] mb-3">Session Details</h2>
+            <div className="text-[#272727]  text-base  ">
+              {item.about}
+            </div>
 
-                  {/* About Me */}
-                  <div>
-                    <label className="block text-base font-medium text-[#1D1D1D] mb-2">About Me</label>
-                    <textarea
-                      placeholder="write about you"
-                      rows="4"
-                      className="w-full px-4 py-3 rounded-md bg-loginInput border-none text-base text-[#1D1D1D] placeholder-[#5E5E5E] focus:outline-none focus:ring-2 focus:ring-btn-primary resize-none"
-                    />
-                  </div>
+            <div className='text-base mt-4'>
+              <p>No trials. No pressure. Just cricket.</p>
+            </div>
+          </div>
 
-                  {/* Submit Button */}
-                  <button
+          {/* 3-Column Grid for Information */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+            
+            {/* Column 1: Session Overview */}
+            <div>
+              <h3 className="text-[17px] font-bold text-[#1A1D1F] mb-4">Session Overview</h3>
+              <div className="space-y-3 mb-6">
+                
+                {/* Info Row: Sport */}
+                <div className="flex items-center gap-4 bg-white p-3.5 rounded-xl border border-gray-100 shadow-sm">
+                  <div className="w-10 h-10 rounded-full bg-[#EAF2F1] flex items-center justify-center text-[#147B6B]">
+                    <Medal className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <p className="text-[13px] text-gray-500 font-medium mb-0.5">Sport</p>
+                    <p className="text-[15px] font-semibold text-[#1A1D1F]">{item.sport || 'Cricket'}</p>
+                  </div>
+                </div>
+
+                {/* Info Row: Session Type */}
+                <div className="flex items-center gap-4 bg-white p-3.5 rounded-xl border border-gray-100 shadow-sm">
+                  <div className="w-10 h-10 rounded-full bg-[#EAF2F1] flex items-center justify-center text-[#147B6B]">
+                    <Calendar className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <p className="text-[13px] text-gray-500 font-medium mb-0.5">Session Type</p>
+                    <p className="text-[15px] font-semibold text-[#1A1D1F]">{item.type}</p>
+                  </div>
+                </div>
+
+                {/* Info Row: Suitable For */}
+                <div className="flex items-center gap-4 bg-white p-3.5 rounded-xl border border-gray-100 shadow-sm">
+                  <div className="w-10 h-10 rounded-full bg-[#EAF2F1] flex items-center justify-center text-[#147B6B]">
+                    <Users className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <p className="text-[13px] text-gray-500 font-medium mb-0.5">Suitable For</p>
+                    <p className="text-[15px] font-semibold text-[#1A1D1F]">{item.suitableFor}</p>
+                  </div>
+                </div>
+
+                {/* Info Row: Women's only */}
+                <div className="flex items-center gap-4 bg-white p-3.5 rounded-xl border border-gray-100 shadow-sm">
+                  <div className="w-10 h-10 rounded-full bg-[#EAF2F1] flex items-center justify-center text-[#147B6B]">
+                    <Users className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <p className="text-[13px] text-gray-500 font-medium mb-0.5">Women's only</p>
+                    <p className="text-[15px] font-semibold text-[#1A1D1F]">{item.womensOnly}</p>
+                  </div>
+                </div>
+
+              </div>
+              
+              {/* Action Buttons */}
+              <div className="flex flex-wrap gap-3">
+                <button className="bg-[#147B6B] hover:bg-[#0D655D] text-white px-5 py-2.5 rounded-lg text-sm font-medium transition-colors">
+                  Book Your Place
+                </button>
+                <button className="bg-[#147B6B] hover:bg-[#0D655D] text-white px-5 py-2.5 rounded-lg text-sm font-medium transition-colors">
+                  Register Interest
+                </button>
+              </div>
+            </div>
+
+            {/* Column 2: Venue Information */}
+            <div>
+              <h3 className="text-[17px] font-bold text-[#1A1D1F] mb-4">Venue Information</h3>
+              <div className="bg-white p-6 rounded-[20px] shadow-sm border border-gray-100 h-[380px] flex flex-col">
+                <div className="space-y-3 mb-6 flex-1">
+                  <p className="text-[14px] flex">
+                    <span className="text-gray-500 w-28 shrink-0">Venue Name:</span> 
+                    <span className="font-medium text-[#1A1D1F] truncate">{item.location}</span>
+                  </p>
+                  <p className="text-[14px] flex">
+                    <span className="text-gray-500 w-28 shrink-0">Postcode:</span> 
+                    <span className="font-medium text-[#1A1D1F]">{item.postcode}</span>
+                  </p>
+                  <p className="text-[14px] flex">
+                    <span className="text-gray-500 w-28 shrink-0">Town/City:</span> 
+                    <span className="font-medium text-[#1A1D1F]">{item.town}</span>
+                  </p>
+                  <p className="text-[14px] flex">
+                    <span className="text-gray-500 w-28 shrink-0">Session Days:</span> 
+                    <span className="font-medium text-[#1A1D1F]">{item.day}</span>
+                  </p>
+                  <p className="text-[14px] flex">
+                    <span className="text-gray-500 w-28 shrink-0">Session Time:</span> 
+                    <span className="font-medium text-[#1A1D1F]">{item.time}</span>
+                  </p>
+                </div>
+                
+                {/* Map Placeholder Image */}
+                <div className="w-full h-36 rounded-lg overflow-hidden bg-gray-200 shrink-0">
+                  {item.mapImage ? (
+                    <img src={item.mapImage} alt="Map View" className="w-full h-full object-cover" />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center text-gray-400 text-sm">Map Image</div>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            {/* Column 3: Contact Organiser */}
+            <div>
+              <h3 className="text-[17px] font-bold text-[#1A1D1F] mb-4">Contact Organiser</h3>
+              <div className="bg-[#E7F1F1] p-6 rounded-[20px] h-[380px] flex flex-col">
+                <p className="text-[15px] mb-4 text-[#1A1D1F] font-medium">Ask the organiser a question</p>
+                <form onSubmit={handleSendMessage} className="flex flex-col flex-1">
+                  <textarea 
+                    className="w-full flex-1 bg-[#C8DFDB] rounded-xl p-4 text-[14px] text-[#1A1D1F] placeholder-gray-500/70 border-none focus:ring-1 focus:ring-[#147B6B] resize-none mb-4"
+                    placeholder="Write your message"
+                    required
+                  ></textarea>
+                  <button 
                     type="submit"
-                    className="bg-btn-primary hover:bg-[#0d655d] text-white font-medium px-6 py-2.5 rounded-md transition-colors"
+                    className="bg-[#147B6B] hover:bg-[#0D655D] text-white px-5 py-2.5 rounded-lg text-sm font-medium transition-colors w-fit"
                   >
-                    Submit
+                    Send message
                   </button>
                 </form>
               </div>
-            </aside>
+            </div>
+
           </div>
         </div>
       </Container>
