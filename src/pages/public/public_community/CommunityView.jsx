@@ -184,6 +184,23 @@ const CommunityView = () => {
           {/* Main Content */}
           <div className="lg:col-span-3">
 
+            {/* Mobile Category Dropdown */}
+            <div className="lg:hidden mb-6">
+              <select
+                value={activeCategory}
+                onChange={(e) => {
+                  setActiveCategory(e.target.value);
+                  setCurrentPage(1);
+                }}
+                className="w-full px-4 py-3 rounded-lg bg-white border border-gray-300 text-[#1A1D1F] font-medium focus:outline-none focus:ring-2 focus:ring-[#147B6B] focus:border-transparent"
+              >
+                <option value="All Discussion">All Discussion</option>
+                <option value="Stories & Experiences">Stories & Experiences</option>
+                <option value="Questions & Advice">Questions & Advice</option>
+                <option value="Match & event support">Match & event support</option>
+              </select>
+            </div>
+
             {/* Dynamic Header Section */}
             <div className="flex flex-col sm:flex-row justify-between items-start mb-6 gap-4">
               <div className={currentHeader.titleClass}>

@@ -14,7 +14,7 @@ import ForgotPasswordView from '../pages/public/public_login/ForgotPasswordView.
 import OtpVerificationView from '../pages/public/public_login/OtpVerificationView.jsx';
 import ResetPasswordView from '../pages/public/public_login/ResetPasswordView.jsx';
 import CommunityView from '../pages/public/public_community/CommunityView';
-import CommunityDetails from '../pages/public/public_community/components/CommunityDetails';
+
 import NotFound from '../pages/error/NotFound';
 import Unauthorized from '../pages/error/Unauthorized';
 import EventView from '../pages/public/public_event/EventView.jsx';
@@ -99,7 +99,7 @@ const router = createBrowserRouter(
         <Route path="discover" element={<DiscoverView />} />
         <Route path="discover/:type/:id" element={<DiscoverDetails />} />
         <Route path="community" element={<CommunityView />} />
-        <Route path="community/:id" element={<CommunityDetails />} />
+    
         <Route path="events" element={<EventView />} />
         <Route path="events/:id" element={<EventDetailsPage />} />
         <Route path="marketplace" element={<MarketPlaceView />} />

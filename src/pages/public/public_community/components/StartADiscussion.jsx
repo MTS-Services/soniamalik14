@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 
 const StartADiscussion = ({ isOpen, onClose, onSubmit }) => {
@@ -36,9 +37,11 @@ const StartADiscussion = ({ isOpen, onClose, onSubmit }) => {
 
     return (
         <div className="fixed inset-0 bg-black/80 bg-opacity-50 flex items-center justify-center z-50 p-4">
-            <div className="bg-white rounded-lg max-w-xl w-full max-h-[90vh] overflow-y-auto">
-                {/* Header */}
-                <div className="flex justify-between items-center p-6 border-b border-gray-200">
+            {/* Changed from overflow-y-auto to flex flex-col */}
+            <div className="bg-white rounded-lg max-w-xl w-full max-h-[90vh] flex flex-col">
+                
+                {/* Header - added shrink-0 so it doesn't compress */}
+                <div className="flex justify-between items-center p-6 border-b border-gray-200 shrink-0">
                     <h2 className="text-xl font-semibold text-gray-900">Start a Discussion</h2>
                     <button
                         onClick={onClose}
@@ -48,8 +51,8 @@ const StartADiscussion = ({ isOpen, onClose, onSubmit }) => {
                     </button>
                 </div>
 
-                {/* Content */}
-                <div className="p-6 space-y-6">
+                {/* Content - added flex-1 and overflow-y-auto so ONLY this part scrolls */}
+                <div className="p-6 space-y-6 flex-1 overflow-y-auto custom-scrollbar">
                     {/* Thread Title */}
                     <div>
                         <label className="block text-sm font-medium text-gray-700 mb-2">Thread Title</label>
@@ -82,9 +85,9 @@ const StartADiscussion = ({ isOpen, onClose, onSubmit }) => {
                                 <button
                                     key={sport}
                                     onClick={() => setSelectedSport(sport)}
-                                    className={`px-3 py-1 rounded-lg text-sm  transition-colors ${selectedSport === sport
-                                            ? 'bg-btn-primary text-white'
-                                            : 'bg-[#91C0BC] text-black '
+                                    className={`px-3 py-1 rounded-lg text-sm transition-colors ${selectedSport === sport
+                                        ? 'bg-btn-primary text-white'
+                                        : 'bg-[#91C0BC] text-black hover:bg-[#7baaa6]'
                                         }`}
                                 >
                                     {sport}
@@ -101,9 +104,9 @@ const StartADiscussion = ({ isOpen, onClose, onSubmit }) => {
                                 <button
                                     key={topic}
                                     onClick={() => handleTopicToggle(topic)}
-                                    className={`px-3 py-1 rounded-lg text-sm  transition-colors ${selectedTopics.includes(topic)
-                                              ? 'bg-btn-primary text-white'
-                                            : 'bg-[#91C0BC] text-black '
+                                    className={`px-3 py-1 rounded-lg text-sm transition-colors ${selectedTopics.includes(topic)
+                                        ? 'bg-btn-primary text-white'
+                                        : 'bg-[#91C0BC] text-black hover:bg-[#7baaa6]'
                                         }`}
                                 >
                                     {topic}
@@ -113,8 +116,8 @@ const StartADiscussion = ({ isOpen, onClose, onSubmit }) => {
                     </div>
                 </div>
 
-                {/* Footer */}
-                <div className="px-6 py-4 border-t border-gray-200">
+                {/* Footer - added shrink-0 so it doesn't compress */}
+                <div className="px-6 py-4 border-t border-gray-200 shrink-0">
                     <button
                         onClick={handleSubmit}
                         disabled={!threadTitle.trim() || !description.trim() || !selectedSport || selectedTopics.length === 0}

@@ -10,7 +10,7 @@ const ForumTopicCard = ({ topic, isLoggedIn = false }) => {
     title = 'How to balance strength training with competitive netball?',
     description = "I'm starting to play more on asphalt courts and my current trainers are wearing down fast. Any recommendations for durable soles?",
     replies = 4,
-    avatar,
+   
     tags = ['Football', 'New to sport'],
     likes = 4,
     hearts = 4,
