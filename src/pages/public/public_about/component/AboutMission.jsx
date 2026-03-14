@@ -4,7 +4,7 @@ import Container from '../../../../components/layout/Container';
 
 const AboutMission = () => {
   return (
-    <section className="py-8 md:py-12 lg:py-20">
+    <section className="py-10 sm:py-16 lg:py-20">
       <Container>
         {/* Switched to flex-col on mobile/tablet so image goes below text, and grid on lg devices */}
         <div className="flex flex-col lg:grid lg:grid-cols-2 gap-10 md:gap-14 lg:gap-16 items-center">
@@ -47,7 +47,7 @@ const AboutMission = () => {
               {/* Left Column */}
               <div className="flex flex-col gap-3 md:gap-5 lg:gap-6">
                 {/* Football field - Tall image (Height increased for md/lg, original for xl) */}
-                <div className="w-full aspect-[3/4] md:aspect-[2/3] lg:aspect-[2/3.2] xl:aspect-[3.5/3] rounded-2xl md:rounded-[24px] overflow-hidden shadow-sm">
+                <div className="w-full aspect-[3/4] md:aspect-[2/3] lg:aspect-[2/3.2] xl:aspect-[2.7/3] 2xl:aspect-[3.5/3] rounded-2xl md:rounded-[24px] overflow-hidden shadow-sm">
                   <img
                     src="https://i.ibb.co.com/HTH1JGdM/8566dfd34f75b216152413d0df32b95e7a8e5cde.png"
                     alt="Football field"
@@ -77,7 +77,7 @@ const AboutMission = () => {
                 </div>
 
                 {/* Basketball player - Tall image (Height increased for md/lg, original for xl) */}
-                <div className="w-full aspect-[3/4] md:aspect-[2/3] lg:aspect-[2/3.2] xl:aspect-[3.5/3] rounded-2xl md:rounded-[24px] overflow-hidden shadow-sm">
+                <div className="w-full aspect-[3/4] md:aspect-[2/3] lg:aspect-[2/3.2] xl:aspect-[2.7/3] 2xl:aspect-[3.5/3] rounded-2xl md:rounded-[24px] overflow-hidden shadow-sm">
                   <img
                     src="https://i.ibb.co.com/nswVb7Lc/e186ad5a2a26d6d1df719ecff7b35da792473089.jpg"
                     alt="Basketball player"

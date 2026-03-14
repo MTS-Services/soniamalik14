@@ -30,11 +30,11 @@ const HowItWorks = () => {
 
         {/* Process Container */}
         <div className="relative">
-          
+
           {/* Main Connector Line (Desktop) */}
           <div className="hidden md:block absolute top-[45px] left-0 right-0 h-[4px] bg-[#0F766E] z-0 mx-4">
             {/* Left End Dot */}
-            <div className="absolute left-0 top-1/2 -translate-y-1/2 w-3 h-3 rounded-full bg-[#0F766E]" />
+            <div className="absolute left-0 top-1/2 -translate-y-1/2 w-3 h-3 rounded-full bg-[#0F766E] " />
             {/* Right End Dot */}
             <div className="absolute right-0 top-1/2 -translate-y-1/2 w-3 h-3 rounded-full bg-[#0F766E]" />
           </div>
@@ -43,13 +43,13 @@ const HowItWorks = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12 relative z-10">
             {steps.map((step, index) => (
               <div key={index} className="flex flex-col items-center text-center">
-                
+
                 {/* Icon Circle */}
                 <div className="relative mb-6">
                   {/* White background behind icon to create the 'line-break' effect */}
                   <div className="absolute inset-0 bg-white scale-110 rounded-full z-[-1] invisible md:visible" />
-                  
-                  <div className="w-22 h-22 rounded-full bg-gradient-to-br from-[#79D7C6] to-[#29A7AE] flex items-center justify-center shadow-sm">
+
+                  <div className="w-22 h-22 rounded-full  bg-gradient-to-br from-[#79D7C6] to-[#29A7AE] flex items-center justify-center shadow-sm">
                     {step.icon}
                   </div>
                 </div>
@@ -71,3 +71,10 @@ const HowItWorks = () => {
 };
 
 export default HowItWorks;
+
+
+
+
+
+
+
