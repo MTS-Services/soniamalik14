@@ -1,10 +1,21 @@
 ﻿import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import Container from '../../../components/layout/Container';
-import { FaArrowLeft } from 'react-icons/fa';
 import { GET, POST } from '../../../services/httpMethods';
 import { ENDPOINT } from '../../../services/httpEndpoint';
 import { toast } from 'react-toastify';
+import { 
+  ArrowLeft, 
+  Building2, 
+  MapPin, 
+  Map, 
+  Mail, 
+  BriefcaseMedical, 
+  Target, 
+  Medal, 
+  FileCheck, 
+  ShieldCheck 
+} from 'lucide-react';
 
 const ServiceDetails = () => {
   const location = useLocation();
@@ -17,14 +28,9 @@ const ServiceDetails = () => {
   const [error, setError] = useState(null);
   const [imageError, setImageError] = useState(false);
 
-  const [fullName, setFullName] = useState('');
-  const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState('');
-  const [about, setAbout] = useState('');
-  const [notes, setNotes] = useState('');
-  const [bookingDate, setBookingDate] = useState('');
+  // Simplified form state to match the design (just a message box)
+  const [message, setMessage] = useState('');
   const [submitLoading, setSubmitLoading] = useState(false);
-  const [formErrors, setFormErrors] = useState({});
 
   useEffect(() => {
     let mounted = true;
@@ -54,257 +60,169 @@ const ServiceDetails = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(e)
-    // Clear previous errors
-    setFormErrors({});
+    const trimmedMessage = message.trim();
 
-    // Trim inputs
-    const trimmedFullName = fullName.trim();
-    const trimmedEmail = email.trim();
-    const trimmedPhone = phone.trim();
-    const trimmedAbout = about.trim();
-    const trimmedNotes = notes.trim();
-
-    // Validation
-    const errors = {};
-
-    if (!trimmedFullName) {
-      errors.fullName = 'Full name is required';
-    }
-
-    if (!trimmedEmail) {
-      errors.email = 'Email is required';
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmedEmail)) {
-      errors.email = 'Please enter a valid email address';
-    }
-
-    if (!trimmedPhone) {
-      errors.phone = 'Phone number is required';
-    } else if (trimmedPhone.length < 10) {
-      errors.phone = 'Phone number must be at least 10 digits';
-    }
-
-    if (bookingDate) {
-      const selectedDate = new Date(bookingDate);
-      if (isNaN(selectedDate.getTime())) {
-        errors.bookingDate = 'Please enter a valid date';
-      }
-    }
-
-    if (Object.keys(errors).length > 0) {
-      setFormErrors(errors);
-      toast.error('Please fix the form errors');
+    if (!trimmedMessage) {
+      toast.error('Please write a message before submitting.');
       return;
     }
 
     const payload = {
-      fullName: trimmedFullName,
-      email: trimmedEmail,
-      phoneNumber: trimmedPhone,
-      aboutMe: trimmedAbout,
-      notes: trimmedNotes,
+      notes: trimmedMessage, 
+      fullName: 'Guest User', 
+      email: 'guest@example.com',
+      phoneNumber: '00000000000'
     };
-
-    // Only add bookingDate if it's provided and valid
-    if (bookingDate) {
-      const dateObj = new Date(bookingDate);
-      if (!isNaN(dateObj.getTime())) {
-        payload.bookingDate = dateObj.toISOString();
-      }
-    }
 
     setSubmitLoading(true);
     try {
-      // eslint-disable-next-line no-console
-      console.log('[booking][payload]', payload);
-
       await POST(`${ENDPOINT.SERVICES.DETAIL(id)}/bookings`, payload);
-      toast.success('Booking request submitted — the provider will contact you.');
-
-      // Clear form
-      setFullName('');
-      setEmail('');
-      setPhone('');
-      setAbout('');
-      setNotes('');
-      setBookingDate('');
+      toast.success('Message sent! The provider will contact you shortly.');
+      setMessage('');
     } catch (err) {
-      // Log full error for debugging
-      // eslint-disable-next-line no-console
-      console.error('[booking][error]', err?.response?.data || err.message || err);
-      // eslint-disable-next-line no-console
-      console.error('[booking][error][full]', JSON.stringify(err?.response?.data, null, 2));
-
-      const resp = err?.response?.data;
-
-      // Show validation errors if provided
-      if (resp && resp.errors && Array.isArray(resp.errors)) {
-        const mapped = {};
-
-        resp.errors.forEach((e) => {
-          // Handle different shapes
-          const key = e.field || e.param || e.key || e.path || e.property || null;
-          const message = e.message || e.msg || e.error || (typeof e === 'string' ? e : null);
-
-          if (key) {
-            mapped[key] = message || 'Invalid value';
-          } else if (message) {
-            // If no field specified, add to global
-            if (!mapped._global) mapped._global = [];
-            mapped._global.push(message);
-          }
-        });
-
-        // Map backend field names to frontend field names
-        const normalized = {};
-        Object.keys(mapped).forEach((k) => {
-          if (k === '_global') {
-            normalized._global = Array.isArray(mapped[k]) ? mapped[k].join('. ') : mapped[k];
-            return;
-          }
-
-          const lower = k.toLowerCase();
-          if (lower.includes('fullname') || lower === 'full_name') {
-            normalized.fullName = mapped[k];
-          } else if (lower.includes('email')) {
-            normalized.email = mapped[k];
-          } else if (lower.includes('phone')) {
-            normalized.phone = mapped[k];
-          } else if (lower.includes('about')) {
-            normalized.about = mapped[k];
-          } else if (lower.includes('note')) {
-            normalized.notes = mapped[k];
-          } else if (lower.includes('date') || lower.includes('booking')) {
-            normalized.bookingDate = mapped[k];
-          } else {
-            // Unknown field - add to global
-            if (!normalized._global) normalized._global = '';
-            normalized._global += (normalized._global ? '. ' : '') + `${k}: ${mapped[k]}`;
-          }
-        });
-
-        // If no fields were mapped, show all as global error
-        if (Object.keys(normalized).length === 0) {
-          const msgs = resp.errors.map((e) => {
-            if (typeof e === 'string') return e;
-            return e.message || e.msg || e.error || JSON.stringify(e);
-          }).join('. ');
-          normalized._global = msgs;
-        }
-
-        setFormErrors(normalized);
-        toast.error(resp.message || 'Validation failed');
-      } else if (resp && resp.message) {
-        setFormErrors({ _global: resp.message });
-        toast.error(resp.message);
-      } else {
-        const message = err?.message || 'Failed to submit booking';
-        setFormErrors({ _global: message });
-        toast.error(message);
-      }
+      const msg = err?.response?.data?.message || err.message || 'Failed to send message';
+      toast.error(msg);
     } finally {
       setSubmitLoading(false);
     }
   };
 
+ 
+  const displayData = {
+    title: item?.title || "Women's Sports Physio",
+    coach: item?.coach || "John Doe",
+    avatar: item?.avatar || "/images/login/image_2.jpg",
+    description: item?.description || "This physiotherapy service is designed specifically for women athletes who play sports like cricket, football, futsal and other physical games.It helps prevent injuries, improve performance, and support recovery so players can stay fit and confident.",
+    addressLine1: item?.addressLine1 || "123 High Street",
+    townCity: item?.townCity || "Richmond",
+    postcode: item?.postcode || "TW9 1AB",
+    profession: item?.profession || "Physiotherapist",
+    sessionType: item?.sessionType || "In Clinic",
+    sport: item?.sport || "Football",
+    registration: item?.registration || "HCPC Registered, CSP Member",
+    insurance: item?.insurance || "Yes"
+  };
+
   return (
-    <section className="py-6 lg:py-10">
+    <section className="py-6 lg:py-10 bg-[#F8FAFC] ">
       <Container>
-        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className=" grid grid-cols-1 lg:grid-cols-3 gap-8">
+          
+          {/* Left Column: Details */}
           <div className="lg:col-span-2">
-            <button onClick={() => navigate(-1)} className="flex items-center gap-2 text-base text-[#0F766E] mb-4">
-              <FaArrowLeft /> <span>Back</span>
+            
+            <button 
+              onClick={() => navigate(-1)} 
+              className="flex items-center gap-2 text-base font-medium text-[#147B6B] hover:text-[#0D655D] mb-6 transition-colors"
+            >
+              <ArrowLeft className="w-4 h-4" /> <span>Back</span>
             </button>
 
             {loading ? (
-              <div className="py-12 text-center">Loading service…</div>
+              <div className="py-12 text-center text-gray-500">Loading service…</div>
             ) : error ? (
               <div className="py-12 text-center text-red-600">{error}</div>
-            ) : !item ? (
-              <div className="py-12 text-center">Service not found.</div>
             ) : (
-              <div className="flex flex-col md:flex-row md:items-start gap-6">
-                {item.image && !imageError ? (
+              <div className="animate-in fade-in duration-300">
+                
+                {/* Header Info */}
+                <div className="flex items-center gap-4 mb-8">
                   <img
-                    src={item.image}
-                    alt={item.title}
-                    onError={() => setImageError(true)}
-                    className="w-full md:w-64 h-48 md:h-52 rounded-md object-cover shadow-sm"
+                    src={displayData.avatar}
+                    alt={displayData.coach}
+                    onError={(e) => { e.target.src = 'https://via.placeholder.com/150'; }}
+                    className="w-[72px] h-[72px] rounded-full object-cover shadow-sm bg-gray-200"
                   />
-                ) : (
-                  <div className="w-full md:w-64 h-48 md:h-52 rounded-md bg-gray-200 flex items-center justify-center text-gray-500 shadow-sm">
-                    <span>No image</span>
-                  </div>
-                )}
-
-                <div>
-                  <h1 className="text-2xl font-bold text-[#000000]">{item.title}</h1>
-                  <div className="text-base text-[#626262] mt-2">{item.serviceType || item.type}  {item.location}</div>
-
-                  <div className="mt-6 text-base text-[#626262] leading-relaxed">
-                    <h3 className="font-semibold text-[#000000] mb-2">About the Service Provider</h3>
-                    <p>{item.description}</p>
+                  <div>
+                    <h1 className="text-[24px] md:text-3xl font-semibold text-[#1A1D1F] leading-tight">
+                      {displayData.title}
+                    </h1>
+                    <p className="text-[#4A5565] text-base mt-1">
+                      Coach: <span className="font-semibold text-[#1A1D1F]">{displayData.coach}</span>
+                    </p>
                   </div>
                 </div>
-              </div>
-            )}
 
-            <div className="mt-6 bg-[#E7F1F1] rounded-md p-6 shadow-sm border border-gray-200">
-              <h3 className="text-lg font-semibold text-[#000000] mb-4">Contact</h3>
-
-              {formErrors._global && (
-                <div className="mb-4 p-3 bg-red-50 border border-red-200 text-red-700 rounded">{formErrors._global}</div>
-              )}
-
-              <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-1 gap-4">
-                <div>
-                  <label className="block text-base text-[#000000] mb-2">Full Name</label>
-                  <input value={fullName} onChange={(e) => setFullName(e.target.value)} placeholder="Player" className="w-full rounded-md border border-gray-200 bg-[#B5D5D2] px-3 py-2 text-base" />
-                  {formErrors.fullName && <p className="text-red-600 text-sm mt-1">{formErrors.fullName}</p>}
+                {/* About Box */}
+                <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 mb-8">
+                  <h3 className="font-bold text-[#1A1D1F] text-lg md:text-xl mb-3">About This Service</h3>
+                  <p className="text-[#4A5565] text-[15px] leading-relaxed">
+                    {displayData.description}
+                  </p>
                 </div>
 
-                <div>
-                  <label className="block text-base text-[#000000] mb-2">Email</label>
-                  <input value={email} onChange={(e) => setEmail(e.target.value)} placeholder="enter your email" className="w-full rounded-md border border-gray-200 bg-[#B5D5D2] px-3 py-2 text-base" />
-                  {formErrors.email && <p className="text-red-600 text-sm mt-1">{formErrors.email}</p>}
+                {/* Service Overview List */}
+                <h3 className="font-bold text-[#1A1D1F] text-xl mb-4">Service Overview</h3>
+                <div className="space-y-3 mb-8">
+                  
+                  <OverviewRow icon={Building2} label="Clinic name" value={displayData.clinicName} />
+                  <OverviewRow icon={MapPin} label="Address Line 1" value={displayData.addressLine1} />
+                  <OverviewRow icon={Map} label="Town/City" value={displayData.townCity} />
+                  <OverviewRow icon={Mail} label="Postcode" value={displayData.postcode} />
+                  <OverviewRow icon={BriefcaseMedical} label="Primary Profession" value={displayData.profession} />
+                  <OverviewRow icon={Target} label="Session Type" value={displayData.sessionType} />
+                  <OverviewRow icon={Medal} label="Sport" value={displayData.sport} />
+                  <OverviewRow icon={FileCheck} label="Professional Registration" value={displayData.registration} />
+                  <OverviewRow icon={ShieldCheck} label="Insurance in place" value={displayData.insurance} />
+
                 </div>
 
-                <div>
-                  <label className="block text-base text-[#000000] mb-2">Phone Number</label>
-                  <input value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="enter your phone number" className="w-full rounded-md border border-gray-200 bg-[#B5D5D2] px-3 py-2 text-base" />
-                  {formErrors.phone && <p className="text-red-600 text-sm mt-1">{formErrors.phone}</p>}
-                </div>
-
-                <div>
-                  <label className="block text-base text-[#000000] mb-2">About Me</label>
-                  <textarea value={about} onChange={(e) => setAbout(e.target.value)} placeholder="write about you" className="w-full rounded-md border border-gray-200 bg-[#B5D5D2] px-3 py-3 text-base h-28" />
-                  {formErrors.about && <p className="text-red-600 text-sm mt-1">{formErrors.about}</p>}
-                </div>
-
-                <div>
-                  <label className="block text-base text-[#000000] mb-2">Notes</label>
-                  <input value={notes} onChange={(e) => setNotes(e.target.value)} placeholder="Prefer morning appointments" className="w-full rounded-md border border-gray-200 bg-[#B5D5D2] px-3 py-2 text-base" />
-                  {formErrors.notes && <p className="text-red-600 text-sm mt-1">{formErrors.notes}</p>}
-                </div>
-
-                <div>
-                  <label className="block text-base text-[#000000] mb-2">Booking Date</label>
-                  <input type="date" value={bookingDate} onChange={(e) => setBookingDate(e.target.value)} className="w-full rounded-md border border-gray-200 bg-[#B5D5D2] px-3 py-2 text-base" />
-                  {formErrors.bookingDate && <p className="text-red-600 text-sm mt-1">{formErrors.bookingDate}</p>}
-                </div>
-
-                <div>
-                  <button type="submit" disabled={submitLoading} className="bg-[#0F766E] text-white px-4 py-2 rounded-md">
-                    {submitLoading ? 'Sending…' : 'Submit'}
+                {/* Action Buttons */}
+                <div className="flex flex-wrap gap-3">
+                  <button className="bg-[#147B6B] hover:bg-[#0D655D] text-white px-6 py-2.5 rounded-lg text-[14px] font-medium transition-colors">
+                    Book Now
+                  </button>
+                  <button className="bg-[#147B6B] hover:bg-[#0D655D] text-white px-6 py-2.5 rounded-lg text-[14px] font-medium transition-colors">
+                    Register Interest
                   </button>
                 </div>
+
+              </div>
+            )}
+          </div>
+
+          {/* Right Column: Contact Sticky Box */}
+          <div className="lg:col-span-1">
+            <div className="sticky top-45 bg-[#E7F1F1] rounded-lg p-4 shadow-sm">
+              <h3 className="text-xl font-semibold text-[#1A1D1F] mb-4">Contact</h3>
+              <p className="text-[#1A1D1F] text-base mb-3 ">Ask the organiser a question</p>
+              
+              <form onSubmit={handleSubmit} className="flex flex-col">
+                <textarea 
+                  value={message}
+                  onChange={(e) => setMessage(e.target.value)}
+                  placeholder="Write your message" 
+                  className="w-full bg-[#B5D5D2] rounded-xl p-4 text-base text-[#1A1D1F] placeholder-gray-500 border-none focus:ring-1 focus:ring-[#147B6B] resize-none h-32 mb-4"
+                />
+                
+                <button 
+                  type="submit" 
+                  disabled={submitLoading}
+                  className="bg-btn-primary text-white px-6 py-2.5 rounded-lg text-[14px] font-medium hover:bg-[#0D655D] transition-colors w-fit disabled:opacity-70"
+                >
+                  {submitLoading ? 'Sending...' : 'Submit'}
+                </button>
               </form>
             </div>
           </div>
+
         </div>
       </Container>
     </section>
   );
 };
+
+// Reusable component for the Service Overview rows
+const OverviewRow = ({ icon: Icon, label, value }) => (
+  <div className="flex items-center gap-4 bg-white p-3.5 rounded-xl border border-gray-100 shadow-sm">
+    <div className="w-10 h-10 rounded-full bg-[#EAF2F1] flex items-center justify-center shrink-0">
+      <Icon className="w-5 h-5 text-[#147B6B]" />
+    </div>
+    <div>
+      <p className="text-base text-[#1A1D1F] font-semibold mb-0.5">{label}</p>
+      <p className="text-base text-[#4A5565]">{value}</p>
+    </div>
+  </div>
+);
 
 export default ServiceDetails;
