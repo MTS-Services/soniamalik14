@@ -67,7 +67,7 @@ const Pagination = ({ page = 1, total = 10, onChange = () => {} }) => {
               key={`e-${idx}`}
               className={`${squareBase} bg-white border-gray-200 text-gray-500 flex items-center justify-center`}
             >
-              â€¦
+              ...
             </div>
           );
         }

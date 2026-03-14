@@ -32,8 +32,8 @@ const DiscoverCard = ({ item }) => {
     >
       <div className="flex-1 flex flex-col">
         <div className="relative">
-          <div className="absolute top-3 left-3">
-            <span className="bg-white text-emerald-700 px-3 py-1 rounded-full text-xs font-semibold shadow-sm">{item.type}</span>
+          <div className="absolute bottom-6 left-3">
+            <span className="bg-[#E7F1F1] text-[#0F766E] px-3 py-1 rounded-full text-sm font-semibold shadow-sm">{item.type}</span>
           </div>
 
           <div className="h-44 sm:h-56 bg-gray-200 rounded-lg mb-4 overflow-hidden flex items-center justify-center">
