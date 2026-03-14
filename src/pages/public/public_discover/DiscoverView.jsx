@@ -1,8 +1,9 @@
-﻿import React, { useState } from 'react';
+﻿
+
+import React, { useState } from 'react';
 import Container from '../../../components/layout/Container';
 import PageHeader from '../../../components/ui/PageHeader';
 import DiscoverCard from './components/DiscoverCard';
-import Filters from './components/Filters';
 import Pagination from './components/Pagination';
 
 const sample = Array.from({ length: 9 }).map((_, i) => ({
@@ -42,15 +43,50 @@ const DiscoverView = () => {
   return (
     <section className="py-6 lg:py-8">
       <Container>
-        <div className="mb-6">
-          <PageHeader
-            title="Find Your Sport"
-            description="Browse clubs, casual sessions, and expert services."
-          />
-        </div>
+        <div className="mb-8">
+          <PageHeader title="Find your sport" />
+          
+          {/* New Filter Section Added Here */}
+          <div className="mt-4 bg-[#F0F5F4] p-2.5 rounded-lg inline-flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
+            
+            {/* Select Sports Dropdown */}
+            <div className="relative w-full sm:w-[180px]">
+              <select className="appearance-none w-full bg-white border-none text-gray-700 text-sm rounded-md px-3 py-2 outline-none focus:ring-1 focus:ring-teal-500 cursor-pointer shadow-sm">
+                <option value="">Select sports</option>
+                <option value="football">Football</option>
+                <option value="tennis">Tennis</option>
+                <option value="basketball">Basketball</option>
+              </select>
+              <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-gray-800">
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+                </svg>
+              </div>
+            </div>
 
-        <div className="mb-6">
-          <Filters onFilter={(t) => setFilter(t)} active={filter} />
+            {/* Postcode/City Input */}
+            <input
+              type="text"
+              placeholder="Enter Postcode/City"
+              className="w-full sm:w-[220px] bg-white border-none text-gray-700 text-sm rounded-md px-3 py-2 outline-none focus:ring-1 focus:ring-teal-500 shadow-sm placeholder-gray-400"
+            />
+
+            {/* Distance Dropdown */}
+            <div className="relative w-full sm:w-[140px]">
+              <select className="appearance-none w-full bg-white border-none text-gray-700 text-sm rounded-md px-3 py-2 outline-none focus:ring-1 focus:ring-teal-500 cursor-pointer shadow-sm">
+                <option value="">Distance</option>
+                <option value="5">5 Miles</option>
+                <option value="10">10 Miles</option>
+                <option value="20">20 Miles</option>
+              </select>
+              <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-gray-800">
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+                </svg>
+              </div>
+            </div>
+            
+          </div>
         </div>
 
         {filtered.length > 0 ? (
