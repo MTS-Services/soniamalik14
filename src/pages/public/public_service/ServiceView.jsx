@@ -96,7 +96,7 @@ const dummyServices = Array.from({ length: 6 }).map((_, i) => ({
     description: 'Discover tools, support, and guidance to nurture your mental well-being every day.',
     type: 'Physios',
     sport: 'Football',
-    image: '', // Keeps the gray placeholder look
+    image: 'https://i.ibb.co.com/M5yh8WGJ/0aab4f0cea97648654a2c3fe1dc1dc4751e6d7f7.jpg', // Keeps the gray placeholder look
 }));
 
 const ServiceView = () => {
@@ -119,15 +119,15 @@ const ServiceView = () => {
     const paginatedServices = filtered.slice(startIndex, endIndex);
 
     return (
-        <section className="py-6 lg:py-10 bg-[#F8FAFC] ">
+        <section className="py-6 lg:py-8 bg-[#F8FAFC] ">
             <Container>
                 {/* Header Section */}
                 <div className="mb-6">
-                    <PageHeader title="Services" description={"Support for your journey - from injury recovery to nutrition guidance. Professionals supporting women at every level."}/>                    
+                    <PageHeader title="Services" description={"Support for your journey - from injury recovery to nutrition guidance. Professionals supporting women at every level."} />
                 </div>
 
                 {/* Filter Bar (Matches the design from the image) */}
-                <div className="mb-8 bg-[#F0F5F4] p-2.5 rounded-lg inline-flex flex-col sm:flex-row gap-3 w-full lg:w-auto">
+                <div className="mb-4 bg-[#E7F1F1] p-4 rounded-lg inline-flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
 
                     {/* Postcode/City Input */}
                     <input
@@ -135,7 +135,7 @@ const ServiceView = () => {
                         placeholder="Enter Postcode/City"
                         value={postcode}
                         onChange={(e) => setPostcode(e.target.value)}
-                        className="w-full sm:w-[220px] bg-white border-none text-[#4A5565] text-[14px] rounded-md px-3.5 py-2.5 outline-none focus:ring-1 focus:ring-[#147B6B] shadow-sm placeholder-gray-400"
+                        className="w-full sm:w-[220px] bg-white border-none text-gray-700 text-base rounded-md px-3 py-2 outline-none focus:ring-1 focus:ring-teal-500 shadow-sm placeholder-gray-400"
                     />
 
                     {/* Distance Dropdown */}
@@ -143,14 +143,14 @@ const ServiceView = () => {
                         <select
                             value={distance}
                             onChange={(e) => setDistance(e.target.value)}
-                            className="appearance-none w-full bg-white border-none text-[#4A5565] text-[14px] rounded-md px-3.5 py-2.5 outline-none focus:ring-1 focus:ring-[#147B6B] cursor-pointer shadow-sm"
+                            className="appearance-none w-full bg-white border-none text-gray-700 text-base rounded-md px-3 py-3 outline-none focus:ring-1 focus:ring-teal-500 cursor-pointer shadow-sm"
                         >
                             <option value="">Distance</option>
                             <option value="5">5 Miles</option>
                             <option value="10">10 Miles</option>
                             <option value="20">20 Miles</option>
                         </select>
-                        <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-gray-500">
+                        <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-gray-800">
                             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
                             </svg>
@@ -162,7 +162,7 @@ const ServiceView = () => {
                         <select
                             value={selectedService}
                             onChange={(e) => { setSelectedService(e.target.value); setPage(1); }}
-                            className="appearance-none w-full bg-white border-none text-[#4A5565] text-[14px] rounded-md px-3.5 py-2.5 outline-none focus:ring-1 focus:ring-[#147B6B] cursor-pointer shadow-sm"
+                            className="appearance-none w-full bg-white border-none text-gray-700 text-base rounded-md px-3 py-3 outline-none focus:ring-1 focus:ring-teal-500 cursor-pointer shadow-sm"
                         >
                             <option value="All">Select Services</option>
                             <option value="Physios">Physios</option>
@@ -181,7 +181,7 @@ const ServiceView = () => {
                 {/* Content Grid */}
                 {filtered.length > 0 ? (
                     <>
-                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                             {paginatedServices.map((item) => (
                                 <ServiceCard key={item.id} item={item} />
                             ))}
@@ -223,3 +223,8 @@ const ServiceView = () => {
 };
 
 export default ServiceView;
+
+
+
+
+
