@@ -94,28 +94,12 @@ const CommunityView = () => {
     <div className="min-h-screen bg-gray-50 py-6 lg:py-8">
       <Container>
         {/* Header */}
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-3 lg:mb-6">
-          <SectionHeader
-            title="Community Forum"
-            description="Connect, chat and support each other."
-            align="left"
-          />
-
-          {/* Login/Post Button */}
-          <Button
-            variant="primary"
-            className="rounded-md mt-4 sm:mt-0 w-full sm:w-auto"
-            onClick={() => (isAuthenticated ? navigate('/community/new') : navigate('/signin'))}
-          >
-            {isAuthenticated ? 'Post a thread' : 'Log in To Post'}
-          </Button>
-        </div>
 
         {/* Main Content Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-3 lg:gap-6">
           {/* Left Sidebar - Categories */}
           <div className="lg:col-span-1">
-            <div className="hidden lg:block sticky top-40">
+            <div className="hidden lg:block sticky top-46">
               <CategorySidebar
                 activeCategory={activeCategory}
                 onCategoryChange={setActiveCategory}
@@ -125,6 +109,23 @@ const CommunityView = () => {
 
           {/* Main Content - Forum Topics */}
           <div className="lg:col-span-3">
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-3 ">
+              <SectionHeader
+                title="ESSA Community"
+                className='text-3xl'
+                align="left"
+              />
+
+              {/* Login/Post Button */}
+              <Button
+                variant="primary"
+                className="rounded-md mt-4 sm:mt-0 w-full sm:w-auto"
+                onClick={() => (isAuthenticated ? navigate('/community/new') : navigate('/signin'))}
+              >
+                {isAuthenticated ? 'Post a thread' : 'Log in To Post'}
+              </Button>
+            </div>
+
             <div className="space-y-2 lg:space-y-4">
               {topics.map((topic) => (
                 <ForumTopicCard
