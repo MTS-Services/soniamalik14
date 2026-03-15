@@ -1,10 +1,12 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Container from '../../../../components/layout/Container'
 import Button from '../../../../components/ui/Button'
+import FindSupportModal from './FindSupportModal'
 
 const DiscoverEmptyPage = () => {
-  return (
-    <section className="bg-gray-50 py-10">
+    const [isModalOpen, setIsModalOpen] = useState(false)
+    return (
+        <section className="py-6 lg:py-10 bg-[#F8FAFC]">
             <Container>
                 <div className="max-w-2xl mx-auto text-center ">
                     <img
@@ -19,13 +21,15 @@ const DiscoverEmptyPage = () => {
                         Tell us what you’d love to play — we’ll show clubs there’s demand in your area. Help us bring more sport to your area.
                     </p>
 
-                    <Button variant="primary" className="px-6 py-3 rounded-lg"  >
+                    <Button variant="primary" className="px-6 py-3 rounded-lg" onClick={() => setIsModalOpen(true)}>
                         What would you like to see?
                     </Button>
                 </div>
             </Container>
+
+            <FindSupportModal open={isModalOpen} onClose={() => setIsModalOpen(false)} />
         </section>
-  )
+    )
 }
 
 export default DiscoverEmptyPage

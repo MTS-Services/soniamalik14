@@ -1,6 +1,4 @@
-﻿
-
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import Container from '../../../components/layout/Container';
 import PageHeader from '../../../components/ui/PageHeader';
 import DiscoverCard from './components/DiscoverCard';
@@ -59,9 +57,8 @@ const DiscoverView = () => {
       );
     }
 
-    // Filter by distance if selected (demonstration - you can enhance with actual distance calculation)
     if (distance) {
-      match = match && true; // Add actual distance calculation logic if you have coordinates
+      match = match && true; 
     }
 
     return match;
@@ -83,7 +80,7 @@ const DiscoverView = () => {
           <div className="mt-4 bg-[#E7F1F1] p-4 rounded-lg inline-flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
 
             {/* Select Sports Dropdown */}
-            <div className="relative w-full sm:w-[180px]">
+            <div className="relative w-full sm:w-45">
               <select
                 value={selectedSport}
                 onChange={(e) => {
@@ -111,18 +108,18 @@ const DiscoverView = () => {
               value={location}
               onChange={(e) => {
                 setLocation(e.target.value);
-                setPage(1); // Reset to first page when filter changes
+                setPage(1); 
               }}
-              className="w-full sm:w-[220px] bg-white border-none text-gray-700 text-base rounded-md px-3 py-2 outline-none focus:ring-1 focus:ring-teal-500 shadow-sm placeholder-gray-400"
+              className="w-full sm:w-55 bg-white border-none text-gray-700 text-base rounded-md px-3 py-2 outline-none focus:ring-1 focus:ring-teal-500 shadow-sm placeholder-gray-400"
             />
 
             {/* Distance Dropdown */}
-            <div className="relative w-full sm:w-[140px]">
+            <div className="relative w-full sm:w-35">
               <select
                 value={distance}
                 onChange={(e) => {
                   setDistance(e.target.value);
-                  setPage(1); // Reset to first page when filter changes
+                  setPage(1); 
                 }}
                 className="appearance-none w-full bg-white border-none text-gray-700 text-base rounded-md px-3 py-3 outline-none focus:ring-1 focus:ring-teal-500 cursor-pointer shadow-sm"
               >

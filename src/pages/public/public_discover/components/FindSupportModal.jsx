@@ -1,4 +1,5 @@
 ﻿import React, { useEffect, useRef, useState } from 'react'
+import { X } from 'lucide-react'
 import Button from '../../../../components/ui/Button'
 
 const Checkbox = ({ label, checked, onChange }) => (
@@ -71,7 +72,7 @@ const FindSupportModal = ({ open, onClose }) => {
                 {/* Header - sticky */}
                 <div className="sticky top-0 bg-white border-b border-gray-200 px-4 py-3 flex items-center justify-between">
                     <h3 className="text-lg font-semibold">Fill the form</h3>
-                    <button onClick={onClose} aria-label="Close" className="text-gray-600 hover:text-gray-900">Ã—</button>
+                    <button onClick={onClose} aria-label="Close" className="text-gray-600 hover:text-gray-900"><X className="w-5 h-5" /></button>
                 </div>
 
                 {/* Body - scrollable */}
