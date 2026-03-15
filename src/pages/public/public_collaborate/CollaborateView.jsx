@@ -159,7 +159,7 @@ const CollaborateView = () => {
             <Container>
                 {/* Header Section */}
                 <div className="max-w-3xl mb-8">
-                    <h1 className="text-3xl sm:text-4xl lg:text-[2.75rem] font-bold text-gray-900 leading-tight mb-4">
+                    <h1 className="text-3xl lg:text-[40px] font-semibold text-subtitle mb-4">
                         Collaborate With <br className="hidden sm:block" /> ESSA Hub
                     </h1>
                     <p className="text-base sm:text-lg text-gray-600 leading-relaxed max-w-2xl">

@@ -5,6 +5,7 @@ import Container from '../../../components/layout/Container';
 import PageHeader from '../../../components/ui/PageHeader';
 import DiscoverCard from './components/DiscoverCard';
 import Pagination from './components/Pagination';
+import DiscoverEmptyPage from './components/DiscoverEmptyPage';
 
 const sample = Array.from({ length: 9 }).map((_, i) => ({
   id: i + 1,
@@ -151,28 +152,7 @@ const DiscoverView = () => {
             {totalPages > 1 && <Pagination page={page} total={totalPages} onChange={(p) => setPage(p)} />}
           </>
         ) : (
-          <div className="flex flex-col items-center justify-center py-16 px-4">
-            <div className="text-center">
-              <svg className="w-20 h-20 mx-auto mb-4 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-              <h3 className="text-xl font-semibold text-[#282828] mb-2">No Sports Found</h3>
-              <p className="text-[#363636] text-base mb-4">
-                We couldn't find any sports matching your search criteria.
-              </p>
-              <button
-                onClick={() => {
-                  setSelectedSport('');
-                  setLocation('');
-                  setDistance('');
-                  setPage(1);
-                }}
-                className="text-btn-primary hover:text-[#0d655d] font-medium text-base"
-              >
-                Clear filters
-              </button>
-            </div>
-          </div>
+          <DiscoverEmptyPage />
         )}
       </Container>
     </section>

@@ -27,8 +27,9 @@ const HeaderNav = ({ isMenuOpen, setIsMenuOpen }) => {
     { name: 'Events', href: '/events' },
     { name: 'Services', href: '/services' },
     { name: 'Marketplace', href: '/marketplace' },
-    { name: 'News', href: '/news' },
+    
     { name: 'Collaborate', href: '/collaborate' },
+    { name: 'News', href: '/news' },
   ];
 
   const isActive = (path) => {
