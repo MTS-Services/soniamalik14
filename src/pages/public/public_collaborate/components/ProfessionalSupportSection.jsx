@@ -1,58 +1,5 @@
 import React from 'react';
 import { Check, ArrowRight } from 'lucide-react';
-
-// const ProfessionalSupportSection = () => {
-//     return (
-//         <div className="relative rounded-2xl overflow-hidden min-h-[500px] xl:min-h-[600px] flex items-center bg-white border border-gray-100 shadow-sm group">
-//             {/* Image Layer (Left Side) */}
-//             <div className="absolute inset-0 md:w-[80%] h-full md:right-auto md:left-0">
-//                 <img
-//                     src="/ProfessionalSupport1.png"
-//                     alt="For Professional Support"
-//                     className="w-full h-full object-cover object-center"
-//                 />
-//             </div>
-
-//             {/* Gradient Overlay (Fades Right to Left) */}
-//             <div
-//                 className="absolute inset-0 w-full h-full 
-//                 bg-[linear-gradient(180deg,transparent_0%,rgba(255,255,255,0.8)_40%,#FFF_65%)]
-//                 md:bg-[linear-gradient(270deg,#FFF_45%,rgba(255,255,255,0.8)_55%,transparent_100%)]"
-//             />
-
-//             {/* Content Container (Right Side) */}
-//             <div className="relative z-10 w-full md:w-[55%] lg:w-[50%] p-6 sm:p-10 lg:p-16 flex flex-col justify-end md:justify-center min-h-[450px] md:min-h-0 h-full ml-auto">
-//                 <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#0F172A] mb-4">
-//                     For Professional Support
-//                 </h2>
-
-//                 <p className="text-[14px] sm:text-[15px] lg:text-base text-gray-600 mb-6 leading-relaxed">
-//                     We want to work with professionals whose expertise supports women in sport — including physiotherapy, strength and conditioning, nutrition, women's health and wellbeing.
-//                 </p>
-
-//                 <ul className="space-y-3 mb-8">
-//                     <li className="flex items-start gap-3 text-[14px] sm:text-[15px] lg:text-base text-gray-600">
-//                         <Check className="w-5 h-5 text-[#137C71] shrink-0 mt-0.5" strokeWidth={2.5} />
-//                         <span>Connect with a targeted audience</span>
-//                     </li>
-//                     <li className="flex items-start gap-3 text-[14px] sm:text-[15px] lg:text-base text-gray-600">
-//                         <Check className="w-5 h-5 text-[#137C71] shrink-0 mt-0.5" strokeWidth={2.5} />
-//                         <span>Increase visibility within a trusted platform</span>
-//                     </li>
-//                 </ul>
-
-//                 <div>
-//                     <a href="#" className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-[#137C71] text-white rounded-md text-sm sm:text-base font-semibold hover:bg-[#0F635A] transition-colors">
-//                         List your business
-//                         <ArrowRight className="w-4 h-4" />
-//                     </a>
-//                 </div>
-//             </div>
-//         </div>
-//     );
-// };
-
-
 const ProfessionalSupportSection = () => {
     return (
         <div className="relative w-full rounded-lg overflow-hidden bg-white shadow-sm flex flex-col md:block mb-10">
