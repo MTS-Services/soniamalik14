@@ -67,7 +67,7 @@ const EventView = () => {
     const paged = filtered.slice((page - 1) * perPage, page * perPage);
 
     return (
-        <div className="min-h-screen bg-gray-50 py-6 lg:py-10">
+        <div className="min-h-screenpy-6 lg:py-8 bg-[#F8FAFC] ">
             <Container>
                 {/* Custom Header Section */}
                 <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center mb-6 lg:mb-8 gap-4">

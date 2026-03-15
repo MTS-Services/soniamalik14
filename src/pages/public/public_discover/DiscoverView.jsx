@@ -73,7 +73,7 @@ const DiscoverView = () => {
   const paginatedItems = filtered.slice(startIndex, endIndex);
 
   return (
-    <section className="py-6 lg:py-8">
+    <section className="py-6 lg:py-8 bg-[#F8FAFC] ">
       <Container>
         <div className="mb-8">
           <PageHeader title="Find your sport" />
