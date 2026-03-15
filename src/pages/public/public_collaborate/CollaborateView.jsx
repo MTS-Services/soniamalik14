@@ -54,11 +54,11 @@ const CollaborateCard = ({ data }) => {
         <div className="relative rounded-2xl overflow-hidden min-h-[500px] xl:min-h-[600px] flex items-center bg-white border border-gray-100 shadow-sm group">
             
             {/* 1. Background Image Wrapper (Constrained to 70% width on desktop to prevent zooming) */}
-            <div className={`absolute inset-0 md:w-[70%] h-full ${isLeft ? 'md:left-auto md:right-0' : 'md:right-auto md:left-0'}`}>
+            <div className={`absolute inset-0 md:w-[80%] h-full ${isLeft ? 'md:left-auto md:right-0' : 'md:right-auto md:left-0'}`}>
                 <img 
                     src={data.image} 
                     alt={data.title} 
-                    className="w-full h-full object-cover object-center" 
+                    className="w-full h-full  object-center objrect-cover " 
                 />
             </div>
 
@@ -68,8 +68,8 @@ const CollaborateCard = ({ data }) => {
                 className={`absolute inset-0 w-full h-full
                     bg-[linear-gradient(180deg,transparent_0%,rgba(255,255,255,0.8)_40%,#FFF_65%)]
                     ${isLeft 
-                        ? 'md:bg-[linear-gradient(90deg,#FFF_45%,rgba(255,255,255,0.95)_55%,transparent_80%)]' 
-                        : 'md:bg-[linear-gradient(270deg,#FFF_45%,rgba(255,255,255,0.95)_55%,transparent_80%)]'
+                        ? 'md:bg-[linear-gradient(90deg,#FFF_45%,rgba(255,255,255,0.8)_55%,transparent_100%)]' 
+                        : 'md:bg-[linear-gradient(270deg,#FFF_45%,rgba(255,255,255,0.8)_55%,transparent_100%)]'
                     }
                 `} 
             />
