@@ -40,14 +40,14 @@ const HowItWorks = () => {
           </div>
 
           {/* Steps Wrapper */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 relative z-10">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-12 relative z-10">
             {steps.map((step, index) => (
               <div key={index} className="flex flex-col items-center text-center">
 
                 {/* Icon Circle */}
                 <div className="relative mb-6">
                   {/* White background behind icon to create the 'line-break' effect */}
-                  <div className="absolute inset-0 bg-[#F8FAFC] scale-160 rounded-full z-[-1] invisible md:visible" />
+                  <div className="absolute inset-0 bg-[#F8FAFC] scale-50 md:scale-160 rounded-full z-[-1] invisible md:visible" />
 
                   <div className="w-22 h-22 rounded-full  bg-gradient-to-br from-[#79D7C6] to-[#29A7AE]  flex items-center justify-center shadow-sm">
                     {step.icon}
