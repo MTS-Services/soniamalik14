@@ -65,7 +65,7 @@ import ProviderThreadDetails from '../pages/dashboards/provider/thread/ProviderT
 import ProviderSettings from '../pages/dashboards/provider/ProviderSettings.jsx';
 import MyOrders from '../pages/myOrders/MyOrders.jsx';
 
-// User Dashboard Pages
+// Admin Dashboard Pages
 import DashboardOverview from '../pages/dashboards/user/dashboardOverview/DashboardOverview.jsx';
 import ManageProducts from '../pages/dashboards/user/manageProducts/ManageProducts.jsx';
 import UserOrderList from '../pages/dashboards/user/order/OrderList.jsx';
@@ -75,11 +75,12 @@ import ClubList from '../pages/dashboards/admin/ClubList/ClubList.jsx';
 import ServiceProviderList from '../pages/dashboards/admin/ServiceProviderList/ServiceProviderList.jsx';
 import ServiceProviderDetails from '../pages/dashboards/admin/ServiceProviderList/ServiceProviderDetails.jsx';
 import AdminFinances from '../pages/dashboards/admin/finances/AdminFinances.jsx';
-import RoleMatrix from '../pages/dashboards/admin/role_matrix/RoleMatrix.jsx';
+
 import AdminSettings from '../pages/dashboards/admin/settings/Settings.jsx';
 import AdminNews from '../pages/dashboards/admin/news/adminNews.jsx';
 import ServiceRequested from '../pages/dashboards/admin/ServiceRequested/ServiceRequested.jsx';
 import MarketPlaceView from '../pages/public/public_market/MarketPlaceView.jsx';
+import Users from '../pages/dashboards/admin/Users/Users.jsx';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -149,8 +150,9 @@ const router = createBrowserRouter(
         <Route path="service/:id" element={<ServiceProviderDetails />} />
         <Route path="service-request" element={<ServiceRequested />} />
         <Route path="finances" element={<AdminFinances />} />
-        <Route path="role-matrix" element={<RoleMatrix />} />
+        {/* <Route path="role-matrix" element={<RoleMatrix />} /> */}
         <Route path="news" element={<AdminNews />} />
+        <Route path="users" element={<Users />} />
         <Route path="settings" element={<AdminSettings />} />
       </Route>
 
