@@ -10,14 +10,15 @@ const AdminIndex = () => {
   return (
     <div className="flex-1 overflow-auto bg-gray-50 dashboardPy dashboardSpaceY">
       {/* Header */}
-      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-        <div>
-          <h1 className="text-3xl font-bold text-gray-900">Admin Dashboard</h1>
-          <p className="text-base text-gray-600 mt-2">Welcome back, Admin. Here's what's happening today.</p>
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4">
+        <div className="text-center sm:text-left">
+          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Admin Dashboard</h1>
+          <p className="text-sm sm:text-base text-gray-600 mt-1 sm:mt-2">Welcome back, Admin. Here's what's happening today.</p>
         </div>
-        <button className="flex items-center gap-2 px-6 py-5 bg-btn-primary text-white font-medium rounded-lg hover:bg-teal-700 transition-colors">
-          <Download className="h-6 w-6" />
-          Export CSV
+        <button className="flex items-center justify-center gap-2 px-4 sm:px-6 py-2 sm:py-5 bg-btn-primary text-white text-sm sm:text-base font-medium rounded-lg hover:bg-teal-700 transition-colors whitespace-nowrap">
+          <Download className="h-5 w-5 sm:h-6 sm:w-6" />
+          <span className="hidden sm:inline">Export CSV</span>
+          <span className="sm:hidden">Export</span>
         </button>
       </div>
 
