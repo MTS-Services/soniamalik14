@@ -57,11 +57,6 @@
 // };
 
 // export default SportProvidersSection;
-
-
-
-
-
 // import React from 'react';
 // import { Check, ArrowRight } from 'lucide-react';
 
@@ -129,7 +124,7 @@ const SportProvidersSection = () => {
             {/* Mobile Image (Visible only on small screens) */}
             <div className="h-64 sm:h-80 w-full md:hidden relative">
                 <img 
-                    // Replace with your original image: "/sportProviderOrginal.png"
+                
                     src="/sportProviderOrginal.png" 
                     alt="For Sport Providers" 
                     className="w-full h-full object-cover object-top"
@@ -141,7 +136,7 @@ const SportProvidersSection = () => {
             {/* Desktop Background Image (Hidden on small screens) */}
             <div className="hidden md:block absolute inset-0 z-0 w-full h-full xl:min-h-[700px]">
                 <img 
-                    // Replace with your original image: "/sportProviderOrginal.png"
+                  
                     src="/sportProviderOrginal.png" 
                     alt="For Sport Providers" 
                     className="absolute inset-0 w-full h-full  "
@@ -157,26 +152,26 @@ const SportProvidersSection = () => {
                     For Sport Providers
                 </h2>
                 
-                <p className="text-[#333333] text-[16px] md:text-[17px] mb-8 leading-relaxed pr-4 md:pr-10">
+                <p className="text-[#333333] text-[16px] md:text-[17px] mb-8 leading-relaxed pr-4 md:pr-10 max-w-lg">
                     If you run sessions, teams or training opportunities, ESSA Hub can help make them easier to find.
                 </p>
 
                 <ul className="space-y-4 mb-8">
                     <li className="flex items-start">
                         <Check className="w-[22px] h-[22px] text-[#107C66] mr-3 mt-[2px] shrink-0" strokeWidth={2.5} />
-                        <span className="text-[#1A1A1A] text-[15px] font-medium tracking-tight">
+                        <span className="text-[#1A1A1A] text-base font-medium tracking-tight">
                             Promote women-only or inclusive sessions
                         </span>
                     </li>
                     <li className="flex items-start">
                         <Check className="w-[22px] h-[22px] text-[#107C66] mr-3 mt-[2px] shrink-0" strokeWidth={2.5} />
-                        <span className="text-[#1A1A1A] text-[15px] font-medium tracking-tight">
+                        <span className="text-[#1A1A1A] text-base font-medium tracking-tight">
                             Increase visibility within your local area
                         </span>
                     </li>
                 </ul>
 
-                <p className="text-[#333333] text-[15px] md:text-[16px] mb-8 leading-relaxed pr-4 md:pr-10">
+                <p className="text-[#333333] text-base mb-8 leading-relaxed pr-4 md:pr-10 max-w-lg">
                     If you deliver sport and want to reach more women, we'd love to hear from you.
                 </p>
 

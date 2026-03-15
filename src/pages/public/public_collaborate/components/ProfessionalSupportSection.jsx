@@ -88,20 +88,20 @@ const ProfessionalSupportSection = () => {
                     For Professional Support
                 </h2>
                 
-                <p className="text-[#333333] text-[16px] md:text-[17px] mb-8 leading-relaxed pr-4 md:pr-10">
+                <p className="text-[#333333] text-[16px]  mb-8 leading-relaxed pr-4 md:pr-10 max-w-md">
                     We want to work with professionals whose expertise supports women in sport — including physiotherapy, strength and conditioning, nutrition, women's health and wellbeing.
                 </p>
 
                 <ul className="space-y-4 mb-8">
                     <li className="flex items-start">
                         <Check className="w-[22px] h-[22px] text-[#107C66] mr-3 mt-[2px] shrink-0" strokeWidth={2.5} />
-                        <span className="text-[#1A1A1A] text-[15px] font-medium tracking-tight">
+                        <span className="text-[#1A1A1A] text-base font-medium tracking-tight">
                             Connect with a targeted audience
                         </span>
                     </li>
                     <li className="flex items-start">
                         <Check className="w-[22px] h-[22px] text-[#107C66] mr-3 mt-[2px] shrink-0" strokeWidth={2.5} />
-                        <span className="text-[#1A1A1A] text-[15px] font-medium tracking-tight">
+                        <span className="text-[#1A1A1A] text-base font-medium tracking-tight">
                             Increase visibility within a trusted platform
                         </span>
                     </li>
