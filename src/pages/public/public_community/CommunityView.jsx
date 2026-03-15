@@ -168,7 +168,7 @@ const CommunityView = () => {
   const paginatedTopics = topics.slice(startIndex, endIndex);
 
   return (
-    <div className="min-h-screen py-6 lg:py-8 bg-[#F8FAFC] ">
+    <div className="min-h-screen py-6 lg:py-10 bg-[#F8FAFC] ">
       <Container>
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-3 lg:gap-6">
           {/* Left Sidebar - Categories */}

@@ -119,7 +119,7 @@ const ServiceView = () => {
     const paginatedServices = filtered.slice(startIndex, endIndex);
 
     return (
-        <section className="py-6 lg:py-8 bg-[#F8FAFC] ">
+        <section className="py-6 lg:py-10 bg-[#F8FAFC] ">
             <Container>
                 {/* Header Section */}
                 <div className="mb-6">
