@@ -1,6 +1,6 @@
 import React from 'react';
 
-const PlayersTable = ({ data, activeSubTab }) => {
+const PlayersTable = ({ data, activeSubTab, onSuspend }) => {
     return (
         <div className="overflow-x-auto rounded-lg border border-gray-100">
             <table className="w-full whitespace-nowrap">
@@ -33,8 +33,11 @@ const PlayersTable = ({ data, activeSubTab }) => {
                             <td className="px-4 py-4 text-sm text-gray-600">{row.interest}</td>
                             <td className="px-4 py-4 text-sm text-gray-600">{row.status}</td>
                             <td className="px-4 py-4 text-sm">
-                                <button className="bg-gray-100 text-gray-700 px-3 py-1.5 rounded text-xs font-medium hover:bg-gray-200 transition">
-                                    {activeSubTab === 'all' ? 'Suspended' : 'Reinstate'}
+                                <button
+                                    onClick={() => onSuspend(row.id)}
+                                    className="bg-[#E7F1F1] text-black px-3 py-1.5 rounded text-xs font-medium hover:bg-gray-200 transition"
+                                >
+                                    {activeSubTab === 'all' ? 'Suspend' : 'Reinstate'}
                                 </button>
                             </td>
                         </tr>

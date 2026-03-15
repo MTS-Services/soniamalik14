@@ -6,10 +6,13 @@ import SportProvidersTable from './components/SportProvidersTable';
 import ServiceProvidersTable from './components/ServiceProvidersTable';
 import TabsSection from './components/TabsSection';
 import PaginationSection from './components/PaginationSection';
+import SuspendModal from './components/SuspendModal';
 
 const Users = () => {
     const [activeTab, setActiveTab] = useState('players');
     const [activeSubTab, setActiveSubTab] = useState('all');
+    const [isSuspendModalOpen, setIsSuspendModalOpen] = useState(false);
+    const [selectedUserId, setSelectedUserId] = useState(null);
 
     // Dummy Data
     const playersData = Array(6).fill({
@@ -57,10 +60,27 @@ const Users = () => {
         status: 'Active',
     }).map((item, i) => ({ ...item, id: i }));
 
+    // Modal handlers
+    const handleOpenSuspendModal = (userId) => {
+        setSelectedUserId(userId);
+        setIsSuspendModalOpen(true);
+    };
+
+    const handleCloseSuspendModal = () => {
+        setIsSuspendModalOpen(false);
+        setSelectedUserId(null);
+    };
+
+    const handleSubmitSuspend = (userId, reason) => {
+        console.log(`User ${userId} suspended with reason: ${reason}`);
+        // TODO: Make API call to suspend user
+        handleCloseSuspendModal();
+    };
+
     const renderTableContent = () => {
-        if (activeTab === 'players') return <PlayersTable data={playersData} activeSubTab={activeSubTab} />;
-        if (activeTab === 'sportProviders') return <SportProvidersTable data={sportProvidersData} activeSubTab={activeSubTab} />;
-        if (activeTab === 'serviceProviders') return <ServiceProvidersTable data={serviceProvidersData} activeSubTab={activeSubTab} />;
+        if (activeTab === 'players') return <PlayersTable data={playersData} activeSubTab={activeSubTab} onSuspend={handleOpenSuspendModal} />;
+        if (activeTab === 'sportProviders') return <SportProvidersTable data={sportProvidersData} activeSubTab={activeSubTab} onSuspend={handleOpenSuspendModal} />;
+        if (activeTab === 'serviceProviders') return <ServiceProvidersTable data={serviceProvidersData} activeSubTab={activeSubTab} onSuspend={handleOpenSuspendModal} />;
     };
 
     return (
@@ -101,6 +121,14 @@ const Users = () => {
 
                 </div>
             </div>
+
+            {/* Suspend Modal */}
+            <SuspendModal
+                isOpen={isSuspendModalOpen}
+                onClose={handleCloseSuspendModal}
+                onSubmit={handleSubmitSuspend}
+                userId={selectedUserId}
+            />
         </div>
     );
 };
