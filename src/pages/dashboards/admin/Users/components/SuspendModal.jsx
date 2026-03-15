@@ -18,10 +18,10 @@ const SuspendModal = ({ isOpen, onClose, onSubmit, userId }) => {
             <div className="bg-white rounded-lg shadow-lg max-w-md w-full mx-4 p-6">
                 {/* Header */}
                 <div className="flex items-center justify-between mb-4">
-                    <h2 className="text-lg font-semibold text-gray-900">Suspend</h2>
+                    <h2 className="text-lg font-medium text-gray-900">Suspend</h2>
                     <button
                         onClick={onClose}
-                        className="text-gray-400 hover:text-gray-600 transition-colors"
+                        className="text-black bg-[#D9D9D9] p-1 rounded-full"
                     >
                         <X className="w-5 h-5" />
                     </button>
@@ -29,7 +29,7 @@ const SuspendModal = ({ isOpen, onClose, onSubmit, userId }) => {
 
                 {/* Content */}
                 <div className="mb-6">
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-base  text-gray-700 mb-2">
                         Why suspend
                     </label>
                     <textarea
