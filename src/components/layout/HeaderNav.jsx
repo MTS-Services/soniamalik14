@@ -21,15 +21,14 @@ const HeaderNav = ({ isMenuOpen, setIsMenuOpen }) => {
 
   const navigation = [
     { name: 'Home', href: '/' },
-
     { name: 'About', href: '/about' },
     { name: 'Discover', href: '/discover' },
-    // { name: 'Find Sport', href: '/find-sport' },
     { name: 'Community', href: '/community' },
     { name: 'Events', href: '/events' },
     { name: 'Services', href: '/services' },
     { name: 'Marketplace', href: '/marketplace' },
     { name: 'News', href: '/news' },
+    { name: 'Collaborate', href: '/collaborate' },
   ];
 
   const isActive = (path) => {

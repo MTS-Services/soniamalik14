@@ -5,6 +5,7 @@ import HomeView from '../pages/public/public_Home/HomeView';
 import AboutView from '../pages/public/public_about/AboutView';
 import DiscoverView from '../pages/public/public_discover/DiscoverView';
 import DiscoverDetails from '../pages/public/public_discover/DiscoverDetails';
+import CollaborateView from '../pages/public/public_collaborate/CollaborateView';
 // import FindSport from '../pages/public/public_FindSport/FindSport';
 // import FindSportDetails from '../pages/public/public_FindSport/components/FindSportDetails';
 import SigninView from '../pages/public/public_login/SigninView.jsx';
@@ -99,7 +100,8 @@ const router = createBrowserRouter(
         <Route path="discover" element={<DiscoverView />} />
         <Route path="discover/:type/:id" element={<DiscoverDetails />} />
         <Route path="community" element={<CommunityView />} />
-    
+        <Route path="collaborate" element={<CollaborateView />} />
+
         <Route path="events" element={<EventView />} />
         <Route path="events/:id" element={<EventDetailsPage />} />
         <Route path="marketplace" element={<MarketPlaceView />} />
