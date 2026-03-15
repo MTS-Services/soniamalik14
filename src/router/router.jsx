@@ -20,9 +20,9 @@ import Unauthorized from '../pages/error/Unauthorized';
 import EventView from '../pages/public/public_event/EventView.jsx';
 import EventDetailsPage from '../pages/public/public_event/EventDetails.jsx';
 import MarketPlace from '../pages/public/public_market/MarketPlace.jsx';
-import MarketplaceDetails from '../pages/public/public_market/MarketplaceDetails.jsx';
-import Checkout from '../pages/public/public_market/Checkout.jsx';
-import OrderConfirmed from '../pages/public/public_market/OrderConfirmed.jsx';
+// import MarketplaceDetails from '../pages/public/public_market/MarketplaceDetails.jsx';
+// import Checkout from '../pages/public/public_market/Checkout.jsx';
+// import OrderConfirmed from '../pages/public/public_market/OrderConfirmed.jsx';
 import ServiceView from '../pages/public/public_service/ServiceView.jsx';
 import ServiceDetails from '../pages/public/public_service/ServiceDetails.jsx';
 import UnderConstruction from '../components/ui/UnderConstruction.jsx';
@@ -104,8 +104,8 @@ const router = createBrowserRouter(
         <Route path="events/:id" element={<EventDetailsPage />} />
         <Route path="marketplace" element={<MarketPlaceView />} />
         {/* <Route path="marketplace/:id" element={<MarketplaceDetails />} /> */}
-        <Route path="checkout" element={<Checkout />} />
-        <Route path="order-confirmed" element={<OrderConfirmed />} />
+        {/* <Route path="checkout" element={<Checkout />} />
+        <Route path="order-confirmed" element={<OrderConfirmed />} /> */}
         <Route path="my-orders" element={<MyOrders />} />
         <Route path="services" element={<ServiceView />} />
         <Route path="services/:id" element={<ServiceDetails />} />
