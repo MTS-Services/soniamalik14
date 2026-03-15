@@ -106,7 +106,7 @@ const TabsSection = ({ activeTab, activeSubTab, setActiveTab, setActiveSubTab })
                 <div className="flex w-full">
                     <button
                         onClick={() => setActiveSubTab('all')}
-                        className={`flex-1 pb-3 text-sm sm:text-base font-medium text-center transition ${activeSubTab === 'all' ? 'text-[#0B544E] border-b-2 border-[#0B544E]' : 'text-gray-500 hover:text-gray-700'}`}
+                        className={`flex-1 pb-3 text-base font-medium text-center transition ${activeSubTab === 'all' ? 'text-[#0B544E] border-b-2 border-[#0B544E]' : 'text-gray-500 hover:text-gray-700'}`}
                     >
                         {activeTab === 'players' && 'All Players'}
                         {activeTab === 'sportProviders' && 'All Sport Providers'}
@@ -114,7 +114,7 @@ const TabsSection = ({ activeTab, activeSubTab, setActiveTab, setActiveSubTab })
                     </button>
                     <button
                         onClick={() => setActiveSubTab('suspended')}
-                        className={`flex-1 pb-3 text-sm sm:text-base font-medium text-center transition ${activeSubTab === 'suspended' ? 'text-[#0B544E] border-b-2 border-[#0B544E]' : 'text-gray-500 hover:text-gray-700'}`}
+                        className={`flex-1 pb-3 text-base font-medium text-center transition ${activeSubTab === 'suspended' ? 'text-[#0B544E] border-b-2 border-[#0B544E]' : 'text-gray-500 hover:text-gray-700'}`}
                     >
                         Suspended
                     </button>
