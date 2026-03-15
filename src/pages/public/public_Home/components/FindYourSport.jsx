@@ -76,11 +76,11 @@ const FindYourSport = () => {
     <section className="py-10 sm:py-16 lg:py-20 bg-[#E7F1F1] overflow-hidden">
       <Container>
         <div className="text-center mb-4 lg:mb-6">
-          <h2 className="font-bold text-[#0B544E] text-2xl sm:text-3xl md:text-4xl lg:text-5xl">
+          <h2 className="font-semibold text-[#0B544E] text-2xl sm:text-3xl md:text-4xl lg:text-5xl">
             Find your sport. Find your squad.
           </h2>
         </div>
-        <p className="text-center text-gray-600 text-base mb-8 ">
+        <p className="text-center text-gray-600 text-base mb-6 md:mb-12 ">
           We're expanding our sports and local listings. If you can't find what you're looking for yet, help us shape what comes next.
         </p>
 

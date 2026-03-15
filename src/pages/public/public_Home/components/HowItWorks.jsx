@@ -24,7 +24,7 @@ const HowItWorks = () => {
     <section className="bg-[#F8FAFC] py-10 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-8 font-sans">
       <div className="max-w-6xl mx-auto">
         {/* Section Header */}
-        <h2 className="text-4xl font-bold text-center text-[#0B544E] mb-10 md:mb-24">
+        <h2 className="font-semibold text-[#0B544E] text-2xl sm:text-3xl md:text-4xl lg:text-5xl  text-center  mb-10 md:mb-16">
           How it works
         </h2>
 

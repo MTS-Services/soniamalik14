@@ -200,10 +200,10 @@ export default function CoreFeatures() {
     >
       <div className="container w-full relative">
         {/* Header */}
-        <header className="text-center mb-12">
+        <header className="text-center mb-6 md:mb-12">
           <h1
             id="essa-hub-heading"
-            className="text-3xl sm:text-4xl font-bold text-[#0B544E] mb-3 tracking-tight"
+            className="font-semibold text-[#0B544E] text-2xl sm:text-3xl md:text-4xl lg:text-5xl mb-3 tracking-tight"
           >
             Explore ESSA Hub
           </h1>
