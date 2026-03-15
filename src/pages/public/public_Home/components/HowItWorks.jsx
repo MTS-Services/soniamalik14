@@ -21,7 +21,7 @@ const steps = [
 
 const HowItWorks = () => {
   return (
-    <section className="bg-white py-10 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-8 font-sans">
+    <section className="bg-[#F8FAFC] py-10 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-8 font-sans">
       <div className="max-w-6xl mx-auto">
         {/* Section Header */}
         <h2 className="text-4xl font-bold text-center text-[#0B544E] mb-10 md:mb-24">
@@ -47,9 +47,9 @@ const HowItWorks = () => {
                 {/* Icon Circle */}
                 <div className="relative mb-6">
                   {/* White background behind icon to create the 'line-break' effect */}
-                  <div className="absolute inset-0 bg-white scale-110 rounded-full z-[-1] invisible md:visible" />
+                  <div className="absolute inset-0 bg-[#F8FAFC] scale-160 rounded-full z-[-1] invisible md:visible" />
 
-                  <div className="w-22 h-22 rounded-full  bg-gradient-to-br from-[#79D7C6] to-[#29A7AE] flex items-center justify-center shadow-sm">
+                  <div className="w-22 h-22 rounded-full  bg-gradient-to-br from-[#79D7C6] to-[#29A7AE]  flex items-center justify-center shadow-sm">
                     {step.icon}
                   </div>
                 </div>
@@ -71,10 +71,3 @@ const HowItWorks = () => {
 };
 
 export default HowItWorks;
-
-
-
-
-
-
-

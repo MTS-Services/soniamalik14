@@ -195,7 +195,7 @@ export default function CoreFeatures() {
 
   return (
     <section
-      className="bg-[#E7F1F199] h-auto w-full px-4 sm:px-6 lg:px-8 flex flex-col items-center justify-center py-10 sm:py-16 lg:py-20 overflow-hidden"
+      className="bg-[#E7F1F199] h-auto w-full px-4 sm:px-6 lg:px-8 flex flex-col items-center justify-center py-12 md:py-16 lg:py-20 overflow-hidden"
       aria-labelledby="essa-hub-heading"
     >
       <div className="container w-full relative">
