@@ -51,7 +51,7 @@ const NewsList = ({ featured, items = [], onScrollEndChange }) => {
               onScroll={handleScroll}
               onWheel={handleWheel}
               data-lenis-prevent
-              className="max-h-130 overflow-y-scroll pr-2"
+              className="max-h-140 overflow-y-scroll pr-2"
               style={{
                 scrollbarWidth: 'thin',
                 scrollbarColor: '#CBD5E0 #F7FAFC'
