@@ -18,36 +18,6 @@ const NewsList = ({ featured, items = [], onScrollEndChange }) => {
     if (typeof onScrollEndChange === 'function') onScrollEndChange(atBottom)
   }
 
-  // Smooth scroll implementation using requestAnimationFrame to avoid jumpy wheel behavior
-  const scrollAnim = useRef(null)
-  useEffect(() => {
-    return () => {
-      if (scrollAnim.current) cancelAnimationFrame(scrollAnim.current)
-    }
-  }, [])
-
-  const smoothScrollBy = (delta) => {
-    const el = listRef.current
-    if (!el) return
-    const start = el.scrollTop
-    const max = el.scrollHeight - el.clientHeight
-    const end = Math.max(0, Math.min(start + delta, max))
-    const duration = 500
-    const t0 = performance.now()
-
-    if (scrollAnim.current) cancelAnimationFrame(scrollAnim.current)
-
-    const step = (now) => {
-      const t = Math.min(1, (now - t0) / duration)
-      const eased = 1 - Math.pow(1 - t, 4) // easeOutQuart (gentler)
-      el.scrollTop = start + (end - start) * eased
-      if (t < 1) scrollAnim.current = requestAnimationFrame(step)
-      else scrollAnim.current = null
-    }
-
-    scrollAnim.current = requestAnimationFrame(step)
-  }
-
   const handleWheel = (e) => {
     const el = listRef.current
     if (!el) return
@@ -57,14 +27,10 @@ const NewsList = ({ featured, items = [], onScrollEndChange }) => {
     const canScrollDown = el.scrollTop < el.scrollHeight - el.clientHeight
     const canScrollUp = el.scrollTop > 0
 
-    if ((isScrollingDown && canScrollDown) || (isScrollingUp && canScrollUp)) {
+    // Prevent background scroll when at top/bottom
+    if ((isScrollingDown && !canScrollDown) || (isScrollingUp && !canScrollUp)) {
       e.preventDefault()
       e.stopPropagation()
-
-      // Even smaller factor for a very gentle feel
-      const factor = 0.12
-      const delta = e.deltaY * factor
-      smoothScrollBy(delta)
     }
   }
 
@@ -80,10 +46,11 @@ const NewsList = ({ featured, items = [], onScrollEndChange }) => {
         <aside className="md:col-span-1">
           <div className="bg-transparent">
             {/* Make the news list scrollable within the sidebar area. Keep minimal change. */}
-            <div 
-              ref={listRef} 
-              onScroll={handleScroll} 
+            <div
+              ref={listRef}
+              onScroll={handleScroll}
               onWheel={handleWheel}
+              data-lenis-prevent
               className="max-h-130 overflow-y-scroll pr-2"
               style={{
                 scrollbarWidth: 'thin',
