@@ -81,6 +81,7 @@ import AdminNews from '../pages/dashboards/admin/news/adminNews.jsx';
 import ServiceRequested from '../pages/dashboards/admin/ServiceRequested/ServiceRequested.jsx';
 import MarketPlaceView from '../pages/public/public_market/MarketPlaceView.jsx';
 import Users from '../pages/dashboards/admin/Users/Users.jsx';
+import ListingsManagement from '../pages/dashboards/admin/ListingsManagement/ListingsManagement.jsx';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -153,6 +154,7 @@ const router = createBrowserRouter(
         {/* <Route path="role-matrix" element={<RoleMatrix />} /> */}
         <Route path="news" element={<AdminNews />} />
         <Route path="users" element={<Users />} />
+        <Route path="listings" element={<ListingsManagement />} />
         <Route path="settings" element={<AdminSettings />} />
       </Route>
 
