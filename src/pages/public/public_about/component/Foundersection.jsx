@@ -5,7 +5,7 @@ const Foundersection = () => {
 
   return (
     <div className="h-auto md:min-h-164 flex items-center justify-center px-4 sm:p-6 lg:p-8 pt-14 bg-[#E7F1F1] py-10 sm:py-16 lg:py-20">
-     
+
 
       <article
         className="relative bg-white rounded-2xl shadow-lg  max-w-5xl w-full px-4 py-5 sm:px-6 sm:py-6 md:p-8 lg:p-10 transition-all duration-500"
@@ -21,13 +21,13 @@ const Foundersection = () => {
         <header className="flex flex-col sm:flex-row sm:items-start gap-3 sm:gap-6 mb-5 sm:mb-8">
           {/* Founder photo */}
           <div className="flex-shrink-0 w-full sm:w-auto px-2 sm:px-0">
-            <div className="relative flex justify-center sm:justify-start">
-              
+            <div className="relative flex justify-start">
+
               <img
                 src="/images/founder.jpg"
                 alt="ESSA Hub founder"
-                className="relative w-full max-w-xs sm:max-w-none sm:w-36 sm:h-36 md:w-40 md:h-40 h-auto object-cover rounded-lg sm:rounded-xl"
-                
+                className="relative w-28 h-28 sm:w-36 sm:h-36 md:w-40 md:h-40 object-cover rounded-full md:rounded-2xl"
+
               />
             </div>
           </div>
@@ -45,9 +45,9 @@ const Foundersection = () => {
           </div>
         </header>
 
-   
 
-        
+
+
         <div className="space-y-3 sm:space-y-5">
           <p className="text-base md:text-lg text-gray-700 leading-relaxed">
             I wanted to build something that makes getting involved easier — in ways that fit around
