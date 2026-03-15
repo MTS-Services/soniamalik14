@@ -349,7 +349,7 @@ const MarketPlaceView = () => {
                             <div className="relative w-[300px] h-[100px] md:w-[400px] md:h-[130px] flex items-center justify-center">
                                 {/* Replace the src below with the actual path to your red brush stroke image */}
                                 <img 
-                                    src="/images/coming-soon.png" 
+                                    src="/comingSoon.png" 
                                     alt="Coming Soon" 
                                     className="absolute inset-0 w-full h-full object-contain"
                                 />
