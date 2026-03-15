@@ -336,7 +336,7 @@ const MarketPlaceView = () => {
 
                 {/* Coming Soon View for Pre-Loved & List Item Tabs */}
                 {(activeTab === 'pre_loved' || activeTab === 'list_item') && (
-                    <div className="flex flex-col items-center justify-center pt-8 pb-20 px-4 text-center animate-fadeIn">
+                    <div className="flex flex-col items-center justify-center  px-4 text-center animate-fadeIn">
                         
                         <h2 className="text-3xl md:text-[2.75rem] font-semibold text-black max-w-4xl mx-auto leading-tight mb-8">
                             {activeTab === 'pre_loved' 
