@@ -158,7 +158,7 @@ const SportProviderListingDetails = () => {
                             <h3 className="text-xl font-bold text-gray-900 mb-4">Engagement Statistics</h3>
                             <div className="grid grid-cols-4 gap-4">
                                 <div className="text-center">
-                                    <Eye className="w-6 h-6 text-blue-600 mx-auto mb-2" />
+                                    <eye className="w-6 h-6 text-blue-600 mx-auto mb-2" />
                                     <p className="text-3xl font-bold text-blue-600">{data.engagement.views}</p>
                                     <p className="text-sm text-gray-600">Views</p>
                                 </div>
