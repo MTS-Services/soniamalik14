@@ -69,7 +69,7 @@ const DemandSignals = () => {
     }, [riSearchQuery, riFilter]);
 
     return (
-        <div className="min-h-screen bg-gray-50 p-4 md:p-8 font-sans">
+        <div className="flex-1 overflow-auto bg-gray-50 dashboardPy dashboardSpaceY">
             <div className="max-w-[1600px] mx-auto">
 
                 {/* 1. Header Section */}

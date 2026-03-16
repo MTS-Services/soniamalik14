@@ -22,6 +22,7 @@ import {
     Newspaper,
     List,
     TrendingUp,
+    FileText,
 } from 'lucide-react';
 import { useAuth, ROLES } from '../../context/AuthContext';
 
@@ -34,7 +35,9 @@ const getMenuItems = (role, basePath) => {
         { id: 'event', label: 'Event', icon: <Calendar className="w-5 h-5" />, path: `${basePath}/event` },
         { id: 'brand', label: 'Brand', icon: <Package className="w-5 h-5" />, path: `${basePath}/brand` },
         { id: 'demand', label: 'Demand', icon: <TrendingUp className="w-5 h-5" />, path: `${basePath}/demand` },
-
+        { id: 'content', label: 'Content', icon: <FileText className="w-5 h-5" />, path: `${basePath}/content` },
+        { id: 'revenue', label: 'Revenue', icon: <DollarSign className="w-5 h-5" />, path: `${basePath}/revenue` },
+        { id: 'analytics', label: 'Analytics', icon: <BarChart3 className="w-5 h-5" />, path: `${basePath}/analytics` },
         { id: 'settings', label: 'Settings', icon: <Settings className="w-5 h-5" />, path: `${basePath}/settings` },
     ];
 

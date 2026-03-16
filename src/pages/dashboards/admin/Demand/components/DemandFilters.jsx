@@ -1,5 +1,5 @@
 import React from 'react';
-import { Search } from 'lucide-react';
+import { Search, ChevronDown } from 'lucide-react';
 
 const DemandFilters = ({ riSearchQuery, setRiSearchQuery, riFilter, setRiFilter }) => {
     return (
@@ -18,13 +18,27 @@ const DemandFilters = ({ riSearchQuery, setRiSearchQuery, riFilter, setRiFilter 
                     />
                 </div>
 
-                {/* Filter Buttons */}
-                <div className="flex bg-gray-50 p-1 rounded-lg border border-gray-100 w-full lg:w-auto overflow-x-auto">
+                {/* Mobile View: Select Dropdown */}
+                <div className="lg:hidden relative w-full">
+                    <select
+                        value={riFilter}
+                        onChange={(e) => setRiFilter(e.target.value)}
+                        className="w-full appearance-none bg-white border border-gray-200 text-gray-700 py-2 px-4 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-[#0f766e] focus:border-transparent font-medium text-base"
+                    >
+                        <option value="All">All</option>
+                        <option value="Contacted">Contacted</option>
+                        <option value="Not Contacted">Not Contacted</option>
+                    </select>
+                    <ChevronDown className="w-5 h-5 text-gray-400 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+                </div>
+
+                {/* Desktop View: Filter Buttons */}
+                <div className="hidden lg:flex bg-gray-50 p-1 rounded-lg border border-gray-100 overflow-x-auto">
                     {['All', 'Contacted', 'Not Contacted'].map((filter) => (
                         <button
                             key={filter}
                             onClick={() => setRiFilter(filter)}
-                            className={`flex-1 lg:flex-none px-4 py-2 text-base font-medium rounded-md transition-colors whitespace-nowrap ${riFilter === filter
+                            className={`px-4 py-2 text-base font-medium rounded-md transition-colors whitespace-nowrap ${riFilter === filter
                                 ? 'bg-[#0f766e] text-white shadow-sm'
                                 : 'text-gray-600 hover:bg-gray-200/50'
                                 }`}

@@ -78,6 +78,9 @@ import ServiceProviderListingDetails from '../pages/dashboards/admin/ListingsMan
 import EventSingleDetails from '../pages/dashboards/admin/event/EventSingleDetails.jsx';
 import Brand from '../pages/dashboards/admin/Brand/Brand.jsx';
 import Demand from '../pages/dashboards/admin/Demand/Demand.jsx';
+import Content from '../pages/dashboards/admin/Content/Content.jsx';
+import Revenue from '../pages/dashboards/admin/Revenue/Revenue.jsx';
+import Analytics from '../pages/dashboards/admin/Analytics/Analytics.jsx';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -144,6 +147,9 @@ const router = createBrowserRouter(
         <Route path="listings/service-provider/:id" element={<ServiceProviderListingDetails />} />
         <Route path="brand" element={<Brand />} />
         <Route path="demand" element={<Demand />} />
+        <Route path="content" element={<Content />} />
+        <Route path="revenue" element={<Revenue />} />
+        <Route path="analytics" element={<Analytics />} />
         <Route path="settings" element={<AdminSettings />} />
       </Route>
 
