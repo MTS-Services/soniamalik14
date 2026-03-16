@@ -26,7 +26,7 @@ import MarketPlace from '../pages/public/public_market/MarketPlace.jsx';
 // import OrderConfirmed from '../pages/public/public_market/OrderConfirmed.jsx';
 import ServiceView from '../pages/public/public_service/ServiceView.jsx';
 import ServiceDetails from '../pages/public/public_service/ServiceDetails.jsx';
-import UnderConstruction from '../components/ui/UnderConstruction.jsx';
+
 import NewsView from '../pages/public/public_news/NewsView';
 import NewsDetails from '../pages/public/public_news/NewsDetails.jsx';
 import DashboardLayout from '../components/layout/DashboardLayout.jsx';
@@ -40,19 +40,14 @@ import ProviderEventDetails from '../pages/dashboards/provider/event/EventDetail
 import ProviderEventAnalytics from '../pages/dashboards/provider/eventAnalytics/EventAnalytics.jsx';
 import CoachIndex from '../pages/dashboards/coach/CoachIndex.jsx';
 import Event from '../pages/dashboards/admin/event/Event.jsx';
-import EventSingleDetails from '../pages/dashboards/admin/event/EventSingleDetails.jsx';
 import AdminIndex from '../pages/dashboards/admin/adminIndex/AdminIndex.jsx';
-import EventDetails from '../pages/dashboards/admin/EventDetails/AdminEventDetails.jsx';
-import ProductRequested from '../pages/dashboards/admin/ProductRequested/ProductRequested.jsx';
-import OrderList from '../pages/dashboards/admin/OrderList/OrderList.jsx';
-import Sports from '../pages/dashboards/admin/Sports/Sports.jsx';
+;
 import CoachEvent from '../pages/dashboards/coach/event/CoachEvent.jsx';
 import CoachEventDetails from '../pages/dashboards/coach/event/EventDetails.jsx';
 import EventAnalytics from '../pages/dashboards/coach/eventAnalytics/EventAnalytics.jsx';
 import Thread from '../pages/dashboards/coach/thread/Thread.jsx';
 import EventAnallyticsDetails from '../pages/dashboards/shared/eventAnalytics/EventAnallyticsDetails.jsx';
-import AdminThread from '../pages/dashboards/admin/Thread/Thread.jsx';
-import AdminThreadDetails from '../pages/dashboards/admin/Thread/ThreadDetails.jsx';
+
 import ThreadDetails from '../pages/dashboards/coach/thread/ThreadDetails.jsx';
 import Recruitment from '../pages/dashboards/coach/recruitment/Recruitment.jsx';
 import RecruitmentDetails from '../pages/dashboards/coach/recruitment/RecruitmentDetails.jsx';
@@ -71,16 +66,15 @@ import ManageProducts from '../pages/dashboards/user/manageProducts/ManageProduc
 import UserOrderList from '../pages/dashboards/user/order/OrderList.jsx';
 import Finances from '../pages/dashboards/user/finances/Finances.jsx';
 import Account from '../pages/dashboards/user/account/Account.jsx';
-import ClubList from '../pages/dashboards/admin/ClubList/ClubList.jsx';
-import ServiceProviderList from '../pages/dashboards/admin/ServiceProviderList/ServiceProviderList.jsx';
-import ServiceProviderDetails from '../pages/dashboards/admin/ServiceProviderList/ServiceProviderDetails.jsx';
-import AdminFinances from '../pages/dashboards/admin/finances/AdminFinances.jsx';
+
 
 import AdminSettings from '../pages/dashboards/admin/settings/Settings.jsx';
-import AdminNews from '../pages/dashboards/admin/news/adminNews.jsx';
-import ServiceRequested from '../pages/dashboards/admin/ServiceRequested/ServiceRequested.jsx';
+
 import MarketPlaceView from '../pages/public/public_market/MarketPlaceView.jsx';
 import Users from '../pages/dashboards/admin/Users/Users.jsx';
+import ListingsManagement from '../pages/dashboards/admin/ListingsManagement/ListingsManagement.jsx';
+import SportProviderListingDetails from '../pages/dashboards/admin/ListingsManagement/SportProviderListingDetails.jsx';
+import ServiceProviderListingDetails from '../pages/dashboards/admin/ListingsManagement/ServiceProviderListingDetails.jsx';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -138,21 +132,12 @@ const router = createBrowserRouter(
       >
         <Route index element={<AdminIndex />} />
         <Route path="event" element={<Event />} />
-        <Route path="event/:id" element={<EventSingleDetails />} />
-        <Route path="event-details" element={<EventDetails />} />
-        <Route path="product-request" element={<ProductRequested />} />
-        <Route path="order" element={<OrderList />} />
-        <Route path="sports" element={<Sports />} />
-        <Route path="thread" element={<AdminThread />} />
-        <Route path="thread/:id" element={<AdminThreadDetails />} />
-        <Route path="club" element={<ClubList />} />
-        <Route path="service" element={<ServiceProviderList />} />
-        <Route path="service/:id" element={<ServiceProviderDetails />} />
-        <Route path="service-request" element={<ServiceRequested />} />
-        <Route path="finances" element={<AdminFinances />} />
-        {/* <Route path="role-matrix" element={<RoleMatrix />} /> */}
-        <Route path="news" element={<AdminNews />} />
+        
+    
         <Route path="users" element={<Users />} />
+        <Route path="listings" element={<ListingsManagement />} />
+        <Route path="listings/sport-provider/:id" element={<SportProviderListingDetails />} />
+        <Route path="listings/service-provider/:id" element={<ServiceProviderListingDetails />} />
         <Route path="settings" element={<AdminSettings />} />
       </Route>
 
