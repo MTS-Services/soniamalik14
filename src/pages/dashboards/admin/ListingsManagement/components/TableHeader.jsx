@@ -5,11 +5,11 @@ const TableHeader = () => {
 
     return (
         <thead>
-            <tr className="bg-[#E7F1F1] border-y border-gray-100">
+            <tr className="bg-[#E7F1F1] border-y border-gray-100 rounded-t-xl">
                 {headers.map((header) => (
                     <th
                         key={header}
-                        className="px-6 py-3 text-base font-medium text-gray-600 tracking-wider"
+                        className="px-6 py-3 text-base font-medium text-gray-700 tracking-wider"
                     >
                         {header}
                     </th>

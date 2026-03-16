@@ -82,6 +82,8 @@ import ServiceRequested from '../pages/dashboards/admin/ServiceRequested/Service
 import MarketPlaceView from '../pages/public/public_market/MarketPlaceView.jsx';
 import Users from '../pages/dashboards/admin/Users/Users.jsx';
 import ListingsManagement from '../pages/dashboards/admin/ListingsManagement/ListingsManagement.jsx';
+import SportProviderListingDetails from '../pages/dashboards/admin/ListingsManagement/SportProviderListingDetails.jsx';
+import ServiceProviderListingDetails from '../pages/dashboards/admin/ListingsManagement/ServiceProviderListingDetails.jsx';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -155,6 +157,8 @@ const router = createBrowserRouter(
         <Route path="news" element={<AdminNews />} />
         <Route path="users" element={<Users />} />
         <Route path="listings" element={<ListingsManagement />} />
+        <Route path="listings/sport-provider/:id" element={<SportProviderListingDetails />} />
+        <Route path="listings/service-provider/:id" element={<ServiceProviderListingDetails />} />
         <Route path="settings" element={<AdminSettings />} />
       </Route>
 
