@@ -3,10 +3,10 @@ import { ChevronDown } from 'lucide-react';
 
 const AnalyticsHeader = ({ dateRange, onDateRangeChange }) => {
     return (
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
             <div>
                 <h1 className="text-2xl md:text-3xl font-bold text-gray-900">Growth Intelligence</h1>
-                <p className="text-sm text-gray-500 mt-1">Deep dive into platform performance and demand trends.</p>
+                <p className="text-sm md:text-base text-gray-600 mt-2">Deep dive into platform performance and demand trends.</p>
             </div>
             <button
                 onClick={onDateRangeChange}

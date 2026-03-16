@@ -11,7 +11,7 @@ const AnalyticsTopSports = () => {
 
     return (
         <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 md:p-8 flex flex-col">
-            <h2 className="text-xl font-bold text-gray-900 mb-8">Top Sports by Interest</h2>
+            <h2 className="text-xl md:text-2xl font-semibold text-gray-900 mb-8">Top Sports by Interest</h2>
 
             {/* Custom SVG Donut Chart */}
             <div className="relative w-40 h-40 mx-auto mb-10">
@@ -36,7 +36,7 @@ const AnalyticsTopSports = () => {
             {/* Sport List */}
             <div className="space-y-4 mt-auto">
                 {sports.map((sport) => (
-                    <div key={sport.name} className="flex justify-between items-center text-sm font-bold text-gray-800">
+                    <div key={sport.name} className="flex justify-between items-center text-sm md:text-base font-semibold text-gray-800">
                         <div className="flex items-center gap-3">
                             <span className={`w-2.5 h-2.5 rounded-full ${sport.color}`}></span>
                             {sport.name}
