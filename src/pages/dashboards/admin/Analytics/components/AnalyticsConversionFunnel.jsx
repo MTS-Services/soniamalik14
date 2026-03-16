@@ -10,12 +10,12 @@ const AnalyticsConversionFunnel = () => {
 
     return (
         <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 md:p-8">
-            <h2 className="text-xl font-bold text-gray-900 mb-8">Conversion Funnel</h2>
+            <h2 className="text-xl md:text-2xl font-semibold text-black mb-8">Conversion Funnel</h2>
 
             <div className="space-y-7">
                 {funnelSteps.map((step, index) => (
                     <div key={index}>
-                        <p className="text-sm font-medium text-gray-700 mb-2">{step.label}</p>
+                        <p className="text-base font-medium text-gray-700 mb-2">{step.label}</p>
                         <div className="w-full bg-gray-100 rounded-full h-3.5">
                             <div
                                 className="bg-[#0f766e] h-3.5 rounded-full transition-all duration-300"
