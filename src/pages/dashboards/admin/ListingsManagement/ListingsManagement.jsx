@@ -121,14 +121,14 @@ const ListingsManagement = () => {
         return tableData.filter((item) => {
             // 1. Tab Filter
             const matchesTab = activeTab === 'All' || item.providerType === activeTab;
-            
+
             // 2. Search Filter (checks listing name, provider name, and category)
             const searchLower = searchQuery.toLowerCase();
-            const matchesSearch = 
+            const matchesSearch =
                 item.listing.toLowerCase().includes(searchLower) ||
                 item.provider.toLowerCase().includes(searchLower) ||
                 item.category.toLowerCase().includes(searchLower);
-            
+
             // 3. Dropdown Filters
             const matchesSport = selectedSport === 'All Sports' || item.category === selectedSport;
             const matchesStatus = selectedStatus === 'All Status' || item.status === selectedStatus;
@@ -162,11 +162,11 @@ const ListingsManagement = () => {
                         <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Listings Management</h1>
                         <p className="text-sm sm:text-base text-gray-600 mt-1 sm:mt-2">Review, approve, and feature provider and brand listings.</p>
                     </div>
-                   <button className="flex items-center justify-center gap-2 px-4 sm:px-6 py-2 sm:py-3 bg-btn-primary text-white text-sm sm:text-base font-medium rounded-lg hover:bg-teal-700 transition-colors whitespace-nowrap">
-                             <Download className="w-5 h-5 sm:w-6 sm:h-6" />
-                             <span className="hidden sm:inline">Export CSV</span>
-                             <span className="sm:hidden">Export</span>
-                           </button>
+                    <button className="flex items-center justify-center gap-2 px-4 sm:px-6 py-2 sm:py-3 bg-btn-primary text-white text-sm sm:text-base font-medium rounded-lg hover:bg-teal-700 transition-colors whitespace-nowrap">
+                        <Download className="w-5 h-5 sm:w-6 sm:h-6" />
+                        <span className="hidden sm:inline">Export CSV</span>
+                        <span className="sm:hidden">Export</span>
+                    </button>
                 </div>
 
                 {/* Main Content Area */}
@@ -194,11 +194,10 @@ const ListingsManagement = () => {
                                     <button
                                         key={tab}
                                         onClick={() => setActiveTab(tab)}
-                                        className={`px-4 py-1.5 text-sm font-medium rounded-md transition-colors ${
-                                            activeTab === tab
+                                        className={`px-4 py-1.5 text-sm font-medium rounded-md transition-colors ${activeTab === tab
                                                 ? 'bg-[#0f766e] text-white shadow-sm'
                                                 : 'text-gray-600 hover:bg-gray-100'
-                                        }`}
+                                            }`}
                                     >
                                         {tab}
                                     </button>
@@ -208,10 +207,10 @@ const ListingsManagement = () => {
 
                         {/* Dropdown Filters */}
                         <div className="flex flex-wrap gap-4 mb-6">
-                            
+
                             {/* Sport Filter Dropdown */}
                             <div className="relative">
-                                <select 
+                                <select
                                     value={selectedSport}
                                     onChange={(e) => setSelectedSport(e.target.value)}
                                     className="appearance-none flex items-center justify-between w-40 px-4 py-2 pr-10 text-sm text-gray-600 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 focus:outline-none focus:border-[#0f766e] cursor-pointer"
@@ -225,7 +224,7 @@ const ListingsManagement = () => {
 
                             {/* Status Filter Dropdown */}
                             <div className="relative">
-                                <select 
+                                <select
                                     value={selectedStatus}
                                     onChange={(e) => setSelectedStatus(e.target.value)}
                                     className="appearance-none flex items-center justify-between w-36 px-4 py-2 pr-10 text-sm text-gray-600 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 focus:outline-none focus:border-[#0f766e] cursor-pointer"
@@ -254,14 +253,14 @@ const ListingsManagement = () => {
                     <div className="overflow-x-auto">
                         <table className="w-full text-left border-collapse">
                             <thead>
-                                <tr className="bg-[#f0f4f4] border-y border-gray-100">
-                                    <th className="px-6 py-3 text-xs font-medium text-gray-600 uppercase tracking-wider">Listing</th>
-                                    <th className="px-6 py-3 text-xs font-medium text-gray-600 uppercase tracking-wider">Provider</th>
-                                    <th className="px-6 py-3 text-xs font-medium text-gray-600 uppercase tracking-wider">Category</th>
-                                    <th className="px-6 py-3 text-xs font-medium text-gray-600 uppercase tracking-wider">Postcode</th>
-                                    <th className="px-6 py-3 text-xs font-medium text-gray-600 uppercase tracking-wider">Status</th>
-                                    <th className="px-6 py-3 text-xs font-medium text-gray-600 uppercase tracking-wider">Engagement</th>
-                                    <th className="px-6 py-3 text-xs font-medium text-gray-600 uppercase tracking-wider">Actions</th>
+                                <tr className="bg-[#E7F1F1] border-y border-gray-100">
+                                    <th className="px-6 py-3 text-base font-medium text-gray-600  tracking-wider">Listing</th>
+                                    <th className="px-6 py-3 text-base font-medium text-gray-600  tracking-wider">Provider</th>
+                                    <th className="px-6 py-3 text-base font-medium text-gray-600 tracking-wider">Category</th>
+                                    <th className="px-6 py-3 text-base font-medium text-gray-600  tracking-wider">Postcode</th>
+                                    <th className="px-6 py-3 text-base font-medium text-gray-600  tracking-wider">Status</th>
+                                    <th className="px-6 py-3 text-base font-medium text-gray-600  tracking-wider">Engagement</th>
+                                    <th className="px-6 py-3 text-base font-medium text-gray-600  tracking-wider">Actions</th>
                                 </tr>
                             </thead>
                             <tbody className="bg-white divide-y divide-gray-100">
