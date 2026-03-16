@@ -16,7 +16,7 @@ const AddNewsModal = ({
 
     return (
         <div className="fixed inset-0 bg-black/80 bg-opacity-50 flex items-center justify-center z-50 p-4">
-            <div className="bg-white rounded-lg shadow-lg max-w-md w-full">
+            <div className="bg-white rounded-lg shadow-lg max-w-lg w-full">
 
                 {/* Modal Header */}
                 <div className="flex justify-between items-center border-b border-gray-200 p-6">
@@ -34,7 +34,7 @@ const AddNewsModal = ({
 
                     {/* News Title */}
                     <div>
-                        <label className="block text-sm font-medium text-gray-900 mb-2">News Title</label>
+                        <label className="block text-base font-medium text-gray-900 mb-2">News Title</label>
                         <input
                             type="text"
                             name="title"
@@ -47,7 +47,7 @@ const AddNewsModal = ({
 
                     {/* News Description */}
                     <div>
-                        <label className="block text-sm font-medium text-gray-900 mb-2">News Description</label>
+                        <label className="block text-base font-medium text-gray-900 mb-2">News Description</label>
                         <textarea
                             name="description"
                             value={formData.description}
@@ -59,7 +59,7 @@ const AddNewsModal = ({
 
                     {/* Upload Image */}
                     <div>
-                        <label className="block text-sm font-medium text-gray-900 mb-2">Upload Image</label>
+                        <label className="block text-base font-medium text-gray-900 mb-2">Upload Image</label>
                         <div
                             onClick={onUploadImageClick}
                             className="w-full h-32 bg-[#f5f5f5] rounded-lg flex flex-col items-center justify-center cursor-pointer hover:bg-[#eeeeee] transition-colors relative overflow-hidden group border border-gray-200"
@@ -79,7 +79,7 @@ const AddNewsModal = ({
                                 </>
                             ) : (
                                 <>
-                                    <ImagePlus className="w-7 h-7 text-[#0f766e] mb-2 transition-transform group-hover:scale-110" strokeWidth={1.5} />
+                                    <ImagePlus className="w-7 h-7 text-[#0F766E] mb-2 transition-transform group-hover:scale-110" strokeWidth={1.5} />
                                     <span className="text-xs font-medium text-gray-600">Upload image</span>
                                 </>
                             )}

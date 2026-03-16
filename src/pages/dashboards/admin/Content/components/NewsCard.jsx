@@ -16,17 +16,17 @@ const NewsCard = ({ news, onEdit, onDelete }) => {
             <div className="pt-4 px-1 flex flex-col flex-grow">
 
                 {/* Date */}
-                <p className="text-xs font-medium text-gray-400 mb-1.5">
+                <p className="text-sm font-medium text-gray-400 mb-1.5">
                     {news.date}
                 </p>
 
                 {/* Title */}
-                <h3 className="text-[17px] leading-tight font-bold text-gray-900 mb-2 line-clamp-2">
+                <h3 className="text-lg leading-tight font-bold text-gray-900 mb-2 line-clamp-2">
                     {news.title}
                 </h3>
 
                 {/* Description */}
-                <p className="text-sm text-gray-500 mb-6 line-clamp-2 flex-grow leading-relaxed">
+                <p className="text-base text-gray-500 mb-6 line-clamp-2 grow leading-relaxed">
                     {news.description}
                 </p>
 
@@ -34,14 +34,14 @@ const NewsCard = ({ news, onEdit, onDelete }) => {
                 <div className="flex gap-3 mt-auto pt-2">
                     <button
                         onClick={() => onEdit(news.id)}
-                        className="flex-1 flex items-center justify-center gap-2 py-2 border border-[#0f766e]/30 text-[#0f766e] bg-[#f2fafa] rounded-md text-sm font-medium hover:bg-[#e2f3f1] transition-colors"
+                        className="flex-1 flex items-center justify-center gap-2 py-2 border border-[#2FDDCF] text-[#0F766E] bg-[#E7F1F1] rounded-md text-sm font-medium hover:bg-[#e2f3f1] transition-colors"
                     >
                         <Edit className="w-4 h-4" />
                         Edit
                     </button>
                     <button
                         onClick={() => onDelete(news.id)}
-                        className="flex-1 flex items-center justify-center gap-2 py-2 border border-[#0f766e]/30 text-[#0f766e] bg-[#f2fafa] rounded-md text-sm font-medium hover:bg-[#e2f3f1] transition-colors"
+                        className="flex-1 flex items-center justify-center gap-2 py-2 border border-[#2FDDCF] text-[#0F766E] bg-[#E7F1F1] rounded-md text-sm font-medium hover:bg-[#e2f3f1] transition-colors"
                     >
                         <Trash2 className="w-4 h-4" />
                         Delete
