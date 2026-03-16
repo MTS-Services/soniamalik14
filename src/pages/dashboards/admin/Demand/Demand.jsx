@@ -70,7 +70,7 @@ const DemandSignals = () => {
 
     return (
         <div className="flex-1 overflow-auto bg-gray-50 dashboardPy dashboardSpaceY">
-            <div className="max-w-[1600px] mx-auto">
+            <div className="">
 
                 {/* 1. Header Section */}
                 <DemandHeader />
