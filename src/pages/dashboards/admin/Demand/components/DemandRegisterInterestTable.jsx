@@ -5,7 +5,7 @@ const DemandRegisterInterestTable = ({ data }) => {
     return (
         <table className="w-full text-left border-collapse">
             <thead>
-                <tr className="bg-[#eff4f4] border-b border-gray-100">
+                <tr className="bg-[#E7F1F1] border-b border-gray-100">
                     <th className="px-6 py-4 text-base font-semibold text-gray-600 whitespace-nowrap">User / Listing</th>
                     <th className="px-6 py-4 text-base font-semibold text-gray-600 whitespace-nowrap">Sport / Location</th>
                     <th className="px-6 py-4 text-base font-semibold text-gray-600 whitespace-nowrap">Date</th>

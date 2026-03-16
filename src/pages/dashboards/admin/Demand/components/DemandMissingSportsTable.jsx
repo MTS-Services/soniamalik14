@@ -4,7 +4,7 @@ const DemandMissingSportsTable = ({ data }) => {
     return (
         <table className="w-full text-left border-collapse">
             <thead>
-                <tr className="bg-[#eff4f4] border-b border-gray-100">
+                <tr className="bg-[#E7F1F1] border-b border-gray-100">
                     <th className="px-6 py-4 text-base font-semibold text-gray-600 whitespace-nowrap">User ID</th>
                     <th className="px-6 py-4 text-base font-semibold text-gray-600 whitespace-nowrap">Requested Sport</th>
                     <th className="px-6 py-4 text-base font-semibold text-gray-600 whitespace-nowrap">Postcode / Radius</th>
