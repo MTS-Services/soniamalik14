@@ -61,6 +61,61 @@ const ContentNews = () => {
         news.title.toLowerCase().includes(newsSearchQuery.toLowerCase())
     );
 
+    // Handle image upload for modal
+    const handleImageUpload = (e) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = (event) => {
+            const imageUrl = event.target?.result;
+            setFormData(prev => ({
+                ...prev,
+                image: imageUrl
+            }));
+        };
+        reader.readAsDataURL(file);
+    };
+
+    // Handle form input changes
+    const handleFormChange = (e) => {
+        const { name, value } = e.target;
+        setFormData(prev => ({
+            ...prev,
+            [name]: value
+        }));
+    };
+
+    // Handle save news
+    const handleSaveNews = () => {
+        if (formData.title.trim() && formData.description.trim()) {
+            // Add your save logic here
+            console.log('Saving news:', formData);
+            // Reset form and close modal
+            setFormData({ title: '', description: '', image: null });
+            setIsModalOpen(false);
+        }
+    };
+
+    // Handle modal close
+    const handleCloseModal = () => {
+        setFormData({ title: '', description: '', image: null });
+        setIsModalOpen(false);
+    };
+
+    // Handle upload image click
+    const handleUploadImageClick = () => {
+        imageFileRef.current?.click();
+    };
+
+    // Remove image from modal
+    const removeModalImage = () => {
+        setFormData(prev => ({
+            ...prev,
+            image: null
+        }));
+    };
+
     return (
         <div className="font-sans">
             {/* News Top Bar */}
@@ -76,9 +131,12 @@ const ContentNews = () => {
                         className="bg-transparent border-none outline-none w-full text-sm text-gray-700 placeholder-gray-500"
                     />
                 </div>
-                
+
                 {/* Add News Button */}
-                <button className="flex items-center justify-center px-6 py-2.5 w-full sm:w-auto bg-[#0f766e] text-white text-sm font-semibold rounded-lg hover:bg-teal-800 transition-colors shadow-sm whitespace-nowrap">
+                <button
+                    onClick={() => setIsModalOpen(true)}
+                    className="flex items-center justify-center px-6 py-2.5 w-full sm:w-auto bg-[#0f766e] text-white text-sm font-semibold rounded-lg hover:bg-teal-800 transition-colors shadow-sm whitespace-nowrap"
+                >
                     Add a new News
                 </button>
             </div>
@@ -88,27 +146,27 @@ const ContentNews = () => {
                 {filteredNews.map((news) => (
                     // Added p-4 here to give padding around the entire card content, including the image
                     <div key={news.id} className="bg-white rounded-xl shadow-sm border border-gray-100 p-4 flex flex-col hover:shadow-md transition-shadow">
-                        
+
                         {/* Card Image - Added rounded-lg to curve the image inside the padded container */}
                         <img
                             src={news.image}
                             alt={news.title}
                             className="w-full h-48 md:h-52 object-cover rounded-lg"
                         />
-                        
+
                         {/* Card Content Area */}
                         <div className="pt-4 px-1 flex flex-col flex-grow">
-                            
+
                             {/* Date */}
                             <p className="text-xs font-medium text-gray-400 mb-1.5">
                                 {news.date}
                             </p>
-                            
+
                             {/* Title */}
                             <h3 className="text-[17px] leading-tight font-bold text-gray-900 mb-2 line-clamp-2">
                                 {news.title}
                             </h3>
-                            
+
                             {/* Description */}
                             <p className="text-sm text-gray-500 mb-6 line-clamp-2 flex-grow leading-relaxed">
                                 {news.description}
@@ -129,7 +187,7 @@ const ContentNews = () => {
                         </div>
                     </div>
                 ))}
-                
+
                 {/* Empty State Fallback */}
                 {filteredNews.length === 0 && (
                     <div className="col-span-full py-12 text-center text-gray-500 text-sm">
@@ -137,6 +195,106 @@ const ContentNews = () => {
                     </div>
                 )}
             </div>
+
+            {/* Hidden Image Input */}
+            <input
+                ref={imageFileRef}
+                type="file"
+                accept="image/*"
+                hidden
+                onChange={handleImageUpload}
+            />
+
+            {/* Add News Modal */}
+            {isModalOpen && (
+                <div className="fixed inset-0 bg-black/80 bg-opacity-50 flex items-center justify-center z-50 p-4">
+                    <div className="bg-white rounded-lg shadow-lg max-w-md w-full">
+                        {/* Modal Header */}
+                        <div className="flex justify-between items-center border-b border-gray-200 p-6">
+                            <h2 className="text-lg font-semibold text-gray-900">News</h2>
+                            <button
+                                onClick={handleCloseModal}
+                                className="text-gray-400 hover:text-gray-600 transition-colors"
+                            >
+                                <X className="w-5 h-5" />
+                            </button>
+                        </div>
+
+                        {/* Modal Body */}
+                        <div className="p-6 space-y-5">
+                            {/* News Title */}
+                            <div>
+                                <label className="block text-sm font-medium text-gray-900 mb-2">News Title</label>
+                                <input
+                                    type="text"
+                                    name="title"
+                                    value={formData.title}
+                                    onChange={handleFormChange}
+                                    placeholder="Enter membership title here"
+                                    className="w-full bg-[#f5f5f5] border-none rounded-lg px-4 py-2.5 text-sm focus:ring-2 focus:ring-[#0f766e]/20 outline-none text-gray-800 placeholder-gray-500"
+                                />
+                            </div>
+
+                            {/* News Description */}
+                            <div>
+                                <label className="block text-sm font-medium text-gray-900 mb-2">News Description</label>
+                                <textarea
+                                    name="description"
+                                    value={formData.description}
+                                    onChange={handleFormChange}
+                                    placeholder="Description"
+                                    className="w-full h-24 bg-[#f5f5f5] border-none rounded-lg px-4 py-2.5 text-sm focus:ring-2 focus:ring-[#0f766e]/20 outline-none resize-none text-gray-800 placeholder-gray-500"
+                                />
+                            </div>
+
+                            {/* Upload Image */}
+                            <div>
+                                <label className="block text-sm font-medium text-gray-900 mb-2">Upload Image</label>
+                                <div
+                                    onClick={handleUploadImageClick}
+                                    className="w-full h-32 bg-[#f5f5f5] rounded-lg flex flex-col items-center justify-center cursor-pointer hover:bg-[#eeeeee] transition-colors relative overflow-hidden group border border-gray-200"
+                                >
+                                    {formData.image ? (
+                                        <>
+                                            <img src={formData.image} alt="Preview" className="w-full h-full object-cover" />
+                                            <button
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    removeModalImage();
+                                                }}
+                                                className="absolute top-2 right-2 bg-red-500 hover:bg-red-600 text-white p-1 rounded-full transition-colors"
+                                            >
+                                                <X className="w-4 h-4" strokeWidth={2} />
+                                            </button>
+                                        </>
+                                    ) : (
+                                        <>
+                                            <ImagePlus className="w-7 h-7 text-[#0f766e] mb-2 transition-transform group-hover:scale-110" strokeWidth={1.5} />
+                                            <span className="text-xs font-medium text-gray-600">Upload image</span>
+                                        </>
+                                    )}
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Modal Footer */}
+                        <div className="border-t border-gray-200 p-6 flex gap-3">
+                            <button
+                                onClick={handleCloseModal}
+                                className="flex-1 py-2 px-4 border border-gray-300 text-gray-700 font-medium rounded-lg hover:bg-gray-50 transition-colors"
+                            >
+                                Cancel
+                            </button>
+                            <button
+                                onClick={handleSaveNews}
+                                className="flex-1 py-2 px-4 bg-[#0f766e] text-white font-medium rounded-lg hover:bg-teal-800 transition-colors"
+                            >
+                                Save News
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };
