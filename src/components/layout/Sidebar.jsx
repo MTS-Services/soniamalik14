@@ -180,7 +180,7 @@ const Sidebar = ({ isOpen, onClose }) => {
                                 }}
                             >
                                 <span className="flex items-center">{item.icon}</span>
-                                <span className="text-base 2xl:text-lg font-medium">{item.label}</span>
+                                <span className="text-base  font-medium">{item.label}</span>
                             </NavLink>
                         </div>
                     ))}
