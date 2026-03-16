@@ -29,19 +29,9 @@ const getMenuItems = (role, basePath) => {
     const adminMenu = [
         { id: 'dashboard', label: 'Dashboard', icon: <LayoutDashboard className="w-5 h-5" />, path: `${basePath}` },
         { id: 'users', label: 'Users', icon: <Users className="w-5 h-5" />, path: `${basePath}/users` },
-        { id: 'listings', label: 'Listings Management', icon: <List className="w-5 h-5" />, path: `${basePath}/listings` },
+        { id: 'listings', label: 'Listings ', icon: <List className="w-5 h-5" />, path: `${basePath}/listings` },
         { id: 'event', label: 'Event', icon: <Calendar className="w-5 h-5" />, path: `${basePath}/event` },
-        { id: 'event-details', label: 'Event Details', icon: <CalendarCheck className="w-5 h-5" />, path: `${basePath}/event-details` },
-        { id: 'product-request', label: 'Product Request', icon: <Package className="w-5 h-5" />, path: `${basePath}/product-request` },
-        { id: 'order', label: 'Order', icon: <ShoppingCart className="w-5 h-5" />, path: `${basePath}/order` },
-        { id: 'thread', label: 'Thread', icon: <MessageSquare className="w-5 h-5" />, path: `${basePath}/thread` },
-        { id: 'club', label: 'Club', icon: <Users className="w-5 h-5" />, path: `${basePath}/club` },
-        { id: 'sports', label: 'Sports', icon: <LandPlot className="w-5 h-5" />, path: `${basePath}/sports` },
-
-        { id: 'service-request', label: 'Service Request', icon: <Wrench className="w-5 h-5" />, path: `${basePath}/service-request` },
-        { id: 'finances', label: 'Finances', icon: <DollarSign className="w-5 h-5" />, path: `${basePath}/finances` },
-
-        { id: 'News', label: 'News', icon: <Newspaper className="w-5 h-5" />, path: `${basePath}/news` },
+ 
 
         { id: 'settings', label: 'Settings', icon: <Settings className="w-5 h-5" />, path: `${basePath}/settings` },
     ];
