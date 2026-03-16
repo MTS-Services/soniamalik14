@@ -2,7 +2,7 @@ import React from 'react';
 
 const Revenue = () => {
     return (
-        <div className="flex-1 flex flex-col items-center justify-center bg-white min-h-screen p-6 md:p-8 font-sans">
+        <div className="flex-1 flex flex-col items-center justify-center min-h-screen overflow-auto bg-gray-50 dashboardPy dashboardSpaceY">
             <div className="text-center max-w-2xl mx-auto flex flex-col items-center">
                 
                 {/* Main Heading */}
