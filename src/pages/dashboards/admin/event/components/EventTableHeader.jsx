@@ -13,9 +13,9 @@ const EventTableHeader = () => {
 
     return (
         <thead>
-            <tr className="bg-[#f0f4f4] border-y border-gray-100">
+            <tr className="bg-[#E7F1F1] border-y border-gray-100">
                 {headers.map((header) => (
-                    <th key={header} className="px-6 py-3 text-xs font-medium text-gray-600 uppercase tracking-wider">
+                    <th key={header} className="px-6 py-3 text-base font-medium text-black  tracking-wider">
                         {header}
                     </th>
                 ))}

@@ -8,16 +8,16 @@ const EventEngagementMetrics = ({ engagement }) => {
 
     return (
         <div className="flex items-center gap-3">
-            <span className="flex items-center gap-1 text-xs text-gray-500" title="Views">
+            <span className="flex items-center gap-1 text-sm text-gray-500" title="Views">
                 <Eye className="w-3.5 h-3.5" /> {engagement.views}
             </span>
-            <span className="flex items-center gap-1 text-xs text-gray-500" title="Trend">
+            <span className="flex items-center gap-1 text-sm text-gray-500" title="Trend">
                 <TrendingUp className="w-3.5 h-3.5" /> {engagement.trend}
             </span>
-            <span className="flex items-center gap-1 text-xs text-gray-500" title="Messages">
+            <span className="flex items-center gap-1 text-sm text-gray-500" title="Messages">
                 <MessageSquare className="w-3.5 h-3.5" /> {engagement.messages}
             </span>
-            <span className="flex items-center gap-1 text-xs text-gray-500" title="Shares">
+            <span className="flex items-center gap-1 text-sm text-gray-500" title="Shares">
                 <ExternalLink className="w-3.5 h-3.5" /> {engagement.shares}
             </span>
         </div>
