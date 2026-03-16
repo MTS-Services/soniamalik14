@@ -64,14 +64,14 @@ const EventSearchAndFilters = ({
             </div>
 
             {/* Dropdown & Date Filters */}
-            <div className="flex flex-wrap gap-4">
+            <div className="flex flex-col sm:flex-row gap-4 w-full sm:flex-nowrap">
 
                 {/* Sport Filter Dropdown */}
-                <div className="relative">
+                <div className="relative w-full sm:w-auto">
                     <select
                         value={selectedSport}
                         onChange={(e) => setSelectedSport(e.target.value)}
-                        className="appearance-none flex items-center justify-between w-40 px-4 py-2 pr-10 text-base text-gray-600 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 focus:outline-none focus:border-[#0f766e] cursor-pointer"
+                        className="appearance-none w-full sm:w-56 px-4 py-2 pr-10 text-base text-gray-600 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 focus:outline-none focus:border-[#0f766e] cursor-pointer"
                     >
                         {uniqueSports.map(sport => (
                             <option key={sport} value={sport}>{sport === 'All Sports' ? 'Select sports' : sport}</option>
@@ -81,24 +81,24 @@ const EventSearchAndFilters = ({
                 </div>
 
                 {/* From Date Filter */}
-                <div className="relative">
+                <div className="relative w-full sm:w-auto">
                     <input
                         type="date"
                         value={fromDate}
                         onChange={(e) => setFromDate(e.target.value)}
-                        className="appearance-none flex items-center justify-between w-40 px-4 py-2 text-base text-gray-600 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 focus:outline-none focus:border-[#0f766e] cursor-pointer [&::-webkit-calendar-picker-indicator]:opacity-0 [&::-webkit-calendar-picker-indicator]:absolute [&::-webkit-calendar-picker-indicator]:right-3 [&::-webkit-calendar-picker-indicator]:w-5 [&::-webkit-calendar-picker-indicator]:h-5 [&::-webkit-calendar-picker-indicator]:cursor-pointer"
+                        className="appearance-none w-full sm:w-56 px-4 py-2 text-base text-gray-600 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 focus:outline-none focus:border-[#0f766e] cursor-pointer [&::-webkit-calendar-picker-indicator]:opacity-0 [&::-webkit-calendar-picker-indicator]:absolute [&::-webkit-calendar-picker-indicator]:right-3 [&::-webkit-calendar-picker-indicator]:w-5 [&::-webkit-calendar-picker-indicator]:h-5 [&::-webkit-calendar-picker-indicator]:cursor-pointer pr-10"
                     />
                     {!fromDate && <span className="absolute left-4 top-1/2 -translate-y-1/2 text-base text-gray-600 pointer-events-none bg-white pr-2">Form date</span>}
                     <Calendar className="w-4 h-4 text-gray-400 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" />
                 </div>
 
                 {/* To Date Filter */}
-                <div className="relative">
+                <div className="relative w-full sm:w-auto">
                     <input
                         type="date"
                         value={toDate}
                         onChange={(e) => setToDate(e.target.value)}
-                        className="appearance-none flex items-center justify-between w-40 px-4 py-2 text-base text-gray-600 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 focus:outline-none focus:border-[#0f766e] cursor-pointer [&::-webkit-calendar-picker-indicator]:opacity-0 [&::-webkit-calendar-picker-indicator]:absolute [&::-webkit-calendar-picker-indicator]:right-3 [&::-webkit-calendar-picker-indicator]:w-5 [&::-webkit-calendar-picker-indicator]:h-5 [&::-webkit-calendar-picker-indicator]:cursor-pointer"
+                        className="appearance-none w-full sm:w-56 px-4 py-2 text-base text-gray-600 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 focus:outline-none focus:border-[#0f766e] cursor-pointer [&::-webkit-calendar-picker-indicator]:opacity-0 [&::-webkit-calendar-picker-indicator]:absolute [&::-webkit-calendar-picker-indicator]:right-3 [&::-webkit-calendar-picker-indicator]:w-5 [&::-webkit-calendar-picker-indicator]:h-5 [&::-webkit-calendar-picker-indicator]:cursor-pointer pr-10"
                     />
                     {!toDate && <span className="absolute left-4 top-1/2 -translate-y-1/2 text-base text-gray-600 pointer-events-none bg-white pr-2">To date</span>}
                     <Calendar className="w-4 h-4 text-gray-400 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" />
