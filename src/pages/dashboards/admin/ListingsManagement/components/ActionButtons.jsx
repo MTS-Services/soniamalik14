@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Eye, Star, Flag, CheckCircle2 } from 'lucide-react';
+import BanModal from './BanModal';
 
 const ActionButtons = ({ status, rowId, providerType }) => {
     const navigate = useNavigate();
+    const [isBanModalOpen, setIsBanModalOpen] = useState(false);
 
     const handleViewDetails = () => {
         if (providerType === 'Sport Providers') {
@@ -11,6 +13,11 @@ const ActionButtons = ({ status, rowId, providerType }) => {
         } else if (providerType === 'Service Provider') {
             navigate(`/admin/listings/service-provider/${rowId}`);
         }
+    };
+
+    const handleBanSubmit = (reason) => {
+        console.log(`Listing ${rowId} banned with reason:`, reason);
+        setIsBanModalOpen(false);
     };
 
     return (
@@ -25,7 +32,11 @@ const ActionButtons = ({ status, rowId, providerType }) => {
             <button className="transition-colors" title={status === 'Featured' ? "Unfeature" : "Feature"}>
                 <Star className={`w-4 h-4 md:w-5 md:h-5 ${status === 'Featured' ? 'fill-amber-400 text-amber-400' : 'text-amber-500 hover:fill-amber-100'}`} />
             </button>
-            <button className="transition-colors" title="Flag/Ban">
+            <button
+                onClick={() => setIsBanModalOpen(true)}
+                className="transition-colors"
+                title="Flag/Ban"
+            >
                 <Flag className={`w-4 h-4 md:w-5 md:h-5 ${status === 'Banned' ? 'fill-red-500 text-red-500' : 'text-red-500 hover:fill-red-100'}`} />
             </button>
             {status === 'Pending' && (
@@ -33,6 +44,12 @@ const ActionButtons = ({ status, rowId, providerType }) => {
                     <CheckCircle2 className="w-4 h-4 md:w-5 md:h-5" />
                 </button>
             )}
+
+            <BanModal
+                isOpen={isBanModalOpen}
+                onClose={() => setIsBanModalOpen(false)}
+                onSubmit={handleBanSubmit}
+            />
         </div>
     );
 };
