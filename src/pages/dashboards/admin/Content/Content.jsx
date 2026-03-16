@@ -3,6 +3,7 @@ import ContentLandingPage from './components/ContentLandingPage';
 import ContentAboutUS from './components/ContentAboutUS';
 import ContentCollaboratePage from './components/ContentCollaboratePage';
 import ContentNews from './components/ContentNews';
+import ContentTabs from './components/ContentTabs';
 
 const ContentManagement = () => {
     const [activeTab, setActiveTab] = useState('Landing Page');
@@ -20,22 +21,11 @@ const ContentManagement = () => {
                 </div>
 
                 {/* Tabs Area */}
-                <div className="mb-8 overflow-x-auto no-scrollbar">
-                    <div className="inline-flex bg-white rounded-lg shadow-sm p-1 border border-gray-100 whitespace-nowrap">
-                        {tabs.map((tab) => (
-                            <button
-                                key={tab}
-                                onClick={() => setActiveTab(tab)}
-                                className={`px-6 py-2.5 text-sm font-medium rounded-md transition-all duration-200 ${activeTab === tab
-                                        ? 'bg-[#0f766e] text-white shadow-sm'
-                                        : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
-                                    }`}
-                            >
-                                {tab}
-                            </button>
-                        ))}
-                    </div>
-                </div>
+                <ContentTabs
+                    tabs={tabs}
+                    activeTab={activeTab}
+                    onTabChange={setActiveTab}
+                />
 
                 {/* Tab Content Rendering */}
                 {activeTab === 'Landing Page' && <ContentLandingPage />}
