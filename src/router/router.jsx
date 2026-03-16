@@ -75,6 +75,7 @@ import Users from '../pages/dashboards/admin/Users/Users.jsx';
 import ListingsManagement from '../pages/dashboards/admin/ListingsManagement/ListingsManagement.jsx';
 import SportProviderListingDetails from '../pages/dashboards/admin/ListingsManagement/SportProviderListingDetails.jsx';
 import ServiceProviderListingDetails from '../pages/dashboards/admin/ListingsManagement/ServiceProviderListingDetails.jsx';
+import EventSingleDetails from '../pages/dashboards/admin/event/EventSingleDetails.jsx';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -132,8 +133,9 @@ const router = createBrowserRouter(
       >
         <Route index element={<AdminIndex />} />
         <Route path="event" element={<Event />} />
-        
-    
+        <Route path="event/:id" element={<EventSingleDetails />} />
+
+
         <Route path="users" element={<Users />} />
         <Route path="listings" element={<ListingsManagement />} />
         <Route path="listings/sport-provider/:id" element={<SportProviderListingDetails />} />

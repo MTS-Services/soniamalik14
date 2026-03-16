@@ -1,306 +1,294 @@
-import React, { useState, useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { ArrowLeft, Calendar, Clock, MapPin, Phone, Mail } from 'lucide-react';
-import { useEvent } from '../../../../context/EventContext';
+import React, { useMemo } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { 
+    ArrowLeft, 
+    Calendar, 
+    Clock, 
+    MapPin, 
+    Phone, 
+    Mail,
+    Eye,
+    TrendingUp,
+    MessageSquare,
+    ExternalLink,
+    Code,
+    AlertCircle
+} from 'lucide-react';
 
 const EventSingleDetails = () => {
-  const location = useLocation();
-  const navigate = useNavigate();
-  const { fetchEventById } = useEvent();
-  const passedEvent = location.state?.event || null;
+    const navigate = useNavigate();
+    // Defaulting to 1 for the Live view. Change to 2 for Pending, or 6 for Banned.
+    const { id = 1 } = useParams(); 
 
-  const [eventData, setEventData] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [selectedImage, setSelectedImage] = useState(0);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      if (!passedEvent?.id) {
-        console.error('No event ID provided');
-        setLoading(false);
-        return;
-      }
-
-      setLoading(true);
-      const result = await fetchEventById(passedEvent.id);
-      if (result.success && result.event) {
-        setEventData(result.event);
-      } else {
-        // Fallback to passed event if API fails
-        setEventData(passedEvent);
-      }
-      setLoading(false);
-    };
-
-    fetchData();
-  }, [passedEvent, fetchEventById]);
-
-  // Sample images - using images from public folder or from API
-  const getEventImages = () => {
-    if (eventData?.image) {
-      return [eventData.image, eventData.image, eventData.image, eventData.image];
-    }
-    return [
-      '/images/detaisPage/detailsBanner.png',
-      '/images/detaisPage/sideImage1.png',
-      '/images/marketplace/image_1.jpg',
-      '/images/marketplace/image_3.jpg',
+    // Hardcoded dummy data for the 3 states
+    const eventDataList = [
+        {
+            id: 1, // Approved/Live Status (Image 1)
+            title: "Women's Open Football Training Camp",
+            status: "Live",
+            sport: "Cricket",
+            eventType: "Workshops & learning",
+            description: "This training camp is designed exclusively for women footballers who want to improve their skills, fitness, and overall match performance. The session will focus on technical drills, tactical awareness, team coordination, and physical conditioning in a supportive and competitive environment.\n\nWhether you are preparing for upcoming matches or looking to sharpen your fundamentals, this camp provides professional guidance and structured training. Players will train under experienced coaches and get valuable feedback to help them grow confidently on the field.",
+            date: "Saturday, 12 October 2025",
+            time: "4:00 PM – 7:00 PM",
+            suitableFor: "New to sport",
+            ageGroup: "16+ Years",
+            sportType: "Cricket",
+            engagement: { views: 1250, trend: 45, messages: 28, shares: 28 },
+            venue: {
+                name: "City Sports Ground",
+                address: "2118 Thornridge Cir. Syracuse, Connecticut 35624",
+                phone: "(406) 555-0120",
+                email: "nevaeh.simmons@example.com"
+            },
+            organizer: {
+                name: "Rising Queens Football Academy"
+            }
+        },
+        {
+            id: 2, // Pending Status (Image 2 - Assumes Top Blue Banner)
+            title: "Women's Open Football Training Camp",
+            status: "Pending",
+            sport: "Cricket",
+            eventType: "Workshops & learning",
+            description: "This training camp is designed exclusively for women footballers who want to improve their skills, fitness, and overall match performance. The session will focus on technical drills, tactical awareness, team coordination, and physical conditioning in a supportive and competitive environment.\n\nWhether you are preparing for upcoming matches or looking to sharpen your fundamentals, this camp provides professional guidance and structured training. Players will train under experienced coaches and get valuable feedback to help them grow confidently on the field.",
+            date: "Saturday, 12 October 2025",
+            time: "4:00 PM – 7:00 PM",
+            suitableFor: "New to sport",
+            ageGroup: "16+ Years",
+            sportType: "Cricket",
+            engagement: { views: 1250, trend: 45, messages: 28, shares: 28 },
+            venue: {
+                name: "City Sports Ground",
+                address: "2118 Thornridge Cir. Syracuse, Connecticut 35624",
+                phone: "(406) 555-0120",
+                email: "nevaeh.simmons@example.com"
+            },
+            organizer: {
+                name: "Rising Queens Football Academy"
+            }
+        },
+        {
+            id: 6, // Banned Status (Image 3 - Red Alert Box)
+            title: "Women's Open Football Training Camp",
+            status: "Banned",
+            sport: "Cricket",
+            eventType: "Workshops & learning",
+            description: "This training camp is designed exclusively for women footballers who want to improve their skills, fitness, and overall match performance. The session will focus on technical drills, tactical awareness, team coordination, and physical conditioning in a supportive and competitive environment.\n\nWhether you are preparing for upcoming matches or looking to sharpen your fundamentals, this camp provides professional guidance and structured training. Players will train under experienced coaches and get valuable feedback to help them grow confidently on the field.",
+            date: "Saturday, 12 October 2025",
+            time: "4:00 PM – 7:00 PM",
+            suitableFor: "New to sport",
+            ageGroup: "16+ Years",
+            sportType: "Cricket",
+            engagement: { views: 1250, trend: 45, messages: 28, shares: 28 },
+            venue: {
+                name: "City Sports Ground",
+                address: "2118 Thornridge Cir. Syracuse, Connecticut 35624",
+                phone: "(406) 555-0120",
+                email: "nevaeh.simmons@example.com"
+            },
+            organizer: {
+                name: "Rising Queens Football Academy"
+            }
+        }
     ];
-  };
 
-  const images = eventData ? getEventImages() : [];
+    const eventData = useMemo(() => eventDataList.find(item => item.id === parseInt(id)) || eventDataList[0], [id]);
 
-  const formatDate = (dateStr) => {
-    if (!dateStr) return '-';
-    try {
-      const date = new Date(dateStr);
-      return date.toLocaleDateString('en-US', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
-    } catch {
-      return dateStr;
-    }
-  };
-
-  const formatTime = (startDate, endDate) => {
-    if (!startDate) return '-';
-    try {
-      const start = new Date(startDate);
-      const startTime = start.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
-
-      if (endDate) {
-        const end = new Date(endDate);
-        const endTime = end.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
-        return `${startTime} — ${endTime}`;
-      }
-
-      return startTime;
-    } catch {
-      return '-';
-    }
-  };
-
-  const formatEnum = (value) => {
-    if (!value) return '-';
-    return String(value).replace(/_/g, ' ').replace(/-/g, ' ').toLowerCase().split(' ').map(s => s ? s[0].toUpperCase() + s.slice(1) : '').join(' ');
-  };
-
-  if (loading) {
     return (
-      <div className="flex-1 overflow-auto bg-gray-50 min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#0F766E] mx-auto mb-4"></div>
-          <p className="text-gray-600">Loading event details...</p>
-        </div>
-      </div>
-    );
-  }
-
-  if (!eventData) {
-    return (
-      <div className="flex-1 overflow-auto bg-gray-50 min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <p className="text-gray-600 text-lg mb-4">Event not found</p>
-          <button
-            onClick={() => navigate(-1)}
-            className="px-4 py-2 bg-[#0F766E] text-white rounded-md hover:opacity-90"
-          >
-            Go Back
-          </button>
-        </div>
-      </div>
-    );
-  }
-
-  return (
-    <div className="flex-1 overflow-auto bg-gray-50 min-h-screen">
-      <div className=" mx-auto p-4 md:p-6 lg:p-8">
-
-        {/* Image Gallery Section */}
-        <div className="mb-6">
-          {/* Main Image */}
-          <div className="relative rounded-xl overflow-hidden mb-3">
-            <img
-              src={images[selectedImage]}
-              alt="Event"
-              className="w-full h-64 md:h-80 lg:h-160 object-cover"
-              onError={(e) => {
-                e.target.src = '/images/detaisPage/detailsBanner.png';
-              }}
-            />
-            {/* Back Button */}
-            <button
-              onClick={() => navigate(-1)}
-              className="absolute top-4 left-4 flex items-center gap-2 bg-white/90 backdrop-blur-sm px-4 py-2 rounded-lg text-gray-700 hover:bg-white transition-colors shadow-sm"
-            >
-              <ArrowLeft size={18} />
-              <span className="text-base font-medium">Back</span>
-            </button>
-          </div>
-
-          {/* Thumbnail Images */}
-          <div className="grid grid-cols-3 gap-3">
-            {images.slice(1, 4).map((img, index) => (
-              <div
-                key={index}
-                onClick={() => setSelectedImage(index + 1)}
-                className={`rounded-xl overflow-hidden cursor-pointer border-2 transition-all ${selectedImage === index + 1 ? 'border-[#0F766E]' : 'border-transparent'
-                  }`}
-              >
-                <img
-                  src={img}
-                  alt={`Event ${index + 2}`}
-                  className="w-full h-24 md:h-74 object-cover hover:opacity-90 transition-opacity"
-                  onError={(e) => {
-                    e.target.src = '/images/marketplace/image_4.jpg';
-                  }}
-                />
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Event Details Section */}
-        <div className="space-y-6">
-          {/* Title & Description */}
-          <div>
-            <h1 className="text-xl md:text-2xl font-bold text-gray-900 mb-4">
-              {eventData.title}
-            </h1>
-            <div className="text-base md:text-base text-gray-600 leading-relaxed whitespace-pre-line">
-              {eventData.description || 'No description available'}
-            </div>
-          </div>
-
-          {/* Date & Time */}
-          <div className="space-y-3">
-            <div className="flex items-center gap-3 text-base md:text-base text-gray-700">
-              <Calendar size={18} className="text-gray-400" />
-              <span>{formatDate(eventData.startDate)}</span>
-            </div>
-            <div className="flex items-center gap-3 text-base md:text-base text-gray-700">
-              <Clock size={18} className="text-gray-400" />
-              <span>{formatTime(eventData.startDate, eventData.endDate)}</span>
-            </div>
-          </div>
-
-          {/* Age Group, Skill Level, Registration Fee */}
-          <div className="space-y-4">
-            {eventData.minAge && (
-              <div>
-                <h3 className="text-base font-semibold text-gray-900">Age Group:</h3>
-                <p className="text-base text-gray-600">{eventData.minAge}+ Years</p>
-              </div>
-            )}
-            {eventData.skillLevel && (
-              <div>
-                <h3 className="text-base font-semibold text-gray-900">Skill Level:</h3>
-                <p className="text-base text-gray-600">{formatEnum(eventData.skillLevel)}</p>
-              </div>
-            )}
-            {eventData.registrationFee !== undefined && (
-              <div>
-                <h3 className="text-base font-semibold text-gray-900">Registration Fee:</h3>
-                <p className="text-base text-gray-600">{eventData.registrationFee === 0 ? 'Free' : `$${eventData.registrationFee}`}</p>
-              </div>
-            )}
-            {eventData.maxParticipants && (
-              <div>
-                <h3 className="text-base font-semibold text-gray-900">Max Participants:</h3>
-                <p className="text-base text-gray-600">{eventData.maxParticipants} {eventData.currentParticipants ? `(${eventData.currentParticipants} registered)` : ''}</p>
-              </div>
-            )}
-          </div>
-
-          {/* Venue Card */}
-          <div className="bg-white rounded-xl border max-w-xl border-gray-200 p-4 md:p-6 shadow-sm">
-            {/* Venue Header */}
-            <div className="flex items-start gap-2 mb-2">
-              <span className="text-base font-semibold text-gray-900">Venue:</span>
-              <span className="text-base text-gray-600">{eventData.venueName || 'TBD'}</span>
-            </div>
-
-            {/* Address */}
-            {eventData.fullAddress && (
-              <div className="flex items-start gap-2 mb-4">
-                <MapPin size={16} className="text-gray-400 mt-0.5 shrink-0" />
-                <span className="text-base text-gray-600">{eventData.fullAddress}</span>
-              </div>
-            )}
-
-            {/* Map Placeholder */}
-            <div className="rounded-lg overflow-hidden mb-6">
-              {(eventData.googleMapLink || eventData.fullAddress) ? (
-                <iframe
-                  src={
-                    eventData.googleMapLink?.includes('embed')
-                      ? eventData.googleMapLink
-                      : `https://maps.google.com/maps?q=${encodeURIComponent(eventData.fullAddress || '')}&t=&z=13&ie=UTF8&iwloc=&output=embed`
-                  }
-                  width="100%"
-                  height="360"
-                  style={{ border: 0 }}
-                  allowFullScreen=""
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                  title="Venue Map"
-                  className="rounded-lg"
-                />
-              ) : (
-                <div className="w-full h-90 bg-gray-100 rounded-lg flex items-center justify-center text-gray-400">
-                  Map not available
+        <div className="flex-1 overflow-auto bg-gray-50 min-h-screen relative font-sans pb-12">
+            
+            {/* 1. Pending Status Top Banner */}
+            {eventData.status === 'Pending' && (
+                <div className="bg-[#789bb4] text-white px-6 py-2.5 flex justify-between items-center shadow-sm">
+                    <span className="font-semibold text-sm">not approved by admin</span>
+                    <Code className="w-5 h-5 opacity-70" />
                 </div>
-              )}
-            </div>
+            )}
 
-            {/* Contact Information */}
-            {(eventData.organizerPhone || eventData.organizerEmail) && (
-              <div className="mb-6">
-                <h3 className="text-base font-semibold text-gray-900 mb-3">Contact Information</h3>
-                <div className="space-y-2">
-                  {eventData.organizerPhone && (
-                    <div className="flex items-center gap-2 text-base text-gray-600">
-                      <Phone size={16} className="text-gray-400" />
-                      <span>{eventData.organizerPhone}</span>
+            <div className=" p-4 md:p-8 space-y-6">
+                
+                {/* Hero Image Section */}
+                <div className="relative rounded-2xl overflow-hidden shadow-sm">
+                    <img
+                        src="https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&w=1600&q=80"
+                        alt="Event Banner"
+                        className="w-full h-64 md:h-96 object-cover"
+                    />
+                    {/* Back Button floating on image */}
+                    <button
+                        onClick={() => navigate(-1)}
+                        className="absolute top-4 left-4 flex items-center gap-2 bg-white/90 backdrop-blur-sm px-4 py-2 rounded-lg text-gray-700 hover:bg-white hover:text-[#0f766e] transition-colors shadow-sm"
+                    >
+                        <ArrowLeft className="w-4 h-4" />
+                        <span className="text-sm font-medium">Back</span>
+                    </button>
+                </div>
+
+                {/* 2. Banned Status Alert Banner */}
+                {eventData.status === 'Banned' && (
+                    <div className="bg-red-50/80 border border-red-100 rounded-xl p-5 flex gap-3">
+                        <AlertCircle className="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" />
+                        <div>
+                            <h3 className="text-base font-semibold text-red-600 mb-1">This event was not approved</h3>
+                            <p className="text-sm leading-relaxed text-red-500">
+                                Your event could not be published because it does not meet our community or safety guidelines.<br/>
+                                Please review the feedback below, make the required changes, and submit again.
+                            </p>
+                        </div>
                     </div>
-                  )}
-                  {eventData.organizerEmail && (
-                    <div className="flex items-center gap-2 text-base text-gray-600">
-                      <Mail size={16} className="text-gray-400" />
-                      <span>{eventData.organizerEmail}</span>
-                    </div>
-                  )}
-                </div>
-              </div>
-            )}
+                )}
 
-            {/* Organized By */}
-            {eventData.organizerName && (
-              <div>
-                <h3 className="text-base font-semibold text-gray-900 mb-3">Organized By:</h3>
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center overflow-hidden">
-                    {eventData.organizerLogo ? (
-                      <img
-                        src={eventData.organizerLogo}
-                        alt="Organizer"
-                        className="w-full h-full object-cover"
-                        onError={(e) => {
-                          e.target.style.display = 'none';
-                          e.target.parentElement.innerHTML = `<span class="text-white text-xs font-bold">${eventData.organizerName?.substring(0, 2).toUpperCase()}</span>`;
-                        }}
-                      />
-                    ) : (
-                      <span className="text-white text-xs font-bold">{eventData.organizerName?.substring(0, 2).toUpperCase()}</span>
-                    )}
-                  </div>
-                  <span className="text-base font-medium text-gray-900">{eventData.organizerName}</span>
+                {/* Main Content Grid */}
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 pt-2">
+                    
+                    {/* LEFT COLUMN: Details */}
+                    <div className="lg:col-span-2 space-y-6">
+                        
+                        {/* Title & Stats */}
+                        <div>
+                            <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-3">
+                                {eventData.title}
+                            </h1>
+                            <div className="flex items-center gap-4 text-sm font-medium text-gray-500 mb-6">
+                                <span className="flex items-center gap-1.5"><Eye className="w-4 h-4" /> {eventData.engagement.views}</span>
+                                <span className="flex items-center gap-1.5"><TrendingUp className="w-4 h-4" /> {eventData.engagement.trend}</span>
+                                <span className="flex items-center gap-1.5"><MessageSquare className="w-4 h-4" /> {eventData.engagement.messages}</span>
+                                <span className="flex items-center gap-1.5"><ExternalLink className="w-4 h-4" /> {eventData.engagement.shares}</span>
+                            </div>
+                        </div>
+
+                        {/* Sport & Event Type */}
+                        <div className="space-y-4">
+                            <div>
+                                <h3 className="text-base font-bold text-gray-900 mb-1">Sport</h3>
+                                <p className="text-base text-gray-600">{eventData.sport}</p>
+                            </div>
+                            <div>
+                                <h3 className="text-base font-bold text-gray-900 mb-1">Event Type</h3>
+                                <p className="text-base text-gray-600">{eventData.eventType}</p>
+                            </div>
+                        </div>
+
+                        {/* Description */}
+                        <div>
+                            <p className="text-base text-gray-700 leading-relaxed whitespace-pre-line">
+                                {eventData.description}
+                            </p>
+                        </div>
+
+                        {/* Date & Time */}
+                        <div className="space-y-3 pt-2">
+                            <div className="flex items-center gap-3 text-base text-gray-700">
+                                <Calendar className="w-5 h-5 text-gray-400" />
+                                <span>{eventData.date}</span>
+                            </div>
+                            <div className="flex items-center gap-3 text-base text-gray-700">
+                                <Clock className="w-5 h-5 text-gray-400" />
+                                <span>{eventData.time}</span>
+                            </div>
+                        </div>
+
+                        {/* Additional Info */}
+                        <div className="space-y-4 pt-2">
+                            <div>
+                                <h3 className="text-base font-bold text-gray-900 mb-1">Who is suitable for</h3>
+                                <p className="text-base text-gray-600">{eventData.suitableFor}</p>
+                            </div>
+                            <div>
+                                <h3 className="text-base font-bold text-gray-900 mb-1">Age Group:</h3>
+                                <p className="text-base text-gray-600">{eventData.ageGroup}</p>
+                            </div>
+                            <div>
+                                <h3 className="text-base font-bold text-gray-900 mb-1">Sport Type:</h3>
+                                <p className="text-base text-gray-600">{eventData.sportType}</p>
+                            </div>
+                        </div>
+
+                        {/* Action Buttons */}
+                        <div className="flex flex-wrap gap-4 pt-4">
+                            <button className="px-6 py-2.5 bg-[#0f766e] text-white text-base font-semibold rounded-lg hover:bg-teal-800 transition-colors shadow-sm">
+                                Book Now
+                            </button>
+                            <button className="px-6 py-2.5 bg-[#0f766e] text-white text-base font-semibold rounded-lg hover:bg-teal-800 transition-colors shadow-sm">
+                                Register Interest
+                            </button>
+                        </div>
+
+                        {/* Contact Organizer Form */}
+                        <div className="bg-[#f0f4f4] p-6 rounded-xl border border-gray-100 max-w-lg mt-6">
+                            <h2 className="text-base font-bold text-gray-900 mb-4">Contact Organizer</h2>
+                            <p className="text-base text-gray-700 mb-3 font-medium">Ask the organiser a question</p>
+                            <textarea 
+                                className="w-full h-32 bg-[#cde4e2]/50 border-none rounded-lg p-3 text-base text-gray-700 placeholder-gray-500 focus:ring-2 focus:ring-[#0f766e]/20 outline-none resize-none mb-4"
+                                placeholder="Write your message"
+                            ></textarea>
+                            <button className="px-6 py-2.5 bg-[#0f766e] text-white text-base font-medium rounded-lg hover:bg-teal-800 transition-colors shadow-sm">
+                                Contact organiser
+                            </button>
+                        </div>
+
+                    </div>
+
+                    {/* RIGHT COLUMN: Venue Card */}
+                    <div className="lg:col-span-1">
+                        <div className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm sticky top-6">
+                            
+                            {/* Venue Details */}
+                            <div className="mb-4 text-base">
+                                <span className="font-bold text-gray-900 mr-2">Venue:</span>
+                                <span className="text-gray-600">{eventData.venue.name}</span>
+                            </div>
+
+                            <div className="flex items-start gap-2 mb-4">
+                                <MapPin className="w-5 h-5 text-gray-400 shrink-0 mt-0.5" />
+                                <span className="text-base text-gray-600 leading-snug">{eventData.venue.address}</span>
+                            </div>
+
+                            {/* Dummy Map Image */}
+                            <div className="rounded-lg overflow-hidden border border-gray-100 mb-6">
+                                <img 
+                                    src="https://placehold.co/600x300/e2e8f0/64748b?text=Map+View" 
+                                    alt="Venue Map" 
+                                    className="w-full h-40 object-cover"
+                                />
+                            </div>
+
+                            {/* Contact Information */}
+                            <div className="mb-6">
+                                <h3 className="text-base font-bold text-gray-900 mb-3">Contact Information</h3>
+                                <div className="space-y-3">
+                                    <div className="flex items-center gap-3 text-base text-gray-600">
+                                        <Phone className="w-5 h-5 text-gray-400" />
+                                        <span>{eventData.venue.phone}</span>
+                                    </div>
+                                    <div className="flex items-center gap-3 text-base text-gray-600 break-all">
+                                        <Mail className="w-5 h-5 text-gray-400 shrink-0" />
+                                        <span>{eventData.venue.email}</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Organized By */}
+                            <div>
+                                <h3 className="text-base font-bold text-gray-900 mb-3">Organized By:</h3>
+                                <div className="flex items-center gap-3">
+                                    <div className="w-10 h-10 rounded-full bg-[#111827] flex items-center justify-center shadow-sm">
+                                        <span className="text-white text-sm font-bold tracking-wider">
+                                            RQ
+                                        </span>
+                                    </div>
+                                    <span className="text-base font-medium text-gray-900">{eventData.organizer.name}</span>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
                 </div>
-              </div>
-            )}
-          </div>
+            </div>
         </div>
-      </div>
-    </div>
-  );
+    );
 };
 
 export default EventSingleDetails;
