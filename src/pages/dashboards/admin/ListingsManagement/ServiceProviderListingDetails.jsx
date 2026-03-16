@@ -111,8 +111,8 @@ const ServiceProviderListingDetails = () => {
                 )}
 
                 {/* About This Service */}
-                <div className="bg-white rounded-xl shadow-sm p-6 md:p-8 max-w-2xl">
-                    <h2 className="text-base font-bold text-gray-900 mb-3">About This Service</h2>
+                <div className="bg-white rounded-xl shadow-sm p-4 md:p-6 max-w-2xl">
+                    <h2 className="text-xl font-bold text-gray-900 mb-3">About This Service</h2>
                     <p className="text-base text-gray-600 leading-relaxed">
                         This physiotherapy service is designed specifically for women athletes who play sports like cricket, football, futsal and other physical games. It helps prevent injuries, improve performance, and support recovery so players can stay fit and confident.
                     </p>
@@ -123,39 +123,39 @@ const ServiceProviderListingDetails = () => {
                     <div className="space-y-4">
                         {/* Using Grid to ensure perfect alignment and no text breaking below the label */}
                         <div className="grid grid-cols-1 sm:grid-cols-[220px_1fr] gap-1 sm:gap-4 text-base">
-                            <span className="font-bold text-gray-900">Clinic Name:</span>
+                            <span className="font-semibold text-gray-900">Clinic Name:</span>
                             <span className="text-gray-700">The wellness Center</span>
                         </div>
                         <div className="grid grid-cols-1 sm:grid-cols-[220px_1fr] gap-1 sm:gap-4 text-base">
-                            <span className="font-bold text-gray-900">Address line 1:</span>
+                            <span className="font-semibold text-gray-900">Address line 1:</span>
                             <span className="text-gray-700">123 High Street</span>
                         </div>
                         <div className="grid grid-cols-1 sm:grid-cols-[220px_1fr] gap-1 sm:gap-4 text-base">
-                            <span className="font-bold text-gray-900">Town/City:</span>
+                            <span className="font-semibold text-gray-900">Town/City:</span>
                             <span className="text-gray-700">Richmond</span>
                         </div>
                         <div className="grid grid-cols-1 sm:grid-cols-[220px_1fr] gap-1 sm:gap-4 text-base">
-                            <span className="font-bold text-gray-900">Postcode:</span>
+                            <span className="font-semibold text-gray-900">Postcode:</span>
                             <span className="text-gray-700">TW9 IAB</span>
                         </div>
                         <div className="grid grid-cols-1 sm:grid-cols-[220px_1fr] gap-1 sm:gap-4 text-base">
-                            <span className="font-bold text-gray-900">Primary Profession:</span>
+                            <span className="font-semibold text-gray-900">Primary Profession:</span>
                             <span className="text-gray-700">Physiotherapist</span>
                         </div>
                         <div className="grid grid-cols-1 sm:grid-cols-[220px_1fr] gap-1 sm:gap-4 text-base">
-                            <span className="font-bold text-gray-900">Session Types:</span>
+                            <span className="font-semibold text-gray-900">Session Types:</span>
                             <span className="text-gray-700">In clinic</span>
                         </div>
                         <div className="grid grid-cols-1 sm:grid-cols-[220px_1fr] gap-1 sm:gap-4 text-base">
-                            <span className="font-bold text-gray-900">Sport:</span>
+                            <span className="font-semibold text-gray-900">Sport:</span>
                             <span className="text-gray-700">Football</span>
                         </div>
                         <div className="grid grid-cols-1 sm:grid-cols-[220px_1fr] gap-1 sm:gap-4 text-base">
-                            <span className="font-bold text-gray-900">Professional Registration:</span>
+                            <span className="font-semibold text-gray-900">Professional Registration:</span>
                             <span className="text-gray-700">HCPC Registered, CSP Member</span>
                         </div>
                         <div className="grid grid-cols-1 sm:grid-cols-[220px_1fr] gap-1 sm:gap-4 text-base">
-                            <span className="font-bold text-gray-900">Insurance in place:</span>
+                            <span className="font-semibold text-gray-900">Insurance in place:</span>
                             <span className="text-gray-700">Yes</span>
                         </div>
                     </div>
@@ -163,10 +163,10 @@ const ServiceProviderListingDetails = () => {
 
                 {/* Action Buttons */}
                 <div className="flex flex-wrap gap-4">
-                    <button className="px-5 py-2.5 bg-[#0f766e] text-white text-base font-semibold rounded-lg hover:bg-teal-800 transition-colors">
+                    <button className="px-5 py-2.5 bg-[#0f766e] text-white text-sm md:text-base font-semibold rounded-lg hover:bg-teal-800 transition-colors">
                         Book Your Place
                     </button>
-                    <button className="px-5 py-2.5 bg-[#0f766e] text-white text-base font-semibold rounded-lg hover:bg-teal-800 transition-colors">
+                    <button className="px-5 py-2.5 bg-[#0f766e] text-white text-sm md:text-base font-semibold rounded-lg hover:bg-teal-800 transition-colors">
                         Register Interest
                     </button>
                 </div>
