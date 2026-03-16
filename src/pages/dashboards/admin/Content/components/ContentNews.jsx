@@ -1,8 +1,15 @@
-import React, { useState } from 'react';
-import { Search, Edit, Trash2 } from 'lucide-react';
+import React, { useState, useRef } from 'react';
+import { Search, Edit, Trash2, ImagePlus, X } from 'lucide-react';
 
 const ContentNews = () => {
     const [newsSearchQuery, setNewsSearchQuery] = useState('');
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [formData, setFormData] = useState({
+        title: '',
+        description: '',
+        image: null
+    });
+    const imageFileRef = useRef(null);
 
     // Dummy Data exactly matching the image
     const newsData = [
@@ -22,7 +29,7 @@ const ContentNews = () => {
         },
         {
             id: 3,
-            image: 'https://images.unsplash.com/photo-1571019614242-c5c5adee9f50?auto=format&fit=crop&w=800&q=80',
+            image: 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=800&q=80',
             date: 'Wed Dec 10 2025',
             title: 'Improve Your Flexibility in 30 Days',
             description: "Discover how regular yoga practice can improve your flexibility and reduce stress in just 30 days."
@@ -43,7 +50,7 @@ const ContentNews = () => {
         },
         {
             id: 6,
-            image: 'https://images.unsplash.com/photo-1571019614242-c5c5adee9f50?auto=format&fit=crop&w=800&q=80',
+            image: 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=800&q=80',
             date: 'Wed Dec 10 2025',
             title: 'Improve Your Flexibility in 30 Days',
             description: "Discover how regular yoga practice can improve your flexibility and reduce stress in just 30 days."
@@ -77,7 +84,7 @@ const ContentNews = () => {
             </div>
 
             {/* News Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-6">
                 {filteredNews.map((news) => (
                     // Added p-4 here to give padding around the entire card content, including the image
                     <div key={news.id} className="bg-white rounded-xl shadow-sm border border-gray-100 p-4 flex flex-col hover:shadow-md transition-shadow">
