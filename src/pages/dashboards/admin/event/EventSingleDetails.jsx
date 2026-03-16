@@ -96,7 +96,7 @@ const EventSingleDetails = () => {
     const eventData = useMemo(() => eventDataList.find(item => item.id === parseInt(id)) || eventDataList[0], [id]);
 
     return (
-        <div className="flex-1 overflow-auto bg-gray-50 min-h-screen relative font-sans pb-12">
+        <div className="flex-1 overflow-auto bg-[#F8F9FA]  relative font-sans pb-12">
             
             {/* 1. Pending Status Top Banner */}
             {eventData.status === 'Pending' && (
@@ -118,7 +118,7 @@ const EventSingleDetails = () => {
                     {/* Back Button floating on image */}
                     <button
                         onClick={() => navigate(-1)}
-                        className="absolute top-4 left-4 flex items-center gap-2 bg-white/90 backdrop-blur-sm px-4 py-2 rounded-lg text-gray-700 hover:bg-white hover:text-[#0f766e] transition-colors shadow-sm"
+                        className="absolute top-4 left-4 flex items-center gap-2 bg-white/80 backdrop-blur-md px-4 py-2 rounded-lg text-black   transition-colors shadow-sm"
                     >
                         <ArrowLeft className="w-4 h-4" />
                         <span className="text-sm font-medium">Back</span>
@@ -130,8 +130,8 @@ const EventSingleDetails = () => {
                     <div className="bg-red-50/80 border border-red-100 rounded-xl p-5 flex gap-3">
                         <AlertCircle className="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" />
                         <div>
-                            <h3 className="text-base font-semibold text-red-600 mb-1">This event was not approved</h3>
-                            <p className="text-sm leading-relaxed text-red-500">
+                            <h3 className="text-xl font-semibold text-red-600 mb-1">This event was not approved</h3>
+                            <p className="text-base leading-relaxed text-red-500">
                                 Your event could not be published because it does not meet our community or safety guidelines.<br/>
                                 Please review the feedback below, make the required changes, and submit again.
                             </p>
@@ -147,10 +147,10 @@ const EventSingleDetails = () => {
                         
                         {/* Title & Stats */}
                         <div>
-                            <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-3">
+                            <h1 className="text-2xl md:text-3xl font-semibold text-gray-900 mb-3">
                                 {eventData.title}
                             </h1>
-                            <div className="flex items-center gap-4 text-sm font-medium text-gray-500 mb-6">
+                            <div className="flex items-center gap-4 text-base font-medium text-gray-500 mb-6">
                                 <span className="flex items-center gap-1.5"><Eye className="w-4 h-4" /> {eventData.engagement.views}</span>
                                 <span className="flex items-center gap-1.5"><TrendingUp className="w-4 h-4" /> {eventData.engagement.trend}</span>
                                 <span className="flex items-center gap-1.5"><MessageSquare className="w-4 h-4" /> {eventData.engagement.messages}</span>
@@ -171,7 +171,7 @@ const EventSingleDetails = () => {
                         </div>
 
                         {/* Description */}
-                        <div>
+                        <div className='max-w-4xl'>
                             <p className="text-base text-gray-700 leading-relaxed whitespace-pre-line">
                                 {eventData.description}
                             </p>
@@ -216,14 +216,14 @@ const EventSingleDetails = () => {
                         </div>
 
                         {/* Contact Organizer Form */}
-                        <div className="bg-[#f0f4f4] p-6 rounded-xl border border-gray-100 max-w-lg mt-6">
-                            <h2 className="text-base font-bold text-gray-900 mb-4">Contact Organizer</h2>
-                            <p className="text-base text-gray-700 mb-3 font-medium">Ask the organiser a question</p>
+                        <div className="bg-[#E7F1F1] p-4 rounded-lg border border-gray-100 max-w-lg mt-6">
+                            <h2 className="text-xl font-bold text-gray-900 mb-4">Contact Organizer</h2>
+                            <p className="text-lg text-gray-700 mb-3 font-medium">Ask the organiser a question</p>
                             <textarea 
-                                className="w-full h-32 bg-[#cde4e2]/50 border-none rounded-lg p-3 text-base text-gray-700 placeholder-gray-500 focus:ring-2 focus:ring-[#0f766e]/20 outline-none resize-none mb-4"
+                                className="w-full h-32 bg-[#B5D5D2]/50 border-none rounded-lg p-3 text-base text-gray-700 placeholder-gray-500 focus:ring-2 focus:ring-[#0f766e]/20 outline-none resize-none mb-4"
                                 placeholder="Write your message"
                             ></textarea>
-                            <button className="px-6 py-2.5 bg-[#0f766e] text-white text-base font-medium rounded-lg hover:bg-teal-800 transition-colors shadow-sm">
+                            <button className="px-6 py-2.5 bg-[#0F766E] text-white text-base font-medium rounded-lg hover:bg-teal-800 transition-colors shadow-sm">
                                 Contact organiser
                             </button>
                         </div>
@@ -231,12 +231,12 @@ const EventSingleDetails = () => {
                     </div>
 
                     {/* RIGHT COLUMN: Venue Card */}
-                    <div className="lg:col-span-1">
-                        <div className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm sticky top-6">
+                    <div className="lg:col-span-1 lg:mt-4">
+                        <div className="bg-white rounded-xl border border-[#91C0BC] p-6 shadow-sm sticky top-6">
                             
                             {/* Venue Details */}
                             <div className="mb-4 text-base">
-                                <span className="font-bold text-gray-900 mr-2">Venue:</span>
+                                <span className="font-semibold text-gray-900 mr-2">Venue:</span>
                                 <span className="text-gray-600">{eventData.venue.name}</span>
                             </div>
 
@@ -248,7 +248,7 @@ const EventSingleDetails = () => {
                             {/* Dummy Map Image */}
                             <div className="rounded-lg overflow-hidden border border-gray-100 mb-6">
                                 <img 
-                                    src="https://placehold.co/600x300/e2e8f0/64748b?text=Map+View" 
+                                    src="https://i.ibb.co.com/3mNs5TCZ/1579279c93526af38385f21a2041e29aeb2f2ae5.png" 
                                     alt="Venue Map" 
                                     className="w-full h-40 object-cover"
                                 />
@@ -256,7 +256,7 @@ const EventSingleDetails = () => {
 
                             {/* Contact Information */}
                             <div className="mb-6">
-                                <h3 className="text-base font-bold text-gray-900 mb-3">Contact Information</h3>
+                                <h3 className="text-lg font-semibold text-gray-900 mb-3">Contact Information</h3>
                                 <div className="space-y-3">
                                     <div className="flex items-center gap-3 text-base text-gray-600">
                                         <Phone className="w-5 h-5 text-gray-400" />

@@ -21,6 +21,7 @@ import {
     LandPlot,
     Newspaper,
     List,
+    TrendingUp,
 } from 'lucide-react';
 import { useAuth, ROLES } from '../../context/AuthContext';
 
@@ -31,7 +32,8 @@ const getMenuItems = (role, basePath) => {
         { id: 'users', label: 'Users', icon: <Users className="w-5 h-5" />, path: `${basePath}/users` },
         { id: 'listings', label: 'Listings ', icon: <List className="w-5 h-5" />, path: `${basePath}/listings` },
         { id: 'event', label: 'Event', icon: <Calendar className="w-5 h-5" />, path: `${basePath}/event` },
- 
+        { id: 'brand', label: 'Brand', icon: <Package className="w-5 h-5" />, path: `${basePath}/brand` },
+        { id: 'demand', label: 'Demand', icon: <TrendingUp className="w-5 h-5" />, path: `${basePath}/demand` },
 
         { id: 'settings', label: 'Settings', icon: <Settings className="w-5 h-5" />, path: `${basePath}/settings` },
     ];

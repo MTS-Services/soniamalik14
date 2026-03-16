@@ -76,6 +76,8 @@ import ListingsManagement from '../pages/dashboards/admin/ListingsManagement/Lis
 import SportProviderListingDetails from '../pages/dashboards/admin/ListingsManagement/SportProviderListingDetails.jsx';
 import ServiceProviderListingDetails from '../pages/dashboards/admin/ListingsManagement/ServiceProviderListingDetails.jsx';
 import EventSingleDetails from '../pages/dashboards/admin/event/EventSingleDetails.jsx';
+import Brand from '../pages/dashboards/admin/Brand/Brand.jsx';
+import Demand from '../pages/dashboards/admin/Demand/Demand.jsx';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -140,6 +142,8 @@ const router = createBrowserRouter(
         <Route path="listings" element={<ListingsManagement />} />
         <Route path="listings/sport-provider/:id" element={<SportProviderListingDetails />} />
         <Route path="listings/service-provider/:id" element={<ServiceProviderListingDetails />} />
+        <Route path="brand" element={<Brand />} />
+        <Route path="demand" element={<Demand />} />
         <Route path="settings" element={<AdminSettings />} />
       </Route>
 
