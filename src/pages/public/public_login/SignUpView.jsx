@@ -1,341 +1,198 @@
-﻿
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { FaArrowLeft } from 'react-icons/fa';
 import { Eye, EyeOff } from 'lucide-react';
-import { POST } from '../../../services/httpMethods';
-import { ENDPOINT } from '../../../services/httpEndpoint';
-import { toast } from 'react-toastify';
+
+// Declare components outside to fix "Cannot create components during render" error
+const InputField = ({ label, name, placeholder, type = "text", optional = false, value, onChange }) => (
+  <div className="w-full">
+    <label className="block text-[#1A1D1F] text-sm md:text-base font-medium mb-2">
+      {label} {optional && <span className="text-gray-400 font-normal">(optional)</span>}
+    </label>
+    <input
+      type={type}
+      name={name}
+      placeholder={placeholder}
+      value={value}
+      onChange={onChange}
+      className="w-full px-4 py-3 bg-[#C2DBD9]/60 rounded-lg outline-none focus:ring-1 focus:ring-[#00796B] transition-all placeholder-gray-500 text-[#1A1D1F]"
+    />
+  </div>
+);
 
 const RegisterView = () => {
   const navigate = useNavigate();
-  const [role, setRole] = useState('User');
+  const [role, setRole] = useState('Player');
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
   const [formData, setFormData] = useState({
-    // Shared fields
     email: '',
     phoneNumber: '',
     password: '',
     confirmPassword: '',
-    interestedIn: [],
-    // User specific
-    username: '',
+    postcode: '',
+    displayName: '',
+    firstName: '',
+    lastName: '',
+    interestedSports: [],
+    orgName: '',
+    aboutOrg: '',
+    sessionType: 'Women Only',
+    sportsOffered: [],
     fullName: '',
-    abilityLevel: 'Beginner',
-    location: '',
-    // Club Owner specific
-    clubName: '',
-    founded: '',
-    about: '',
-    clubLocation: '',
-    totalMembers: '',
-    activePlayers: '',
-    coaches: '',
-    teams: '',
-    groundName: '',
-    groundLocation: '',
-    ownerFullName: '',
-    // Service Provider specific
-    businessName: '',
-    clinicAddress: '',
-    serviceArea: '',
-    workingDays: '',
-    workingHours: '',
+    serviceType: [],
+    practitionerName: '',
+    aboutService: '',
   });
 
-  const [errors, setErrors] = useState({});
-  const [loading, setLoading] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-
-  const sports = ['Football', 'Squash', 'Rugby', 'Netball', 'Cricket', 'Padel', 'Tennis'];
-
-  const handleRoleChange = (e) => {
-    setRole(e.target.value);
-    setErrors({});
-  };
+  const sportsOptions = ['Football', 'Squash', 'Rugby', 'Netball', 'Cricket', 'Padel', 'Tennis', 'Badminton', 'Golf', 'Running', 'Other'];
+  const serviceOptions = ['Physiotherapy', 'Nutrition', 'Personal Training', 'Sports Massage', 'Mental Health & Wellbeing', 'Coaching', 'Other'];
 
   const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    if (type === 'checkbox') {
-      setFormData(prev => ({
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleCheckboxChange = (listName, value) => {
+    setFormData(prev => {
+      const list = prev[listName];
+      return {
         ...prev,
-        interestedIn: checked
-          ? [...prev.interestedIn, value]
-          : prev.interestedIn.filter(sport => sport !== value)
-      }));
-    } else {
-      setFormData(prev => ({ ...prev, [name]: value }));
-    }
-    if (errors[name]) setErrors(prev => ({ ...prev, [name]: '' }));
-  };
-
-  const renderUserInput = (label, name, placeholder, type = "text") => {
-    const hasError = Boolean(errors[name]);
-    return (
-      <div className="flex-1">
-        <label className="block text-[#282828] font-medium mb-2 text-base md:text-base">{label}</label>
-        <input
-          aria-invalid={hasError}
-          type={type}
-          name={name}
-          placeholder={placeholder}
-          value={formData[name]}
-          onChange={handleChange}
-          className={`w-full px-4 py-3 bg-loginInput rounded-lg outline-none focus:ring-2 focus:ring-btn-primary transition-all text-base text-gray-700 placeholder-[#747474] ${hasError ? 'border-2 border-red-500' : ''}`}
-        />
-        {hasError && <p className="text-red-600 text-sm mt-1">{errors[name]}</p>}
-      </div>
-    );
-  };
-
-  const validate = () => {
-    const err = {};
-    if (role === 'User') {
-      if (!formData.username || !formData.username.trim()) err.username = 'Username is required';
-      if (!formData.fullName || !formData.fullName.trim()) err.fullName = 'Full name is required';
-      if (!formData.email || !formData.email.trim()) err.email = 'Email is required';
-      else if (!/\S+@\S+\.\S+/.test(formData.email)) err.email = 'Email is invalid';
-      if (!formData.password) err.password = 'Password is required';
-    }
-    if (role === 'Club Owner') {
-      if (!formData.clubName || !formData.clubName.trim()) err.clubName = 'Club name is required';
-      if (!formData.ownerFullName || !formData.ownerFullName.trim()) err.ownerFullName = 'Owner full name is required';
-      if (!formData.email || !formData.email.trim()) err.email = 'Email is required';
-      else if (!/\S+@\S+\.\S+/.test(formData.email)) err.email = 'Email is invalid';
-      if (!formData.password) err.password = 'Password is required';
-    }
-    setErrors(err);
-    return Object.keys(err).length === 0;
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    console.debug('[RegisterView] handleSubmit clicked', { role, formData });
-    if (!validate()) {
-      toast.error('Please fix the highlighted fields');
-      console.debug('[RegisterView] validation failed', errors);
-      return;
-    }
-    setLoading(true);
-    try {
-      let payload = {};
-      if (role === 'User') {
-        payload = {
-          email: formData.email,
-          password: formData.password,
-          name: formData.fullName || formData.username,
-          role: 'USER',
-        };
-      } else if (role === 'Club Owner') {
-        // map UI role label to backend role value: send as COACH for club owners
-        payload = {
-          email: formData.email,
-          password: formData.password,
-          name: formData.ownerFullName,
-          role: 'COACH',
-          clubName: formData.clubName,
-        };
-      } else {
-        payload = {
-          email: formData.email,
-          password: formData.password,
-          name: formData.fullName || formData.username || formData.ownerFullName || formData.businessName,
-          role: 'USER',
-        };
-      }
-
-      const res = await POST(ENDPOINT.AUTH.REGISTER, payload);
-      const body = res?.data || res;
-      toast.success(body?.message || 'Registered successfully. Check email for code.');
-      try { localStorage.setItem('register_email', payload.email); } catch (e) { }
-      navigate('/verify-email');
-    } catch (err) {
-      const resp = err?.response?.data;
-      const message = resp?.message || err.message || 'Registration failed';
-      // eslint-disable-next-line no-console
-      console.error('[RegisterView] register error', err);
-      toast.error(message);
-      if (Array.isArray(resp?.errors)) {
-        const serverErrors = {};
-        resp.errors.forEach((e) => { if (e.param) serverErrors[e.param] = e.msg || e.message; });
-        setErrors((p) => ({ ...p, ...serverErrors }));
-      }
-    } finally {
-      setLoading(false);
-    }
+        [listName]: list.includes(value) ? list.filter(i => i !== value) : [...list, value]
+      };
+    });
   };
 
   return (
-    <div className="min-h-screen flex">
-      {/* Left Side Form */}
-      <div className="w-full  flex items-center justify-center px-6 py-12 bg-secondary overflow-y-auto">
-        <div className="w-full max-w-md">
-          <div className="mb-8">
-            <Link to="/" className="inline-flex items-center text-base gap-1 text-btn-primary font-medium mb-4">
-              <FaArrowLeft /> Back to Home
-            </Link>
-            <h1 className="text-3xl font-bold text-[#282828]">Create Account</h1>
-            <p className="text-[#363636] text-base">Join the ESSA community today</p>
+    <div className="min-h-screen bg-[#E7F1F1] flex items-center justify-center p-4 sm:p-8">
+      <div className="w-full max-w-xl bg-transparent">
+        <div className="mb-8">
+          <h1 className="text-4xl font-bold text-[#000] mb-2">Create Account</h1>
+          <p className="text-[#00796B] text-lg">
+            {role === 'Player' ? 'Join the ESSA community' : role === 'Sport provider' ? 'Join ESSA and start listing your sessions.' : 'Join ESSA and help more women stay active.'}
+          </p>
+        </div>
+
+        <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
+          {/* I'm joining as */}
+          <div>
+            <label className="block text-[#1A1D1F] font-medium mb-2">I'm joining as</label>
+            <select
+              value={role}
+              onChange={(e) => setRole(e.target.value)}
+              className="w-full px-4 py-3 bg-[#C2DBD9] rounded-lg outline-none appearance-none cursor-pointer font-medium"
+              style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23000'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E")`, backgroundRepeat: 'no-repeat', backgroundPosition: 'right 1rem center', backgroundSize: '1.2em' }}
+            >
+              <option value="Player">Player</option>
+              <option value="Sport provider">Sport provider</option>
+              <option value="Service Provider">Service Provider</option>
+            </select>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-5">
-            {/* Role Selector */}
-            <div>
-              <label className="block text-[#282828] font-medium mb-2">I am a</label>
-              <select
-                value={role}
-                onChange={handleRoleChange}
-                className="w-full px-4 py-3 bg-loginInput rounded-lg outline-none focus:ring-2 focus:ring-btn-primary appearance-none cursor-pointer text-base"
-                style={{
-                  backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23363636'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E")`,
-                  backgroundRepeat: 'no-repeat',
-                  backgroundPosition: 'right 0.75rem center',
-                  backgroundSize: '1.25em 1.25em',
-                }}
-              >
-                <option value="User">User</option>
-                <option value="Club Owner">Club Owner</option>
-                <option value="Service Provider">Service Provider</option>
-              </select>
-            </div>
-
-            {/* CONDITIONAL FIELDS BASED ON ROLE */}
-            {role === 'User' && (
-              <>
-                <div className="grid grid-cols-2 gap-4">
-                  {renderUserInput("Username", "username", "john doe")}
-                  {renderUserInput("Full Name", "fullName", "Player")}
-                </div>
-                {renderUserInput("Email", "email", "enter your email", "email")}
-                {renderUserInput("Phone Number", "phoneNumber", "enter your phone number", "tel")}
-                <div>
-                  <label className="block text-[#282828] font-medium mb-2">Ability Level</label>
-                  <select name="abilityLevel" value={formData.abilityLevel} onChange={handleChange} className="w-full px-4 py-3 bg-loginInput rounded-lg outline-none focus:ring-2 focus:ring-btn-primary appearance-none cursor-pointer text-base"
-                    style={{
-                      backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23363636'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E")`,
-                      backgroundRepeat: 'no-repeat',
-                      backgroundPosition: 'right 0.75rem center',
-                      backgroundSize: '1.25em 1.25em',
-                    }}>
-                    <option>Beginner</option>
-                    <option>Intermediate</option>
-                    <option>Advanced</option>
-                  </select>
-                </div>
-                {renderUserInput("Location/Postcode", "location", "e.g. London, SW1")}
-                {/* Sports Selection for User */}
-                <div>
-                  <label className="block text-[#282828] font-medium mb-2">Interested In</label>
-                  <div className="grid grid-cols-2 gap-2">
-                    {sports.map((sport) => (
-                      <label key={sport} className="flex items-center gap-2 cursor-pointer">
-                        <input type="checkbox" value={sport} checked={formData.interestedIn.includes(sport)} onChange={handleChange} className="accent-btn-primary" />
-                        <span className="text-base">{sport}</span>
-                      </label>
-                    ))}
-                  </div>
-                </div>
-              </>
-            )}
-
-            {role === 'Club Owner' && (
-              <>
-                <div className="grid grid-cols-2 gap-4">
-                  {renderUserInput("Club Name", "clubName", "Woking Warriors FC")}
-                  {renderUserInput("Founded", "founded", "2018")}
-                </div>
-                <div>
-                  <label className="block text-[#282828] font-medium mb-2">About</label>
-                  <textarea name="about" placeholder="Write a about of this club" className="w-full px-4 py-3 bg-loginInput rounded-lg outline-none h-32 text-base" onChange={handleChange} />
-                  {errors.about && <p className="text-red-600 text-sm mt-1">{errors.about}</p>}
-                </div>
-                {renderUserInput("Location", "clubLocation", "2118 Thornridge Cir. Syracuse, Connecticut 35624")}
-                <div className="grid grid-cols-2 gap-4">
-                  {renderUserInput("Total Members", "totalMembers", "128")}
-                  {renderUserInput("Active Players:", "activePlayers", "96")}
-                </div>
-                <div className="grid grid-cols-2 gap-4">
-                  {renderUserInput("Coaches", "coaches", "8")}
-                  {renderUserInput("Teams", "teams", "6")}
-                </div>
-                {/* Club Owner Shared Game Selector */}
-                <div>
-                  <label className="block text-[#282828] font-medium mb-2">Club Game</label>
-                  <div className="grid grid-cols-2 gap-2">
-                    {sports.map((sport) => (
-                      <label key={sport} className="flex items-center gap-2 cursor-pointer">
-                        <input type="checkbox" value={sport} checked={formData.interestedIn.includes(sport)} onChange={handleChange} className="accent-btn-primary" />
-                        <span className="text-base">{sport}</span>
-                      </label>
-                    ))}
-                  </div>
-                </div>
-                {renderUserInput("Ground Name", "groundName", "Royal Sports Arena")}
-                {renderUserInput("Ground Location", "groundLocation", "45 Kingsway Road, London, UK")}
-                <div className="pt-4 border-t border-gray-300"><h3 className="font-bold mb-4">Club Owner Details</h3></div>
-              </>
-            )}
-
-            {role === 'Service Provider' && (
-              <>
-                {renderUserInput("Business Name", "businessName", "Woking Warriors FC")}
-                <div>
-                  <label className="block text-[#282828] font-medium mb-2">About</label>
-                  <textarea name="about" placeholder="Write a about of this club" className="w-full px-4 py-3 bg-loginInput rounded-lg outline-none h-32 text-base" onChange={handleChange} />
-                  {errors.about && <p className="text-red-600 text-sm mt-1">{errors.about}</p>}
-                </div>
-                {renderUserInput("Clinic Address", "clinicAddress", "2118 Thornridge Cir. Syracuse, Connecticut 35624")}
-                {renderUserInput("Service Area", "serviceArea", "2118 Thornridge Cir. Syracuse, Connecticut 35624")}
-                <div className="grid grid-cols-2 gap-4">
-                  {renderUserInput("Working Days", "workingDays", "Monday - Saturday")}
-                  {renderUserInput("Working Hours", "workingHours", "9:00 am - 8:00Pm")}
-                </div>
-                <div className="pt-4 border-t border-gray-300"><h3 className="font-bold mb-4">Service Owner Details</h3></div>
-              </>
-            )}
-
-            {/* Shared Owner Fields (for Club & Service) */}
-            {(role === 'Club Owner' || role === 'Service Provider') && (
-              <>
-                {renderUserInput("Full Name", "ownerFullName", "Enter Your Full Name")}
-                {renderUserInput("Email", "email", "Write your email", "email")}
-                {renderUserInput("Phone Number", "phoneNumber", "enter your phone number", "tel")}
-              </>
-            )}
-
-            {/* Shared Password Fields */}
-            <div className="space-y-4">
+          {/* Player Form */}
+          {role === 'Player' && (
+            <>
+              <InputField label="Display Name" name="displayName" placeholder="john doe" optional value={formData.displayName} onChange={handleChange} />
+              <div className="grid grid-cols-2 gap-4">
+                <InputField label="First Name" name="firstName" placeholder="Enter name here" value={formData.firstName} onChange={handleChange} />
+                <InputField label="Last Name" name="lastName" placeholder="Enter name here" value={formData.lastName} onChange={handleChange} />
+              </div>
+              <InputField label="Email" name="email" placeholder="enter your email" type="email" value={formData.email} onChange={handleChange} />
+              <InputField label="Phone Number" name="phoneNumber" placeholder="enter your phone number" optional value={formData.phoneNumber} onChange={handleChange} />
+              <InputField label="Postcode" name="postcode" placeholder="SW20" value={formData.postcode} onChange={handleChange} />
+              
               <div>
-                <label className="block text-[#282828] font-medium mb-2">Password</label>
-                <div className="relative">
-                  <input type={showPassword ? "text" : "password"} name="password" placeholder="... ... ..." value={formData.password} className="w-full px-4 py-3 bg-loginInput rounded-lg outline-none text-base" onChange={handleChange} />
-                  <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500">
-                    {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
-                  </button>
+                <label className="block text-[#1A1D1F] font-medium mb-3">Which sports are you interested in?</label>
+                <div className="flex flex-wrap gap-2">
+                  {sportsOptions.map(sport => (
+                    <button key={sport} type="button" onClick={() => handleCheckboxChange('interestedSports', sport)}
+                      className={`px-4 py-1.5 rounded-full border text-sm transition-all ${formData.interestedSports.includes(sport) ? 'bg-[#00796B] text-white border-[#00796B]' : 'bg-[#C2DBD9]/60 text-[#00796B] border-[#00796B]/20'}`}>{sport}</button>
+                  ))}
                 </div>
               </div>
+            </>
+          )}
+
+          {/* Sport Provider Form */}
+          {role === 'Sport provider' && (
+            <>
+              <InputField label="Organization or Coach Name" name="orgName" placeholder="Woking Warriors FC" value={formData.orgName} onChange={handleChange} />
               <div>
-                <label className="block text-[#282828] font-medium mb-2">Confirm Password</label>
-                <div className="relative">
-                  <input type={showConfirmPassword ? "text" : "password"} name="confirmPassword" placeholder="... ... ... ..." value={formData.confirmPassword} className="w-full px-4 py-3 bg-loginInput rounded-lg outline-none text-base" onChange={handleChange} />
-                  <button type="button" onClick={() => setShowConfirmPassword(!showConfirmPassword)} className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500">
-                    {showConfirmPassword ? <EyeOff size={18} /> : <Eye size={18} />}
-                  </button>
+                <label className="block text-[#1A1D1F] font-medium mb-2">About your organisation</label>
+                <textarea name="aboutOrg" placeholder="A short overview of what you offer and who your sessions are suitable for." className="w-full px-4 py-3 bg-[#C2DBD9]/60 rounded-lg outline-none h-28 text-[#1A1D1F]" value={formData.aboutOrg} onChange={handleChange} />
+              </div>
+              <div>
+                <label className="block text-[#1A1D1F] font-medium mb-2">Session type</label>
+                <select name="sessionType" value={formData.sessionType} onChange={handleChange} className="w-full px-4 py-3 bg-[#C2DBD9] rounded-lg outline-none appearance-none cursor-pointer">
+                  <option value="Women Only">Women Only</option>
+                  <option value="Mixed">Mixed</option>
+                </select>
+              </div>
+              <InputField label="Postcode" name="postcode" placeholder="SW1" value={formData.postcode} onChange={handleChange} />
+              <div>
+                <label className="block text-[#1A1D1F] font-medium mb-3">Sports offered</label>
+                <div className="flex flex-wrap gap-2">
+                  {sportsOptions.map(sport => (
+                    <button key={sport} type="button" onClick={() => handleCheckboxChange('sportsOffered', sport)}
+                      className={`px-4 py-1.5 rounded-full border text-sm ${formData.sportsOffered.includes(sport) ? 'bg-[#00796B] text-white' : 'bg-[#C2DBD9]/60 text-[#00796B]'}`}>{sport}</button>
+                  ))}
                 </div>
               </div>
-            </div>
+              <div className="pt-4"><h3 className="font-bold text-xl text-[#000]">Primary Contact</h3></div>
+              <InputField label="Full Name" name="fullName" placeholder="Enter Your Full Name" value={formData.fullName} onChange={handleChange} />
+              <InputField label="Email" name="email" placeholder="Write your email" value={formData.email} onChange={handleChange} />
+              <InputField label="Phone Number" name="phoneNumber" placeholder="enter your phone number" value={formData.phoneNumber} onChange={handleChange} />
+            </>
+          )}
 
-            <button type="submit" className="w-full bg-btn-primary text-white py-3 rounded-lg font-bold hover:bg-[#0d655d] transition-colors">
-              Create Account
+          {/* Service Provider Form */}
+          {role === 'Service Provider' && (
+            <>
+              <div>
+                <label className="block text-[#1A1D1F] font-medium mb-3">Service Type</label>
+                <div className="flex flex-wrap gap-2">
+                  {serviceOptions.map(service => (
+                    <button key={service} type="button" onClick={() => handleCheckboxChange('serviceType', service)}
+                      className={`px-4 py-1.5 rounded-full border text-sm ${formData.serviceType.includes(service) ? 'bg-[#00796B] text-white' : 'bg-[#C2DBD9]/60 text-[#00796B]'}`}>{service}</button>
+                  ))}
+                </div>
+              </div>
+              <InputField label="Organisation or Practitioner Name" name="practitionerName" placeholder="Woking Warriors FC" value={formData.practitionerName} onChange={handleChange} />
+              <div>
+                <label className="block text-[#1A1D1F] font-medium mb-2">About</label>
+                <textarea name="aboutService" placeholder="A short overview of your services and who you support." className="w-full px-4 py-3 bg-[#C2DBD9]/60 rounded-lg outline-none h-28 text-[#1A1D1F]" value={formData.aboutService} onChange={handleChange} />
+              </div>
+              <InputField label="Postcode" name="postcode" placeholder="SW1" value={formData.postcode} onChange={handleChange} />
+              <div className="pt-4"><h3 className="font-bold text-xl text-[#000]">Primary Contact</h3></div>
+              <InputField label="Full Name" name="fullName" placeholder="Enter Your Full Name" value={formData.fullName} onChange={handleChange} />
+              <InputField label="Email" name="email" placeholder="Write your email" value={formData.email} onChange={handleChange} />
+              <InputField label="Phone Number" name="phoneNumber" placeholder="enter your phone number" value={formData.phoneNumber} onChange={handleChange} />
+            </>
+          )}
+
+          {/* Password Section */}
+          <div className="relative">
+            <InputField label="Password" name="password" placeholder="Minimum 8 characters" type={showPassword ? "text" : "password"} value={formData.password} onChange={handleChange} />
+            <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-3 top-[42px] text-gray-500">
+              {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
             </button>
-            <p className="text-center text-base">
-              Already have an account? <Link to="/signin" className="text-btn-primary font-bold hover:underline">Log in</Link>
-            </p>
-          </form>
-        </div>
-      </div>
+          </div>
+          <div className="relative">
+            <InputField label="Confirm Password" name="confirmPassword" placeholder="**** **** ****" type={showConfirmPassword ? "text" : "password"} value={formData.confirmPassword} onChange={handleChange} />
+            <button type="button" onClick={() => setShowConfirmPassword(!showConfirmPassword)} className="absolute right-3 top-[42px] text-gray-500">
+              {showConfirmPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+            </button>
+          </div>
 
-      
+          <button type="submit" className="w-full bg-[#00796B] text-white py-4 rounded-xl font-bold text-lg hover:shadow-lg transition-all active:scale-[0.98]">
+            Create Account
+          </button>
+
+          <p className="text-center text-gray-600">
+            Already have an account? <Link to="/signin" className="text-black font-semibold underline">Log in</Link>
+          </p>
+        </form>
+      </div>
     </div>
   );
 };
