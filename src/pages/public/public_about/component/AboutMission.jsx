@@ -41,7 +41,7 @@ const AboutMission = () => {
           </div>
 
           {/* Right: Image Collage (Below text on Tab/Mobile) */}
-          <div className="order-2 lg:order-none w-full max-w-xl mx-auto lg:max-w-none">
+          <div className="hidden lg:block w-full max-w-xl mx-auto lg:max-w-none">
             <div className="grid grid-cols-2 gap-3 md:gap-5 lg:gap-6">
 
               {/* Left Column */}
