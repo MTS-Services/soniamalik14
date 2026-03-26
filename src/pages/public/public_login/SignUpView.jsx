@@ -1,5 +1,5 @@
 ﻿import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Eye, EyeOff } from 'lucide-react';
 
 // Declare components outside to fix "Cannot create components during render" error
@@ -20,7 +20,7 @@ const InputField = ({ label, name, placeholder, type = "text", optional = false,
 );
 
 const RegisterView = () => {
-  const navigate = useNavigate();
+
   const [role, setRole] = useState('Player');
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -67,7 +67,7 @@ const RegisterView = () => {
     <div className="min-h-screen bg-[#E7F1F1] flex items-center justify-center p-4 sm:p-8">
       <div className="w-full max-w-xl bg-transparent">
         <div className="mb-8">
-          <h1 className="text-4xl font-bold text-[#000] mb-2">Create Account</h1>
+          <h1 className="text-4xl font-bold text-black mb-2">Create Account</h1>
           <p className="text-[#00796B] text-lg">
             {role === 'Player' ? 'Join the ESSA community' : role === 'Sport provider' ? 'Join ESSA and start listing your sessions.' : 'Join ESSA and help more women stay active.'}
           </p>
@@ -100,7 +100,7 @@ const RegisterView = () => {
               <InputField label="Email" name="email" placeholder="enter your email" type="email" value={formData.email} onChange={handleChange} />
               <InputField label="Phone Number" name="phoneNumber" placeholder="enter your phone number" optional value={formData.phoneNumber} onChange={handleChange} />
               <InputField label="Postcode" name="postcode" placeholder="SW20" value={formData.postcode} onChange={handleChange} />
-              
+
               <div>
                 <label className="block text-[#1A1D1F] font-medium mb-3">Which sports are you interested in?</label>
                 <div className="flex flex-wrap gap-2">
@@ -138,7 +138,7 @@ const RegisterView = () => {
                   ))}
                 </div>
               </div>
-              <div className="pt-4"><h3 className="font-bold text-xl text-[#000]">Primary Contact</h3></div>
+              <div className="pt-4"><h3 className="font-bold text-xl text-black">Primary Contact</h3></div>
               <InputField label="Full Name" name="fullName" placeholder="Enter Your Full Name" value={formData.fullName} onChange={handleChange} />
               <InputField label="Email" name="email" placeholder="Write your email" value={formData.email} onChange={handleChange} />
               <InputField label="Phone Number" name="phoneNumber" placeholder="enter your phone number" value={formData.phoneNumber} onChange={handleChange} />
@@ -173,13 +173,13 @@ const RegisterView = () => {
           {/* Password Section */}
           <div className="relative">
             <InputField label="Password" name="password" placeholder="Minimum 8 characters" type={showPassword ? "text" : "password"} value={formData.password} onChange={handleChange} />
-            <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-3 top-[42px] text-gray-500">
+            <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-3 top-10.5 text-gray-500">
               {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
             </button>
           </div>
           <div className="relative">
             <InputField label="Confirm Password" name="confirmPassword" placeholder="**** **** ****" type={showConfirmPassword ? "text" : "password"} value={formData.confirmPassword} onChange={handleChange} />
-            <button type="button" onClick={() => setShowConfirmPassword(!showConfirmPassword)} className="absolute right-3 top-[42px] text-gray-500">
+            <button type="button" onClick={() => setShowConfirmPassword(!showConfirmPassword)} className="absolute right-3 top-10.5 text-gray-500">
               {showConfirmPassword ? <EyeOff size={18} /> : <Eye size={18} />}
             </button>
           </div>
