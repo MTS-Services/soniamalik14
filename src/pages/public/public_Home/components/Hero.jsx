@@ -1,26 +1,34 @@
-﻿import Container from '../../../../components/layout/Container';
+﻿
+import Container from '../../../../components/layout/Container';
 import Button from '../../../../components/ui/Button';
 import HeroTitle from '../../../../components/ui/HeroTitle';
 
 const Hero = () => {
   return (
     <div
-      style={{ backgroundImage: "url('/herobg.png')" }}
-      className="relative flex  w-auto h-80 md:h-150 lg:h-200 items-center justify-center bg-cover bg-top"
+      className="relative flex w-full h-[100vh] md:h-150 lg:h-screen items-end md:items-center justify-center bg-cover bg-center 
+                 bg-[url('/mobilehero.jpg')] md:bg-[url('/hero.jpg')]"
     >
-      {/* overlay */}
-      <div className="absolute inset-0 z-0 bg-black opacity-10"></div>
-      <Container className="relative z-10 py-10 lg:py-0">
-        <div className='space-y-3.5 md:space-y-5 flex flex-col justify-center mt-28 md:mt-32 lg:mt-80 xl:mt-90 items-center text-center px-4'>
-          <HeroTitle className='whitespace-nowrap md:whitespace-normal'>Women. Sport. Community.</HeroTitle>
-          <p className='herosubtitle'>A platform built for women in sport — whatever level you're starting at.</p>
-          {/* action btns */}
-          <div className='flex flex-col md:flex-row items-center justify-center gap-1.5 lg:gap-4 w-full'>
-            {/* <Button className='w-5/6 max-w-sm rounded-md whitespace-nowrap md:w-auto'>Explore Sport s Near You</Button> */}
-            <Button className='rounded-md whitespace-nowrap md:w-auto'>Join ESSA Hub</Button>
-            {/* <Button className='w-2/3 max-w-xs rounded-md whitespace-nowrap text-btn font-medium md:w-auto' variant='outline'>Join the ESSA Hub</Button> */}
+      <div className="absolute inset-0 z-0 bg-black/10 md:bg-black/10"></div>
+      
+      <Container className="relative z-10 pb-16 md:pb-0 lg:py-0">
+        <div className='space-y-4 md:space-y-5 flex flex-col justify-center items-center text-center px-4'>
+          
+          <HeroTitle className='text-3xl md:text-5xl lg:text-7xl leading-tight'>
+            Women. Sport. <br className="md:hidden" /> Community.
+          </HeroTitle>
+
+          <p className='herosubtitle max-w-[280px] md:max-w-none text-white/90 text-sm md:text-lg'>
+            A platform built for women in sport — whatever level you're starting at.
+          </p>
+          
+          {/* Action Button */}
+          <div className='pt-4 w-full flex justify-center'>
+            <Button className='rounded-md whitespace-nowrap px-8 py-3 bg-[#00796B] hover:bg-[#005a50] text-white border-none w-full md:w-auto max-w-[250px]'>
+              Join ESSA Hub
+            </Button>
           </div>
-          {/* <p className='herosubtitle hidden sm:flex'>Women-focused services, support and connection - all around sport</p> */}
+
         </div>
       </Container>
     </div>
