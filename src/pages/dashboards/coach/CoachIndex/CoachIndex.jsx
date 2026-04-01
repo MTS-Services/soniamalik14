@@ -43,7 +43,7 @@ const CoachIndex = () => {
         </Card>
 
         {/* Events (moved to component) */}
-        <Card className="p-6">
+        <Card className="p-2 md:p-6">
           <EventsList onCreateEvent={() => setIsEventModalOpen(true)} />
         </Card>
       </div>

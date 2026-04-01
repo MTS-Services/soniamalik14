@@ -81,6 +81,7 @@ import Demand from '../pages/dashboards/admin/Demand/Demand.jsx';
 import Content from '../pages/dashboards/admin/Content/Content.jsx';
 import Revenue from '../pages/dashboards/admin/Revenue/Revenue.jsx';
 import Analytics from '../pages/dashboards/admin/Analytics/Analytics.jsx';
+import ManageListing from '../pages/dashboards/coach/manageListing/ManageListing.jsx';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -185,7 +186,7 @@ const router = createBrowserRouter(
         }
       >
         <Route index element={<CoachIndex />} />
-        <Route path="event" element={<CoachEvent />} />
+        <Route path="manage-listings" element={<ManageListing />} />
         <Route path="event/:id" element={<CoachEventDetails />} />
         <Route path="event-analytics" element={<EventAnalytics />} />
         <Route path="event-analytics/event/:id" element={<EventAnallyticsDetails />} />
