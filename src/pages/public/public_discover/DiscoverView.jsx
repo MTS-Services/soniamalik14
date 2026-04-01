@@ -90,9 +90,14 @@ const DiscoverView = () => {
                 className="appearance-none w-full bg-white border-none text-gray-700 text-base rounded-md px-3 py-3 outline-none focus:ring-1 focus:ring-teal-500 cursor-pointer shadow-sm"
               >
                 <option value="">Select sports</option>
-                <option value="Clubs">Clubs</option>
-                <option value="Training">Training</option>
-                <option value="Sessions">Sessions</option>
+                <option value="Clubs">Football</option>
+                <option value="Training">Cricket</option>
+                <option value="Sessions">Netball</option>
+                <option value="Sessions">Tennis</option>
+                <option value="Sessions">Padel</option>
+                <option value="Sessions">Rugby</option>
+                <option value="Sessions">Others</option>
+                
               </select>
               <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-gray-800">
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
