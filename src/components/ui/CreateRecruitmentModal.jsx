@@ -126,10 +126,10 @@ const CreateRecruitmentModal = ({ isOpen, onClose, initialData = null, mode = 'c
                 if (e.target === e.currentTarget) onClose();
             }}
         >
-            <div className="bg-white rounded-lg shadow-xl w-full max-w-xl mx-4 sm:mx-6 flex flex-col max-h-[85vh]">
+            <div className="bg-white rounded-lg shadow-xl w-full max-w-2xl mx-4 sm:mx-6 flex flex-col max-h-[85vh]">
                 {/* Sticky Header */}
                 <div className="flex items-center justify-between p-4 rounded-t-lg border-b border-gray-200 sticky top-0 bg-white z-10">
-                    <h2 className="text-lg font-semibold">Recruitment</h2>
+                    <h2 className="text-2xl font-semibold">Recruitment</h2>
                     <button onClick={onClose} className="text-gray-600 bg-gray-100 rounded-full p-1">
                         <X className="w-5 h-5" />
                     </button>
@@ -140,7 +140,8 @@ const CreateRecruitmentModal = ({ isOpen, onClose, initialData = null, mode = 'c
                     <form id="create-recruitment-form" onSubmit={handleSubmit} className="space-y-6">
                         {/* Organisation Details */}
                         <div>
-                            <h4 className="text-sm font-semibold text-gray-700 mb-2">Organisation Details</h4>
+                            <h4 className="text-xl font-semibold text-gray-700 mb-2">Organisation Details</h4>
+                            <p className='text-base mb-2'> Tell us about your organization or club</p>
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                 <div>
                                     <label className="block text-base font-medium text-gray-600 mb-1">Organisation / Club Name</label>
