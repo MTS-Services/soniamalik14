@@ -11,7 +11,7 @@ const BrandsProductsSection = () => {
             {/* Mobile Image (Visible only on small screens) */}
             <div className="h-64 sm:h-80 w-full md:hidden relative">
                 <img
-                    src="/MarketPlace1.png"
+                    src="/MarketPlace1.webp"
                     alt="For Brands & Products"
                     loading="lazy"
                     className="w-full h-full object-cover object-center"
@@ -24,8 +24,8 @@ const BrandsProductsSection = () => {
             <div className="hidden md:block absolute inset-0 z-0 w-full h-full xl:min-h-[700px]">
                 <img
                     // Replace with your original image: "/MarketPlace1.png"
-                    src="/MarketPlace1.png"
-                    alt="For Sport Providers"
+                    src="/MarketPlace1.webp"
+                    alt="For Brands & Products"
                     className="absolute inset-0 w-full h-full  "
                 />
                 {/* Smooth Gradient Overlay exactly like the image (Fades Left to Right) */}

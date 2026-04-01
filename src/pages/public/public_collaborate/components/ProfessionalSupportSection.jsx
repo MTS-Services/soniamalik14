@@ -7,7 +7,7 @@ const ProfessionalSupportSection = () => {
             {/* Mobile Image (Visible only on small screens) */}
             <div className="h-64 sm:h-80 w-full md:hidden relative">
                 <img
-                    src="/ProfessionalSupport1.png"
+                    src="/ProfessionalSupport1.webp"
                     alt="For Professional Support"
                     loading="lazy"
                     className="w-full h-full object-cover object-center"
@@ -20,7 +20,7 @@ const ProfessionalSupportSection = () => {
             <div className="hidden md:block absolute inset-0 z-0 w-full h-full xl:min-h-[700px]">
                 <img
                     // Replace with your original image: "/ProfessionalSupport1.png"
-                    src="/ProfessionalSupport1.png"
+                    src="/ProfessionalSupport1.webp"
                     alt="For Professional Support"
                     className="absolute inset-0 w-full h-full object-cover "
                 />

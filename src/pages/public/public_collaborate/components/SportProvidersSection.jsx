@@ -8,7 +8,7 @@ const SportProvidersSection = () => {
             {/* Mobile Image (Visible only on small screens) */}
             <div className="h-64 sm:h-80 w-full md:hidden relative">
                 <img
-                    src="/sportProviderOrginal.png"
+                    src="/sportProviderOrginal.webp"
                     alt="For Sport Providers"
                     loading="lazy"
                     className="w-full h-full object-cover object-center"
@@ -21,7 +21,7 @@ const SportProvidersSection = () => {
             <div className="hidden md:block absolute inset-0 z-0 w-full h-full xl:min-h-[700px]">
                 <img
 
-                    src="/sportProviderOrginal.png"
+                    src="/sportProviderOrginal.webp"
                     alt="For Sport Providers"
                     className="absolute inset-0 w-full h-full  "
                 />

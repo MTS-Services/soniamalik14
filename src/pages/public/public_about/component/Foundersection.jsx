@@ -102,7 +102,7 @@ const Foundersection = () => {
             <img
               src="/images/founder.jpg"
               alt="ESSA Hub founder"
-              className="w-16 h-16 sm:w-36 sm:h-36 md:w-40 md:h-40 object-cover rounded-full"
+              className="w-20 h-20 sm:w-36 sm:h-36 md:w-40 md:h-40 object-cover rounded-lg"
             />
           </div>
 
