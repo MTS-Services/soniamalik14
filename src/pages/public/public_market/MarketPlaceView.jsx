@@ -153,7 +153,7 @@
 //                     </div>
 //                 )}
 
-              
+
 //             </Container>
 //         </section>
 //     );
@@ -249,7 +249,7 @@ const BrandCard = ({ brand }) => {
 const MarketPlaceView = () => {
     const [query, setQuery] = useState('');
     // New state to track the active tab
-    const [activeTab, setActiveTab] = useState('shop_brands'); 
+    const [activeTab, setActiveTab] = useState('shop_brands');
 
     const filtered = useMemo(() => {
         const q = (query || '').trim().toLowerCase();
@@ -285,27 +285,27 @@ const MarketPlaceView = () => {
                     </div>
 
                     {/* Filter Buttons as Tabs */}
-                    <div className="flex flex-wrap sm:flex-nowrap gap-3">
-                        <button 
+                    <div className="flex flex-col lg:flex-row gap-3 w-full lg:w-auto">
+                        <button
                             onClick={() => setActiveTab('shop_brands')}
-                            className={`${activeTab === 'shop_brands' ? 'bg-[#0F766E] text-white' : 'bg-[#91C0BC] text-black'} px-6 py-3 rounded-lg text-base font-semibold shadow-sm hover:opacity-90 transition-colors flex-1 sm:flex-none`}
+                            className={`${activeTab === 'shop_brands' ? 'bg-[#0F766E] text-white' : 'bg-white border border-[#0F766E] text-black'} px-6 py-3 rounded-lg text-base font-semibold shadow-sm hover:opacity-90 transition-colors lg:flex-none flex-1`}
                         >
                             Shop Brands
                         </button>
 
-                        <button 
+                        <button
                             onClick={() => setActiveTab('pre_loved')}
-                            className={`${activeTab === 'pre_loved' ? 'bg-[#0F766E] text-white' : 'bg-[#91C0BC] text-black'} px-5 py-1.5 rounded-lg flex flex-col text-base items-center justify-center flex-1 sm:flex-none hover:opacity-90 transition-colors`}
+                            className={`${activeTab === 'pre_loved' ? 'bg-[#0F766E] text-white' : 'bg-white border border-[#0F766E] text-black'} px-5 py-3 rounded-lg flex flex-col text-base items-center justify-center lg:flex-none flex-1 hover:opacity-90 transition-colors`}
                         >
-                            <span className="text-sm font-semibold leading-tight">Pre-Loved</span>
+                            <span className="text-base font-semibold leading-tight">Pre-Loved</span>
                             <span className="text-sm leading-tight opacity-75">(Coming Soon)</span>
                         </button>
 
-                        <button 
+                        <button
                             onClick={() => setActiveTab('list_item')}
-                            className={`${activeTab === 'list_item' ? 'bg-[#0F766E] text-white' : 'bg-[#91C0BC] text-black'} px-5 py-1.5 rounded-lg text-base flex flex-col items-center justify-center flex-1 sm:flex-none hover:opacity-90 transition-colors`}
+                            className={`${activeTab === 'list_item' ? 'bg-[#0F766E] text-white' : 'bg-white border border-[#0F766E] text-black'} px-5 py-3 rounded-lg text-base flex flex-col items-center justify-center lg:flex-none flex-1 hover:opacity-90 transition-colors`}
                         >
-                            <span className="text-sm font-semibold leading-tight">List Your Item</span>
+                            <span className="text-base font-semibold leading-tight">List Your Item</span>
                             <span className="text-sm leading-tight opacity-75">(Coming Soon)</span>
                         </button>
                     </div>
@@ -337,9 +337,9 @@ const MarketPlaceView = () => {
                 {/* Coming Soon View for Pre-Loved & List Item Tabs */}
                 {(activeTab === 'pre_loved' || activeTab === 'list_item') && (
                     <div className="flex flex-col items-center justify-center  px-4 text-center animate-fadeIn">
-                        
+
                         <h2 className="text-3xl md:text-[2.75rem] font-semibold text-black max-w-4xl mx-auto leading-tight mb-8">
-                            {activeTab === 'pre_loved' 
+                            {activeTab === 'pre_loved'
                                 ? "A space to buy and sell pre-loved sports kit within the ESSA community."
                                 : "A space to list your sports items and reach the ESSA community."}
                         </h2>
@@ -348,9 +348,9 @@ const MarketPlaceView = () => {
                         <div className="mb-10 w-full flex justify-center">
                             <div className="relative w-[300px] h-[100px] md:w-[400px] md:h-[130px] flex items-center justify-center">
                                 {/* Replace the src below with the actual path to your red brush stroke image */}
-                                <img 
-                                    src="/comingSoon.png" 
-                                    alt="Coming Soon" 
+                                <img
+                                    src="/comingSoon.png"
+                                    alt="Coming Soon"
                                     className="absolute inset-0 w-full h-full object-contain"
                                 />
                                 {/* Fallback CSS box just in case the image is missing */}
