@@ -35,7 +35,7 @@ const ProfessionalSupportSection = () => {
                     For Professional Support
                 </h2>
 
-                <p className="text-[#333333] text-[16px]  mb-8 leading-relaxed pr-4 md:pr-10 max-w-md">
+                <p className="text-[#333333] text-base md:text-lg  mb-8 leading-relaxed pr-4 md:pr-10 max-w-md">
                     We want to work with professionals whose expertise supports women in sport — including physiotherapy, strength and conditioning, nutrition, women's health and wellbeing.
                 </p>
 

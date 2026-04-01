@@ -39,7 +39,7 @@ const BrandsProductsSection = () => {
                     For Brands & Products
                 </h2>
 
-                <p className="text-[#333333] text-[16px]  mb-8 leading-relaxed pr-4 md:pr-10 max-w-md">
+                <p className="text-[#333333] text-base md:text-lg  mb-8 leading-relaxed pr-4 md:pr-10 max-w-md">
                     The ESSA Marketplace features thoughtfully selected brands that support women in sport.
                 </p>
 
@@ -58,7 +58,7 @@ const BrandsProductsSection = () => {
                     </li>
                 </ul>
 
-                <p className="text-[#333333] text-base md:text-[16px] mb-8 leading-relaxed pr-4 md:pr-10">
+                <p className="text-[#333333] text-base md:text-lg mb-8 leading-relaxed pr-4 md:pr-10">
                     If your brand shares our purpose, we’d love to hear from you.
                 </p>
 

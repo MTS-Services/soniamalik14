@@ -36,7 +36,7 @@ const SportProvidersSection = () => {
                     For Sport Providers
                 </h2>
 
-                <p className="text-[#333333] text-[16px] md:text-[17px] mb-8 leading-relaxed pr-4 md:pr-10 max-w-lg">
+                <p className="text-[#333333] text-base md:text-lg mb-8 leading-relaxed pr-4 md:pr-10 max-w-lg">
                     If you run sessions, teams or training opportunities, ESSA Hub can help make them easier to find.
                 </p>
 
@@ -55,7 +55,7 @@ const SportProvidersSection = () => {
                     </li>
                 </ul>
 
-                <p className="text-[#333333] text-base mb-8 leading-relaxed pr-4 md:pr-10 max-w-lg">
+                <p className="text-[#333333] text-base md:text-lg mb-8 leading-relaxed pr-4 md:pr-10 max-w-lg">
                     If you deliver sport and want to reach more women, we'd love to hear from you.
                 </p>
 
