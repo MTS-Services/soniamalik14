@@ -1,28 +1,28 @@
 import React from 'react';
 import { Check, ArrowRight } from 'lucide-react';
- 
+
 const SportProvidersSection = () => {
     return (
         <div className="relative w-full rounded-lg overflow-hidden bg-white shadow-sm flex flex-col md:block">
-            
+
             {/* Mobile Image (Visible only on small screens) */}
             <div className="h-64 sm:h-80 w-full md:hidden relative">
-                <img 
-                
-                    src="/sportProviderOrginal.png" 
-                    alt="For Sport Providers" 
-                    className="w-full h-full object-cover object-top"
+                <img
+                    src="/sportProviderOrginal.png"
+                    alt="For Sport Providers"
+                    loading="lazy"
+                    className="w-full h-full object-cover object-center"
                 />
                 {/* Subtle gradient to transition to white content below on mobile */}
-                <div className="absolute bottom-0 left-0 right-0 h-28 bg-gradient-to-t from-white via-white/80 to-transparent"></div>
+                <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-white from-0% via-white/60 via-50% to-transparent to-100%"></div>
             </div>
 
             {/* Desktop Background Image (Hidden on small screens) */}
             <div className="hidden md:block absolute inset-0 z-0 w-full h-full xl:min-h-[700px]">
-                <img 
-                  
-                    src="/sportProviderOrginal.png" 
-                    alt="For Sport Providers" 
+                <img
+
+                    src="/sportProviderOrginal.png"
+                    alt="For Sport Providers"
                     className="absolute inset-0 w-full h-full  "
                 />
                 {/* Smooth Gradient Overlay exactly like the image (Fades Left to Right) */}
@@ -31,11 +31,11 @@ const SportProvidersSection = () => {
 
             {/* Content Container */}
             <div className="relative z-10 p-6 sm:p-10 md:p-12 lg:p-16 w-full md:w-[65%] lg:w-[55%] bg-white md:bg-transparent min-h-[450px] md:min-h-[500px] xl:min-h-[550px] flex flex-col justify-center">
-                
+
                 <h2 className="text-3xl md:text-[40px] leading-tight font-medium text-gray-900 mb-5 tracking-tight">
                     For Sport Providers
                 </h2>
-                
+
                 <p className="text-[#333333] text-[16px] md:text-[17px] mb-8 leading-relaxed pr-4 md:pr-10 max-w-lg">
                     If you run sessions, teams or training opportunities, ESSA Hub can help make them easier to find.
                 </p>
@@ -60,7 +60,7 @@ const SportProvidersSection = () => {
                 </p>
 
                 <div>
-                    <a 
+                    <a
                         href="#"
                         className="bg-[#107C66] hover:bg-[#0c6150] transition-colors duration-200 text-white text-[15px] font-medium py-3 px-6 rounded-md inline-flex items-center group shadow-sm"
                     >

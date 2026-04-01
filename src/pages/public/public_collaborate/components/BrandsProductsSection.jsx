@@ -11,13 +11,13 @@ const BrandsProductsSection = () => {
             {/* Mobile Image (Visible only on small screens) */}
             <div className="h-64 sm:h-80 w-full md:hidden relative">
                 <img
-                    // Replace with your original image: "/sportProviderOrginal.png"
                     src="/MarketPlace1.png"
-                    alt="For Sport Providers"
-                    className="w-full h-full object-cover object-top"
+                    alt="For Brands & Products"
+                    loading="lazy"
+                    className="w-full h-full object-cover object-center"
                 />
                 {/* Subtle gradient to transition to white content below on mobile */}
-                <div className="absolute bottom-0 left-0 right-0 h-28 bg-gradient-to-t from-white via-white/80 to-transparent"></div>
+                <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-white from-0% via-white/60 via-50% to-transparent to-100%"></div>
             </div>
 
             {/* Desktop Background Image (Hidden on small screens) */}
@@ -74,9 +74,9 @@ const BrandsProductsSection = () => {
             </div>
 
             {/* Modal Component */}
-            <JoinMarketplaceModal 
-                isOpen={isModalOpen} 
-                onClose={() => setIsModalOpen(false)} 
+            <JoinMarketplaceModal
+                isOpen={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
             />
         </div>
     );
