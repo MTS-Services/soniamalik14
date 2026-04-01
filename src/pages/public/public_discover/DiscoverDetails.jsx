@@ -162,7 +162,7 @@ const DiscoverDetails = () => {
             {/* Column 2: Venue Information */}
             <div>
               <h3 className="text-xl font-semibold text-[#1A1D1F] mb-4">Venue Information</h3>
-              <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-100 h-[400px] flex flex-col">
+              <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-100 h-100 flex flex-col">
                 <div className="space-y-3 mb-6 flex-1">
                   <p className="text-base flex">
                     <span className="text-[#1A1D1F] w-28 shrink-0 font-medium">Venue Name:</span> 
@@ -200,7 +200,7 @@ const DiscoverDetails = () => {
             {/* Column 3: Contact Organiser */}
             <div>
               <h3 className="text-xl font-semibold text-[#1A1D1F] mb-4">Contact Organiser</h3>
-              <div className="bg-[#E7F1F1] p-4 rounded-lg h-[400px] flex flex-col">
+              <div className="bg-[#E7F1F1] p-4 rounded-lg h-100 flex flex-col">
                 <p className="text-base mb-4 text-[#1A1D1F] ">Ask the organiser a question</p>
                 <form onSubmit={handleSendMessage} className="flex flex-col flex-1">
                   <textarea 

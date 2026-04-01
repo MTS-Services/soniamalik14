@@ -9,6 +9,7 @@ const sample = Array.from({ length: 9 }).map((_, i) => ({
   id: i + 1,
   title: ['Woking Warriors FC', 'Beginner Basics Boot Camp', 'Weekly 5-a-Side Session'][i % 3],
   type: ['Clubs', 'Training', 'Sessions'][i % 3],
+  sport: ['Football', 'Cricket', 'Netball', 'Tennis', 'Padel', 'Rugby', 'Others'][i % 7],
   day: 'Monday, Wednesday',
   time: '19:00 - 21:00',
   location: '2972 Wetherden Rd, Santa Ana, Illinois 85486',
@@ -44,9 +45,9 @@ const DiscoverView = () => {
   const filtered = sample.filter((item) => {
     let match = true;
 
-    // Filter by sport type if selected
+    // Filter by sport if selected
     if (selectedSport) {
-      match = match && item.type.toLowerCase() === selectedSport.toLowerCase();
+      match = match && item.sport.toLowerCase() === selectedSport.toLowerCase();
     }
 
     // Filter by location/postcode if entered
@@ -58,7 +59,7 @@ const DiscoverView = () => {
     }
 
     if (distance) {
-      match = match && true; 
+      match = match && true;
     }
 
     return match;
@@ -85,19 +86,19 @@ const DiscoverView = () => {
                 value={selectedSport}
                 onChange={(e) => {
                   setSelectedSport(e.target.value);
-                  setPage(1); // Reset to first page when filter changes
+                  setPage(1);
                 }}
                 className="appearance-none w-full bg-white border-none text-gray-700 text-base rounded-md px-3 py-3 outline-none focus:ring-1 focus:ring-teal-500 cursor-pointer shadow-sm"
               >
                 <option value="">Select sports</option>
-                <option value="Clubs">Football</option>
-                <option value="Training">Cricket</option>
-                <option value="Sessions">Netball</option>
-                <option value="Sessions">Tennis</option>
-                <option value="Sessions">Padel</option>
-                <option value="Sessions">Rugby</option>
-                <option value="Sessions">Others</option>
-                
+                <option value="Football">Football</option>
+                <option value="Cricket">Cricket</option>
+                <option value="Netball">Netball</option>
+                <option value="Tennis">Tennis</option>
+                <option value="Padel">Padel</option>
+                <option value="Rugby">Rugby</option>
+                <option value="Others">Others</option>
+
               </select>
               <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-gray-800">
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -113,7 +114,7 @@ const DiscoverView = () => {
               value={location}
               onChange={(e) => {
                 setLocation(e.target.value);
-                setPage(1); 
+                setPage(1);
               }}
               className="w-full sm:w-55 bg-white border-none text-gray-700 text-base rounded-md px-3 py-2 outline-none focus:ring-1 focus:ring-teal-500 shadow-sm placeholder-gray-400"
             />
@@ -124,7 +125,7 @@ const DiscoverView = () => {
                 value={distance}
                 onChange={(e) => {
                   setDistance(e.target.value);
-                  setPage(1); 
+                  setPage(1);
                 }}
                 className="appearance-none w-full bg-white border-none text-gray-700 text-base rounded-md px-3 py-3 outline-none focus:ring-1 focus:ring-teal-500 cursor-pointer shadow-sm"
               >
