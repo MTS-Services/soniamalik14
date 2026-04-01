@@ -20,7 +20,7 @@ const ManageListing = () => {
 
     // Pagination Logic
     const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 3;
+    const itemsPerPage = 8;
     const totalPages = Math.ceil(allListings.length / itemsPerPage);
 
     // Modal state
@@ -47,7 +47,6 @@ const ManageListing = () => {
 
     const handleDeleteListing = (id) => {
         console.log('Delete listing:', id);
-        // TODO: Delete listing confirmation
     };
 
     return (
@@ -56,7 +55,7 @@ const ManageListing = () => {
             <ListingHeader onAddClick={handleAddListing} />
 
             {/* Grid Section */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 min-h-[500px]">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 min-h-[500px]">
                 {currentItems.map((item) => (
                     <ListingCard
                         key={item.id}
