@@ -25,6 +25,8 @@ const ManageListing = () => {
 
     // Modal state
     const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+    const [modalMode, setModalMode] = useState('create');
+    const [selectedListing, setSelectedListing] = useState(null);
 
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -37,12 +39,17 @@ const ManageListing = () => {
     };
 
     const handleAddListing = () => {
+        setModalMode('create');
+        setSelectedListing(null);
         setIsCreateModalOpen(true);
     };
 
     const handleEditListing = (id) => {
-        console.log('Edit listing:', id);
-        // TODO: Open edit listing modal with listing data
+        const listing = allListings.find((l) => l.id === id) || null;
+        if (!listing) return console.warn('Listing not found', id);
+        setSelectedListing(listing);
+        setModalMode('edit');
+        setIsCreateModalOpen(true);
     };
 
     const handleDeleteListing = (id) => {
@@ -55,7 +62,7 @@ const ManageListing = () => {
             <ListingHeader onAddClick={handleAddListing} />
 
             {/* Grid Section */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 min-h-[500px]">
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-6 min-h-[500px]">
                 {currentItems.map((item) => (
                     <ListingCard
                         key={item.id}
@@ -76,8 +83,9 @@ const ManageListing = () => {
             {/* Create Recruitment Modal */}
             <CreateRecruitmentModal
                 isOpen={isCreateModalOpen}
-                onClose={() => setIsCreateModalOpen(false)}
-                mode="create"
+                onClose={() => { setIsCreateModalOpen(false); setSelectedListing(null); setModalMode('create'); }}
+                mode={modalMode}
+                initialData={selectedListing}
             />
         </div>
     );
