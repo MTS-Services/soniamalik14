@@ -153,7 +153,7 @@ const CreateRecruitmentModal = ({ isOpen, onClose, initialData = null, mode = 'c
                                 </div>
                             </div>
 
-                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
+                            <div className="grid grid-cols-1  gap-4 mt-4">
                                 <div>
                                     <label className="block text-base font-medium text-gray-600 mb-1">Role</label>
                                     <input value={form.role} onChange={(e) => handleChange('role', e.target.value)} className="w-full px-3 py-2 border border-gray-300 rounded-md text-base" placeholder="coach/manager" />
@@ -235,9 +235,14 @@ const CreateRecruitmentModal = ({ isOpen, onClose, initialData = null, mode = 'c
 
                 {/* Sticky Footer */}
                 <div className="p-4 border-t rounded-b-lg border-gray-200 sticky bottom-0 bg-white z-10">
-                    <Button type="submit" form="create-recruitment-form" variant="primary" className="w-full rounded-lg py-3">
-                        Submit For Approval
-                    </Button>
+                    <div className="flex   justify-end gap-3">
+                        <Button type="submit" form="create-recruitment-form" variant="primary" className=" rounded-lg text-xs md:text-sm  py-1 md:py-3">
+                            Submit For Approval
+                        </Button>
+                        <Button type="button" onClick={handlePreview} variant="primary" className="w-36 rounded-lg text-xs md:text-sm py-1 md:py-3">
+                            View Preview
+                        </Button>
+                    </div>
                 </div>
             </div>
         </div>
