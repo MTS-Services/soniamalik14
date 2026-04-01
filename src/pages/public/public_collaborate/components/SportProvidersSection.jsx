@@ -1,6 +1,6 @@
 import React from 'react';
 import { Check, ArrowRight } from 'lucide-react';
-
+ 
 const SportProvidersSection = () => {
     return (
         <div className="relative w-full rounded-lg overflow-hidden bg-white shadow-sm flex flex-col md:block">
