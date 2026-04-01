@@ -3,18 +3,13 @@ import { Link, NavLink, useNavigate, useLocation } from 'react-router-dom';
 import {
     LayoutDashboard,
     Calendar,
-    
     Package,
-  
     MessageSquare,
     Users,
-   
     DollarSign,
- 
     LogOut,
     BarChart3,
     UserPlus,
-
     X,
     Settings,
     CirclePlus,
@@ -22,7 +17,9 @@ import {
     List,
     TrendingUp,
     FileText,
-    UserRoundPlus,
+    CalendarPlus2,
+    Bell,
+    
 } from 'lucide-react';
 import { useAuth, ROLES } from '../../context/AuthContext';
 
@@ -51,10 +48,11 @@ const getMenuItems = (role, basePath) => {
 
     const coachMenu = [
         { id: 'dashboard', label: 'Dashboard', icon: <LayoutDashboard className="w-5 h-5" />, path: `${basePath}` },
-        { id: 'manage-listings', label: 'Manage Listings', icon: <UserRoundPlus className="w-5 h-5" />, path: `${basePath}/manage-listings` },
-        { id: 'event-analytics', label: 'Event Analytics', icon: <BarChart3 className="w-5 h-5" />, path: `${basePath}/event-analytics` },
-        { id: 'thread', label: 'Thread', icon: <MessageSquare className="w-5 h-5" />, path: `${basePath}/thread` },
-        { id: 'recruitment', label: 'Add Listing', icon: <UserPlus className="w-5 h-5" />, path: `${basePath}/recruitment` },
+         { id: 'recruitment', label: 'Manage Listings', icon: <UserPlus className="w-5 h-5" />, path: `${basePath}/recruitment` },
+         { id: 'event', label: 'Events', icon: <CalendarPlus2 className="w-5 h-5" />, path: `${basePath}/events` },
+        { id: 'event-analytics', label: 'Insights', icon: <BarChart3 className="w-5 h-5" />, path: `${basePath}/event-analytics` },
+        { id: 'notifications', label: 'Notifications', icon: <Bell className="w-5 h-5" />, path: `${basePath}/notifications` },
+
     ];
 
     switch (role) {

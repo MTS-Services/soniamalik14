@@ -6,8 +6,7 @@ import AboutView from '../pages/public/public_about/AboutView';
 import DiscoverView from '../pages/public/public_discover/DiscoverView';
 import DiscoverDetails from '../pages/public/public_discover/DiscoverDetails';
 import CollaborateView from '../pages/public/public_collaborate/CollaborateView';
-// import FindSport from '../pages/public/public_FindSport/FindSport';
-// import FindSportDetails from '../pages/public/public_FindSport/components/FindSportDetails';
+
 import SigninView from '../pages/public/public_login/SigninView.jsx';
 import RegisterView from '../pages/public/public_login/SignUpView.jsx';
 import VerifyEmailView from '../pages/public/public_login/VerifyEmailView.jsx';
@@ -20,10 +19,7 @@ import NotFound from '../pages/error/NotFound';
 import Unauthorized from '../pages/error/Unauthorized';
 import EventView from '../pages/public/public_event/EventView.jsx';
 import EventDetailsPage from '../pages/public/public_event/EventDetails.jsx';
-import MarketPlace from '../pages/public/public_market/MarketPlace.jsx';
-// import MarketplaceDetails from '../pages/public/public_market/MarketplaceDetails.jsx';
-// import Checkout from '../pages/public/public_market/Checkout.jsx';
-// import OrderConfirmed from '../pages/public/public_market/OrderConfirmed.jsx';
+
 import ServiceView from '../pages/public/public_service/ServiceView.jsx';
 import ServiceDetails from '../pages/public/public_service/ServiceDetails.jsx';
 
@@ -45,10 +41,9 @@ import AdminIndex from '../pages/dashboards/admin/adminIndex/AdminIndex.jsx';
 import CoachEvent from '../pages/dashboards/coach/event/CoachEvent.jsx';
 import CoachEventDetails from '../pages/dashboards/coach/event/EventDetails.jsx';
 import EventAnalytics from '../pages/dashboards/coach/eventAnalytics/EventAnalytics.jsx';
-import Thread from '../pages/dashboards/coach/thread/Thread.jsx';
+;
 import EventAnallyticsDetails from '../pages/dashboards/shared/eventAnalytics/EventAnallyticsDetails.jsx';
 
-import ThreadDetails from '../pages/dashboards/coach/thread/ThreadDetails.jsx';
 import Recruitment from '../pages/dashboards/coach/recruitment/Recruitment.jsx';
 import RecruitmentDetails from '../pages/dashboards/coach/recruitment/RecruitmentDetails.jsx';
 import EditProfile from '../pages/dashboards/coach/CoachIndex/EditProfile.jsx';
@@ -81,7 +76,7 @@ import Demand from '../pages/dashboards/admin/Demand/Demand.jsx';
 import Content from '../pages/dashboards/admin/Content/Content.jsx';
 import Revenue from '../pages/dashboards/admin/Revenue/Revenue.jsx';
 import Analytics from '../pages/dashboards/admin/Analytics/Analytics.jsx';
-import ManageListing from '../pages/dashboards/coach/manageListing/ManageListing.jsx';
+import Notifications from '../pages/dashboards/coach/Notifications/Notifications.jsx';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -186,12 +181,12 @@ const router = createBrowserRouter(
         }
       >
         <Route index element={<CoachIndex />} />
-        <Route path="manage-listings" element={<ManageListing />} />
+        <Route path="events" element={<CoachEvent />} />
         <Route path="event/:id" element={<CoachEventDetails />} />
         <Route path="event-analytics" element={<EventAnalytics />} />
         <Route path="event-analytics/event/:id" element={<EventAnallyticsDetails />} />
-        <Route path="thread" element={<Thread />} />
-        <Route path="thread/:id" element={<ThreadDetails />} />
+        <Route path="notifications" element={<Notifications />} />
+
         <Route path="recruitment" element={<Recruitment />} />
         <Route path="recruitment/:id" element={<RecruitmentDetails />} />
         <Route path="settings" element={<EditProfile />} />

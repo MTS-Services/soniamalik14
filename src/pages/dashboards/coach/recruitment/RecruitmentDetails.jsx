@@ -1,9 +1,18 @@
 ﻿import React, { useEffect, useState } from 'react';
 import { Link, useLocation, useParams } from 'react-router-dom';
-import { ArrowLeft, MapPin, Calendar, Clock, Mail, Phone } from 'lucide-react';
-import ApplicationTable from './components/ApplicationTable';
+import { ArrowLeft } from 'lucide-react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchRecruitments, selectRecruitmentById, selectRecruitments } from '../../../../features/recruitment/recruitmentSlice';
+
+import HeroBanner from './components/HeroBanner';
+import TitleCoachInfo from './components/TitleCoachInfo';
+import SessionDetailsCard from './components/SessionDetailsCard';
+import SessionOverview from './components/SessionOverview';
+import VenueInformation from './components/VenueInformation';
+import ContactOrganiser from './components/ContactOrganiser';
+import BookingsTable from './components/BookingsTable';
+import RegisteredInterestTable from './components/RegisteredInterestTable';
+import EnquiriesTable from './components/EnquiriesTable';
 
 const RecruitmentDetails = () => {
     const { id } = useParams();
@@ -13,8 +22,8 @@ const RecruitmentDetails = () => {
     const dispatch = useDispatch();
     const recruitments = useSelector(selectRecruitments);
     const recruitmentFromStore = useSelector((s) => selectRecruitmentById(s, id));
-    const loading = useSelector((s) => s.recruitment.loading);
-    const error = useSelector((s) => s.recruitment.error);
+    const loading = useSelector((s) => s.recruitment?.loading);
+    const error = useSelector((s) => s.recruitment?.error);
 
     useEffect(() => {
         if (recruitments.length === 0) {
@@ -23,173 +32,78 @@ const RecruitmentDetails = () => {
     }, [dispatch, recruitments.length]);
 
     useEffect(() => {
-        console.log('State item:', state?.item);
-        console.log('Recruitment from store:', recruitmentFromStore);
-        console.log('All recruitments:', recruitments);
-
         if (state?.item) {
             setItem(state.item);
         } else if (recruitmentFromStore) {
             setItem(recruitmentFromStore);
         } else if (recruitments.length > 0) {
-            // Try to find item again after data loads
             const found = recruitments.find(r => String(r.id) === String(id));
-            console.log('Found item:', found);
             setItem(found || null);
         }
     }, [state, id, recruitmentFromStore, recruitments]);
 
     const backTarget = state?.from === 'recruitment' ? '/coach/recruitment' : '/coach/recruitment';
 
-    // Show loading first, before checking if item exists
-    if (loading) return <div className="dashboardPy">Loading recruitment...</div>;
-    if (error) return <div className="dashboardPy text-red-600">Error: {error}</div>;
-    if (!item) return <div className="dashboardPy">Recruitment not found.</div>;
+    // Mock Data
+    const bookingsData = [
+        { name: 'Marvin McKinney', phone: '(704) 555-0127', email: 'willie.jennings@example.com' },
+        { name: 'Eleanor Pena', phone: '(702) 555-0122', email: 'jessica.hanson@example.com' },
+        { name: 'Jacob Jones', phone: '(302) 555-0107', email: 'alma.lawson@example.com' },
+        { name: 'Annette Black', phone: '(603) 555-0123', email: 'nevaeh.simmons@example.com' },
+        { name: 'Dianne Russell', phone: '(219) 555-0114', email: 'dolores.chambers@example.com' },
+        { name: 'Albert Flores', phone: '(406) 555-0120', email: 'jackson.graham@example.com' },
+    ];
+
+    const registeredInterestData = [
+        { name: 'Marvin McKinney', phone: '(704) 555-0127', email: 'willie.jennings@example.com' },
+        { name: 'Eleanor Pena', phone: '(702) 555-0122', email: 'jessica.hanson@example.com' },
+        { name: 'Jacob Jones', phone: '(302) 555-0107', email: 'alma.lawson@example.com' },
+    ];
+
+    const enquiriesData = [
+        { name: 'Devon Lane', phone: '(405) 555-0128', email: 'jackson.graham@example.com', msg: 'Aliquam porta nisl dolor, molestie pellentesque elit...', date: '12 Mar 26' },
+        { name: 'Marvin McKinney', phone: '(704) 555-0127', email: 'michael.mitc@example.com', msg: 'In a laoreet purus. Integer turpis quam...', date: '12 Mar 26' },
+    ];
+
+    if (loading) return <div className="p-8 font-sans">Loading recruitment...</div>;
+    if (error) return <div className="p-8 font-sans text-red-600">Error: {error}</div>;
+    if (!item) return <div className="p-8 font-sans">Recruitment not found.</div>;
 
     return (
-        <div className=" dashboardPy dashboardSpaceY  text-gray-800">
-            {/* Back Button */}
-            <div className="mb-4">
-                <Link to={backTarget} className="inline-flex items-center text-base font-medium text-teal-600 hover:text-teal-700">
-                    <ArrowLeft className="w-4 h-4 mr-1" /> Back
-                </Link>
-            </div>
+        <div className="bg-[#F8FAFB] min-h-screen p-4 md:p-8 text-[#1F2937] font-sans">
+            <div className="space-y-8">
 
-            {/* Main Content Wrapper */}
-            <div className="">
-
-                {/* Hero Image */}
-                <div className="w-full h-64 md:h-[820px] relative rounded-xl overflow-hidden mb-6">
-                    <img
-                        src={item.image}
-                        alt={item.title}
-                        className="w-full h-full object-cover"
-                    />
+                {/* Back Button */}
+                <div>
+                    <Link to={backTarget} className="inline-flex items-center text-sm font-semibold text-[#0F766E] hover:underline">
+                        <ArrowLeft className="w-4 h-4 mr-1.5" /> Back
+                    </Link>
                 </div>
 
+                {/* Hero Banner */}
+                <HeroBanner item={item} />
 
-                {/* Left Column: Details */}
-                <div className="lg:col-span-2">
-                    <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
-                        {item.title}
-                    </h1>
+                {/* Title & Coach Info */}
+                <TitleCoachInfo item={item} />
 
-                
-                    <div className="mb-4">
-                        {/* Skill practice / short descriptor */}
-                        <p className="text-base text-gray-600 mb-2">
-                            {item.skillPractice || ''}
-                            {item.skillPractice && item.skillLevel ? ' Â· ' : ''}
-                            {item.skillLevel || ''}
-                        </p>
+                {/* Session Details Card */}
+                <SessionDetailsCard item={item} />
 
-                        {/* Location with pin */}
-                        <div className="flex items-center text-base text-gray-700 mb-4">
-                            <MapPin className="w-4 h-4 text-gray-500 mr-2" />
-                            <span className="">{item.location || item.venue || ''}</span>
-                        </div>
-
-                        {/* Sessions Day & Training Time as labeled rows */}
-                        <div className="space-y-2 text-base text-gray-700">
-                            <div className="flex items-start">
-                                <div className="w-36 font-bold text-gray-900">Sessions Day:</div>
-                                <div className="flex-1">{item.sessionsDay || item.date || ''}</div>
-                            </div>
-                            <div className="flex items-start">
-                                <div className="w-36 font-bold text-gray-900">Training Time:</div>
-                                <div className="flex-1">{item.trainingTime || item.time || ''}</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* Session Overview */}
-                    <h2 className="text-lg font-semibold text-gray-900 mb-2">Session Overview</h2>
-                    <div className="text-base text-gray-600 leading-relaxed whitespace-pre-line mb-8">
-                        {item.description}
-                    </div>
-
-
-                    {/* Event Attributes (Age, Sport, Skill, Deadline) */}
-                    <div className="space-y-4 text-base text-gray-800 mb-8">
-                        <div>
-                            <span className="font-bold block text-gray-900">Skill Level:</span>
-                            <span>{item.skillLevel || 'N/A'}</span>
-                        </div>
-                        <div>
-                            <span className="font-bold block text-gray-900">Age Group:</span>
-                            <span>{item.ageGroup || 'N/A'}</span>
-                        </div>
-                        <div>
-                            <span className="font-bold block text-gray-900">Experience Required:</span>
-                            <span>{item.experienceRequired || 'None'}</span>
-                        </div>
-                        <div>
-                            <span className="font-bold block text-gray-900">Equipment:</span>
-                            <span>{item.equipment || 'N/A'}</span>
-                        </div>
-                        <div>
-                            <span className="font-bold block text-gray-900">Sport Type:</span>
-                            <span>{item.sportType || 'N/A'}</span>
-                        </div>
-                        <div>
-                            <span className="font-bold block text-gray-900">Last Date to Register:</span>
-                            <span>{item.lastDateToRegister || 'N/A'}</span>
-                        </div>
-                        <div>
-                            <span className="font-bold block text-gray-900">Training Frequency:</span>
-                            <span>{item.trainingFrequency || 'N/A'}</span>
-                        </div>
-                        <div>
-                            <span className="font-bold block text-gray-900">Session Format:</span>
-                            <span>{item.sessionFormat || 'N/A'}</span>
-                        </div>
-                        <div>
-                            <span className="font-bold block text-gray-900">Season Duration:</span>
-                            <span>{item.seasonDuration || 'N/A'}</span>
-                        </div>
-                        <div>
-                            <span className="font-bold block text-gray-900">Head Coach:</span>
-                            <span>{item.headCoach || 'N/A'}</span>
-                        </div>
-                        <div>
-                            <span className="font-bold block text-gray-900">Coaching Style:</span>
-                            <span>{item.coachingStyle || 'N/A'}</span>
-                        </div>
-                        <div>
-                            <span className="font-bold block text-gray-900">Trial Location:</span>
-                            <span>{item.trialLocation || 'N/A'}</span>
-                        </div>
-                        <div>
-                            <span className="font-bold block text-gray-900">Posted By:</span>
-                            <span>{item.postedBy || 'N/A'}</span>
-                        </div>
-                        <div className="flex items-center gap-3">
-
-                            <div>
-                                <span className="font-bold block text-gray-900">Contact Email:</span>
-                                <span>{item.contactEmail || 'N/A'}</span>
-                            </div>
-                        </div>
-                        <div className="flex items-center gap-3">
-                            <div>
-                                <span className="font-bold block text-gray-900">Phone:</span>
-                                <span>{item.phone || 'N/A'}</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div>
-                        <h1 className="text-2xl font-bold text-gray-900 mb-3">Applicant Information</h1>
-                    </div>
-                    {/* Applicants Table */}
-                    <div className="mb-8">
-                        <ApplicationTable applicants={item.applicants || []} perPage={9} />
-                    </div>
+                {/* 3-Column Grid */}
+                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 lg:gap-8">
+                    <SessionOverview item={item} />
+                    <VenueInformation item={item} />
+                    <ContactOrganiser />
                 </div>
+
+                {/* Tables Section */}
+                <BookingsTable data={bookingsData} />
+                <RegisteredInterestTable data={registeredInterestData} />
+                <EnquiriesTable data={enquiriesData} />
 
             </div>
         </div>
     );
 }
 
-
-export default RecruitmentDetails
+export default RecruitmentDetails;

@@ -31,7 +31,7 @@ const RecruitmentCard = ({ item = {}, editLink, onEdit, onDelete, className = ''
     return (
         <>
             <Link to={`/coach/recruitment/${item.id}`} state={{ item, from: 'recruitment' }} className="block">
-                <Card className={`p-4 h-full flex flex-col justify-between rounded-lg border !border-[#B5D5D2] bg-white ${className}`}>
+                <Card className={`p-4 h-full flex flex-col justify-between rounded-lg  bg-[#E7F1F180]! ${className}`}>
                     <div>
                         <div className="relative">
                             {item.tag && (
