@@ -5,6 +5,9 @@ import Button from './Button';
 const CreateRecruitmentModal = ({ isOpen, onClose, initialData = null, mode = 'create' }) => {
     const [form, setForm] = useState({
         title: '',
+        organisationName: '',
+        contactPerson: '',
+        role: '',
         sportType: '',
         skillLevelRequired: '',
         description: '',
@@ -16,6 +19,17 @@ const CreateRecruitmentModal = ({ isOpen, onClose, initialData = null, mode = 'c
         playersNeeded: '',
         homeGround: '',
         whatPlayersReceive: '',
+        sports: [],
+        sessionTypes: [],
+        suitableFor: [],
+        womensOnly: null,
+        venueName: '',
+        postcode: '',
+        town: '',
+        typicalSessionDays: '',
+        sessionDate: '',
+        sessionTime: '',
+        bookingLink: '',
         skillLevel: 'Beginner',
         image: null,
     });
@@ -25,6 +39,9 @@ const CreateRecruitmentModal = ({ isOpen, onClose, initialData = null, mode = 'c
             // reset when closed
             setForm({
                 title: '',
+                organisationName: '',
+                contactPerson: '',
+                role: '',
                 sportType: '',
                 skillLevelRequired: '',
                 description: '',
@@ -36,6 +53,17 @@ const CreateRecruitmentModal = ({ isOpen, onClose, initialData = null, mode = 'c
                 playersNeeded: '',
                 homeGround: '',
                 whatPlayersReceive: '',
+                sports: [],
+                sessionTypes: [],
+                suitableFor: [],
+                womensOnly: null,
+                venueName: '',
+                postcode: '',
+                town: '',
+                typicalSessionDays: '',
+                sessionDate: '',
+                sessionTime: '',
+                bookingLink: '',
                 skillLevel: 'Beginner',
                 image: null,
             });
@@ -68,6 +96,20 @@ const CreateRecruitmentModal = ({ isOpen, onClose, initialData = null, mode = 'c
 
     const handleChange = (k, v) => setForm((s) => ({ ...s, [k]: v }));
 
+    const toggleArrayField = (field, value) => {
+        setForm((s) => {
+            const arr = s[field] || [];
+            if (arr.includes(value)) return { ...s, [field]: arr.filter((a) => a !== value) };
+            return { ...s, [field]: [...arr, value] };
+        });
+    };
+
+    const handlePreview = (e) => {
+        e.preventDefault();
+        console.log('Preview payload', form);
+        // TODO: open preview modal
+    };
+
     const handleSubmit = (e) => {
         e.preventDefault();
         // minimal validation
@@ -95,114 +137,96 @@ const CreateRecruitmentModal = ({ isOpen, onClose, initialData = null, mode = 'c
 
                 {/* Scrollable body */}
                 <div className="overflow-y-auto flex-1 p-4 sm:p-6">
-                    <form id="create-recruitment-form" onSubmit={handleSubmit} className="space-y-4">
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            <div>
-                                <label className="block text-base font-medium text-gray-700 mb-1">Post Title</label>
-                                <input
-                                    value={form.title}
-                                    onChange={(e) => handleChange('title', e.target.value)}
-                                    className="w-full px-3 py-2 border border-gray-300 rounded-md text-base"
-                                    placeholder="enter event title"
-                                />
-                            </div>
-                            <div>
-                                <label className="block text-base font-medium text-gray-700 mb-1">Sport Type</label>
-                                <input
-                                    value={form.sportType}
-                                    onChange={(e) => handleChange('sportType', e.target.value)}
-                                    className="w-full px-3 py-2 border border-gray-300 rounded-md text-base"
-                                    placeholder="e.g. Cricket, Football"
-                                />
-                            </div>
-                        </div>
-
+                    <form id="create-recruitment-form" onSubmit={handleSubmit} className="space-y-6">
+                        {/* Organisation Details */}
                         <div>
-                            <label className="block text-base font-medium text-gray-700 mb-1">Skill Level Required</label>
-                            <input
-                                value={form.skillLevelRequired}
-                                onChange={(e) => handleChange('skillLevelRequired', e.target.value)}
-                                className="w-full px-3 py-2 border border-gray-300 rounded-md text-base"
-                                placeholder="e.g., Point Guard, Defender"
-                            />
+                            <h4 className="text-sm font-semibold text-gray-700 mb-2">Organisation Details</h4>
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div>
+                                    <label className="block text-base font-medium text-gray-600 mb-1">Organisation / Club Name</label>
+                                    <input value={form.organisationName} onChange={(e) => handleChange('organisationName', e.target.value)} className="w-full px-3 py-2 border border-gray-300 rounded-md text-base" placeholder="Enter organisation name" />
+                                </div>
+                                <div>
+                                    <label className="block text-base font-medium text-gray-600 mb-1">Contact Person Name</label>
+                                    <input value={form.contactPerson} onChange={(e) => handleChange('contactPerson', e.target.value)} className="w-full px-3 py-2 border border-gray-300 rounded-md text-base" placeholder="Enter contact name" />
+                                </div>
+                            </div>
+
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
+                                <div>
+                                    <label className="block text-base font-medium text-gray-600 mb-1">Role</label>
+                                    <input value={form.role} onChange={(e) => handleChange('role', e.target.value)} className="w-full px-3 py-2 border border-gray-300 rounded-md text-base" placeholder="coach/manager" />
+                                </div>
+                                <div>
+                                    <label className="block text-base font-medium text-gray-600 mb-1">About</label>
+                                    <input value={form.whatPlayersReceive} onChange={(e) => handleChange('whatPlayersReceive', e.target.value)} className="w-full px-3 py-2 border border-gray-300 rounded-md text-base" placeholder="Write 2-3 lines about your organisation..." />
+                                </div>
+                            </div>
+
+                            <div className="mt-4">
+                                <label className="block text-base font-medium text-gray-600 mb-2">Upload Image</label>
+                                <div className="border-2 border-dashed border-gray-300 rounded-md p-6 text-center">
+                                    <Upload className="w-8 h-8 text-green-600 mx-auto mb-2" />
+                                    <p className="text-green-600 font-medium text-base mb-1">Upload Image</p>
+                                    <p className="text-gray-400 text-base mb-2">JPEG files accepted. Max 100MB</p>
+                                    <input id="create-recruitment-image" type="file" accept="image/*" onChange={(e) => handleChange('image', e.target.files?.[0] || null)} className="hidden" />
+                                    <label htmlFor="create-recruitment-image" className="inline-block cursor-pointer px-4 py-2 bg-gray-100 rounded-md text-sm">Choose File</label>
+                                    {form.image && <p className="text-sm text-gray-600 mt-2">Selected: {form.image.name}</p>}
+                                </div>
+                            </div>
                         </div>
 
+                        {/* Sport & Session Information */}
                         <div>
-                            <label className="block text-base font-medium text-gray-700 mb-1">Description of the Team & Opportunity</label>
-                            <textarea
-                                value={form.description}
-                                onChange={(e) => handleChange('description', e.target.value)}
-                                rows={4}
-                                className="w-full px-3 py-2 border border-gray-300 rounded-md text-base resize-none"
-                                placeholder="Describe your event in details"
-                            />
-                        </div>
+                            <h4 className="text-base font-semibold text-gray-700 mb-2">Sport & Session Information</h4>
+                            <p className="text-base text-gray-500 mb-3">Details about the sport and session you offer</p>
 
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            <div>
-                                <label className="block text-base font-medium text-gray-700 mb-1">Training Location</label>
-                                <input value={form.trainingLocation} onChange={(e) => handleChange('trainingLocation', e.target.value)} className="w-full px-3 py-2 border border-gray-300 rounded-md text-base" placeholder="training location" />
-                            </div>
-                            <div>
-                                <label className="block text-base font-medium text-gray-700 mb-1">Times</label>
-                                <input value={form.times} onChange={(e) => handleChange('times', e.target.value)} className="w-full px-3 py-2 border rounded-md text-base border-gray-300" placeholder="7:00am-8:00 pm" />
-                            </div>
-                        </div>
-
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            <div>
-                                <label className="block text-base font-medium text-gray-700 mb-1">Match Days</label>
-                                <input value={form.matchDays} onChange={(e) => handleChange('matchDays', e.target.value)} className="w-full border-gray-300 px-3 py-2 border rounded-md text-base" placeholder="Days" />
-                            </div>
-                            <div>
-                                <label className="block text-base font-medium text-gray-700 mb-1">Application Deadline</label>
-                                <input value={form.applicationDeadline} onChange={(e) => handleChange('applicationDeadline', e.target.value)} className="w-full px-3 py-2 border border-gray-300 rounded-md text-base" placeholder="enter deadline" />
-                            </div>
-                        </div>
-
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            <div>
-                                <label className="block text-base font-medium text-gray-700 mb-1">Age Range</label>
-                                <input value={form.ageRange} onChange={(e) => handleChange('ageRange', e.target.value)} className="w-full px-3 py-2 border rounded-md text-base border-gray-300" placeholder="e.g 17-18" />
-                            </div>
-                            <div>
-                                <label className="block text-base font-medium text-gray-700 mb-1">Number of Players Needed</label>
-                                <input value={form.playersNeeded} onChange={(e) => handleChange('playersNeeded', e.target.value)} className="w-full px-3 py-2 border rounded-md text-base border-gray-300" placeholder="e.g., 3 spots available" />
-                            </div>
-                        </div>
-
-                        <div>
-                            <label className="block text-base font-medium text-gray-700 mb-1">Home Ground</label>
-                            <input value={form.homeGround} onChange={(e) => handleChange('homeGround', e.target.value)} className="w-full px-3 py-2 border rounded-md text-base border-gray-300" placeholder="homeground" />
-                        </div>
-
-                        <div>
-                            <label className="block text-base font-medium text-gray-700 mb-1">What Players Receive</label>
-                            <input value={form.whatPlayersReceive} onChange={(e) => handleChange('whatPlayersReceive', e.target.value)} className="w-full px-3 py-2 border rounded-md text-base border-gray-300" placeholder="e.g kit helmet etc" />
-                        </div>
-
-                        <div>
-                            <label className="block text-base font-medium text-gray-700 mb-2">Skill Level</label>
-                            <div className="flex gap-2">
-                                {['Beginner', 'Intermediate', 'Advanced'].map((lvl) => (
-                                    <button type="button" key={lvl} onClick={() => handleChange('skillLevel', lvl)} className={`px-4 py-2 rounded-md text-base ${form.skillLevel === lvl ? 'bg-btn-primary text-white' : 'bg-gray-100'}`}>
-                                        {lvl}
+                            <div className="flex flex-wrap gap-2 mb-4">
+                                {['Football', 'Squash', 'Rugby', 'Netball', 'Cricket', 'Padel', 'Tennis', 'Badminton', 'Golf', 'Running', 'Other'].map((s) => (
+                                    <button key={s} type="button" onClick={() => toggleArrayField('sports', s)} className={`px-3 py-1 rounded-full text-base ${form.sports.includes(s) ? 'bg-[#E6F6F2] text-[#0F766E]' : 'bg-gray-100 text-gray-700'}`}>
+                                        {s}
                                     </button>
                                 ))}
                             </div>
+
+                            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-3">
+                                {['Recreational', 'Social', 'Training', 'Coaching', 'League', 'Competitive'].map((t) => (
+                                    <label key={t} className="flex items-center gap-2 text-base"><input type="checkbox" checked={form.sessionTypes.includes(t)} onChange={() => toggleArrayField('sessionTypes', t)} className="w-4 h-4" /> {t}</label>
+                                ))}
+                            </div>
+
+                            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-3">
+                                <label className="text-base"><input type="checkbox" checked={form.suitableFor.includes('New to sport')} onChange={() => toggleArrayField('suitableFor', 'New to sport')} className="mr-2" /> New to sport</label>
+                                <label className="text-base"><input type="checkbox" checked={form.suitableFor.includes('Some experience')} onChange={() => toggleArrayField('suitableFor', 'Some experience')} className="mr-2" /> Some experience</label>
+                                <label className="text-base"><input type="checkbox" checked={form.suitableFor.includes('Compete players')} onChange={() => toggleArrayField('suitableFor', 'Compete players')} className="mr-2" /> Competitive</label>
+                            </div>
+
+                            <div className="flex items-center gap-4 mt-2">
+                                <label className="flex items-center gap-2 text-base"><input type="radio" name="womensOnly" checked={form.womensOnly === true} onChange={() => handleChange('womensOnly', true)} /> YES</label>
+                                <label className="flex items-center gap-2 text-base"><input type="radio" name="womensOnly" checked={form.womensOnly === false} onChange={() => handleChange('womensOnly', false)} /> NO</label>
+                            </div>
                         </div>
 
-                        {/* Image upload */}
+                        {/* Location & Timing */}
                         <div>
-                            <label className="block text-base font-medium text-gray-700 mb-2">Upload Image</label>
-                            <div className="border-2 border-dashed border-gray-300 rounded-md p-6 text-center">
-                                <Upload className="w-8 h-8 text-green-600 mx-auto mb-2" />
-                                <p className="text-green-600 font-medium text-base mb-1">Upload Image</p>
-                                <p className="text-gray-400 text-xs mb-2">JPEG files accepted. Max 100MB</p>
-                                <input id="create-recruitment-image" type="file" accept="image/*" onChange={(e) => handleChange('image', e.target.files?.[0] || null)} className="hidden" />
-                                <label htmlFor="create-recruitment-image" className="inline-block cursor-pointer px-4 py-2 bg-gray-100 rounded-md text-base">Choose File</label>
-                                {form.image && <p className="text-base text-gray-600 mt-2">Selected: {form.image.name}</p>}
+                            <h4 className="text-base font-semibold text-gray-700 mb-2">Location & Timing</h4>
+                            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                                <input value={form.venueName} onChange={(e) => handleChange('venueName', e.target.value)} placeholder="Venue name" className="px-3 py-2 border rounded-md text-sm border-gray-300" />
+                                <input value={form.postcode} onChange={(e) => handleChange('postcode', e.target.value)} placeholder="Postcode" className="px-3 py-2 border rounded-md text-sm border-gray-300" />
+                                <input value={form.town} onChange={(e) => handleChange('town', e.target.value)} placeholder="Town / City" className="px-3 py-2 border rounded-md text-sm border-gray-300" />
                             </div>
+
+                            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-3">
+                                <input value={form.typicalSessionDays} onChange={(e) => handleChange('typicalSessionDays', e.target.value)} placeholder="Typical Session Days" className="px-3 py-2 border rounded-md text-sm border-gray-300" />
+                                <input value={form.sessionDate} onChange={(e) => handleChange('sessionDate', e.target.value)} placeholder="Date/Day" className="px-3 py-2 border rounded-md text-sm border-gray-300" />
+                                <input value={form.sessionTime} onChange={(e) => handleChange('sessionTime', e.target.value)} placeholder="Time" className="px-3 py-2 border rounded-md text-sm border-gray-300" />
+                            </div>
+                        </div>
+
+                        {/* Booking Details */}
+                        <div>
+                            <h4 className="text-base font-semibold text-gray-700 mb-2">Booking Details</h4>
+                            <input value={form.bookingLink} onChange={(e) => handleChange('bookingLink', e.target.value)} placeholder="Booking link" className="w-full px-3 py-2 border rounded-md text-sm border-gray-300" />
                         </div>
 
                     </form>
