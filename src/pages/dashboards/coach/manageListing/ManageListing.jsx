@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import ListingHeader from './components/ListingHeader';
 import ListingCard from './components/ListingCard';
 import ListingPagination from './components/ListingPagination';
+import CreateRecruitmentModal from '../../../../components/ui/CreateRecruitmentModal';
 
 const ManageListing = () => {
     // Real Dummy Data with Images
@@ -22,6 +23,9 @@ const ManageListing = () => {
     const itemsPerPage = 3;
     const totalPages = Math.ceil(allListings.length / itemsPerPage);
 
+    // Modal state
+    const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
     const currentItems = allListings.slice(indexOfFirstItem, indexOfLastItem);
@@ -33,8 +37,7 @@ const ManageListing = () => {
     };
 
     const handleAddListing = () => {
-        console.log('Add new listing clicked');
-        // TODO: Open create listing modal
+        setIsCreateModalOpen(true);
     };
 
     const handleEditListing = (id) => {
@@ -69,6 +72,13 @@ const ManageListing = () => {
                 currentPage={currentPage}
                 totalPages={totalPages}
                 onPageChange={handlePageChange}
+            />
+
+            {/* Create Recruitment Modal */}
+            <CreateRecruitmentModal
+                isOpen={isCreateModalOpen}
+                onClose={() => setIsCreateModalOpen(false)}
+                mode="create"
             />
         </div>
     );

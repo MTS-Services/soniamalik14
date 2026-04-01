@@ -3,7 +3,7 @@ import { MapPin, Calendar, Clock, Edit3, Trash2 } from 'lucide-react';
 
 const ListingCard = ({ listing, onEdit, onDelete }) => {
     return (
-        <div className="bg-white rounded-xl p-4 shadow-sm border border-gray-100 flex flex-col h-full">
+        <div className="bg-[#E7F1F180] rounded-xl p-4 shadow-sm border border-gray-100 flex flex-col h-full">
             {/* Card Image Area */}
             <div className="relative h-48 bg-gray-200 rounded-lg mb-4 overflow-hidden">
                 <img src={listing.image} alt={listing.title} className="w-full h-full object-cover" />
