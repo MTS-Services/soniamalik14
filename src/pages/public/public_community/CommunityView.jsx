@@ -184,6 +184,11 @@ const CommunityView = () => {
           {/* Main Content */}
           <div className="lg:col-span-3">
 
+            {/* Mobile Title - Above Dropdown (Mobile Only) */}
+            <div className="lg:hidden mb-4">
+              <h1 className="text-[32px] font-bold text-[#1A1D1F]">ESSA Community</h1>
+            </div>
+
             {/* Mobile Category Dropdown */}
             <div className="lg:hidden mb-6">
               <select
@@ -201,8 +206,19 @@ const CommunityView = () => {
               </select>
             </div>
 
+            {/* Mobile Button (Mobile Only) */}
+            <div className="lg:hidden mb-6">
+              <Button
+                variant="primary"
+                className="rounded-md w-full bg-[#147B6B] hover:bg-[#0D655D] text-white px-6 py-3 font-medium transition-colors"
+                onClick={handleOpenModal}
+              >
+                {isAuthenticated ? 'Ask Or Share' : 'Log in To Post'}
+              </Button>
+            </div>
+
             {/* Dynamic Header Section */}
-            <div className="flex flex-col sm:flex-row justify-between items-start mb-6 gap-4">
+            <div className="hidden lg:flex flex-col sm:flex-row justify-between items-start mb-6 gap-4">
               <div className={currentHeader.titleClass}>
                 {currentHeader.title}
               </div>
