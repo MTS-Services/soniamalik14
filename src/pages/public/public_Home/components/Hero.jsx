@@ -7,7 +7,7 @@ const Hero = () => {
   return (
     <div
       className="relative flex w-full h-[70vh] md:h-150 lg:h-screen items-end md:items-center justify-center bg-cover bg-center 
-                 bg-[url('/hero1.jpg')] md:bg-[url('/hero.jpg')]"
+                 bg-[url('/hero2.webp')] md:bg-[url('/heroWebp.webp')]"
     >
       <div className="absolute inset-0 z-0 bg-black/10 md:bg-black/10"></div>
       
