@@ -18,13 +18,13 @@ const Hero = () => {
             Women. Sport. <br className="md:hidden" /> Community.
           </HeroTitle>
 
-          <p className='herosubtitle max-w-[280px] md:max-w-none text-white/90 text-sm md:text-lg'>
+          <p className='herosubtitle max-w-70 md:max-w-none text-white/90 text-sm md:text-lg'>
             A platform built for women in sport — whatever level you're starting at.
           </p>
           
           {/* Action Button */}
           <div className='pt-4 w-full flex justify-center'>
-            <Button className='rounded-md whitespace-nowrap px-8 py-3 bg-[#00796B] hover:bg-[#005a50] text-white border-none w-full md:w-auto max-w-[250px]'>
+            <Button className='rounded-md whitespace-nowrap px-8 py-3 bg-[#00796B] hover:bg-[#005a50] text-white border-none w-full md:w-auto max-w-62.5'>
               Join ESSA Hub
             </Button>
           </div>
