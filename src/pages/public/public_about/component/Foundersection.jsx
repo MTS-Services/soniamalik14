@@ -20,9 +20,9 @@ const Foundersection = () => {
         {/* Header section: Modified for Mobile Horizontal Layout */}
         <header className="flex flex-row items-center sm:items-start gap-4 sm:gap-6 mb-6 sm:mb-8">
           {/* Founder photo: Circular and small on mobile, larger on desktop */}
-          <div className="flex-shrink-0">
+          <div className="shrink-0">
             <img
-              src="/images/founder.jpg"
+              src="/founderImage.jpeg"
               alt="ESSA Hub founder"
               className="w-20 h-20 sm:w-36 sm:h-36 md:w-40 md:h-40 object-cover rounded-lg"
             />
