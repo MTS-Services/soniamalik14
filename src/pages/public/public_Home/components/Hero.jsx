@@ -14,7 +14,7 @@ const Hero = () => {
       <Container className="relative z-10 pb-16 md:pb-0 lg:py-0">
         <div className='space-y-4 md:space-y-5 flex flex-col justify-center items-center text-center px-4'>
           
-          <HeroTitle className='text-3xl md:text-5xl lg:text-7xl leading-tight'>
+          <HeroTitle className='text-3xl md:text-5xl lg:text-7xl leading-tight lg:mt-70'>
             Women. Sport. <br className="md:hidden" /> Community.
           </HeroTitle>
 
