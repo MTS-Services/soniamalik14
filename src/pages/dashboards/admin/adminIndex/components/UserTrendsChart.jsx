@@ -26,32 +26,32 @@ const UserTrendsChart = () => {
   ];
 
   return (
-    <div className="rounded-lg bg-white p-6 shadow-sm lg:col-span-2 min-w-0">
-      <div className="mb-4 flex items-center justify-between">
-        <h2 className="text-2xl font-semibold text-gray-900">User</h2>
-        <select className="rounded-lg border border-gray-300 px-4 py-2 text-sm text-gray-600 bg-white focus:outline-none focus:ring-2 focus:ring-btn-primary">
+    <div className="rounded-lg md:rounded-2xl bg-white p-4 md:p-6 shadow-sm lg:col-span-2 min-w-0">
+      <div className="mb-4 md:mb-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 sm:gap-0">
+        <h2 className="text-lg md:text-2xl font-semibold text-gray-900">User</h2>
+        <select className="rounded-lg border border-gray-300 px-3 md:px-4 py-2 text-sm text-gray-600 bg-white focus:outline-none focus:ring-2 focus:ring-btn-primary w-full sm:w-auto">
           <option>This year</option>
           <option>Last year</option>
           <option>Last 6 months</option>
         </select>
       </div>
 
-      <div className="flex items-center gap-6 mb-6">
+      <div className="flex flex-col gap-3 md:gap-6 md:flex-row md:flex-wrap md:items-center mb-4 md:mb-6">
         <div className="flex items-center gap-2">
-          <div className="h-4 w-4 rounded-full bg-btn-primary"></div>
-          <span className="text-base text-gray-700">Player</span>
+          <div className="h-3 md:h-4 w-3 md:w-4 rounded-full bg-btn-primary"></div>
+          <span className="text-sm md:text-base text-gray-700">Player</span>
         </div>
         <div className="flex items-center gap-2">
-          <div className="h-4 w-4 rounded-full bg-yellow-400"></div>
-          <span className="text-base text-gray-700">Service Provider</span>
+          <div className="h-3 md:h-4 w-3 md:w-4 rounded-full bg-yellow-400"></div>
+          <span className="text-sm md:text-base text-gray-700">Service Provider</span>
         </div>
         <div className="flex items-center gap-2">
-          <div className="h-4 w-4 rounded-full bg-gray-900"></div>
-          <span className="text-base text-gray-700">Sport Providers</span>
+          <div className="h-3 md:h-4 w-3 md:w-4 rounded-full bg-gray-900"></div>
+          <span className="text-sm md:text-base text-gray-700">Sport Providers</span>
         </div>
       </div>
 
-      <ResponsiveContainer width="100%" height={400}>
+      <ResponsiveContainer width="100%" height={400} className="md:h-96">
         <AreaChart data={chartData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
           <defs>
             <linearGradient id="colorPlayer" x1="0" y1="0" x2="0" y2="1">
@@ -67,17 +67,17 @@ const UserTrendsChart = () => {
               <stop offset="95%" stopColor="#111827" stopOpacity={0} />
             </linearGradient>
           </defs>
-          <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" vertical={false} />
+          <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" vertical={true} />
           <XAxis
             dataKey="month"
             axisLine={false}
             tickLine={false}
-            tick={{ fill: '#9CA3AF', fontSize: 16 }}
+            tick={{ fill: '#9CA3AF', fontSize: 12 }}
           />
           <YAxis
             axisLine={false}
             tickLine={false}
-            tick={{ fill: '#9CA3AF', fontSize: 16 }}
+            tick={{ fill: '#9CA3AF', fontSize: 12 }}
             tickFormatter={(value) => `${value / 1000}k`}
             ticks={[0, 10000, 20000, 30000, 40000, 50000]}
             domain={[0, 50000]}
