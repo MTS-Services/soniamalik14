@@ -1,12 +1,6 @@
-
-
-
-
-
 import React, { useMemo, useState } from 'react';
 import Container from '../../../components/layout/Container';
 import Button from '../../../components/ui/Button';
-import { Search } from 'lucide-react';
 
 // Sample data using the placeholder image to match your screenshot
 const sampleBrands = [
@@ -63,11 +57,11 @@ const BrandCard = ({ brand }) => {
             </div>
 
             {/* Card Body */}
-            <div className="flex flex-col flex-grow">
+            <div className="flex flex-col grow">
                 <h3 className="text-2xl font-semibold text-gray-900 mb-2">
                     {brand.name}
                 </h3>
-                <p className="text-base text-gray-600 mb-6 leading-relaxed flex-grow pr-2">
+                <p className="text-base text-gray-600 mb-6 leading-relaxed grow pr-2">
                     {brand.description}
                 </p>
 
@@ -107,20 +101,8 @@ const MarketPlaceView = () => {
                     </h1>
                 </div>
 
-                {/* Search and Filters Wrapper */}
-                <div className="bg-[#E7F1F1] p-4 rounded-xl flex flex-col lg:flex-row items-stretch lg:items-center gap-3 mb-12 max-w-4xl">
-
-                    {/* Search Input */}
-                    <div className="relative flex-grow">
-                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-                        <input
-                            type="search"
-                            placeholder="Search brands or sport"
-                            value={query}
-                            onChange={(e) => setQuery(e.target.value)}
-                            className="w-full pl-10 pr-4 py-3 bg-white border-none rounded-lg outline-none text-base text-gray-700 shadow-sm"
-                        />
-                    </div>
+                {/*  Filters Wrapper */}
+                <div className="bg-[#E7F1F1] p-4 rounded-xl flex flex-col lg:flex-row items-stretch lg:items-center lg:justify-center gap-3 mb-12 max-w-lg ">
 
                     {/* Filter Buttons as Tabs */}
                     <div className="flex flex-col lg:flex-row gap-3 w-full lg:w-auto">
@@ -184,7 +166,7 @@ const MarketPlaceView = () => {
 
                         {/* Red Brush Stroke Image Placeholder */}
                         <div className="mb-10 w-full flex justify-center">
-                            <div className="relative w-[300px] h-[100px] md:w-[400px] md:h-[130px] flex items-center justify-center">
+                            <div className="relative w-75 h-25 md:w-100 md:h-32.5 flex items-center justify-center">
                                 {/* Replace the src below with the actual path to your red brush stroke image */}
                                 <img
                                     src="/comingSoon.png"
