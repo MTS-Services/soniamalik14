@@ -108,7 +108,6 @@ const ServiceDetails = () => {
       <Container>
         <div className=" grid grid-cols-1 lg:grid-cols-3 gap-8">
           
-          {/* Left Column: Details */}
           <div className="lg:col-span-2">
             
             <button 
@@ -179,7 +178,6 @@ const ServiceDetails = () => {
             )}
           </div>
 
-          {/* Right Column: Contact Sticky Box */}
           <div className="lg:col-span-1">
             <div className="sticky top-45 bg-[#E7F1F1] rounded-lg p-4 shadow-sm">
               <h3 className="text-xl font-semibold text-[#1A1D1F] mb-4">Contact</h3>
