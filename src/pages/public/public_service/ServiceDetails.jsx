@@ -151,7 +151,6 @@ const ServiceDetails = () => {
                   </p>
                 </div>
 
-                {/* Service Overview List */}
                 <h3 className="font-bold text-[#1A1D1F] text-xl mb-4">Service Overview</h3>
                 <div className="space-y-3 mb-8">
                   
@@ -167,7 +166,6 @@ const ServiceDetails = () => {
 
                 </div>
 
-                {/* Action Buttons */}
                 <div className="flex flex-wrap gap-3">
                   <button className="bg-[#147B6B] hover:bg-[#0D655D] text-white px-6 py-2.5 rounded-lg text-[14px] font-medium transition-colors">
                     Book Now
