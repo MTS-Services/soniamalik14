@@ -207,7 +207,6 @@ const ServiceDetails = () => {
   );
 };
 
-// Reusable component for the Service Overview rows
 const OverviewRow = ({ icon: Icon, label, value }) => (
   <div className="flex items-center gap-4 bg-white p-3.5 rounded-xl border border-gray-100 shadow-sm">
     <div className="w-10 h-10 rounded-full bg-[#EAF2F1] flex items-center justify-center shrink-0">
