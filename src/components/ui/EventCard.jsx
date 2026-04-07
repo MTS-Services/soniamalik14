@@ -1,21 +1,26 @@
-﻿import React, { useState } from 'react';
+﻿import React from 'react';
 import { Link } from 'react-router-dom';
 import Card from './Card';
 import Button from './Button';
 import { MapPin, Calendar, Clock } from 'lucide-react';
 import { FiEdit, FiTrash2 } from 'react-icons/fi';
-import EventModal from './EventModal';
 
-const EventCard = ({ item = {}, editLink, onEdit, onDelete, className = '', detailsRoute = '/coach/event', filter = {} }) => {
-    const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-
+const EventCard = ({
+    item = {},
+    editLink,
+    onEdit,
+    onDelete,
+    className = '',
+    detailsRoute = '/coach/event',
+    filter = {},
+    currentPage = 1,
+}) => {
     const handleEditClick = (e) => {
         e.preventDefault();
         e.stopPropagation();
         if (onEdit) {
             onEdit(item);
         }
-        setIsEditModalOpen(true);
     };
 
     const handleDeleteClick = (e) => {
@@ -26,7 +31,7 @@ const EventCard = ({ item = {}, editLink, onEdit, onDelete, className = '', deta
 
     return (
         <>
-            <Link to={`${detailsRoute}/${item.id}`} state={{ item, from: 'event', filter }} className="block">
+            <Link to={`${detailsRoute}/${item.id}`} state={{ item, from: 'event', filter, currentPage }} className="block">
                 <Card
                     className={`p-4 h-full flex flex-col  justify-between rounded-lg border bg-white ${className}`}
                     style={{ borderColor: '#B5D5D2' }}
@@ -50,7 +55,7 @@ const EventCard = ({ item = {}, editLink, onEdit, onDelete, className = '', deta
                             </div>
                         </div>
 
-                        <h3 className="text-[#282828] font-semibold text-lg mb-2 min-h-[48px]">{item.title}</h3>
+                        <h3 className="text-[#282828] font-semibold text-lg mb-2 min-h-12">{item.title}</h3>
 
                         <div className="text-base text-[#363636] mb-3 flex items-start gap-2 flex-col">
                             {(() => {
@@ -87,7 +92,7 @@ const EventCard = ({ item = {}, editLink, onEdit, onDelete, className = '', deta
                                 </Button>
                             )}
 
-                            <Button onClick={handleDeleteClick} className="w-1/2 rounded-lg flex items-center justify-center gap-2 !border-2 !border-[#0F766E] !bg-[#B5D5D2] !text-[#0E6B64] hover:!bg-[#a0c4c1]" variant="outline">
+                            <Button onClick={handleDeleteClick} className="w-1/2 rounded-lg flex items-center justify-center gap-2 border-2! border-[#0F766E]! bg-[#B5D5D2]! text-[#0E6B64]! hover:bg-[#a0c4c1]!" variant="outline">
                                 <FiTrash2 className="w-4 h-4" /> <span>Delete</span>
                             </Button>
                         </div>

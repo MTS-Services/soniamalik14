@@ -1,18 +1,10 @@
 ﻿import React, { useState, useMemo } from 'react';
 import Table from '../../../../../components/ui/Table';
-import TablePagination from '../../../../../components/ui/TablePagination';
+import Pagination from '../../../../../components/ui/Pagination';
 import { Eye } from 'lucide-react';
 
 const SessionsTable = ({ sessions = [], resultsPerPage = 6 }) => {
     const [currentPage, setCurrentPage] = useState(1);
-
-    const totalResults = sessions.length;
-    const totalPages = Math.max(1, Math.ceil(totalResults / resultsPerPage));
-
-    const paginated = useMemo(() => {
-        const start = (currentPage - 1) * resultsPerPage;
-        return sessions.slice(start, start + resultsPerPage);
-    }, [sessions, currentPage, resultsPerPage]);
 
     const columns = ['User', 'Service', 'Date', 'Status','Action'];
 
@@ -26,6 +18,14 @@ const SessionsTable = ({ sessions = [], resultsPerPage = 6 }) => {
     ];
 
     const effectiveSessions = (sessions && sessions.length > 0) ? sessions : sampleSessions;
+
+    const totalResults = effectiveSessions.length;
+    const totalPages = Math.max(1, Math.ceil(totalResults / resultsPerPage));
+
+    const paginated = useMemo(() => {
+        const start = (currentPage - 1) * resultsPerPage;
+        return effectiveSessions.slice(start, start + resultsPerPage);
+    }, [effectiveSessions, currentPage, resultsPerPage]);
 
     const renderRow = (session) => (
         <>
@@ -48,19 +48,48 @@ const SessionsTable = ({ sessions = [], resultsPerPage = 6 }) => {
 
     return (
         <div>
-            <Table
-                columns={columns}
-                data={paginated.length ? paginated : effectiveSessions.slice(0, resultsPerPage)}
-                renderRow={renderRow}
-            />
+            <div className="hidden md:block overflow-x-auto">
+                <Table
+                    columns={columns}
+                    data={paginated}
+                    renderRow={renderRow}
+                />
+            </div>
 
-            <div className="">
-                <TablePagination
-                    currentPage={currentPage}
-                    totalPages={totalPages}
-                    totalResults={totalResults}
-                    resultsPerPage={resultsPerPage}
-                    onPageChange={(p) => setCurrentPage(p)}
+            <div className="md:hidden space-y-4">
+                {paginated.map((session) => (
+                    <div key={session.id} className="bg-white border border-gray-200 rounded-xl p-4 shadow-sm">
+                        <h3 className="text-base font-semibold text-cardTitle">{session.user}</h3>
+                        <div className="mt-3 grid grid-cols-2 gap-3 text-sm">
+                            <div>
+                                <p className="text-gray-500">Service</p>
+                                <p className="text-cardTitle font-medium">{session.service}</p>
+                            </div>
+                            <div>
+                                <p className="text-gray-500">Date</p>
+                                <p className="text-cardTitle font-medium">{session.date}</p>
+                            </div>
+                            <div>
+                                <p className="text-gray-500">Status</p>
+                                <p className={`${session.status === 'Completed' ? 'text-teal-600' : 'text-blue-600'} font-medium`}>
+                                    {session.status}
+                                </p>
+                            </div>
+                        </div>
+                        <div className="mt-4 flex justify-end">
+                            <button type="button" aria-label="View session details">
+                                <Eye className="w-4 h-4 text-gray-600 cursor-pointer" />
+                            </button>
+                        </div>
+                    </div>
+                ))}
+            </div>
+
+            <div>
+                <Pagination
+                    page={currentPage}
+                    total={totalPages}
+                    onChange={(p) => setCurrentPage(Math.max(1, Math.min(totalPages, p)))}
                 />
             </div>
         </div>

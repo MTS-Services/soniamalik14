@@ -19,8 +19,8 @@ const BookingsTable = ({ bookings = [], resultsPerPage = 6 }) => {
                     <h2 className="text-xl font-semibold text-gray-900">Bookings</h2>
                 </div>
 
-                {/* Card view for mobile & tablet (show until large screens) */}
-                <div className="block lg:hidden">
+                {/* Card view for mobile only */}
+                <div className="block md:hidden">
                     {paginated.map((b, idx) => (
                         <div key={idx} className="px-6 py-4 border-b border-gray-200 last:border-b-0">
                             <div className="grid grid-cols-2 gap-2 items-start">
@@ -33,14 +33,14 @@ const BookingsTable = ({ bookings = [], resultsPerPage = 6 }) => {
                             </div>
                             <div className="grid grid-cols-2 gap-2 items-start mt-3">
                                 <div className="text-xs text-gray-500">Email</div>
-                                <div className="text-base text-gray-700 break-words text-right">{b.email}</div>
+                                <div className="text-base text-gray-700 wrap-break-word text-right">{b.email}</div>
                             </div>
                         </div>
                     ))}
                 </div>
 
-                {/* Table view for large screens */}
-                <div className="hidden lg:block overflow-x-auto">
+                {/* Table view for tablet and larger screens */}
+                <div className="hidden md:block overflow-x-auto">
                     <table className="min-w-full divide-y divide-gray-200">
                         <thead className="bg-[#F8F8F8]">
                             <tr>
@@ -54,7 +54,7 @@ const BookingsTable = ({ bookings = [], resultsPerPage = 6 }) => {
                                 <tr key={idx} className="odd:bg-white even:bg-white">
                                     <td className="px-6 py-6 text-base text-gray-800 font-medium">{b.name}</td>
                                     <td className="px-6 py-6 text-base text-center text-gray-700">{b.phone}</td>
-                                    <td className="px-6 py-6 text-base text-gray-700 break-words text-center">{b.email}</td>
+                                    <td className="px-6 py-6 text-base text-gray-700 wrap-break-word text-center">{b.email}</td>
                                 </tr>
                             ))}
                         </tbody>

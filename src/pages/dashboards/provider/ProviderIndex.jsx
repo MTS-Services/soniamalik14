@@ -1,15 +1,11 @@
 ﻿import React from 'react';
-
-import ProviderEvent from './event/ProviderEvent';
+import ProviderDashboard from './ProviderDashboard';
 
 const ProviderIndex = () => {
- 
-
   return (
     <>
-    <ProviderEvent />
+      <ProviderDashboard />
     </>
- 
   );
 };
 

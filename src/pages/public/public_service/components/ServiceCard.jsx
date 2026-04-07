@@ -107,7 +107,10 @@ const ServiceCard = ({ item }) => {
         </div>
 
         {/* Title */}
-        <h3 className="text-[#1A1D1F] font-bold text-xl md:text-2xl leading-snug mb-2.5">
+        <h3
+          className="font-bold text-xl md:text-2xl leading-snug mb-2.5"
+          style={{ color: item.titleColor || '#1A1D1F' }}
+        >
           {item.title}
         </h3>
 

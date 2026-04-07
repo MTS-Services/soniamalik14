@@ -22,7 +22,9 @@ const EventCard = ({ event }) => {
           </div>
         </div>
 
-        <h3 className="text-[#282828] font-semibold text-lg mb-2">{event.title}</h3>
+        <h3 className="font-semibold text-lg mb-2" style={{ color: event.titleColor || '#282828' }}>
+          {event.title}
+        </h3>
 
         <div className="text-base text-[#363636] mb-1 flex items-center gap-2">
           <MapPin className="w-4 h-4 text-[#363636]" />

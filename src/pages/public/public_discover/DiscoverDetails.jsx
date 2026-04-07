@@ -74,7 +74,7 @@ const DiscoverDetails = () => {
 
           {/* Title & Coach Info */}
           <div className="px-2 md:px-4 mb-8">
-            <h1 className="text-2xl md:text-[32px] font-bold text-[#1A1D1F] leading-tight">
+            <h1 className="text-2xl md:text-[32px] font-bold text-[#0B544E] leading-tight">
               {item.title}
             </h1>
             <p className="text-[#33383F] mt-2 text-base">

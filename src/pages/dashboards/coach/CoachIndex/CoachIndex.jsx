@@ -48,11 +48,11 @@ const CoachIndex = () => {
         </Card>
       </div>
 
-      {/* --- RECENT PLAYER ACTIVITY TABLE START --- */}
+  
       
         <RecentPlayerActivity players={playersActivity} />
     
-      {/* --- RECENT PLAYER ACTIVITY TABLE END --- */}
+  
 
       <CreateRecruitmentModal isOpen={isPostModalOpen} onClose={() => setIsPostModalOpen(false)} />
       <EventModal isOpen={isEventModalOpen} onClose={() => setIsEventModalOpen(false)} mode="create" />

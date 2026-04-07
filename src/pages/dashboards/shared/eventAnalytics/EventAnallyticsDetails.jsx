@@ -187,7 +187,7 @@ const EventAnallyticsDetails = () => {
                 </Link>
             </div>
 
-            <div className="mb-3 text-2xl font-bold text-gray-900 md:text-3xl">
+            <div className="mb-3 text-xl font-semibold text-gray-900 md:text-3xl">
                 {detailsTitleByTab[activeTab] || 'Event Details'}
             </div>
 

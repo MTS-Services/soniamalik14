@@ -12,7 +12,7 @@ const NewsHero = ({ article }) => {
         <div className="mt-4 w-full grid grid-cols-1 md:grid-cols-3 gap-4 items-start lg:items-center">
           <div className="md:col-span-1">
             <p className="text-base text-secondary-text">{article.date}</p>
-            <h3 className="font-semibold text-lg md:text-xl mt-2 text-title leading-tight">{article.title}</h3>
+            <h3 className="font-semibold text-lg md:text-xl mt-2 text-[#0B544E] leading-tight">{article.title}</h3>
           </div>
 
           <div

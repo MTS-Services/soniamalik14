@@ -46,8 +46,9 @@ const DiscoverCard = ({ item }) => {
         </div>
 
         <h3
-          className="text-[#0B2F2C] font-bold text-xl sm:text-2xl mb-3"
+          className="font-bold text-xl sm:text-2xl mb-3"
           style={{
+            color: item.titleColor || '#0B2F2C',
             display: '-webkit-box',
             WebkitLineClamp: 2,
             WebkitBoxOrient: 'vertical',

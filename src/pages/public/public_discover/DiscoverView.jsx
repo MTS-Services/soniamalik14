@@ -8,6 +8,7 @@ import DiscoverEmptyPage from './components/DiscoverEmptyPage';
 const sample = Array.from({ length: 9 }).map((_, i) => ({
   id: i + 1,
   title: ['Woking Warriors FC', 'Beginner Basics Boot Camp', 'Weekly 5-a-Side Session'][i % 3],
+  titleColor: '#0B544E',
   type: ['Clubs', 'Training', 'Sessions'][i % 3],
   sport: ['Football', 'Cricket', 'Netball', 'Tennis', 'Padel', 'Rugby', 'Others'][i % 7],
   day: 'Monday, Wednesday',

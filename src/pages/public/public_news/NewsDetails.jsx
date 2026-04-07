@@ -133,7 +133,7 @@ const NewsDetails = () => {
               </div>
 
               <div className="h-full flex flex-col justify-center items-start">
-                <h1 className="text-white text-3xl md:text-5xl font-bold leading-tight drop-shadow-lg max-w-3xl">{article.title}</h1>
+                <h1 className="text-[#0B544E] text-3xl md:text-5xl font-bold leading-tight drop-shadow-lg max-w-3xl">{article.title}</h1>
 
                 <div className="mt-4 text-base text-white/80 flex items-center gap-4">
                   <span>{article.date}</span>

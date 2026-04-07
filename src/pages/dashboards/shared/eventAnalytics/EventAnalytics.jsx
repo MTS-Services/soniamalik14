@@ -4,7 +4,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Table from '../../../../components/ui/Table';
-import TablePagination from '../../../../components/ui/TablePagination';
+import Pagination from '../../../../components/ui/Pagination';
 import { Eye, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { fetchEventAnalytics } from '../../../../features/events/eventsAPI';
@@ -85,10 +85,11 @@ const EventAnalytics = ({ baseRoute = '/coach' }) => {
     });
 
     const totalResults = filteredEvents.length;
-    const totalPages = Math.ceil(totalResults / resultsPerPage);
-    const paginatedEvents = filteredEvents.slice((currentPage - 1) * resultsPerPage, currentPage * resultsPerPage);
+    const totalPages = Math.max(1, Math.ceil(totalResults / resultsPerPage));
+    const safeCurrentPage = Math.min(currentPage, totalPages);
+    const paginatedEvents = filteredEvents.slice((safeCurrentPage - 1) * resultsPerPage, safeCurrentPage * resultsPerPage);
 
-    const handlePageChange = (page) => setCurrentPage(page);
+    const handlePageChange = (page) => setCurrentPage(Math.max(1, Math.min(totalPages, page)));
 
     const handleTabChange = (tabId) => {
         setActiveTab(tabId);
@@ -138,6 +139,22 @@ const EventAnalytics = ({ baseRoute = '/coach' }) => {
         );
     };
 
+    const getStatusStyle = (status = '') => {
+        const s = status.toLowerCase();
+        if (s === 'approved') return 'text-[#0F766E]';
+        if (s === 'pending') return 'text-[#FF7700]';
+        if (s === 'cancelled') return 'text-red-600';
+        return 'text-gray-600';
+    };
+
+    const formatDate = (dateValue) => {
+        if (!dateValue) return '-';
+        if (typeof dateValue === 'string' && dateValue.includes('-')) {
+            return new Date(dateValue).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: '2-digit' });
+        }
+        return dateValue;
+    };
+
     return (
         <div className="dashboardPy dashboardSpaceY">
             <div className="relative border-b border-gray-200 group">
@@ -182,8 +199,59 @@ const EventAnalytics = ({ baseRoute = '/coach' }) => {
                 )}
                 {!loading && !error && (
                     <>
-                        <Table columns={columns} data={paginatedEvents} renderRow={renderRow} />
-                        <TablePagination currentPage={currentPage} totalPages={totalPages} totalResults={totalResults} resultsPerPage={resultsPerPage} onPageChange={handlePageChange} />
+                        <div className="hidden md:block overflow-x-auto">
+                            <Table columns={columns} data={paginatedEvents} renderRow={renderRow} />
+                        </div>
+
+                        <div className="md:hidden space-y-4">
+                            {paginatedEvents.map((event) => (
+                                <div key={event.id} className="bg-white border border-gray-200 rounded-xl p-4 shadow-sm">
+                                    <div className="flex items-start justify-between gap-3">
+                                        <div>
+                                            <h3 className="text-base font-semibold text-cardTitle">{event.title}</h3>
+                                            <p className="text-sm text-gray-500 mt-1">{event.type} • {event.sport}</p>
+                                        </div>
+                                        <span className={`text-sm font-medium ${getStatusStyle(event.status)}`}>
+                                            {event.status}
+                                        </span>
+                                    </div>
+
+                                    <div className="mt-4 grid grid-cols-2 gap-3 text-sm">
+                                        <div>
+                                            <p className="text-gray-500">Organizer</p>
+                                            <p className="text-cardTitle font-medium">{event.organizer}</p>
+                                        </div>
+                                        <div>
+                                            <p className="text-gray-500">Date</p>
+                                            <p className="text-cardTitle font-medium">{formatDate(event.date)}</p>
+                                        </div>
+                                        <div>
+                                            <p className="text-gray-500">Joined</p>
+                                            <p className="text-btn-primary font-semibold">{event.joined}</p>
+                                        </div>
+                                    </div>
+
+                                    <div className="mt-4 flex justify-end">
+                                        <Link
+                                            to={`${baseRoute}/event-analytics/event/${event.id}`}
+                                            state={{ item: event, from: 'analytics', tab: activeTab }}
+                                            className="inline-flex items-center gap-1 text-sm text-gray-600 hover:text-btn-primary transition-colors"
+                                        >
+                                            <Eye className="w-4 h-4" />
+                                            <span>View</span>
+                                        </Link>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+
+                        {totalPages > 1 && (
+                            <Pagination
+                                page={safeCurrentPage}
+                                total={totalPages}
+                                onChange={handlePageChange}
+                            />
+                        )}
                     </>
                 )}
             </div>

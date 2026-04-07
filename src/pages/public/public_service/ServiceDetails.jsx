@@ -134,7 +134,7 @@ const ServiceDetails = () => {
                     className="w-[72px] h-[72px] rounded-full object-cover shadow-sm bg-gray-200"
                   />
                   <div>
-                    <h1 className="text-[24px] md:text-3xl font-semibold text-[#1A1D1F] leading-tight">
+                    <h1 className="text-[24px] md:text-3xl font-semibold text-[#0B544E] leading-tight">
                       {displayData.title}
                     </h1>
                     <p className="text-[#4A5565] text-base mt-1">
