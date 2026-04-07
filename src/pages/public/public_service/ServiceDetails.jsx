@@ -125,7 +125,7 @@ const ServiceDetails = () => {
             ) : (
               <div className="animate-in fade-in duration-300">
                 
-                {/* Header Info */}
+              
                 <div className="flex items-center gap-4 mb-8">
                   <img
                     src={displayData.avatar}
@@ -143,7 +143,7 @@ const ServiceDetails = () => {
                   </div>
                 </div>
 
-                {/* About Box */}
+          
                 <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 mb-8">
                   <h3 className="font-bold text-[#1A1D1F] text-lg md:text-xl mb-3">About This Service</h3>
                   <p className="text-[#4A5565] text-[15px] leading-relaxed">
