@@ -26,7 +26,7 @@ const ServiceDetails = () => {
   const [item, setItem] = useState(location.state?.item || null);
   const [loading, setLoading] = useState(!location.state?.item);
   const [error, setError] = useState(null);
-  const [imageError, setImageError] = useState(false);
+  // const [imageError, setImageError] = useState(false);
 
   // Simplified form state to match the design (just a message box)
   const [message, setMessage] = useState('');
