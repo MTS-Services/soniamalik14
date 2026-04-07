@@ -97,7 +97,6 @@ const DiscoverView = () => {
                 <option value="Tennis">Tennis</option>
                 <option value="Padel">Padel</option>
                 <option value="Rugby">Rugby</option>
-                <option value="Others">Others</option>
 
               </select>
               <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-gray-800">
