@@ -28,7 +28,6 @@ const ServiceDetails = () => {
   const [error, setError] = useState(null);
   // const [imageError, setImageError] = useState(false);
 
-  // Simplified form state to match the design (just a message box)
   const [message, setMessage] = useState('');
   const [submitLoading, setSubmitLoading] = useState(false);
 
