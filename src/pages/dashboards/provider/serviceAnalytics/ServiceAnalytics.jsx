@@ -3,7 +3,7 @@ import { useAuth } from '../../../../context/AuthContext'
 import { useService } from '../../../../context/ServiceContext'
 import PageHeader from '../../../../components/ui/PageHeader'
 import Table from '../../../../components/ui/Table'
-import TablePagination from '../../../../components/ui/TablePagination'
+import Pagination from '../../../../components/ui/Pagination'
 import { Eye } from 'lucide-react'
 import { Link } from 'react-router-dom'
 
@@ -23,6 +23,12 @@ const ServiceAnalytics = () => {
     const totalPages = Math.max(1, Math.ceil(total / perPage))
     const startIndex = (page - 1) * perPage
     const pageData = providerServices.slice(startIndex, startIndex + perPage)
+
+    useEffect(() => {
+        if (page > totalPages) {
+            setPage(totalPages)
+        }
+    }, [page, totalPages])
 
     const columns = ['Service Name', 'Service Type', 'Phone', 'ACTIONS']
 
@@ -65,14 +71,45 @@ const ServiceAnalytics = () => {
             <PageHeader title="Service List" />
 
             <div className="mt-4">
-                <Table columns={columns} data={pageData} renderRow={renderRow} />
-                <TablePagination
-                    currentPage={page}
-                    totalPages={totalPages}
-                    totalResults={total}
-                    resultsPerPage={perPage}
-                    onPageChange={(p) => setPage(Math.max(1, Math.min(totalPages, p)))}
-                />
+                <div className="hidden md:block overflow-x-auto">
+                    <Table columns={columns} data={pageData} renderRow={renderRow} />
+                </div>
+
+                <div className="md:hidden space-y-4">
+                    {pageData.map((item) => (
+                        <div key={item.id} className="bg-white border border-gray-200 rounded-xl p-4 shadow-sm">
+                            <h3 className="text-base font-semibold text-cardTitle">{item.name}</h3>
+                            <div className="mt-3 grid grid-cols-2 gap-3 text-sm">
+                                <div>
+                                    <p className="text-gray-500">Service Type</p>
+                                    <p className="text-cardTitle font-medium">{item.type || '-'}</p>
+                                </div>
+                                <div>
+                                    <p className="text-gray-500">Phone</p>
+                                    <p className="text-cardTitle font-medium">{item.phone || '-'}</p>
+                                </div>
+                            </div>
+                            <div className="mt-4 flex justify-end">
+                                <Link
+                                    to={`/provider/service/${item.id}`}
+                                    state={{ item, from: 'service-analytics' }}
+                                    className="inline-flex items-center gap-1 text-sm text-gray-600 hover:text-btn-primary transition-colors"
+                                >
+                                    <Eye className="w-4 h-4" />
+                                    <span>View</span>
+                                </Link>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+
+                {totalPages > 1 && (
+                    <Pagination
+                        page={page}
+                        total={totalPages}
+                        onChange={(p) => setPage(Math.max(1, Math.min(totalPages, p)))}
+                    />
+                )}
             </div>
         </div>
     )

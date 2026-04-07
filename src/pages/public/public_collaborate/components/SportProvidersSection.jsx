@@ -32,7 +32,7 @@ const SportProvidersSection = () => {
             {/* Content Container */}
             <div className="relative z-10 p-6 sm:p-10 md:p-12 lg:p-16 w-full md:w-[65%] lg:w-[55%] bg-white md:bg-transparent min-h-[450px] md:min-h-[500px] xl:min-h-[550px] flex flex-col justify-center">
 
-                <h2 className="text-3xl md:text-[40px] leading-tight font-medium text-gray-900 mb-5 tracking-tight">
+                <h2 className="text-3xl md:text-[40px] leading-tight font-medium text-[#0B544E] mb-5 tracking-tight">
                     For Sport Providers
                 </h2>
 

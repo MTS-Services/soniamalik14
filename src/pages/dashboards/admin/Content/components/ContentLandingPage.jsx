@@ -241,7 +241,7 @@ const ContentLandingPage = () => {
 
             {/* 3. Find Your Sport Section */}
             <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 md:p-8">
-                <h2 className="text-2xl lg:text-3xl font-semibold text-gray-900 mb-6">Find Your Sport</h2>
+                <h2 className="text-2xl lg:text-3xl font-semibold text-[#0B544E] mb-6">Find Your Sport</h2>
 
                 {/* Section Inputs */}
                 <div className="space-y-6 mb-10">

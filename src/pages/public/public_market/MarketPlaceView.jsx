@@ -58,7 +58,7 @@ const BrandCard = ({ brand }) => {
 
             {/* Card Body */}
             <div className="flex flex-col grow">
-                <h3 className="text-2xl font-semibold text-gray-900 mb-2">
+                <h3 className="text-2xl font-semibold text-[#0B544E] mb-2">
                     {brand.name}
                 </h3>
                 <p className="text-base text-gray-600 mb-6 leading-relaxed grow pr-2">
@@ -96,7 +96,7 @@ const MarketPlaceView = () => {
             <Container className="py-6 lg:py-10 bg-[#F8FAFC] font-sans ">
                 {/* Header Title */}
                 <div className="mb-8">
-                    <h1 className="text-3xl sm:text-4xl lg:text-[2.5rem] font-bold text-gray-900 tracking-tight">
+                    <h1 className="text-3xl sm:text-4xl lg:text-[2.5rem] font-bold text-[#0B544E] tracking-tight">
                         Curated brands across women’s sport.
                     </h1>
                 </div>

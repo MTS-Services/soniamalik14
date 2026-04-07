@@ -8,6 +8,7 @@ import Pagination from '../../../components/ui/Pagination';
 const sampleEvents = new Array(12).fill(0).map((_, i) => ({
     id: i + 1,
     title: `Womens Football Friendly Match Day`,
+     titleColor: '#0B544E',
     date: '4 Dec 2025',
     location: '1901 Thornridge Cir. Shiloh',
     tag: 'Tournament',
@@ -72,7 +73,7 @@ const EventView = () => {
                 {/* Custom Header Section */}
                 <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center mb-6 lg:mb-8 gap-4">
 
-                    <h1 className="text-3xl lg:text-[40px] font-semibold text-subtitle">
+                    <h1 className="text-3xl lg:text-[40px] font-semibold text-[#0B544E]">
                         Women-focused events and workshops
                     </h1>
 

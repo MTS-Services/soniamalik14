@@ -8,6 +8,7 @@ const ForumTopicCard = ({ topic, isLoggedIn = false }) => {
   const {
     author = 'Ralph Edwards',
     title = 'How to balance strength training with competitive netball?',
+    titleColor = '#1A1D1F',
     description = "I'm starting to play more on asphalt courts and my current trainers are wearing down fast. Any recommendations for durable soles?",
     replies = 4,
    
@@ -61,7 +62,7 @@ const ForumTopicCard = ({ topic, isLoggedIn = false }) => {
       )}
 
       {/* Topic Title */}
-      <h3 className="text-[18px] md:text-xl font-bold text-[#1A1D1F] mb-2 leading-snug">
+      <h3 className="text-[18px] md:text-xl font-bold mb-2 leading-snug" style={{ color: titleColor }}>
         {title}
       </h3>
 
@@ -134,7 +135,7 @@ const ForumTopicCard = ({ topic, isLoggedIn = false }) => {
               onClick={() => setIsExpanded(false)} // Adding toggle logic back to close if needed
               className="bg-[#147B6B] p-2.5 rounded-lg text-white shrink-0 hover:bg-[#0D655D] transition-colors"
             >
-              <Send className="w-5 h-5 ml-[-2px] mt-[1px]" />
+              <Send className="-ml-0.5 mt-px w-5 h-5" />
             </button>
           </div>
         </div>

@@ -28,7 +28,7 @@ const Foundersection = () => {
 
           {/* Title */}
           <div className="flex-1">
-            <h1 className="text-xl leading-tight font-normal text-[#1A1D1F] italic sm:text-3xl sm:not-italic md:text-5xl">
+            <h1 className="text-xl leading-tight font-normal text-[#0B544E] italic sm:text-3xl sm:not-italic  pb-4">
               A note from the founder
             </h1>
             {/**for large device */}

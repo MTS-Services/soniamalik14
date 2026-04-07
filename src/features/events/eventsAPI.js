@@ -1,36 +1,30 @@
 ﻿import { createAsyncThunk } from '@reduxjs/toolkit';
-import { GET } from '../../services/httpMethods';
-import { ENDPOINT } from '../../services/httpEndpoint';
-import { apiExecutor } from '../../services/apiExecutor';
+import eventAnalyticsData from '../../data/eventAnalyticsData.json';
 
-// Fetch all events
+// Fetch all events - using local data
 export const fetchEvents = createAsyncThunk(
   'events/fetchAll',
-  async (_, { rejectWithValue, signal }) => {
+  async (_, { rejectWithValue }) => {
     try {
-      // Call real API (pass signal as third arg to avoid it being serialized into query params)
-      const response = await GET(ENDPOINT.EVENTS.LIST, null, signal);
-      return response.data ?? response;
+      // Simulate async call with local data
+      await new Promise(resolve => setTimeout(resolve, 300));
+      return eventAnalyticsData || [];
     } catch (error) {
-      if (error?.response?.status === 404) return [];
-      return rejectWithValue(error.response?.data || error.message || 'Failed to fetch events');
+      return rejectWithValue(error?.message || 'Failed to fetch events');
     }
   }
 );
 
-// Fetch event analytics
+// Fetch event analytics - using local data
 export const fetchEventAnalytics = createAsyncThunk(
   'events/fetchAnalytics',
-  async (_, { rejectWithValue, signal }) => {
+  async (_, { rejectWithValue }) => {
     try {
-      // Call real API (pass signal correctly). If backend doesn't support analytics, return empty array.
-      const response = await GET(ENDPOINT.EVENTS.ANALYTICS, null, signal);
-      return response.data ?? response;
+      // Simulate async call with local data
+      await new Promise(resolve => setTimeout(resolve, 300));
+      return eventAnalyticsData || [];
     } catch (error) {
-      if (error?.response?.status === 404) return [];
-      return rejectWithValue(
-        error.response?.data || error.message || 'Failed to fetch event analytics'
-      );
+      return rejectWithValue(error?.message || 'Failed to fetch event analytics');
     }
   }
 );

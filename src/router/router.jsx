@@ -43,6 +43,7 @@ import CoachEventDetails from '../pages/dashboards/coach/event/EventDetails.jsx'
 import EventAnalytics from '../pages/dashboards/coach/eventAnalytics/EventAnalytics.jsx';
 ;
 import EventAnallyticsDetails from '../pages/dashboards/shared/eventAnalytics/EventAnallyticsDetails.jsx';
+import Enquiries from '../pages/dashboards/shared/eventAnalytics/Enquiries.jsx';
 
 import Recruitment from '../pages/dashboards/coach/recruitment/Recruitment.jsx';
 import RecruitmentDetails from '../pages/dashboards/coach/recruitment/RecruitmentDetails.jsx';
@@ -53,6 +54,12 @@ import ServiceAnalytics from '../pages/dashboards/provider/serviceAnalytics/Serv
 import ProviderThread from '../pages/dashboards/provider/thread/ProviderThread.jsx';
 import ProviderThreadDetails from '../pages/dashboards/provider/thread/ProviderThreadDetails.jsx';
 import ProviderSettings from '../pages/dashboards/provider/ProviderSettings.jsx';
+import AddListing from '../pages/dashboards/provider/addListing/AddListing.jsx';
+import AddListingDetails from '../pages/dashboards/provider/addListing/AddListingDetails.jsx';
+import Insights from '../pages/dashboards/provider/insights/Insights.jsx';
+import InsightsPreview from '../pages/dashboards/provider/insights/InsightsPreview.jsx';
+import ProviderEnquiries from '../pages/dashboards/provider/enquiries/ProviderEnquiries.jsx';
+import ProviderNotifications from '../pages/dashboards/provider/notifications/ProviderNotifications.jsx';
 import MyOrders from '../pages/myOrders/MyOrders.jsx';
 
 // Admin Dashboard Pages
@@ -159,8 +166,14 @@ const router = createBrowserRouter(
         }
       >
         <Route index element={<ProviderIndex />} />
+        <Route path="add-listing" element={<AddListing />} />
+        <Route path="add-listing/:id" element={<AddListingDetails />} />
         <Route path="event" element={<ProviderEvent />} />
         <Route path="event/:id" element={<ProviderEventDetails />} />
+        <Route path="insights" element={<Insights />} />
+        <Route path="insights/:id" element={<InsightsPreview />} />
+        <Route path="enquiries" element={<ProviderEnquiries />} />
+        <Route path="notifications" element={<ProviderNotifications />} />
         <Route path="event-analytics" element={<ProviderEventAnalytics />} />
         <Route path="event-analytics/event/:id" element={<EventAnallyticsDetails />} />
         <Route path="thread" element={<ProviderThread />} />
@@ -185,6 +198,7 @@ const router = createBrowserRouter(
         <Route path="event/:id" element={<CoachEventDetails />} />
         <Route path="event-analytics" element={<EventAnalytics />} />
         <Route path="event-analytics/event/:id" element={<EventAnallyticsDetails />} />
+        <Route path="enquiries" element={<Enquiries />} />
         <Route path="notifications" element={<Notifications />} />
 
         <Route path="recruitment" element={<Recruitment />} />

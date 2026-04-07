@@ -40,7 +40,7 @@ const CommunityView = () => {
     'All Discussion': {
       title: 'ESSA Community',
       buttonText: 'Ask Or Share',
-      titleClass: 'text-[32px] font-bold text-[#1A1D1F]',
+      titleClass: 'text-[32px] font-bold text-[#0B544E]',
     },
     'Stories & Experiences': {
       title: 'A space to share moments, reflections and stories from your time in sport.',
@@ -159,7 +159,7 @@ const CommunityView = () => {
       replies: 4,
       avatar: '/images/avatars/user12.jpg'
     }
-  ];
+  ].map((topic) => ({ ...topic, titleColor: '#0B544E' }));
 
   // Calculate pagination
   const totalPages = Math.ceil(topics.length / itemsPerPage);
@@ -186,7 +186,7 @@ const CommunityView = () => {
 
             {/* Mobile Title - Above Dropdown (Mobile Only) */}
             <div className="lg:hidden mb-4">
-              <h1 className="text-[32px] font-bold text-[#1A1D1F]">ESSA Community</h1>
+              <h1 className="text-[32px] font-bold text-[#0B544E]">ESSA Community</h1>
             </div>
 
             {/* Mobile Category Dropdown */}

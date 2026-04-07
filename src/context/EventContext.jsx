@@ -1,8 +1,6 @@
-﻿import React, { createContext, useContext, useState, useCallback } from 'react';
-import { GET, POST, PUT, DELETE, PATCH } from '../services/httpMethods';
-import { ENDPOINT } from '../services/httpEndpoint';
+﻿import React, { createContext, useContext, useState, useCallback, useEffect } from 'react';
 import { toast } from 'react-toastify';
-import { useAuth } from './AuthContext';
+import eventsData from '../data/eventsData.json';
 
 const EventContext = createContext(null);
 
@@ -14,51 +12,31 @@ export const EventProvider = ({ children }) => {
     const [deleteLoading, setDeleteLoading] = useState(false);
     const [error, setError] = useState(null);
 
-    // Fetch all events (uses authenticated token). Admins hit the public LIST endpoint,
-    // regular users hit the MY_LIST endpoint.
-    const { user } = useAuth();
+    // Initialize events from JSON data
+    useEffect(() => {
+        setEvents(eventsData || []);
+    }, []);
 
     const fetchEvents = useCallback(async () => {
         setLoading(true);
         setError(null);
         try {
-            // Choose endpoint depending on role
-            const endpointToUse = (user && user.role === 'admin') ? ENDPOINT.EVENTS.LIST : ENDPOINT.EVENTS.MY_LIST;
-            const response = await GET(endpointToUse);
-
-
-            // Backend returns: { success: true, data: { events: [...], total: 3, page: 1 } }
-            let eventsList = [];
-            if (response?.data) {
-                if (Array.isArray(response.data)) {
-                    eventsList = response.data;
-
-                } else if (response.data.events && Array.isArray(response.data.events)) {
-                    eventsList = response.data.events;
-                    ;
-                } else if (response.data.data && response.data.data.events && Array.isArray(response.data.data.events)) {
-                    eventsList = response.data.data.events;
-
-                } else if (response.data.data && Array.isArray(response.data.data)) {
-                    eventsList = response.data.data;
-
-                } else {
-                    console.log(' Could not find events array in response structure');
-                }
-            }
-            console.log(' Parsed events:', eventsList.length, 'events');
+            // Simulate async call with local data
+            await new Promise(resolve => setTimeout(resolve, 300));
+            
+            const eventsList = eventsData || [];
             setEvents(eventsList);
             return { success: true, events: eventsList };
         } catch (err) {
-            console.error(' Error fetching events:', err);
-            const message = err?.response?.data?.message || err?.message || 'Failed to fetch events';
+            console.error('Error fetching events:', err);
+            const message = err?.message || 'Failed to fetch events';
             setError(message);
             toast.error(message);
             return { success: false, message };
         } finally {
             setLoading(false);
         }
-    }, [user]);
+    }, []);
 
     // Fetch single event details
     const fetchEventById = useCallback(async (eventId) => {
@@ -70,20 +48,16 @@ export const EventProvider = ({ children }) => {
         setLoading(true);
         setError(null);
         try {
-            const response = await GET(ENDPOINT.EVENTS.DETAIL(eventId));
-            let event = null;
-            if (response?.data) {
-                if (response.data.event) {
-                    event = response.data.event;
-                } else if (response.data.data) {
-                    event = response.data.data;
-                } else {
-                    event = response.data;
-                }
+            // Simulate async call with local data
+            await new Promise(resolve => setTimeout(resolve, 200));
+            
+            const event = (eventsData || []).find(e => e.id === eventId);
+            if (!event) {
+                throw new Error('Event not found');
             }
             return { success: true, event };
         } catch (err) {
-            const message = err?.response?.data?.message || err?.message || 'Failed to fetch event details';
+            const message = err?.message || 'Failed to fetch event details';
             setError(message);
             toast.error(message);
             return { success: false, message };
@@ -92,42 +66,35 @@ export const EventProvider = ({ children }) => {
         }
     }, []);
 
-    // Create new event (uses authenticated token)
+    // Create new event (uses local state)
     const createEvent = useCallback(async (eventData) => {
         setCreateLoading(true);
         setError(null);
         try {
-            const response = await POST(ENDPOINT.EVENTS.CREATE, eventData);
+            // Simulate async call
+            await new Promise(resolve => setTimeout(resolve, 300));
+            
+            // Generate new ID based on max existing ID
+            const maxId = Math.max(...events.map(e => e.id || 0), 0);
+            const newEvent = {
+                ...eventData,
+                id: maxId + 1,
+                status: eventData.status || 'Pending'
+            };
 
-            // Handle different response structures
-            let newEvent = null;
-            if (response?.data) {
-                if (response.data.event) {
-                    newEvent = response.data.event;
-                } else if (response.data.data) {
-                    newEvent = response.data.data;
-                } else {
-                    newEvent = response.data;
-                }
-            } else {
-                newEvent = response;
-            }
-
+            setEvents(prev => [...prev, newEvent]);
             toast.success('Event created successfully!');
-
-            // Refetch events to get complete data from backend
-            await fetchEvents();
 
             return { success: true, event: newEvent };
         } catch (err) {
-            const message = err?.response?.data?.message || err?.message || 'Failed to create event';
+            const message = err?.message || 'Failed to create event';
             setError(message);
             toast.error(message);
             return { success: false, message };
         } finally {
             setCreateLoading(false);
         }
-    }, [fetchEvents]);
+    }, [events]);
 
     // Update event
     const updateEvent = useCallback(async (eventId, eventData) => {
@@ -139,34 +106,24 @@ export const EventProvider = ({ children }) => {
         setUpdateLoading(true);
         setError(null);
         try {
-            const response = await PUT(ENDPOINT.EVENTS.UPDATE(eventId), eventData);
-
-            let updatedEvent = null;
-            if (response?.data) {
-                if (response.data.event) {
-                    updatedEvent = response.data.event;
-                } else if (response.data.data) {
-                    updatedEvent = response.data.data;
-                } else {
-                    updatedEvent = response.data;
-                }
-            }
-
+            // Simulate async call
+            await new Promise(resolve => setTimeout(resolve, 300));
+            
+            const updatedEvent = { ...eventData, id: eventId };
+            
+            setEvents(prev => prev.map(event => event.id === eventId ? updatedEvent : event));
             toast.success('Event updated successfully!');
-
-            // Refetch events to get complete data from backend
-            await fetchEvents();
 
             return { success: true, event: updatedEvent };
         } catch (err) {
-            const message = err?.response?.data?.message || err?.message || 'Failed to update event';
+            const message = err?.message || 'Failed to update event';
             setError(message);
             toast.error(message);
             return { success: false, message };
         } finally {
             setUpdateLoading(false);
         }
-    }, [fetchEvents]);
+    }, []);
 
     // Delete event
     const deleteEvent = useCallback(async (eventId) => {
@@ -178,15 +135,15 @@ export const EventProvider = ({ children }) => {
         setDeleteLoading(true);
         setError(null);
         try {
-            await DELETE(ENDPOINT.EVENTS.DELETE(eventId));
-            toast.success('Event deleted successfully!');
-
-            // Remove from local state
+            // Simulate async call
+            await new Promise(resolve => setTimeout(resolve, 300));
+            
             setEvents((prev) => prev.filter((event) => event.id !== eventId));
+            toast.success('Event deleted successfully!');
 
             return { success: true };
         } catch (err) {
-            const message = err?.response?.data?.message || err?.message || 'Failed to delete event';
+            const message = err?.message || 'Failed to delete event';
             setError(message);
             toast.error(message);
             return { success: false, message };
@@ -205,25 +162,25 @@ export const EventProvider = ({ children }) => {
         setUpdateLoading(true);
         setError(null);
         try {
-            const response = await PATCH(ENDPOINT.EVENTS.APPROVAL_STATUS(eventId), {
-                action: 'approve'
-            });
+            // Simulate async call
+            await new Promise(resolve => setTimeout(resolve, 300));
+            
+            setEvents(prev => prev.map(event => 
+                event.id === eventId ? { ...event, status: 'Approved' } : event
+            ));
 
             toast.success('Event approved successfully!');
 
-            // Refetch events to get updated data
-            await fetchEvents();
-
-            return { success: true, data: response?.data };
+            return { success: true, data: { status: 'Approved' } };
         } catch (err) {
-            const message = err?.response?.data?.message || err?.message || 'Failed to approve event';
+            const message = err?.message || 'Failed to approve event';
             setError(message);
             toast.error(message);
             return { success: false, message };
         } finally {
             setUpdateLoading(false);
         }
-    }, [fetchEvents]);
+    }, []);
 
     // Reject event
     const rejectEvent = useCallback(async (eventId, rejectionReason) => {
@@ -240,26 +197,25 @@ export const EventProvider = ({ children }) => {
         setUpdateLoading(true);
         setError(null);
         try {
-            const response = await PATCH(ENDPOINT.EVENTS.APPROVAL_STATUS(eventId), {
-                action: 'reject',
-                rejectionReason: rejectionReason.trim()
-            });
+            // Simulate async call
+            await new Promise(resolve => setTimeout(resolve, 300));
+            
+            setEvents(prev => prev.map(event => 
+                event.id === eventId ? { ...event, status: 'Rejected', rejectionReason: rejectionReason.trim() } : event
+            ));
 
             toast.success('Event rejected successfully!');
 
-            // Refetch events to get updated data
-            await fetchEvents();
-
-            return { success: true, data: response?.data };
+            return { success: true, data: { status: 'Rejected', rejectionReason } };
         } catch (err) {
-            const message = err?.response?.data?.message || err?.message || 'Failed to reject event';
+            const message = err?.message || 'Failed to reject event';
             setError(message);
             toast.error(message);
             return { success: false, message };
         } finally {
             setUpdateLoading(false);
         }
-    }, [fetchEvents]);
+    }, []);
 
     const value = {
         events,

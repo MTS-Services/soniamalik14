@@ -2,10 +2,20 @@
 import Button from '../../../../components/ui/Button';
 
 
-const CoachFilter = ({ onFilter, active = 'All' }) => {
+const CoachFilter = ({ onFilter, active = 'All', initialQuery = '' }) => {
     const types = ['All', 'Approved', 'Pending'];
     const [status, setStatus] = useState(active);
-    const [query, setQuery] = useState('');
+    const [query, setQuery] = useState(initialQuery);
+
+    // Sync local status with parent value
+    useEffect(() => {
+        setStatus(active || 'All');
+    }, [active]);
+
+    // Sync local query with parent value
+    useEffect(() => {
+        setQuery(initialQuery || '');
+    }, [initialQuery]);
 
     useEffect(() => {
         if (onFilter) onFilter({ status, query });

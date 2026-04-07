@@ -11,7 +11,7 @@ const AboutMission = () => {
 
           {/* Left: Text Content */}
           <div className="order-1 lg:order-none w-full">
-            <h2 className="text-3xl md:text-4xl lg:text-[40px] font-bold text-[#1A1D1F] mb-4 md:mb-6">
+            <h2 className="text-3xl md:text-4xl lg:text-[40px] font-bold text-[#0B544E] mb-4 md:mb-6">
               About ESSA Hub
             </h2>
 

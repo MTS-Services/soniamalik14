@@ -21,9 +21,22 @@ const DashboardNavbar = ({ onMenuClick }) => {
   };
 
   const handleProfileClick = () => {
-    const path = getBasePath(user?.role);
+    const role = user?.role;
+    const path =
+      role === ROLES.PROVIDER
+        ? '/provider/settings'
+        : role === ROLES.ADMIN
+          ? '/admin/settings'
+          : role === ROLES.COACH
+            ? '/coach/settings'
+            : getBasePath(role);
     navigate(path);
   };
+
+  const avatarSrc =
+    user?.avatar ||
+    user?.image ||
+    'https://plus.unsplash.com/premium_photo-1689568126014-06fea9d5d341?fm=jpg&q=60&w=3000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D';
 
   return (
     <div className="bg-white border-b border-gray-200 px-4 lg:px-8 py-3 lg:py-4 flex items-center justify-between">
@@ -54,7 +67,7 @@ const DashboardNavbar = ({ onMenuClick }) => {
         
         <div className="flex items-center gap-2 lg:gap-3 cursor-pointer" onClick={handleProfileClick}>
           <img
-            src="https://plus.unsplash.com/premium_photo-1689568126014-06fea9d5d341?fm=jpg&q=60&w=3000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D"
+            src={avatarSrc}
             alt="User avatar"
             className="w-9 h-9 lg:w-10 lg:h-10 rounded-full object-cover"
           />

@@ -21,7 +21,7 @@ const FooterLayout = () => {
         <Container>
           <div className="flex flex-col items-stretch gap-6 border-b border-gray-300 pb-6 lg:pb-12 lg:flex-row lg:items-center">
             <div className="flex-1 text-center lg:text-left">
-              <Title className={"text-xl md:text-4xl "}>Stay connected with ESSA</Title>
+              <Title className={"text-xl md:text-4xl text-[#0B544E] "}>Stay connected with ESSA</Title>
               <p className="mt-1 text-gray-600 max-w-lg mx-auto lg:mx-0">
                 Occasional updates on new teams, events, services and community features
               </p>

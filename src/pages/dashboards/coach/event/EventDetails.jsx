@@ -2,7 +2,7 @@
 import EventDetails from '../../shared/event/EventDetails';
 
 const CoachEventDetails = () => {
-    return <EventDetails backRoute="/coach/event" />;
+    return <EventDetails backRoute="/coach/events" />;
 };
 
 export default CoachEventDetails;

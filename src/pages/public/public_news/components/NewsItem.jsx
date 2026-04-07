@@ -6,7 +6,7 @@ const NewsItem = ({ item }) => {
     <Link to={`/news/${item.id || 1}`} state={{ article: item }} className="block">
       <div className="py-5">
         <p className="text-base text-secondary-text">{item.date}</p>
-        <h4 className="font-semibold text-base mt-1 text-title leading-tight">{item.title}</h4>
+        <h4 className="font-semibold text-base mt-1 text-[#0B544E] leading-tight">{item.title}</h4>
         {item.excerpt && (
           <p
             className="text-base mt-2 text-color-secondary-text description"

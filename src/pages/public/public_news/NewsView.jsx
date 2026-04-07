@@ -92,7 +92,7 @@ const NewsView = () => {
     return (
         <Container className="py-6 lg:py-8">
             <div>
-                <Title>Latest News</Title>
+                <Title className={"text-[#0B544E]"}>Latest News</Title>
                 <div className="mt-4 lg:mt-6">
                     <NewsList featured={featured} items={items} />
                 </div>

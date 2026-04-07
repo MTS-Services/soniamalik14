@@ -93,6 +93,7 @@ import PageHeader from '../../../components/ui/PageHeader';
 const dummyServices = Array.from({ length: 6 }).map((_, i) => ({
     id: i + 1,
     title: 'Prioritize Your Mind, Transform Your Life',
+    titleColor: '#0B544E',
     description: 'Discover tools, support, and guidance to nurture your mental well-being every day.',
     type: 'Physios',
     sport: 'Football',
