@@ -1,275 +1,197 @@
-﻿
-import React, { useEffect, useState } from 'react';
-import { useParams, useLocation, Link } from 'react-router-dom';
-import { MapPin, Calendar, Clock, Phone, Mail, ArrowLeft } from 'lucide-react';
+import React, { useState } from 'react';
+import { useParams, useLocation, useNavigate } from 'react-router-dom';
+import { ArrowLeft, CalendarDays, MapPin, MessageCircle, Target, Trophy, Users } from 'lucide-react';
 import { useEvent } from '../../../../context/EventContext';
 
-// Transform backend event data to component format
-const transformEventData = (event) => {
-    if (!event) return null;
-
-    // Format date
-    const formatDate = (dateStr) => {
-        if (!dateStr) return '';
-        const date = new Date(dateStr);
-        return date.toLocaleDateString('en-GB', {
-            weekday: 'long',
-            day: 'numeric',
-            month: 'long',
-            year: 'numeric'
-        });
-    };
-
-    // Format time range
-    const formatTime = (startTime, endTime) => {
-        if (!startTime || !endTime) return '';
-        return `${startTime} â€“ ${endTime}`;
-    };
-
-    // Format age group
-    const formatAgeGroup = (minAge) => {
-        if (!minAge) return 'All ages welcome';
-        return `${minAge}+ Years`;
-    };
-
-    return {
-        ...event,
-        date: formatDate(event.startDate),
-        time: formatTime(event.startTime, event.endTime),
-        ageGroup: formatAgeGroup(event.minAge),
-        lastDateToRegister: event.startDate ? formatDate(new Date(new Date(event.startDate).getTime() - 4 * 24 * 60 * 60 * 1000)) : '',
-        venue: {
-            name: event.venueName || '',
-            address: event.fullAddress || event.city || '',
-        },
-        contact: {
-            phone: event.organizerPhone || '',
-            email: event.organizerEmail || '',
-        },
-        organizer: {
-            name: event.organizerName || '',
-            avatar: event.organizerAvatar || `https://ui-avatars.com/api/?name=${encodeURIComponent(event.organizerName || 'Organizer')}&background=0D8ABC&color=fff`,
-        },
-    };
-};
-
-const EventDetails = ({ backRoute = '/coach/event' }) => {
+const EventDetails = ({ backRoute = '/coach/events' }) => {
     const { id } = useParams();
     const { state } = useLocation();
+    const navigate = useNavigate();
 
-    // Use Event Context instead of Redux
-    const { events, fetchEventById } = useEvent();
-    const [itemData, setItemData] = useState(null);
-    const [loading, setLoading] = useState(false);
+    const { events } = useEvent();
+    const [message, setMessage] = useState('');
+    const [bookingSuccess, setBookingSuccess] = useState(false);
+    const [messageSuccess, setMessageSuccess] = useState(false);
 
-    // Load event data from state, context, or API
-    useEffect(() => {
-        // Priority 1: Use state if available
-        if (state?.item) {
-            const transformed = transformEventData(state.item);
-            setItemData(transformed);
+    const itemData = state?.item || events?.find((e) => String(e.id) === String(id)) || null;
+
+    const handleBack = () => {
+        const filter = state?.filter;
+        if (filter) {
+            const params = new URLSearchParams({
+                status: filter.status || 'All',
+                query: filter.query || ''
+            });
+            navigate(`${backRoute}?${params.toString()}`);
             return;
         }
+        navigate(backRoute);
+    };
 
-        // Priority 2: Find in context events array
-        const found = events.find((e) => String(e.id) === String(id));
-        if (found) {
-            const transformed = transformEventData(found);
-            setItemData(transformed);
-            return;
-        }
+    const handleBookPlace = () => {
+        setBookingSuccess(true);
+        window.setTimeout(() => setBookingSuccess(false), 2500);
+    };
 
-        // Priority 3: Fetch from API
-        const load = async () => {
-            setLoading(true);
-            try {
-                const result = await fetchEventById(id);
-                if (result.success && result.event) {
-                    const transformed = transformEventData(result.event);
-                    setItemData(transformed);
-                }
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        load();
-    }, [state, events, id, fetchEventById]);
-
-    // Update when events array changes
-    useEffect(() => {
-        if (!itemData && events.length > 0) {
-            const found = events.find((e) => String(e.id) === String(id));
-            if (found) {
-                const transformed = transformEventData(found);
-                setItemData(transformed);
-            }
-        }
-    }, [events, id, itemData]);
-
-    if (loading) {
-        return (
-            <div className="dashboardPy dashboardSpaceY text-gray-800">
-                <div className="text-center py-20 text-gray-600">Loading event...</div>
-            </div>
-        );
-    }
+    const handleSendMessage = () => {
+        if (!message.trim()) return;
+        setMessageSuccess(true);
+        setMessage('');
+        window.setTimeout(() => setMessageSuccess(false), 2200);
+    };
 
     if (!itemData) {
-        return (
-            <div className="dashboardPy dashboardSpaceY text-gray-800">
-                <div className="text-center py-20">
-                    <div className="text-gray-600 mb-4">Event not found</div>
-                    <Link to={backRoute} className="text-teal-600 hover:text-teal-700">
-                        Go back
-                    </Link>
-                </div>
-            </div>
-        );
+        return <div className="py-20 text-center text-gray-600">Loading event...</div>;
     }
 
-    const item = itemData;
-    const backTarget = state?.from === 'analytics' ? `${backRoute}-analytics` : backRoute;
+    const event = itemData;
+
+    const overviewItems = [
+        { label: 'Sport', value: event.sportType || 'Cricket', icon: Trophy },
+        { label: 'Event Type', value: event.eventType || 'Recreational', icon: CalendarDays },
+        { label: 'Suitable For', value: event.skillLevel || 'New to the sport', icon: Target },
+        { label: "Women's only", value: 'Yes', icon: Users }
+    ];
 
     return (
-        <div className=" dashboardPy dashboardSpaceY  text-gray-800">
-            {/* Back Button */}
-            <div className="mb-4">
-                <Link to={backTarget} className="inline-flex items-center text-base font-medium text-teal-600 hover:text-teal-700">
-                    <ArrowLeft className="w-4 h-4 mr-1" /> Back
-                </Link>
-            </div>
+        <div className="min-h-screen bg-[#f4f6f8] px-4 pb-10 pt-5 md:px-6 lg:px-10">
+            <div className="mx-auto w-full ">
+                <button
+                    onClick={handleBack}
+                    className="mb-4 inline-flex items-center gap-2 text-[18px] font-normal text-[#0F766E]"
+                >
+                    <ArrowLeft className="h-5 w-5" />
+                    <span>Back</span>
+                </button>
 
-            {/* Main Content Wrapper */}
-            <div className="">
-
-                {/* Hero Image */}
-                <div className="w-full h-64 md:h-[520px] relative rounded-xl overflow-hidden mb-6">
+                <div className="h-[260px] w-full overflow-hidden rounded-xl bg-gray-200 md:h-[420px]">
                     <img
-                        src={item.image}
-                        alt={item.title}
-                        className="w-full h-full object-cover"
+                        src={event.image || 'https://picsum.photos/1200/700?random=50'}
+                        alt={event.title}
+                        className="h-full w-full object-cover"
                     />
                 </div>
 
+                <div className="relative -mt-6 ml-3 h-[64px] w-[64px] overflow-hidden rounded-full border-4 border-white bg-white shadow-sm md:-mt-8 md:ml-4 md:h-[84px] md:w-[84px]">
+                    <img
+                        src={event.organizer?.avatar || 'https://picsum.photos/120/120?random=70'}
+                        alt={event.organizer?.name || 'Organizer'}
+                        className="h-full w-full object-cover"
+                    />
+                </div>
 
-                {/* Left Column: Details */}
-                <div className="lg:col-span-2">
-                    <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
-                        {item.title}
+                <div className="mt-4">
+                    <h1 className="text-[28px] font-semibold leading-tight text-[#0C0C0C] md:text-[32px]">
+                        {event.title || "Women's Open Football Training Camp"}
                     </h1>
-
-                    <div className="text-base md:w-2xl text-gray-600 leading-relaxed whitespace-pre-line mb-8">
-                        {item.description}
-                    </div>
-
-                    {/* Date & Time Section */}
-                    <div className="flex flex-col gap-3 mb-6">
-                        <div className="flex items-center gap-3 text-base text-gray-700">
-                            <Calendar className="w-5 h-5 text-gray-500" />
-                            <span className="font-medium">{item.date}</span>
-                        </div>
-                        <div className="flex items-center gap-3 text-base text-gray-700">
-                            <Clock className="w-5 h-5 text-gray-500" />
-                            <span className="font-medium">{item.time}</span>
-                        </div>
-                    </div>
-
-                    {/* Event Attributes (Age, Sport, Skill, Deadline) */}
-                    <div className="space-y-4 text-base text-gray-800 mb-8">
-                        <div>
-                            <span className="font-bold block text-gray-900">Age Group:</span>
-                            <span>{item.ageGroup}</span>
-                        </div>
-                        <div>
-                            <span className="font-bold block text-gray-900">Sport Type:</span>
-                            <span>{item.sportType}</span>
-                        </div>
-                        <div>
-                            <span className="font-bold block text-gray-900">Skill Level:</span>
-                            <span>{item.skillLevel}</span>
-                        </div>
-                        <div>
-                            <span className="font-bold block text-gray-900">Last Date to Register</span>
-                            <span>{item.lastDateToRegister}</span>
-                        </div>
+                    <div className="mt-1 flex items-center gap-1 text-[16px] leading-6">
+                        <span className="font-medium text-[#373737]">Event Type:</span>
+                        <span className="text-[#0C0C0C]">{event.eventType || 'Workshops & learning'}</span>
                     </div>
                 </div>
 
+                <div className="mt-6 rounded-lg bg-white p-5">
+                    <h2 className="text-[20px] font-semibold leading-8 text-black">Event Type</h2>
+                    <p className="mt-2 whitespace-pre-line text-[14px] leading-5 text-[#2d2d2d]">
+                        {event.description || 'This training camp focuses on technical drills, tactical awareness, and conditioning in a supportive environment.'}
+                    </p>
+                </div>
 
-
-                {/* Right Column: Venue & Contact Card (Matching Image Bottom Section) */}
-                <aside className="max-w-md lg:col-span-1 mt-10 lg:mt-0">
-                    <div className="border border-[#91C0BC] rounded-xl bg-white shadow-sm overflow-hidden">
-
-                        <div className="p-4">
-                            {/* Venue Section */}
-                            <div className="mb-2">
-                                <div className="flex items-center gap-2 mb-1">
-                                    <span className="font-bold text-base text-gray-900">Venue:</span>
-                                    <span className="text-base text-gray-600">{item.venue?.name}</span>
-                                </div>
-                                <div className="flex items-start gap-2 text-xs text-gray-500">
-                                    <MapPin className="w-4 h-4 mt-0.5 shrink-0" />
-                                    <span>{item.venue?.address}</span>
-                                </div>
-                            </div>
-
-                            {/* Google Map */}
-                            <div className="w-full mb-2 h-40 md:h-48 bg-gray-100 rounded-lg overflow-hidden">
-                                {item.googleMapLink ? (
-                                    <iframe
-                                        src={item.googleMapLink.includes('embed') ? item.googleMapLink : `https://maps.google.com/maps?q=${encodeURIComponent(item.venue?.address || '')}&t=&z=13&ie=UTF8&iwloc=&output=embed`}
-                                        width="100%"
-                                        height="100%"
-                                        style={{ border: 0 }}
-                                        allowFullScreen
-                                        loading="lazy"
-                                        referrerPolicy="no-referrer-when-downgrade"
-                                        title="Venue Location"
-                                    />
-                                ) : (
-                                    <div className="w-full h-full flex items-center justify-center text-gray-400">
-                                        Map not available
+                <div className="mt-6 grid grid-cols-1 gap-4 lg:grid-cols-3 lg:gap-6">
+                    <section>
+                        <h3 className="mb-3 text-[20px] font-semibold leading-8 text-black">Session Overview</h3>
+                        <div className="space-y-3">
+                            {overviewItems.map((item) => {
+                                const Icon = item.icon;
+                                return (
+                                    <div key={item.label} className="rounded-[14px] border border-[#e5e7eb] bg-white p-4">
+                                        <div className="flex items-center gap-3">
+                                            <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[#E7F1F1] text-[#0F766E]">
+                                                <Icon className="h-5 w-5" />
+                                            </div>
+                                            <div>
+                                                <p className="text-[16px] font-medium leading-6 text-[#101828]">{item.label}</p>
+                                                <p className="text-[16px] leading-6 text-[#4a5565]">{item.value}</p>
+                                            </div>
+                                        </div>
                                     </div>
-                                )}
-                            </div>
-
-                            {/* Contact Information */}
-                            <div className="mb-4">
-                                <h4 className="font-bold text-base text-gray-900 mb-3">Contact Information</h4>
-                                <div className="space-y-2">
-                                    <div className="flex items-center gap-2 text-base text-gray-600">
-                                        <Phone className="w-4 h-4 text-gray-400" />
-                                        <span>{item.contact?.phone}</span>
-                                    </div>
-                                    <div className="flex items-center gap-2 text-base text-gray-600">
-                                        <Mail className="w-4 h-4 text-gray-400" />
-                                        <span className="break-all">{item.contact?.email}</span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            {/* Organized By */}
-                            <div>
-                                <h4 className="font-bold text-base text-gray-900 mb-3">Organized By:</h4>
-                                <div className="flex items-center gap-3">
-                                    <div className="w-10 h-10 rounded-full bg-gray-100 overflow-hidden border border-gray-200">
-                                        {/* Using placeholder or item image for logo */}
-                                        <img
-                                            src={item.organizer?.avatar || '/api/placeholder/40/40'}
-                                            alt="Logo"
-                                            className="w-full h-full object-cover"
-                                        />
-                                    </div>
-                                    <span className="text-base font-semibold text-gray-800">
-                                        {item.organizer?.name}
-                                    </span>
-                                </div>
-                            </div>
+                                );
+                            })}
                         </div>
+
+                        <div className="mt-4 grid grid-cols-2 gap-3">
+                            <button
+                                onClick={handleBookPlace}
+                                className="rounded-md bg-[#0F766E] px-3 py-2 text-[14px] font-medium text-white transition hover:bg-[#0c5e58]"
+                            >
+                                Book Your Place
+                            </button>
+                            <button className="rounded-md bg-[#0F766E] px-3 py-2 text-[14px] font-medium text-white transition hover:bg-[#0c5e58]">
+                                Register Interest
+                            </button>
+                        </div>
+                    </section>
+
+                    <section className="rounded-[14px] border border-[#e5e7eb] bg-white p-4">
+                        <h3 className="mb-3 text-[20px] font-semibold leading-8 text-black">Venue Information</h3>
+                        <p className="text-[14px] font-medium text-[#101828]">Venue Name:</p>
+                        <p className="mb-2 text-[14px] text-[#4a5565]">{event.venue?.name || 'Bashundhara turbo tough'}</p>
+
+                        <div className="mb-2 flex items-start gap-1 text-[14px] text-[#4a5565]">
+                            <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-[#4a5565]" />
+                            <span>{event.venue?.address || '2118 Thornridge Cir. Syracuse, Connecticut 35624'}</span>
+                        </div>
+
+                        <div className="mt-2 text-[14px] text-[#101828]">
+                            <p>
+                                <span className="font-medium">Session Days:</span> Saturday
+                            </p>
+                            <p>
+                                <span className="font-medium">Session Time:</span> {event.time || '10:00 - 12:00'}
+                            </p>
+                        </div>
+
+                        <div className="mt-3 h-[140px] w-full overflow-hidden rounded-lg bg-[#d9d9d9]">
+                            {event.venue?.address ? (
+                                <iframe
+                                    src={`https://maps.google.com/maps?q=${encodeURIComponent(event.venue.address)}&t=&z=13&ie=UTF8&iwloc=&output=embed`}
+                                    width="100%"
+                                    height="100%"
+                                    style={{ border: 0 }}
+                                    loading="lazy"
+                                    title="Venue Location"
+                                />
+                            ) : null}
+                        </div>
+                    </section>
+
+                    <section className="rounded-[14px] bg-[#e7f1f1] p-4">
+                        <h3 className="mb-1 text-[20px] font-semibold leading-8 text-black">Contact Organiser</h3>
+                        <p className="mb-2 text-[14px] text-[#4a5565]">Ask the organiser a question</p>
+
+                        <textarea
+                            value={message}
+                            onChange={(e) => setMessage(e.target.value)}
+                            placeholder="Write your message"
+                            rows={8}
+                            className="w-full resize-none rounded-md border border-[#9ec9c7] bg-[#a9cdca] p-3 text-[14px] text-[#1f2937] outline-none placeholder:text-[#5f7e7c] focus:border-[#0F766E]"
+                        />
+
+                        <button
+                            onClick={handleSendMessage}
+                            className="mt-3 inline-flex items-center gap-2 rounded-md bg-[#0F766E] px-4 py-2 text-[14px] font-medium text-white transition hover:bg-[#0c5e58]"
+                        >
+                            <MessageCircle className="h-4 w-4" />
+                            Send message
+                        </button>
+                    </section>
+                </div>
+
+                {(bookingSuccess || messageSuccess) && (
+                    <div className="mt-4 rounded-md border border-[#b5d5d2] bg-white px-4 py-2 text-[14px] text-[#0F766E]">
+                        {bookingSuccess ? 'Successfully booked your place.' : 'Message sent to organiser.'}
                     </div>
-                </aside>
+                )}
             </div>
         </div>
     );

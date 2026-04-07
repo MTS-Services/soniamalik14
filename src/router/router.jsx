@@ -43,6 +43,7 @@ import CoachEventDetails from '../pages/dashboards/coach/event/EventDetails.jsx'
 import EventAnalytics from '../pages/dashboards/coach/eventAnalytics/EventAnalytics.jsx';
 ;
 import EventAnallyticsDetails from '../pages/dashboards/shared/eventAnalytics/EventAnallyticsDetails.jsx';
+import Enquiries from '../pages/dashboards/shared/eventAnalytics/Enquiries.jsx';
 
 import Recruitment from '../pages/dashboards/coach/recruitment/Recruitment.jsx';
 import RecruitmentDetails from '../pages/dashboards/coach/recruitment/RecruitmentDetails.jsx';
@@ -185,6 +186,7 @@ const router = createBrowserRouter(
         <Route path="event/:id" element={<CoachEventDetails />} />
         <Route path="event-analytics" element={<EventAnalytics />} />
         <Route path="event-analytics/event/:id" element={<EventAnallyticsDetails />} />
+        <Route path="enquiries" element={<Enquiries />} />
         <Route path="notifications" element={<Notifications />} />
 
         <Route path="recruitment" element={<Recruitment />} />

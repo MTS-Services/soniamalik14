@@ -6,12 +6,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import Table from '../../../../components/ui/Table';
 import TablePagination from '../../../../components/ui/TablePagination';
 import { Eye, ChevronLeft, ChevronRight } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import { fetchEventAnalytics } from '../../../../features/events/eventsAPI';
 import { selectEventAnalytics, selectAnalyticsLoading, selectAnalyticsError } from '../../../../features/events/eventsSlice';
 
 const EventAnalytics = ({ baseRoute = '/coach' }) => {
     const dispatch = useDispatch();
+    const [searchParams, setSearchParams] = useSearchParams();
     const allEvents = useSelector(selectEventAnalytics);
     const loading = useSelector(selectAnalyticsLoading);
     const error = useSelector(selectAnalyticsError);
@@ -27,9 +28,14 @@ const EventAnalytics = ({ baseRoute = '/coach' }) => {
     ];
 
     const eventsSource = Array.isArray(allEvents) && allEvents.length > 0 ? allEvents : demoEvents;
-    const usingDemo = !(Array.isArray(allEvents) && allEvents.length > 0);
 
-    const [activeTab, setActiveTab] = useState('all');
+    const getInitialTab = () => {
+        const tab = searchParams.get('tab');
+        const validTabs = ['all', 'complete', 'upcoming', 'pending', 'cancel'];
+        return validTabs.includes(tab) ? tab : 'all';
+    };
+
+    const [activeTab, setActiveTab] = useState(getInitialTab);
     const [currentPage, setCurrentPage] = useState(1);
     const resultsPerPage = 6;
 
@@ -87,6 +93,10 @@ const EventAnalytics = ({ baseRoute = '/coach' }) => {
     const handleTabChange = (tabId) => {
         setActiveTab(tabId);
         setCurrentPage(1);
+
+        const next = new URLSearchParams(searchParams);
+        next.set('tab', tabId);
+        setSearchParams(next);
     };
 
     const renderRow = (event) => {
@@ -116,7 +126,11 @@ const EventAnalytics = ({ baseRoute = '/coach' }) => {
                 </td>
                 <td className="px-4 py-4"><span className="text-btn-primary font-medium">{event.joined}</span></td>
                 <td className="px-4 py-4">
-                    <Link to={`${baseRoute}/event-analytics/event/${event.id}`} state={{ item: event, from: 'analytics' }} className="text-gray-600 hover:text-btn-primary transition-colors inline-flex items-center">
+                    <Link
+                        to={`${baseRoute}/event-analytics/event/${event.id}`}
+                        state={{ item: event, from: 'analytics', tab: activeTab }}
+                        className="text-gray-600 hover:text-btn-primary transition-colors inline-flex items-center"
+                    >
                         <Eye className="w-5 h-5" />
                     </Link>
                 </td>

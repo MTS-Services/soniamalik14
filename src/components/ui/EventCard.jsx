@@ -6,7 +6,7 @@ import { MapPin, Calendar, Clock } from 'lucide-react';
 import { FiEdit, FiTrash2 } from 'react-icons/fi';
 import EventModal from './EventModal';
 
-const EventCard = ({ item = {}, editLink, onEdit, onDelete, className = '', detailsRoute = '/coach/event' }) => {
+const EventCard = ({ item = {}, editLink, onEdit, onDelete, className = '', detailsRoute = '/coach/event', filter = {} }) => {
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
     const handleEditClick = (e) => {
@@ -26,7 +26,7 @@ const EventCard = ({ item = {}, editLink, onEdit, onDelete, className = '', deta
 
     return (
         <>
-            <Link to={`${detailsRoute}/${item.id}`} state={{ item, from: 'event' }} className="block">
+            <Link to={`${detailsRoute}/${item.id}`} state={{ item, from: 'event', filter }} className="block">
                 <Card
                     className={`p-4 h-full flex flex-col  justify-between rounded-lg border bg-white ${className}`}
                     style={{ borderColor: '#B5D5D2' }}

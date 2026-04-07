@@ -51,6 +51,7 @@ const getMenuItems = (role, basePath) => {
          { id: 'recruitment', label: 'Manage Listings', icon: <UserPlus className="w-5 h-5" />, path: `${basePath}/recruitment` },
          { id: 'event', label: 'Events', icon: <CalendarPlus2 className="w-5 h-5" />, path: `${basePath}/events` },
         { id: 'event-analytics', label: 'Insights', icon: <BarChart3 className="w-5 h-5" />, path: `${basePath}/event-analytics` },
+        { id: 'enquiries', label: 'Enquiries', icon: <MessageSquare className="w-5 h-5" />, path: `${basePath}/enquiries` },
         { id: 'notifications', label: 'Notifications', icon: <Bell className="w-5 h-5" />, path: `${basePath}/notifications` },
 
     ];
@@ -101,7 +102,7 @@ const Sidebar = ({ isOpen, onClose }) => {
 
     const basePath = getBasePath(user?.role);
     const menuItems = getMenuItems(user?.role, basePath);
-    const roleTitle = getRoleTitle(user?.role);
+    const _roleTitle = getRoleTitle(user?.role);
     const location = useLocation();
 
     const handleLogout = () => {

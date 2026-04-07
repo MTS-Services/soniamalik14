@@ -1,4 +1,5 @@
 ﻿import React, { useState, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import PageHeader from '../../../../components/ui/PageHeader';
 import EventCard from '../../../../components/ui/EventCard';
 import Pagination from '../../../../components/ui/Pagination';
@@ -8,6 +9,7 @@ import { useEvent } from '../../../../context/EventContext';
 
 const Event = ({ filterComponent: FilterComponent, detailsRoute = '/coach/event' }) => {
     const { events, loading, error, fetchEvents, deleteEvent } = useEvent();
+    const [searchParams] = useSearchParams();
 
     // Fetch events on component mount
     useEffect(() => {
@@ -15,7 +17,16 @@ const Event = ({ filterComponent: FilterComponent, detailsRoute = '/coach/event'
     }, [fetchEvents]);
 
     const [page, setPage] = useState(1);
-    const [filter, setFilter] = useState({ status: 'All', query: '' });
+    const [filter, setFilter] = useState(() => {
+        // Check URL params for filter values
+        const statusParam = searchParams.get('status');
+        const queryParam = searchParams.get('query');
+        return {
+            status: statusParam || 'All',
+            query: queryParam || ''
+        };
+    });
+
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [editingEvent, setEditingEvent] = useState(null);
     const [eventToDelete, setEventToDelete] = useState(null);
@@ -83,7 +94,11 @@ const Event = ({ filterComponent: FilterComponent, detailsRoute = '/coach/event'
 
             {FilterComponent && (
                 <div>
-                    <FilterComponent onFilter={(f) => setFilter(f)} />
+                    <FilterComponent
+                        onFilter={(f) => setFilter(f)}
+                        active={filter.status}
+                        initialQuery={filter.query}
+                    />
                 </div>
             )}
 
@@ -117,6 +132,7 @@ const Event = ({ filterComponent: FilterComponent, detailsRoute = '/coach/event'
                                     onEdit={() => handleEdit(e)}
                                     onDelete={() => handleDelete(e)}
                                     detailsRoute={detailsRoute}
+                                    filter={filter}
                                 />
                             ))}
                         </div>
