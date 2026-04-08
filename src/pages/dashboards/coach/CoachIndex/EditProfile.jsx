@@ -49,7 +49,6 @@ const EditProfile = () => {
     return (
         <div className="min-h-screen bg-[#F4F7F8] p-4 md:p-8 font-sans">
             <div className="">
-                {/* Header */}
                 <header className="flex justify-between items-start mb-8">
                     <div>
                         <h1 className="text-3xl font-bold text-[#1D1D1D]">Profile</h1>
@@ -60,7 +59,6 @@ const EditProfile = () => {
                     </button>
                 </header>
 
-                {/* Main Card */}
                 <div className="bg-[#91C0BC] bg-opacity-60 rounded-xl p-1 md:p-4 md:pt-15 border- border-[#91C0BC]">
                     <section className="bg-white rounded-[16px] p-6 md:p-8 shadow-sm">
                         <h2 className="text-xl font-bold text-[#1D1D1D] mb-8">Personal Details</h2>
@@ -77,7 +75,6 @@ const EditProfile = () => {
                                 </label>
                             </div>
 
-                            {/* Organization Name */}
                             <div>
                                 <label className={labelClass}>Organization or Coach Name</label>
                                 <input 
@@ -89,7 +86,6 @@ const EditProfile = () => {
                                 />
                             </div>
 
-                            {/* About Section */}
                             <div>
                                 <label className={labelClass}>About your organisation</label>
                                 <textarea 
