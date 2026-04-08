@@ -1,144 +1,221 @@
-﻿import React, { useState, useRef } from 'react'
-import PageHeader from '../../../../components/ui/PageHeader'
-import Card from '../../../../components/ui/Card'
-import { Camera } from 'lucide-react'
-import { ToastContainer, toast } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css'
+﻿import React, { useEffect, useState } from 'react';
+import { FiEye, FiEyeOff, FiCamera } from 'react-icons/fi';
+import { toast } from 'react-toastify';
+
+const sportsOptions = [
+    'Football', 'Squash', 'Rugby', 'Netball', 'Cricket', 
+    'Padel', 'Tennis', 'Badminton', 'Golf', 'Running', 'Other'
+];
 
 const EditProfile = () => {
-    const [form, setForm] = useState({
-        clubName: '',
+    const [profile, setProfile] = useState({
+        clubName: 'Woking Warriors FC',
         about: '',
+        postcode: 'SW1',
+        sessionType: 'women',
+        sports: ['Football', 'Rugby'],
+        fullName: '',
         email: '',
         phone: '',
-        location: '',
-        oldPassword: '',
-        newPassword: '',
-        confirmPassword: '',
     });
 
-    const [avatar, setAvatar] = useState('/coachindex.jpg');
-    const [avatarFile, setAvatarFile] = useState(null);
-    const fileRef = useRef(null);
+    const [imageFile, setImageFile] = useState(null);
+    const [imagePreview, setImagePreview] = useState('/coachindex.jpg');
+    const [passwords, setPasswords] = useState({ current: '', newPass: '', confirm: '' });
+    const [savingProfile, setSavingProfile] = useState(false);
+    
+    // Password Visibility States
+    const [showCurrent, setShowCurrent] = useState(false);
+    const [showNew, setShowNew] = useState(false);
+    const [showConfirm, setShowConfirm] = useState(false);
 
-    const handleChange = (e) => {
+    const handleProfileChange = (e) => {
         const { name, value } = e.target;
-        setForm((s) => ({ ...s, [name]: value }));
+        setProfile((p) => ({ ...p, [name]: value }));
     };
 
-    const handleAvatarPick = (e) => {
-        const file = e.target.files?.[0];
-        if (file) {
-            setAvatarFile(file);
-            const url = URL.createObjectURL(file);
-            setAvatar(url);
-        }
+    const toggleSport = (sport) => {
+        setProfile((prev) => ({
+            ...prev,
+            sports: prev.sports.includes(sport)
+                ? prev.sports.filter((s) => s !== sport)
+                : [...prev.sports, sport]
+        }));
     };
 
-    const handleSubmit = (e) => {
-        e?.preventDefault();
-        // Basic validation example
-        if (form.newPassword && form.newPassword !== form.confirmPassword) {
-            alert('New password and confirm password do not match');
-            return;
-        }
-
-        const payload = {
-            ...form,
-            avatarFileName: avatarFile?.name || null,
-        };
-        console.log('Save profile payload:', payload);
-        // show toast using react-toastify
-        toast.success('Profile saved');
-    };
-
-
+    const inputClass = "w-full rounded-lg border border-[#D4E3E2] bg-white px-4 py-3 text-sm text-[#1D1D1D] placeholder:text-gray-300 outline-none focus:border-[#0F766E] transition-all";
+    const labelClass = "mb-2 block text-xl  text-[#1D1D1D]";
 
     return (
-        <div className='dashboardPy dashboardSpaceY'>
-            
-            <PageHeader title="Settings" description="Manage your account settings and preferences" ctaText="Save" onCtaClick={handleSubmit} />
-
-            <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover />
-
-            <div className="mt-6">
-                <div className="rounded-xl bg-[#91C0BC] p-6">
-                    <div className="">
-                        <h3 className="text-2xl font-semibold mb-4">Personal Details</h3>
-
-                        <Card className="p-6">
-
-                            <form onSubmit={handleSubmit} className="space-y-4">
-                                <div className="flex-shrink-0">
-                                    <div className="relative w-28 h-28 rounded-full overflow-hidden bg-gray-100 ">
-                                        <img src={avatar} alt="avatar" className="w-full h-full object-cover" />
-                                        <button
-                                            type="button"
-                                            onClick={() => fileRef.current?.click()}
-                                            className="absolute bottom-2 right-2 z-10 bg-white p-2 rounded-full shadow-md border"
-                                            title="Change avatar"
-                                            aria-label="Change avatar"
-                                        >
-                                            <Camera className="h-4 w-4 text-gray-700" />
-                                        </button>
-                                        <input ref={fileRef} type="file" accept="image/*" className="hidden" onChange={handleAvatarPick} />
-                                    </div>
-                                </div>
-                                <div className="flex items-start gap-6">
-
-
-                                    <div className="flex-1">
-                                        <div className="grid grid-cols-1 gap-4">
-                                            <div>
-                                                <label className="block text-base text-gray-700 mb-1">Club Name</label>
-                                                <input name="clubName" value={form.clubName} onChange={handleChange} className="w-full border border-gray-300 rounded-md px-3 py-2" />
-                                            </div>
-
-                                            <div>
-                                                <label className="block text-base text-gray-700 mb-1">About Club</label>
-                                                <textarea name="about" value={form.about} onChange={handleChange} rows={5} className="w-full border border-gray-300 rounded-md px-3 py-2" />
-                                            </div>
-
-                                            <div>
-                                                <label className="block text-base text-gray-700 mb-1">Email</label>
-                                                <input name="email" value={form.email} onChange={handleChange} className="w-full border border-gray-300 rounded-md px-3 py-2" />
-                                            </div>
-
-                                            <div>
-                                                <label className="block text-base text-gray-700 mb-1">Phone Number</label>
-                                                <input name="phone" value={form.phone} onChange={handleChange} className="w-full border border-gray-300 rounded-md px-3 py-2" />
-                                            </div>
-
-                                            <div>
-                                                <label className="block text-base text-gray-700 mb-1">Location</label>
-                                                <input name="location" value={form.location} onChange={handleChange} className="w-full border border-gray-300 rounded-md px-3 py-2" />
-                                            </div>
-
-                                            <div>
-                                                <label className="block text-base text-gray-700 mb-1">Old Password</label>
-                                                <input name="oldPassword" type="password" value={form.oldPassword} onChange={handleChange} className="w-full border border-gray-300 rounded-md px-3 py-2" />
-                                            </div>
-
-                                            <div>
-                                                <label className="block text-base text-gray-700 mb-1">New Password</label>
-                                                <input name="newPassword" type="password" value={form.newPassword} onChange={handleChange} className="w-full border border-gray-300 rounded-md px-3 py-2" />
-                                            </div>
-
-                                            <div>
-                                                <label className="block text-base text-gray-700 mb-1">Confirm New Password</label>
-                                                <input name="confirmPassword" type="password" value={form.confirmPassword} onChange={handleChange} className="w-full border border-gray-300 rounded-md px-3 py-2" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </form>
-                        </Card>
+        <div className="min-h-screen bg-[#F4F7F8] p-4 md:p-8 font-sans">
+            <div className="">
+                {/* Header */}
+                <header className="flex justify-between items-start mb-8">
+                    <div>
+                        <h1 className="text-3xl font-bold text-[#1D1D1D]">Profile</h1>
+                        <p className="text-base text-gray-500 mt-1">Manage your account settings and preferences</p>
                     </div>
+                    <button className="bg-[#0F766E] text-white px-8 py-2 rounded-lg font-medium hover:bg-[#0d635d] transition-colors">
+                        Save
+                    </button>
+                </header>
+
+                {/* Main Card */}
+                <div className="bg-[#91C0BC] bg-opacity-60 rounded-xl p-1 md:p-4 md:pt-15 border- border-[#91C0BC]">
+                    <section className="bg-white rounded-[16px] p-6 md:p-8 shadow-sm">
+                        <h2 className="text-xl font-bold text-[#1D1D1D] mb-8">Personal Details</h2>
+
+                        <form className="space-y-6">
+                            {/* Profile Image */}
+                            <div className="relative inline-block mb-4">
+                                <div className="h-20 w-20 rounded-full border-2 border-white shadow-sm overflow-hidden bg-gray-100">
+                                    <img src={imagePreview} alt="Profile" className="h-full w-full object-cover" />
+                                </div>
+                                <label htmlFor="imgInput" className="absolute bottom-0 right-0 bg-white p-1.5 rounded-full shadow-md cursor-pointer border border-gray-100">
+                                    <FiCamera className="text-[#0F766E] size-4" />
+                                    <input type="file" id="imgInput" className="hidden" accept="image/*" />
+                                </label>
+                            </div>
+
+                            {/* Organization Name */}
+                            <div>
+                                <label className={labelClass}>Organization or Coach Name</label>
+                                <input 
+                                    name="clubName" 
+                                    value={profile.clubName} 
+                                    onChange={handleProfileChange} 
+                                    className={inputClass} 
+                                    placeholder="Woking Warriors FC"
+                                />
+                            </div>
+
+                            {/* About Section */}
+                            <div>
+                                <label className={labelClass}>About your organisation</label>
+                                <textarea 
+                                    name="about" 
+                                    value={profile.about} 
+                                    onChange={handleProfileChange} 
+                                    className={`${inputClass} min-h-[120px] resize-none`} 
+                                    placeholder="Write about club"
+                                />
+                            </div>
+
+                            {/* Session Type */}
+                            <div>
+                                <p className={labelClass}>Session Type</p>
+                                <div className="flex gap-3">
+                                    {['women', 'mixed'].map((type) => (
+                                        <button
+                                            key={type}
+                                            type="button"
+                                            onClick={() => setProfile({...profile, sessionType: type})}
+                                            className={`px-4 py-1.5 rounded-full text-sm font-medium border flex items-center gap-2 transition-all ${
+                                                profile.sessionType === type 
+                                                ? 'bg-[#B5D5D2] border-[#94BDBA] text-[#0F766E]' 
+                                                : 'bg-[#B5D5D2] border-gray-200 text-gray-500'
+                                            }`}
+                                        >
+                                            <input type="checkbox" checked={profile.sessionType === type} readOnly className="accent-[#0F766E]" />
+                                            {type === 'women' ? 'Women Only' : 'Mixed'}
+                                        </button>
+                                    ))}
+                                </div>
+                            </div>
+
+                            {/* Postcode */}
+                            <div>
+                                <label className={labelClass}>Postcode</label>
+                                <input 
+                                    name="postcode" 
+                                    value={profile.postcode} 
+                                    onChange={handleProfileChange} 
+                                    className={inputClass} 
+                                    placeholder="SW1"
+                                />
+                            </div>
+
+                            {/* Sports Grid */}
+                            <div>
+                                <p className={labelClass}>Sport</p>
+                                <div className="flex flex-wrap gap-3">
+                                    {sportsOptions.map((sport) => (
+                                        <button
+                                            key={sport}
+                                            type="button"
+                                            onClick={() => toggleSport(sport)}
+                                            className={`px-4 py-1.5 rounded-full text-sm font-medium border flex items-center gap-2 transition-all ${
+                                                profile.sports.includes(sport)
+                                                ? 'bg-[#B5D5D2] border-[#94BDBA] text-[#0F766E]' 
+                                                : 'bg-[#B5D5D2] border-gray-200 text-gray-500'
+                                            }`}
+                                        >
+                                            <input type="checkbox" checked={profile.sports.includes(sport)} readOnly className="accent-[#0F766E]" />
+                                            {sport}
+                                        </button>
+                                    ))}
+                                </div>
+                            </div>
+
+                            {/* Primary Contact Section */}
+                            <div className="pt-8 border-t border-gray-100 mt-10">
+                                <h3 className="text-xl font-bold text-[#1D1D1D] mb-6">Primary Contact</h3>
+                                
+                                <div className="space-y-5">
+                                    <div>
+                                        <label className={labelClass}>Full Name</label>
+                                        <input className={inputClass} placeholder="Enter Your Full Name" />
+                                    </div>
+                                    <div>
+                                        <label className={labelClass}>Email</label>
+                                        <input className={inputClass} placeholder="Write your email" />
+                                    </div>
+                                    <div>
+                                        <label className={labelClass}>Phone Number</label>
+                                        <input className={inputClass} placeholder="Enter your phone number" />
+                                    </div>
+                                    
+                                    {/* Password Fields */}
+                                    <div className="grid grid-cols-1 md:grid-cols-1 gap-5">
+                                        <PasswordField label="Password" placeholder="Minimum 8 characters" show={showNew} setShow={setShowNew} />
+                                        <PasswordField label="Confirm Password" placeholder="•••• •••• ••••" show={showConfirm} setShow={setShowConfirm} />
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Old/New Password Settings Section */}
+                            <div className="space-y-5 pt-4">
+                                <PasswordField label="Old Password" placeholder="••••••" show={showCurrent} setShow={setShowCurrent} />
+                                <PasswordField label="New Password" placeholder="••••••" show={showNew} setShow={setShowNew} />
+                                <PasswordField label="Confirm New Password" placeholder="••••••" show={showConfirm} setShow={setShowConfirm} />
+                            </div>
+                        </form>
+                    </section>
                 </div>
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default EditProfile
+// Reusable Password Input Component
+const PasswordField = ({ label, placeholder, show, setShow }) => (
+    <div>
+        <label className="mb-2 block text-xl  text-[#1D1D1D]">{label}</label>
+        <div className="relative">
+            <input
+                type={show ? "text" : "password"}
+                className="w-full rounded-lg border border-[#D4E3E2] bg-white px-4 py-3 text-sm outline-none focus:border-[#0F766E]"
+                placeholder={placeholder}
+            />
+            <button 
+                type="button"
+                onClick={() => setShow(!show)}
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400"
+            >
+                {show ? <FiEyeOff size={18} /> : <FiEye size={18} />}
+            </button>
+        </div>
+    </div>
+);
+
+export default EditProfile;
