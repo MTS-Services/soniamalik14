@@ -11,8 +11,8 @@ const ProviderNotifications = () => {
 
   return (
     <div className="dashboardPy">
-      <section className="rounded-lg bg-white">
-        <div className="flex items-center justify-between border-b border-[#E2E8EA] px-5 py-4">
+      <section className=" ">
+        <div className="flex items-center justify-between  px-5 py-4">
           <h1 className="text-3xl font-semibold text-[#1D1D1D]">Notifications</h1>
           <button
             type="button"
@@ -24,11 +24,11 @@ const ProviderNotifications = () => {
           </button>
         </div>
 
-        <div className="divide-y divide-[#E2E8EA]">
+        <div className=" divide-y divide-[#767676] rounded-lg overflow-hidden">
           {notifications.map((notification) => (
             <article
               key={notification.id}
-              className={`flex gap-3 px-4 py-4 md:gap-4 md:px-5 md:py-5 ${notification.read ? 'bg-white' : 'bg-[#F8FAFB]'}`}
+              className={`flex gap-3 px-4 py-4 md:gap-4 md:px-5 md:py-5  ${notification.read ? 'bg-[#e8e8e8]' : 'bg-[#e8e8e8]'}`}
             >
               <img
                 src={notification.avatar}

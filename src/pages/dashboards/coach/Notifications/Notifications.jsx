@@ -58,7 +58,7 @@ const Notifications = () => {
     };
 
     return (
-        <div className="bg-[#F8F9FA] min-h-screen py-10 px-4 sm:px-8 font-sans flex justify-center">
+        <div className="bg-[#E8E8E8] min-h-screen py-10 px-4 sm:px-8 font-sans flex justify-center">
             <div className="w-full ">
 
                 {/* Header */}
