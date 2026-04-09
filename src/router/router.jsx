@@ -60,14 +60,11 @@ import Insights from '../pages/dashboards/provider/insights/Insights.jsx';
 import InsightsPreview from '../pages/dashboards/provider/insights/InsightsPreview.jsx';
 import ProviderEnquiries from '../pages/dashboards/provider/enquiries/ProviderEnquiries.jsx';
 import ProviderNotifications from '../pages/dashboards/provider/notifications/ProviderNotifications.jsx';
-import MyOrders from '../pages/myOrders/MyOrders.jsx';
+
 
 // Admin Dashboard Pages
 import DashboardOverview from '../pages/dashboards/user/dashboardOverview/DashboardOverview.jsx';
-import ManageProducts from '../pages/dashboards/user/manageProducts/ManageProducts.jsx';
-import UserOrderList from '../pages/dashboards/user/order/OrderList.jsx';
-import Finances from '../pages/dashboards/user/finances/Finances.jsx';
-import Account from '../pages/dashboards/user/account/Account.jsx';
+
 import UserNotifications from '../pages/dashboards/user/notifications/Notifications.jsx';
 import MyEvents from '../pages/dashboards/user/myEvents/MyEvents.jsx';
 import UserCommunity from '../pages/dashboards/user/community/Community.jsx';
@@ -87,6 +84,7 @@ import Content from '../pages/dashboards/admin/Content/Content.jsx';
 import Revenue from '../pages/dashboards/admin/Revenue/Revenue.jsx';
 import Analytics from '../pages/dashboards/admin/Analytics/Analytics.jsx';
 import Notifications from '../pages/dashboards/coach/Notifications/Notifications.jsx';
+import AccountDetails from '../pages/dashboards/user/account/AccountDetails.jsx';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -115,7 +113,7 @@ const router = createBrowserRouter(
         {/* <Route path="marketplace/:id" element={<MarketplaceDetails />} /> */}
         {/* <Route path="checkout" element={<Checkout />} />
         <Route path="order-confirmed" element={<OrderConfirmed />} /> */}
-        <Route path="my-orders" element={<MyOrders />} />
+        {/* <Route path="my-orders" element={<MyOrders />} /> */}
         <Route path="services" element={<ServiceView />} />
         <Route path="services/:id" element={<ServiceDetails />} />
         <Route path="news" element={<NewsView />} />
@@ -131,7 +129,7 @@ const router = createBrowserRouter(
         <Route path="/dashboard/my-events" element={<MyEvents />} />
         <Route path="/dashboard/community" element={<UserCommunity />} />
         <Route path="/dashboard/saved" element={<Saved />} />
-        <Route path="/dashboard/account" element={<Account />} />
+        <Route path="/dashboard/account" element={<AccountDetails />} />
       </Route>
 
       {/* Admin Dashboard - Protected */}
