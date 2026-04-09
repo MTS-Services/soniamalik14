@@ -16,31 +16,14 @@ const Notifications = () => {
     { id: 10, text: 'Your registered interest was received', isRead: false },
   ]);
 
-  const [selectedNotifications, setSelectedNotifications] = useState(new Set());
-
-  const handleToggleSelect = (id) => {
-    const newSelected = new Set(selectedNotifications);
-    if (newSelected.has(id)) {
-      newSelected.delete(id);
-    } else {
-      newSelected.add(id);
-    }
-    setSelectedNotifications(newSelected);
-  };
-
   const handleMarkAllRead = () => {
     setNotifications(
       notifications.map((notif) => ({ ...notif, isRead: true }))
     );
   };
 
-  const handleDeleteSelected = () => {
-    if (selectedNotifications.size === 0) return;
-    
-    setNotifications(
-      notifications.filter((notif) => !selectedNotifications.has(notif.id))
-    );
-    setSelectedNotifications(new Set());
+  const handleDeleteAll = () => {
+    setNotifications([]);
   };
 
   const handleNotificationClick = (id) => {
@@ -52,11 +35,11 @@ const Notifications = () => {
   };
 
   return (
-    <div className="dashboardPy dashboardSpaceY">
+    <div className="p-4 md:p-6">
       <NotificationHeader
-        selectedCount={selectedNotifications.size}
+        selectedCount={0}
         onMarkAllRead={handleMarkAllRead}
-        onDeleteSelected={handleDeleteSelected}
+        onDeleteSelected={handleDeleteAll}
         totalCount={notifications.length}
       />
 
@@ -68,8 +51,6 @@ const Notifications = () => {
               id={notif.id}
               text={notif.text}
               isRead={notif.isRead}
-              isSelected={selectedNotifications.has(notif.id)}
-              onToggleSelect={handleToggleSelect}
               onClick={() => handleNotificationClick(notif.id)}
             />
           ))
