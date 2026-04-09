@@ -35,7 +35,7 @@ const AccountDetails = () => {
           
           <div className="p-6 flex flex-col md:flex-row gap-8">
             {/* Profile Picture */}
-            <div className="relative w-40 h-40 flex-shrink-0">
+            <div className="relative w-40 h-40 shrink-0">
               <img 
                 src={profileImage} 
                 alt="Profile" 
@@ -57,7 +57,7 @@ const AccountDetails = () => {
             </div>
 
             {/* Form Fields */}
-            <div className="flex-grow grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grow grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-1">
                 <label className="text-base text-gray-700">First name</label>
                 <input type="text" defaultValue="Kevin" className="w-full p-2.5 border border-gray-200 rounded-sm focus:outline-none focus:ring-1 focus:ring-teal-600 text-gray-600" />

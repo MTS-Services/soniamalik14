@@ -83,7 +83,7 @@ const Community = () => {
               }`}
             >
               <div className="flex items-center gap-4 flex-1">
-                <div className="flex-shrink-0">
+                <div className="shrink-0">
                   <div className="w-6 h-6 md:w-8 md:h-8 flex items-center justify-center">
                     <IconComponent className="w-5 h-5 md:w-6 md:h-6 text-gray-600" />
                   </div>
@@ -93,7 +93,7 @@ const Community = () => {
                   <p className="text-xs md:text-sm text-gray-500 mt-1">{activity.time}</p>
                 </div>
               </div>
-              <ChevronRight className="flex-shrink-0 w-5 h-5 text-gray-400" />
+              <ChevronRight className="shrink-0 w-5 h-5 text-gray-400" />
             </div>
           );
         })}
