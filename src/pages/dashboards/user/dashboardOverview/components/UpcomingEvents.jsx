@@ -1,5 +1,6 @@
 import React from 'react';
-import EventCard from './EventCard';
+import EventCard from '../../myEvents/components/EventCard';
+
 
 const UpcomingEvents = ({ events = [] }) => {
   const defaultEvents = [
@@ -13,7 +14,7 @@ const UpcomingEvents = ({ events = [] }) => {
   return (
     <div className="mb-12">
       <h2 className="text-2xl font-bold text-[#111827] mb-6">Upcoming Event</h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-6">
         {eventsList.map(event => (
           <EventCard 
             key={event.id}
