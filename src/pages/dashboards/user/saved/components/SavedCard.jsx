@@ -23,11 +23,11 @@ const SavedCard = ({ title, location, time, imageSrc, onViewDetails, onRemove })
       
       <div className="space-y-3 mb-6">
         <div className="flex items-center gap-3 text-gray-600">
-          <MapPin className="w-5 h-5 flex-shrink-0" />
+          <MapPin className="w-5 h-5 shrink-0" />
           <span className="text-base md:text-lg">{location}</span>
         </div>
         <div className="flex items-center gap-3 text-gray-600">
-          <Clock className="w-5 h-5 flex-shrink-0" />
+          <Clock className="w-5 h-5 shrink-0" />
           <span className="text-base md:text-lg">{time}</span>
         </div>
       </div>
