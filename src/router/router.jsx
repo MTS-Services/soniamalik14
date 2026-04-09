@@ -68,7 +68,10 @@ import ManageProducts from '../pages/dashboards/user/manageProducts/ManageProduc
 import UserOrderList from '../pages/dashboards/user/order/OrderList.jsx';
 import Finances from '../pages/dashboards/user/finances/Finances.jsx';
 import Account from '../pages/dashboards/user/account/Account.jsx';
-
+import UserNotifications from '../pages/dashboards/user/notifications/Notifications.jsx';
+import MyEvents from '../pages/dashboards/user/myEvents/MyEvents.jsx';
+import UserCommunity from '../pages/dashboards/user/community/Community.jsx';
+import Saved from '../pages/dashboards/user/saved/Saved.jsx';
 
 import AdminSettings from '../pages/dashboards/admin/settings/Settings.jsx';
 
@@ -124,9 +127,10 @@ const router = createBrowserRouter(
       {/* Public Dashboard (no landing header) */}
       <Route path="/dashboard" element={<DashboardLayout />}>
         <Route index element={<DashboardOverview />} />
-        <Route path="/dashboard/product" element={<ManageProducts />} />
-        <Route path="/dashboard/orders" element={<UserOrderList />} />
-        <Route path="/dashboard/finances" element={<Finances />} />
+        <Route path="/dashboard/notifications" element={<UserNotifications />} />
+        <Route path="/dashboard/my-events" element={<MyEvents />} />
+        <Route path="/dashboard/community" element={<UserCommunity />} />
+        <Route path="/dashboard/saved" element={<Saved />} />
         <Route path="/dashboard/account" element={<Account />} />
       </Route>
 
