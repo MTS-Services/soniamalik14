@@ -64,7 +64,7 @@ import ProviderNotifications from '../pages/dashboards/provider/notifications/Pr
 
 // Admin Dashboard Pages
 import DashboardOverview from '../pages/dashboards/user/dashboardOverview/DashboardOverview.jsx';
-
+import EventDetails from '../pages/dashboards/user/myEvents/EventDetails.jsx';
 import UserNotifications from '../pages/dashboards/user/notifications/Notifications.jsx';
 import MyEvents from '../pages/dashboards/user/myEvents/MyEvents.jsx';
 import UserCommunity from '../pages/dashboards/user/community/Community.jsx';
@@ -127,6 +127,7 @@ const router = createBrowserRouter(
         <Route index element={<DashboardOverview />} />
         <Route path="/dashboard/notifications" element={<UserNotifications />} />
         <Route path="/dashboard/my-events" element={<MyEvents />} />
+        <Route path="/dashboard/my-events/:id" element={<EventDetails />} />
         <Route path="/dashboard/community" element={<UserCommunity />} />
         <Route path="/dashboard/saved" element={<Saved />} />
         <Route path="/dashboard/account" element={<AccountDetails />} />
