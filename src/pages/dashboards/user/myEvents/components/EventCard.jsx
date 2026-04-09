@@ -12,16 +12,16 @@ const EventCard = ({ title, location, time, imageSrc, onViewDetails, onDelete })
     </div>
     
     <div>
-      <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-4">{title}</h3>
+      <h3 className="text-xl md:text-xl font-bold text-gray-900 mb-4">{title}</h3>
       
       <div className="space-y-3 mb-6">
         <div className="flex items-center gap-3 text-gray-600">
           <MapPin className="w-5 h-5 shrink-0" />
-          <span className="text-base md:text-lg">{location}</span>
+          <span className="text-base ">{location}</span>
         </div>
         <div className="flex items-center gap-3 text-gray-600">
           <Clock className="w-5 h-5 shrink-0" />
-          <span className="text-base md:text-lg">{time}</span>
+          <span className="text-base ">{time}</span>
         </div>
       </div>
       
