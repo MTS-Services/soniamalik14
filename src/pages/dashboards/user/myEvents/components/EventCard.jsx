@@ -28,7 +28,7 @@ const EventCard = ({ title, location, time, imageSrc, onViewDetails, onDelete })
       <div className="flex gap-3">
         <button 
           onClick={onViewDetails}
-          className="flex-1 bg-btn-primary text-white py-3 px-4 rounded-lg font-semibold hover:opacity-90 transition-opacity text-base md:text-lg flex items-center justify-center gap-2"
+          className="flex-1 bg-btn-primary text-white py-3 px-4 rounded-lg font-semibold hover:opacity-90 transition-opacity text-base  flex items-center justify-center gap-2"
         >
           <Edit className="w-5 h-5" />
           <span>View</span>
@@ -36,7 +36,7 @@ const EventCard = ({ title, location, time, imageSrc, onViewDetails, onDelete })
         
         <button
           onClick={onDelete}
-          className="flex-1 border-2 border-btn-primary text-btn-primary py-3 px-4 rounded-lg font-semibold hover:bg-btn-primary/5 transition-colors text-base md:text-lg flex items-center justify-center gap-2"
+          className="flex-1 border-2 border-btn-primary text-btn-primary py-3 px-4 rounded-lg font-semibold hover:bg-btn-primary/5 transition-colors text-base  flex items-center justify-center gap-2"
           title="Delete event"
         >
           <Trash2 className="w-5 h-5" />
