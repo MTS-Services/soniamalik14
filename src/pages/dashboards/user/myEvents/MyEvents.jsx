@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Calendar } from 'lucide-react';
 import EventCard from './components/EventCard';
+import Pagination from '../../../../components/ui/Pagination';
 
 const MyEvents = () => {
   const initialEvents = [
@@ -71,37 +72,63 @@ const MyEvents = () => {
 ];
 
   const [events, setEvents] = useState(initialEvents);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 6;
+
+  const totalPages = Math.ceil(events.length / itemsPerPage);
+  const startIdx = (currentPage - 1) * itemsPerPage;
+  const endIdx = startIdx + itemsPerPage;
+  const currentEvents = events.slice(startIdx, endIdx);
 
   const handleViewDetails = (eventId) => {
     console.log('View details for event:', eventId);
   };
 
   const handleDeleteEvent = (eventId) => {
-    setEvents(events.filter(event => event.id !== eventId));
+    const updatedEvents = events.filter(event => event.id !== eventId);
+    setEvents(updatedEvents);
+    
+    // Reset to page 1 if current page is now empty
+    if (currentPage > Math.ceil(updatedEvents.length / itemsPerPage)) {
+      setCurrentPage(1);
+    }
+  };
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
   };
 
   return (
-    <div className="p-4 md:p-6">
+    <div className="dashboardPy dashboardSpaceY">
       <div className="flex items-center gap-3 mb-8">
-        <Calendar className="w-8 h-8 text-btn-primary" />
         <h1 className="text-2xl md:text-3xl font-bold text-gray-900">My Events</h1>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4 md:gap-6">
-        {events.map((event) => (
-          <EventCard
-            key={event.id}
-            title={event.title}
-            location={event.location}
-            time={event.time}
-            imageSrc={event.imageSrc}
-            onViewDetails={() => handleViewDetails(event.id)}
-            onDelete={() => handleDeleteEvent(event.id)}
-          />
-        ))}
-      </div>
+      {events.length > 0 ? (
+        <>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4 md:gap-6">
+            {currentEvents.map((event) => (
+              <EventCard
+                key={event.id}
+                title={event.title}
+                location={event.location}
+                time={event.time}
+                imageSrc={event.imageSrc}
+                onViewDetails={() => handleViewDetails(event.id)}
+                onDelete={() => handleDeleteEvent(event.id)}
+              />
+            ))}
+          </div>
 
-      {events.length === 0 && (
+          {totalPages > 1 && (
+            <Pagination
+              page={currentPage}
+              total={totalPages}
+              onChange={handlePageChange}
+            />
+          )}
+        </>
+      ) : (
         <div className="text-center py-12">
           <p className="text-gray-500 text-lg">No events found</p>
         </div>
