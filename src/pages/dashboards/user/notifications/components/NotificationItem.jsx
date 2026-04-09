@@ -10,7 +10,7 @@ const NotificationItem = ({ id, text, isRead, onClick }) => {
       <span className={`text-sm md:text-base text-gray-700 ${isRead ? 'font-normal' : 'font-semibold'}`}>
         {text}
       </span>
-      <FiChevronRight className="text-gray-400 flex-shrink-0 w-4 h-4 md:w-5 md:h-5" />
+      <FiChevronRight className="text-gray-400 shrink-0 w-4 h-4 md:w-5 md:h-5" />
     </div>
   );
 };
