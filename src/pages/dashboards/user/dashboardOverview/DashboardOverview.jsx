@@ -5,7 +5,7 @@ import NotificationsList from './components/NotificationsList';
 
 const DashboardOverview = () => {
   return (
-    <section className="bg-gray-50 dashboardPy dashboardSpaceY">
+    <section className=" dashboardPy dashboardSpaceY">
       <DashboardHeader userName="Ismail" />
       <UpcomingEvents />
       <NotificationsList />
