@@ -260,14 +260,7 @@ const ProviderEvent = () => {
                 className="w-full rounded-md border border-gray-300 px-3 py-2 text-base"
                 placeholder="Location"
               />
-              <select
-                value={editingEvent.status}
-                onChange={(e) => setEditingEvent((prev) => ({ ...prev, status: e.target.value }))}
-                className="w-full rounded-md border border-gray-300 px-3 py-2 text-base"
-              >
-                <option value="Approved">Approved</option>
-                <option value="Pending">Pending</option>
-              </select>
+           
             </div>
             <div className="mt-5 flex justify-end gap-3">
               <button
