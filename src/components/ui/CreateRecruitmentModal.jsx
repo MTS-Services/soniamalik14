@@ -1,5 +1,5 @@
 ﻿import React, { useEffect, useState } from 'react';
-import { X, Upload } from 'lucide-react';
+import { Check, X, Upload } from 'lucide-react';
 import Button from './Button';
 
 const sportOptions = ['Football', 'Squash', 'Rugby', 'Netball', 'Cricket', 'Padel', 'Tennis', 'Badminton', 'Golf', 'Running', 'Other'];
@@ -180,12 +180,12 @@ const CreateRecruitmentModal = ({ isOpen, onClose, initialData = null, mode = 'c
                                                 onClick={() => toggleArrayField('sports', sport)}
                                                 className={`inline-flex items-center gap-2 rounded-full border px-3.5 py-2 text-sm font-medium transition-colors ${
                                                     isSelected
-                                                        ? 'border-[#9ECFC8] bg-[#BFDAD6] text-[#1F4F4B]'
-                                                        : 'border-[#CFE4E0] bg-[#E8F4F1] text-[#214C49]'
+                                                        ? 'border-[#B5D5D2] bg-[#B5D5D2] text-[#06322E]'
+                                                        : 'border-[#B5D5D2] bg-[#B5D5D2] text-[#06322E]'
                                                 }`}
                                             >
-                                                <span className={`flex h-4 w-4 items-center justify-center rounded-sm border text-[10px] ${isSelected ? 'border-[#1F4F4B] bg-white' : 'border-[#6B8C88]'}`}>
-                                                    {isSelected ? '✓' : ''}
+                                                <span className={`flex h-4 w-4 items-center justify-center rounded-sm border ${isSelected ? 'border-[#1F4F4B] bg-btn-primary text-white' : 'border-[#6B8C88] text-transparent'}`}>
+                                                    <Check className="h-3 w-3" />
                                                 </span>
                                                 <span>{sport}</span>
                                             </button>
