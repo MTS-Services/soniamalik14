@@ -29,7 +29,7 @@ const HeaderNav = ({ isMenuOpen, setIsMenuOpen }) => {
     { name: 'Marketplace', href: '/marketplace' },
     
     { name: 'Collaborate', href: '/collaborate' },
-    { name: 'News', href: '/news' },
+    // { name: 'News', href: '/news' },
   ];
 
   const isActive = (path) => {
