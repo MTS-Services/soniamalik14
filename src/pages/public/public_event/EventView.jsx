@@ -73,9 +73,14 @@ const EventView = () => {
                 {/* Custom Header Section */}
                 <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center mb-6 lg:mb-8 gap-4">
 
-                    <h1 className="text-3xl lg:text-[40px] font-semibold text-[#0B544E]">
-                        Women-focused events and workshops
+                   <div>
+                     <h1 className="text-3xl lg:text-[40px] font-semibold text-[#0B544E]">
+                       Events
                     </h1>
+                    <p className='text-base'>
+                    Explore women-focused events and workshops near you.
+                    </p>
+                   </div>
 
                     <div className="flex items-center gap-2 w-full lg:w-auto">
                         {/* Search Input */}
