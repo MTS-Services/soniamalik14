@@ -14,7 +14,7 @@ import Container from '../../../components/layout/Container';
 const CommunityView = () => {
   const { isAuthenticated } = useAuth();
   const navigate = useNavigate();
-  const [activeCategory, setActiveCategory] = useState('All Discussion');
+  const [activeCategory, setActiveCategory] = useState('Community Feed');
   const [currentPage, setCurrentPage] = useState(1);
   const [activeSport, setActiveSport] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
@@ -37,7 +37,7 @@ const CommunityView = () => {
 
   // Dynamic configuration for Header & Button based on active category
   const headerConfig = {
-    'All Discussion': {
+    'Community Feed': {
       title: 'ESSA Community',
       buttonText: 'Ask Or Share',
       titleClass: 'text-[32px] font-bold text-[#0B544E]',
@@ -59,8 +59,8 @@ const CommunityView = () => {
     }
   };
 
-  // Fallback to 'All Discussion' if category doesn't match perfectly
-  const currentHeader = headerConfig[activeCategory] || headerConfig['All Discussion'];
+  // Fallback to the community overview if category doesn't match perfectly
+  const currentHeader = headerConfig[activeCategory] || headerConfig['Community Feed'];
 
   const topics = [
     {
@@ -199,7 +199,7 @@ const CommunityView = () => {
                 }}
                 className="w-full px-4 py-3 rounded-lg bg-white border border-gray-300 text-[#1A1D1F] font-medium focus:outline-none focus:ring-2 focus:ring-[#147B6B] focus:border-transparent"
               >
-                <option value="All Discussion">All Discussion</option>
+                <option value="Community Feed">Community Feed</option>
                 <option value="Stories & Experiences">Stories & Experiences</option>
                 <option value="Questions & Advice">Questions & Advice</option>
                 <option value="Match & event support">Match & event support</option>
@@ -297,7 +297,7 @@ const CommunityView = () => {
       </Container>
 
       <StartADiscussion
-        isOpen={showModal && activeCategory === 'All Discussion'}
+        isOpen={showModal && activeCategory === 'Community Feed'}
         onClose={() => setShowModal(false)}
         onSubmit={handleShareExperience}
       />

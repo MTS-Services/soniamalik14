@@ -1,11 +1,11 @@
 ﻿import React from 'react';
 
-const CategorySidebar = ({ activeCategory = 'All Discussion', onCategoryChange }) => {
+const CategorySidebar = ({ activeCategory = 'Community Feed', onCategoryChange }) => {
   const categoryGroups = [
   {
       title: 'Browse',
       items: [
-        'All Discussion',
+        'Community Feed',
         'Stories & Experiences',
         'Questions & Advice'
       ]
