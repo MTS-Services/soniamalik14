@@ -2,94 +2,79 @@
 import { X, Upload } from 'lucide-react';
 import Button from './Button';
 
+const sportOptions = ['Football', 'Squash', 'Rugby', 'Netball', 'Cricket', 'Padel', 'Tennis', 'Badminton', 'Golf', 'Running', 'Other'];
+const sessionTypeOptions = ['Recreational', 'Social', 'Training', 'Coaching', 'League', 'Competitive'];
+const suitableForOptions = ['New to sport', 'Some experience', 'Regular players', 'Competitive', 'All levels welcome'];
+
+const createInitialForm = () => ({
+    title: '',
+    organisationName: '',
+    contactPerson: '',
+    role: '',
+    sportType: '',
+    skillLevelRequired: '',
+    description: '',
+    trainingLocation: '',
+    times: '',
+    matchDays: '',
+    applicationDeadline: '',
+    ageRange: '',
+    playersNeeded: '',
+    homeGround: '',
+    whatPlayersReceive: '',
+    sports: [],
+    sessionTypes: [],
+    suitableFor: [],
+    womensOnly: null,
+    venueName: '',
+    postcode: '',
+    town: '',
+    typicalSessionDays: '',
+    sessionDate: '',
+    sessionTime: '',
+    bookingLink: '',
+    skillLevel: 'Beginner',
+    image: null,
+});
+
 const CreateRecruitmentModal = ({ isOpen, onClose, initialData = null, mode = 'create' }) => {
-    const [form, setForm] = useState({
-        title: '',
-        organisationName: '',
-        contactPerson: '',
-        role: '',
-        sportType: '',
-        skillLevelRequired: '',
-        description: '',
-        trainingLocation: '',
-        times: '',
-        matchDays: '',
-        applicationDeadline: '',
-        ageRange: '',
-        playersNeeded: '',
-        homeGround: '',
-        whatPlayersReceive: '',
-        sports: [],
-        sessionTypes: [],
-        suitableFor: [],
-        womensOnly: null,
-        venueName: '',
-        postcode: '',
-        town: '',
-        typicalSessionDays: '',
-        sessionDate: '',
-        sessionTime: '',
-        bookingLink: '',
-        skillLevel: 'Beginner',
-        image: null,
-    });
+    const [form, setForm] = useState(createInitialForm);
 
     useEffect(() => {
         if (!isOpen) {
-            // reset when closed
-            setForm({
-                title: '',
-                organisationName: '',
-                contactPerson: '',
-                role: '',
-                sportType: '',
-                skillLevelRequired: '',
-                description: '',
-                trainingLocation: '',
-                times: '',
-                matchDays: '',
-                applicationDeadline: '',
-                ageRange: '',
-                playersNeeded: '',
-                homeGround: '',
-                whatPlayersReceive: '',
-                sports: [],
-                sessionTypes: [],
-                suitableFor: [],
-                womensOnly: null,
-                venueName: '',
-                postcode: '',
-                town: '',
-                typicalSessionDays: '',
-                sessionDate: '',
-                sessionTime: '',
-                bookingLink: '',
-                skillLevel: 'Beginner',
-                image: null,
-            });
             return;
         }
 
-        // populate form when editing
-        if (initialData && mode === 'edit') {
-            setForm((s) => ({
-                ...s,
-                title: initialData.title || s.title,
-                sportType: initialData.sportType || s.sportType,
-                skillLevelRequired: initialData.skillLevel || s.skillLevelRequired,
-                description: initialData.description || s.description,
-                trainingLocation: initialData.trialLocation || s.trainingLocation,
-                times: initialData.time || s.times,
-                matchDays: initialData.matchDays || s.matchDays,
-                applicationDeadline: initialData.lastDateToRegister || s.applicationDeadline,
-                ageRange: initialData.ageGroup || s.ageRange,
-                playersNeeded: initialData.playersNeeded || s.playersNeeded,
-                homeGround: initialData.trialLocation || s.homeGround,
-                whatPlayersReceive: initialData.whatPlayersReceive || s.whatPlayersReceive,
-                skillLevel: initialData.skillLevel ? (Array.isArray(initialData.skillLevel) ? initialData.skillLevel[0] : initialData.skillLevel) : s.skillLevel,
-                image: initialData.image || s.image,
-            }));
-        }
+        const frameId = window.requestAnimationFrame(() => {
+            if (initialData && mode === 'edit') {
+                setForm((currentForm) => ({
+                    ...currentForm,
+                    title: initialData.title || currentForm.title,
+                    sportType: initialData.sportType || currentForm.sportType,
+                    skillLevelRequired: initialData.skillLevel || currentForm.skillLevelRequired,
+                    description: initialData.description || currentForm.description,
+                    trainingLocation: initialData.trialLocation || currentForm.trainingLocation,
+                    times: initialData.time || currentForm.times,
+                    matchDays: initialData.matchDays || currentForm.matchDays,
+                    applicationDeadline: initialData.lastDateToRegister || currentForm.applicationDeadline,
+                    ageRange: initialData.ageGroup || currentForm.ageRange,
+                    playersNeeded: initialData.playersNeeded || currentForm.playersNeeded,
+                    homeGround: initialData.trialLocation || currentForm.homeGround,
+                    whatPlayersReceive: initialData.whatPlayersReceive || currentForm.whatPlayersReceive,
+                    skillLevel: initialData.skillLevel
+                        ? Array.isArray(initialData.skillLevel)
+                            ? initialData.skillLevel[0]
+                            : initialData.skillLevel
+                        : currentForm.skillLevel,
+                    image: initialData.image || currentForm.image,
+                }));
+                return;
+            }
+
+            setForm(createInitialForm());
+        });
+
+        return () => window.cancelAnimationFrame(frameId);
     }, [isOpen, initialData, mode]);
 
     if (!isOpen) return null;
@@ -178,33 +163,73 @@ const CreateRecruitmentModal = ({ isOpen, onClose, initialData = null, mode = 'c
                         </div>
 
                         {/* Sport & Session Information */}
-                        <div>
-                            <h4 className="text-base font-semibold text-gray-700 mb-2">Sport & Session Information</h4>
-                            <p className="text-base text-gray-500 mb-3">Details about the sport and session you offer</p>
+                        <div className="rounded-2xl ">
+                            <h4 className="text-lg font-medium text-gray-900">Sport & Session Information</h4>
+                            <p className="mt-1 text-sm text-gray-500">Details about the sport and session you offer</p>
 
-                            <div className="flex flex-wrap gap-2 mb-4">
-                                {['Football', 'Squash', 'Rugby', 'Netball', 'Cricket', 'Padel', 'Tennis', 'Badminton', 'Golf', 'Running', 'Other'].map((s) => (
-                                    <button key={s} type="button" onClick={() => toggleArrayField('sports', s)} className={`px-3 py-1 rounded-full text-base ${form.sports.includes(s) ? 'bg-[#E6F6F2] text-[#0F766E]' : 'bg-gray-100 text-gray-700'}`}>
-                                        {s}
-                                    </button>
-                                ))}
+                            <div className="mt-5">
+                                <p className="mb-3 text-sm font-medium text-gray-900">Sports</p>
+                                <div className="flex flex-wrap gap-2">
+                                    {sportOptions.map((sport) => {
+                                        const isSelected = form.sports.includes(sport);
+
+                                        return (
+                                            <button
+                                                key={sport}
+                                                type="button"
+                                                onClick={() => toggleArrayField('sports', sport)}
+                                                className={`inline-flex items-center gap-2 rounded-full border px-3.5 py-2 text-sm font-medium transition-colors ${
+                                                    isSelected
+                                                        ? 'border-[#9ECFC8] bg-[#BFDAD6] text-[#1F4F4B]'
+                                                        : 'border-[#CFE4E0] bg-[#E8F4F1] text-[#214C49]'
+                                                }`}
+                                            >
+                                                <span className={`flex h-4 w-4 items-center justify-center rounded-sm border text-[10px] ${isSelected ? 'border-[#1F4F4B] bg-white' : 'border-[#6B8C88]'}`}>
+                                                    {isSelected ? '✓' : ''}
+                                                </span>
+                                                <span>{sport}</span>
+                                            </button>
+                                        );
+                                    })}
+                                </div>
                             </div>
 
-                            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-3">
-                                {['Recreational', 'Social', 'Training', 'Coaching', 'League', 'Competitive'].map((t) => (
-                                    <label key={t} className="flex items-center gap-2 text-base"><input type="checkbox" checked={form.sessionTypes.includes(t)} onChange={() => toggleArrayField('sessionTypes', t)} className="w-4 h-4" /> {t}</label>
-                                ))}
+                            <div className="mt-5">
+                                <p className="mb-3 text-sm font-medium text-gray-900">Session Type</p>
+                                <div className="space-y-2">
+                                    {sessionTypeOptions.map((type) => (
+                                        <label key={type} className="flex items-center gap-3 text-sm text-gray-700">
+                                            <input type="checkbox" checked={form.sessionTypes.includes(type)} onChange={() => toggleArrayField('sessionTypes', type)} className="h-4 w-4 rounded border-gray-300 text-[#0F766E] focus:ring-[#0F766E]" />
+                                            <span>{type}</span>
+                                        </label>
+                                    ))}
+                                </div>
                             </div>
 
-                            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-3">
-                                <label className="text-base"><input type="checkbox" checked={form.suitableFor.includes('New to sport')} onChange={() => toggleArrayField('suitableFor', 'New to sport')} className="mr-2" /> New to sport</label>
-                                <label className="text-base"><input type="checkbox" checked={form.suitableFor.includes('Some experience')} onChange={() => toggleArrayField('suitableFor', 'Some experience')} className="mr-2" /> Some experience</label>
-                                <label className="text-base"><input type="checkbox" checked={form.suitableFor.includes('Compete players')} onChange={() => toggleArrayField('suitableFor', 'Compete players')} className="mr-2" /> Competitive</label>
+                            <div className="mt-5">
+                                <p className="mb-3 text-sm font-medium text-gray-900">Suitable for (more than one can be selected)</p>
+                                <div className="space-y-2">
+                                    {suitableForOptions.map((item) => (
+                                        <label key={item} className="flex items-center gap-3 text-sm text-gray-700">
+                                            <input type="checkbox" checked={form.suitableFor.includes(item)} onChange={() => toggleArrayField('suitableFor', item)} className="h-4 w-4 rounded border-gray-300 text-[#0F766E] focus:ring-[#0F766E]" />
+                                            <span>{item}</span>
+                                        </label>
+                                    ))}
+                                </div>
                             </div>
 
-                            <div className="flex items-center gap-4 mt-2">
-                                <label className="flex items-center gap-2 text-base"><input type="radio" name="womensOnly" checked={form.womensOnly === true} onChange={() => handleChange('womensOnly', true)} /> YES</label>
-                                <label className="flex items-center gap-2 text-base"><input type="radio" name="womensOnly" checked={form.womensOnly === false} onChange={() => handleChange('womensOnly', false)} /> NO</label>
+                            <div className="mt-5">
+                                <p className="mb-3 text-sm font-medium text-gray-900">Women&apos;s Only</p>
+                                <div className="space-y-2">
+                                    <label className="flex items-center gap-3 text-sm text-gray-700">
+                                        <input type="radio" name="womensOnly" checked={form.womensOnly === true} onChange={() => handleChange('womensOnly', true)} className="h-4 w-4 border-gray-300 text-[#0F766E] focus:ring-[#0F766E]" />
+                                        <span>YES</span>
+                                    </label>
+                                    <label className="flex items-center gap-3 text-sm text-gray-700">
+                                        <input type="radio" name="womensOnly" checked={form.womensOnly === false} onChange={() => handleChange('womensOnly', false)} className="h-4 w-4 border-gray-300 text-[#0F766E] focus:ring-[#0F766E]" />
+                                        <span>NO</span>
+                                    </label>
+                                </div>
                             </div>
                         </div>
 
