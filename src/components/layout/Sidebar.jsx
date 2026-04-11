@@ -246,7 +246,7 @@ const Sidebar = ({ isOpen, onClose }) => {
         {/* Logo */}
         <div className="flex items-center px-5">
           <Link to="/" onClick={handleNavClick} className="inline-block" aria-label="Home">
-            <img src="/logo.svg" alt="Logo" className="h-auto w-30 pt-2.5 pb-5" />
+            <img src="/logo.png" alt="Logo" className="h-auto w-full pt-5 pb-5" />
           </Link>
         </div>
 

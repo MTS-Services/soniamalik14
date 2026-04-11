@@ -63,7 +63,7 @@ const HeaderTop = ({ onMenuClick, isMenuOpen }) => {
 
           {/* Center: Logo */}
           <Link to="/" className="absolute left-1/2 transform -translate-x-1/2">
-            <img src="/logo.svg" alt="ESSA HUB Logo" className="h-20 w-20" />
+            <img src="/logo.png" alt="ESSA HUB Logo" className="h-6 w-full" />
           </Link>
 
           {/* Right: User Icon (Fixed for Mobile/Tablet) */}
@@ -98,7 +98,7 @@ const HeaderTop = ({ onMenuClick, isMenuOpen }) => {
         {/* Desktop Header */}
         <div className="hidden lg:flex h-15 items-center justify-between">
           <Link to="/" className="flex items-center gap-2">
-            <img src="/logo.svg" alt="ESSA HUB Logo" className="h-25 w-25" />
+            <img src="/logo.png" alt="ESSA HUB Logo" className="h-6 w-full" />
           </Link>
 
           <div className="flex-1 max-w-2xl mx-8">

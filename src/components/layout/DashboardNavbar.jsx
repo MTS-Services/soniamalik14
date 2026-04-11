@@ -52,7 +52,7 @@ const DashboardNavbar = ({ onMenuClick }) => {
         
         {/* Logo - mobile only */}
         <img 
-          src="/logo.svg" 
+          src="/logo.png" 
           alt="Logo" 
           className="lg:hidden h-8 w-auto" 
         />

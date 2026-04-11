@@ -42,7 +42,7 @@ const UserDashboardSidebar = ({ isOpen, onClose }) => {
         </button>
       <div className="px-6 pt-6 pb-4">
         <Link to="/">
-          <img src="/logo.svg" alt="Logo" className="w-32 h-auto" />
+          <img src="/logo.png" alt="Logo" className="w-full h-auto" />
         </Link>
       </div>
 

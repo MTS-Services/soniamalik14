@@ -53,7 +53,7 @@ const FooterLayout = () => {
           <div className="flex flex-col lg:flex-row lg:justify-between gap-8">
             {/* Brand Section */}
             <div className="lg:flex-1">
-              <img src="/logo.svg" alt="Essa Hub" className="mb-4 h-16 md:h-20" />
+              <img src="/logo.png" alt="Essa Hub" className="mb-4 h-8" />
               <p className="max-w-md leading-tight lg:leading-relaxed text-gray-600">
                 ESSA Hub helps women find teams, sessions, services and community - making sport
                 easier to access, return to and enjoy.
