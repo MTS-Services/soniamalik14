@@ -11,7 +11,7 @@ const CollaborateView = () => {
                 {/* Header Section */}
                 <div className="max-w-3xl mb-8">
                     <h1 className="text-3xl lg:text-[40px] font-semibold text-[#0B544E] mb-4">
-                        Collaborate With <br className="hidden sm:block" /> ESSA Hub
+                        Collaborate With ESSA Hub
                     </h1>
                     <p className="text-base sm:text-lg text-gray-600 leading-relaxed max-w-2xl">
                         We're building a trusted space for women's sport and we welcome organisations and businesses who want to be part of it.

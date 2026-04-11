@@ -97,8 +97,11 @@ const MarketPlaceView = () => {
                 {/* Header Title */}
                 <div className="mb-8">
                     <h1 className="text-3xl sm:text-4xl lg:text-[2.5rem] font-bold text-[#0B544E] tracking-tight">
-                        Curated brands across women’s sport.
+                        Marketplace
                     </h1>
+                    <p className='text-base'>
+                        Shop curated brands and products designed for women in sport
+                    </p>
                 </div>
 
                 {/*  Filters Wrapper */}
