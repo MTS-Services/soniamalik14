@@ -16,19 +16,19 @@ const Foundersection = () => {
         onMouseLeave={() => setHovered(false)}
       >
         {/* Header section: Modified for Mobile Horizontal Layout */}
-        <header className="mb-6 flex flex-row items-center gap-4 sm:mb-8 sm:items-start sm:gap-6">
+        <header className="mb-6 md:mb-4 flex flex-row items-center gap-4 sm:mb-8 sm:items-start sm:gap-6">
           {/* Founder photo: Circular and small on mobile, larger on desktop */}
           <div className="shrink-0">
             <img
               src="/founderImage.jpeg"
               alt="ESSA Hub founder"
-              className="h-20 w-20 rounded-lg object-cover sm:h-36 sm:w-36 md:h-40 md:w-40"
+              className="h-20 w-20 rounded-lg object-cover sm:h-36 sm:w-36 "
             />
           </div>
 
           {/* Title */}
-          <div className="flex-1">
-            <h1 className="text-xl leading-tight font-normal text-[#0B544E] italic sm:text-3xl sm:not-italic  pb-4">
+          <div className="flex-1  mt-0 md:mt-2">
+            <h1 className="text-xl leading-tight font-normal text-[#0B544E] italic sm:text-3xl sm:not-italic  pb-2">
               A note from the founder
             </h1>
             {/**for large device */}
