@@ -117,18 +117,14 @@ const BrandsProductsSection = () => {
                 <img
                     src="/MarketPlace1.webp"
                     alt="For Brands & Products"
-                    /* ফিক্স: 'object-right-bottom' দেওয়া হয়েছে। 
-                       এর ফলে ইমেজটি ডানদিকের নিচের কর্নারে পজিশন হবে এবং জুতোর অংশটুকু ফোকাসে থাকবে, 
-                       হাইট না বাড়ালেও জুতো কাটবে না।
-                    */
-                    className="absolute inset-0 w-full h-full object-cover object-right-bottom"
+                  ame="absolute inset-0 w-full h-full object-cover object-right-bottom"
                 />
                 {/* Smooth Gradient Overlay exactly like the image (Fades Left to Right) */}
                 <div className="absolute inset-0 bg-[linear-gradient(90deg,#FFFFFF_40%,rgba(255,255,255,0.9)_55%,transparent_100%)] w-[90%] lg:w-[80%]" />
             </div>
 
             {/* Content Container */}
-            {/* পারফেক্ট সাইজ রাখার জন্য হাইট md:min-h-[450px] রাখা হয়েছে, যা অতিরিক্ত বড় হবে না */}
+           
             <div className="relative z-10 p-6 sm:p-10 md:p-12 lg:p-16 w-full md:w-[65%] lg:w-[55%] bg-white md:bg-transparent min-h-[400px] xl:min-h-[650px] flex flex-col justify-center">
 
                 <h2 className="text-3xl md:text-[32px] leading-tight font-medium text-[#0B544E] mb-5 tracking-tight">
