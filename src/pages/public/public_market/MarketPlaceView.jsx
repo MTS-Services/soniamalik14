@@ -1,6 +1,7 @@
 import React, { useMemo, useState } from 'react';
 import Container from '../../../components/layout/Container';
 import Button from '../../../components/ui/Button';
+import PageHeader from '../../../components/ui/PageHeader';
 
 // Sample data using the placeholder image to match your screenshot
 const sampleBrands = [
@@ -95,14 +96,12 @@ const MarketPlaceView = () => {
         <section>
             <Container className="py-6 lg:py-10 bg-[#F8FAFC] font-sans ">
                 {/* Header Title */}
-                <div className="mb-8">
-                    <h1 className="text-3xl sm:text-4xl lg:text-[2.5rem] font-bold text-[#0B544E] tracking-tight">
-                        Marketplace
-                    </h1>
-                    <p className='text-base'>
-                        Shop curated brands and products designed for women in sport
-                    </p>
+
+                  {/* Header Section */}
+                <div className="mb-6">
+                    <PageHeader title="Marketplace" description={"Shop curated brands and products designed for women in sport."} />
                 </div>
+                
 
                 {/*  Filters Wrapper */}
                 <div className="bg-[#E7F1F1] p-4 rounded-xl flex flex-col lg:flex-row items-stretch lg:items-center lg:justify-center gap-3 mb-12 max-w-lg ">

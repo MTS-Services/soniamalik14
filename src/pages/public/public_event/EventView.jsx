@@ -4,6 +4,7 @@ import { Search, X, Filter } from 'lucide-react';
 import EventFilters from './components/EventFilters';
 import EventCard from './components/EventCard';
 import Pagination from '../../../components/ui/Pagination';
+import PageHeader from '../../../components/ui/PageHeader';
 
 const sampleEvents = new Array(12).fill(0).map((_, i) => ({
     id: i + 1,
@@ -72,15 +73,11 @@ const EventView = () => {
             <Container>
                 {/* Custom Header Section */}
                 <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center mb-6 lg:mb-8 gap-4">
-
-                   <div>
-                     <h1 className="text-3xl lg:text-[40px] font-semibold text-[#0B544E]">
-                       Events
-                    </h1>
-                    <p className='text-base'>
-                    Explore women-focused events and workshops near you.
-                    </p>
-                   </div>
+  {/* Header Section */}
+                <div className="mb-6">
+                    <PageHeader title="Events" description={"Explore women-focused events and workshops near you. "} />
+                </div>
+                 
 
                     <div className="flex items-center gap-2 w-full lg:w-auto">
                         {/* Search Input */}
