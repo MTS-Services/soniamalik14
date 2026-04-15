@@ -4,7 +4,7 @@
 // import HeroTitle from '../../../../components/ui/HeroTitle';
 
 // const AboutHero = () => {
-//   const backgroundImageUrl = '/images/About.jpg'; 
+//   const backgroundImageUrl = '/images/about1.png'; 
 //   return (
 //     <div
 //       style={{ backgroundImage: backgroundImageUrl ? `url(${backgroundImageUrl})` : 'none' }}
@@ -32,16 +32,16 @@ import HeroTitle from '../../../../components/ui/HeroTitle';
 
 const AboutHero = () => {
 
-
+//lg:bg-[url('/images/About.jpg')]
   return (
     <div
       className={`
         relative flex w-auto items-center justify-center bg-cover bg-center 
-        h-70 sm:h-160 md:h-160 lg:h-190
+        h-70 sm:h-160 md:h-160 lg:h-160
         
         bg-[url('/images/about1.png')] 
         
-        lg:bg-[url('/images/About.jpg')]
+        lg:bg-[url('/images/about2.png')]
       `}
     >
       {/* Overlay */}
