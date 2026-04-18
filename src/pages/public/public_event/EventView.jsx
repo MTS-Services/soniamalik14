@@ -156,7 +156,7 @@ const EventView = () => {
         <div className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-4">
           {/* Desktop Sidebar */}
           <aside className="hidden lg:col-span-1 lg:block">
-            <div className="sticky top-44">
+            <div className="sticky top-22">
               <EventFilters
                 filters={filters}
                 onChange={(f) => {
