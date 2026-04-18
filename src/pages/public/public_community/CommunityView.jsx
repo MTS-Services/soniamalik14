@@ -10,6 +10,7 @@ import AddPostModal from './components/AddPostModal';
 import Button from '../../../components/ui/Button';
 import Pagination from '../../../components/ui/Pagination';
 import Container from '../../../components/layout/Container';
+import PageHeader from '../../../components/ui/PageHeader';
 
 const CommunityView = () => {
   const { isAuthenticated } = useAuth();
@@ -20,7 +21,16 @@ const CommunityView = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [showModal, setShowModal] = useState(false);
 
-  const sports = ['All', 'Football', 'Netball', 'Padel', 'Squash', 'Cricket', 'Multi-Sport', 'Not sport-specific'];
+  const sports = [
+    'All',
+    'Football',
+    'Netball',
+    'Padel',
+    'Squash',
+    'Cricket',
+    'Multi-Sport',
+    'Not sport-specific',
+  ];
   const itemsPerPage = 6;
 
   const handleShareExperience = (formData) => {
@@ -53,10 +63,11 @@ const CommunityView = () => {
       titleClass: 'text-[18px] lg:text-[20px] font-medium text-[#1A1D1F] max-w-2xl leading-relaxed',
     },
     'Match & event support': {
-      title: 'Need a last-minute sub, referee, or extra help for a match or event? Post here for short-term support from the community.',
+      title:
+        'Need a last-minute sub, referee, or extra help for a match or event? Post here for short-term support from the community.',
       buttonText: 'Add Post',
       titleClass: 'text-[18px] lg:text-[20px] font-medium text-[#1A1D1F] max-w-3xl leading-relaxed',
-    }
+    },
   };
 
   // Fallback to the community overview if category doesn't match perfectly
@@ -69,7 +80,7 @@ const CommunityView = () => {
       title: 'Training Tips & Daily Practice',
       description: 'Discuss drills, fitness routines, and match-day preparation.',
       replies: 4,
-      avatar: '/images/avatars/user1.jpg'
+      avatar: '/images/avatars/user1.jpg',
     },
     {
       id: 2,
@@ -77,7 +88,7 @@ const CommunityView = () => {
       title: 'Match Experience & Learnings',
       description: 'Share match stories, key moments, and lessons learned on the field.',
       replies: 4,
-      avatar: '/images/avatars/user2.jpg'
+      avatar: '/images/avatars/user2.jpg',
     },
     {
       id: 3,
@@ -85,7 +96,7 @@ const CommunityView = () => {
       title: 'Injury Recovery & Player Care',
       description: 'Talk about injury prevention, recovery tips, and player health.',
       replies: 4,
-      avatar: '/images/avatars/user3.jpg'
+      avatar: '/images/avatars/user3.jpg',
     },
     {
       id: 4,
@@ -93,7 +104,7 @@ const CommunityView = () => {
       title: 'Players Needed for Our Team',
       description: 'Post trial details, required positions, and team information.',
       replies: 4,
-      avatar: '/images/avatars/user4.jpg'
+      avatar: '/images/avatars/user4.jpg',
     },
     {
       id: 5,
@@ -101,7 +112,7 @@ const CommunityView = () => {
       title: "Women's Football Event Announcements",
       description: 'Share upcoming tournaments, trials, friendly matches, or events.',
       replies: 4,
-      avatar: '/images/avatars/user5.jpg'
+      avatar: '/images/avatars/user5.jpg',
     },
     {
       id: 6,
@@ -109,7 +120,7 @@ const CommunityView = () => {
       title: 'Club Management & Team Building',
       description: 'Discuss team management, scheduling, and player development.',
       replies: 4,
-      avatar: '/images/avatars/user6.jpg'
+      avatar: '/images/avatars/user6.jpg',
     },
     {
       id: 7,
@@ -117,7 +128,7 @@ const CommunityView = () => {
       title: 'Physio, Fitness & Nutrition Support',
       description: 'Offer physiotherapy, fitness training, and nutrition services.',
       replies: 4,
-      avatar: '/images/avatars/user7.jpg'
+      avatar: '/images/avatars/user7.jpg',
     },
     {
       id: 8,
@@ -125,7 +136,7 @@ const CommunityView = () => {
       title: 'Women in Football – Stories & Inspiration',
       description: 'Share journeys, success stories, and motivation for women in football.',
       replies: 4,
-      avatar: '/images/avatars/user8.jpg'
+      avatar: '/images/avatars/user8.jpg',
     },
     {
       id: 9,
@@ -133,7 +144,7 @@ const CommunityView = () => {
       title: 'Challenges Faced by Women Footballers',
       description: 'Discuss common challenges and support each other with solutions.',
       replies: 4,
-      avatar: '/images/avatars/user9.jpg'
+      avatar: '/images/avatars/user9.jpg',
     },
     {
       id: 10,
@@ -141,7 +152,7 @@ const CommunityView = () => {
       title: 'Mental Health & Wellbeing',
       description: 'Discuss mental strength, dealing with pressure, and player wellness.',
       replies: 4,
-      avatar: '/images/avatars/user10.jpg'
+      avatar: '/images/avatars/user10.jpg',
     },
     {
       id: 11,
@@ -149,7 +160,7 @@ const CommunityView = () => {
       title: 'Sponsorship & Funding Opportunities',
       description: 'Share information about sponsorships, grants, and funding for clubs.',
       replies: 4,
-      avatar: '/images/avatars/user11.jpg'
+      avatar: '/images/avatars/user11.jpg',
     },
     {
       id: 12,
@@ -157,8 +168,8 @@ const CommunityView = () => {
       title: 'Youth Development Programs',
       description: 'Discuss grassroots development and youth engagement in sports.',
       replies: 4,
-      avatar: '/images/avatars/user12.jpg'
-    }
+      avatar: '/images/avatars/user12.jpg',
+    },
   ].map((topic) => ({ ...topic, titleColor: '#0B544E' }));
 
   // Calculate pagination
@@ -168,12 +179,12 @@ const CommunityView = () => {
   const paginatedTopics = topics.slice(startIndex, endIndex);
 
   return (
-    <div className="min-h-screen py-6 lg:py-10 bg-[#F8FAFC] ">
+    <div className="min-h-screen bg-[#F8FAFC] py-6 lg:py-10">
       <Container>
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-3 lg:gap-6">
+        <div className="grid grid-cols-1 gap-3 lg:grid-cols-4 lg:gap-6">
           {/* Left Sidebar - Categories */}
           <div className="lg:col-span-1">
-            <div className="hidden lg:block sticky top-46">
+            <div className="sticky top-46 hidden lg:block">
               <CategorySidebar
                 activeCategory={activeCategory}
                 onCategoryChange={setActiveCategory}
@@ -183,21 +194,25 @@ const CommunityView = () => {
 
           {/* Main Content */}
           <div className="lg:col-span-3">
-
             {/* Mobile Title - Above Dropdown (Mobile Only) */}
-            <div className="lg:hidden mb-4">
-              <h1 className="text-[32px] font-bold text-[#0B544E]">ESSA Community</h1>
+            <div className="mb-4 lg:hidden">
+              <PageHeader
+                title="ESSA Community"
+                description="Browse all conversations across the community - from questions to shared experiences.
+
+"
+              />
             </div>
 
             {/* Mobile Category Dropdown */}
-            <div className="lg:hidden mb-6">
+            <div className="mb-6 lg:hidden">
               <select
                 value={activeCategory}
                 onChange={(e) => {
                   setActiveCategory(e.target.value);
                   setCurrentPage(1);
                 }}
-                className="w-full px-4 py-3 rounded-lg bg-white border border-gray-300 text-[#1A1D1F] font-medium focus:outline-none focus:ring-2 focus:ring-[#147B6B] focus:border-transparent"
+                className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 font-medium text-[#1A1D1F] focus:border-transparent focus:ring-2 focus:ring-[#147B6B] focus:outline-none"
               >
                 <option value="Community Feed">Community Feed</option>
                 <option value="Stories & Experiences">Stories & Experiences</option>
@@ -207,10 +222,10 @@ const CommunityView = () => {
             </div>
 
             {/* Mobile Button (Mobile Only) */}
-            <div className="lg:hidden mb-6">
+            <div className="mb-6 lg:hidden">
               <Button
                 variant="primary"
-                className="rounded-md w-full bg-[#147B6B] hover:bg-[#0D655D] text-white px-6 py-3 font-medium transition-colors"
+                className="w-full rounded-md bg-[#147B6B] px-6 py-3 font-medium text-white transition-colors hover:bg-[#0D655D]"
                 onClick={handleOpenModal}
               >
                 {isAuthenticated ? 'Ask Or Share' : 'Log in To Post'}
@@ -218,14 +233,20 @@ const CommunityView = () => {
             </div>
 
             {/* Dynamic Header Section */}
-            <div className="hidden lg:flex flex-col sm:flex-row justify-between items-start mb-6 gap-4">
-              <div className={currentHeader.titleClass}>
-                {currentHeader.title}
+            <div className="mb-6 hidden flex-col items-start justify-between gap-4 sm:flex-row lg:flex">
+              <div>
+                <div className={currentHeader.titleClass}>{currentHeader.title}</div>
+                {activeCategory === 'Community Feed' && (
+                  <p className="mt-1 text-base text-[#4B5563]">
+                    Browse all conversations across the community - from questions to shared
+                    experiences.
+                  </p>
+                )}
               </div>
 
               <Button
                 variant="primary"
-                className="rounded-md w-full sm:w-auto shrink-0 bg-[#147B6B] hover:bg-[#0D655D] text-white px-6 py-2.5 font-medium transition-colors"
+                className="w-full shrink-0 rounded-md bg-[#147B6B] px-6 py-2.5 font-medium text-white transition-colors hover:bg-[#0D655D] sm:w-auto"
                 onClick={handleOpenModal}
               >
                 {isAuthenticated ? currentHeader.buttonText : 'Log in To Post'}
@@ -235,15 +256,16 @@ const CommunityView = () => {
             {/* Filter & Search Section */}
             {isAuthenticated && (
               <div className="mb-6">
-                <div className="flex flex-wrap gap-2 md:gap-4 mb-4">
+                <div className="mb-4 flex flex-wrap gap-2 md:gap-4">
                   {sports.map((sport) => (
                     <button
                       key={sport}
                       onClick={() => setActiveSport(sport)}
-                      className={`px-4 py-2 rounded-lg text-sm md:text-base font-medium transition-colors ${activeSport === sport
-                        ? 'bg-[#147B6B] text-white'
-                        : 'bg-[#91C0BC] text-[#242424] hover:bg-[#7db0ac]'
-                        }`}
+                      className={`rounded-lg px-4 py-2 text-sm font-medium transition-colors md:text-base ${
+                        activeSport === sport
+                          ? 'bg-[#147B6B] text-white'
+                          : 'bg-[#91C0BC] text-[#242424] hover:bg-[#7db0ac]'
+                      }`}
                     >
                       {sport}
                     </button>
@@ -256,10 +278,10 @@ const CommunityView = () => {
                     placeholder="Search for anything..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="w-full px-4 py-3 pl-4 pr-10 rounded-lg bg-white border border-gray-200 outline-none focus:ring-2 focus:ring-[#147B6B] focus:border-transparent text-[15px]"
+                    className="w-full rounded-lg border border-gray-200 bg-white px-4 py-3 pr-10 pl-4 text-[15px] outline-none focus:border-transparent focus:ring-2 focus:ring-[#147B6B]"
                   />
                   <svg
-                    className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400"
+                    className="absolute top-1/2 right-3 h-5 w-5 -translate-y-1/2 text-gray-400"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -275,22 +297,14 @@ const CommunityView = () => {
               </div>
             )}
 
-            <div className="space-y-2 lg:space-y-4 mb-8">
+            <div className="mb-8 space-y-2 lg:space-y-4">
               {paginatedTopics.map((topic) => (
-                <ForumTopicCard
-                  key={topic.id}
-                  topic={topic}
-                  isLoggedIn={isAuthenticated}
-                />
+                <ForumTopicCard key={topic.id} topic={topic} isLoggedIn={isAuthenticated} />
               ))}
             </div>
 
             {totalPages > 1 && (
-              <Pagination
-                page={currentPage}
-                total={totalPages}
-                onChange={setCurrentPage}
-              />
+              <Pagination page={currentPage} total={totalPages} onChange={setCurrentPage} />
             )}
           </div>
         </div>
