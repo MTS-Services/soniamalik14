@@ -238,15 +238,15 @@ const Sidebar = ({ isOpen, onClose }) => {
         {/* Close button for mobile */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 rounded-full p-1 hover:bg-gray-100 lg:hidden"
+          className="absolute top-4 right-4  rounded-full p-1 hover:bg-gray-100 lg:hidden"
         >
           <X className="h-5 w-5 text-gray-600" />
         </button>
 
         {/* Logo */}
-        <div className="flex items-center px-5">
+        <div className="flex items-center px-5 ">
           <Link to="/" onClick={handleNavClick} className="inline-block" aria-label="Home">
-            <img src="/logo.png" alt="Logo" className="h-auto w-full pt-5 pb-5" />
+            <img src="/logo.png" alt="Logo" className="h-auto w-full pt-5 pb-5 " />
           </Link>
         </div>
 
