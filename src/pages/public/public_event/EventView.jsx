@@ -88,7 +88,7 @@ const EventView = () => {
             {/* Mobile Filter Button */}
             <button
               onClick={() => setShowFilters(true)}
-              className="flex w-full items-center justify-between rounded-2xl border border-[#B9DAD7] bg-white px-5 py-4 text-left shadow-[0_2px_8px_rgba(16,24,40,0.06)] transition-transform hover:-translate-y-0.5 active:scale-[0.99] lg:hidden"
+              className="flex w-full items-center justify-between rounded-lg border border-[#B9DAD7] bg-white px-5 py-4 text-left lg:hidden"
             >
               <span className="text-base font-semibold leading-none text-gray-900">Filters</span>
               <Filter className="h-6 w-6 shrink-0 text-gray-900" strokeWidth={2.2} />
