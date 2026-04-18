@@ -9,7 +9,7 @@ const Hero = () => {
         {/* Image Section with Masking Effect */}
         <div className="relative h-72 w-full">
           <div
-            className="h-full w-full bg-[url('/hero2.png')] bg-cover bg-center"
+            className="h-full w-full bg-[url('/hero23.png')] bg-cover bg-center"
             style={{
               maskImage: 'linear-gradient(to bottom, black 60%, transparent 100%)',
               WebkitMaskImage: 'linear-gradient(to bottom, black 60%, transparent 100%)',
