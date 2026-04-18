@@ -275,7 +275,7 @@ const CommunityView = () => {
                 <div className="relative">
                   <input
                     type="text"
-                    placeholder="Search for anything..."
+                    placeholder=" Search topics, questions or keywords"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     className="w-full rounded-lg border border-gray-200 bg-white px-4 py-3 pr-10 pl-4 text-[15px] outline-none focus:border-transparent focus:ring-2 focus:ring-[#147B6B]"
