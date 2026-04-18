@@ -15,7 +15,7 @@ import PageHeader from '../../../components/ui/PageHeader';
 const CommunityView = () => {
   const { isAuthenticated } = useAuth();
   const navigate = useNavigate();
-  const [activeCategory, setActiveCategory] = useState('Community Feed');
+  const [activeCategory, setActiveCategory] = useState('All posts');
   const [currentPage, setCurrentPage] = useState(1);
   const [activeSport, setActiveSport] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
@@ -47,7 +47,7 @@ const CommunityView = () => {
 
   // Dynamic configuration for Header & Button based on active category
   const headerConfig = {
-    'Community Feed': {
+    'All posts': {
       title: 'ESSA Community',
       buttonText: 'Ask Or Share',
       titleClass: 'text-[32px] font-bold text-[#0B544E]',
@@ -71,7 +71,7 @@ const CommunityView = () => {
   };
 
   // Fallback to the community overview if category doesn't match perfectly
-  const currentHeader = headerConfig[activeCategory] || headerConfig['Community Feed'];
+  const currentHeader = headerConfig[activeCategory] || headerConfig['All posts'];
 
   const topics = [
     {
@@ -214,7 +214,7 @@ const CommunityView = () => {
                 }}
                 className="w-full rounded-lg border border-gray-300 bg-white px-4 py-3 font-medium text-[#1A1D1F] focus:border-transparent focus:ring-2 focus:ring-[#147B6B] focus:outline-none"
               >
-                <option value="Community Feed">Community Feed</option>
+                <option value="All posts">All posts</option>
                 <option value="Stories & Experiences">Stories & Experiences</option>
                 <option value="Questions & Advice">Questions & Advice</option>
                 <option value="Match & event support">Match & event support</option>
@@ -236,7 +236,7 @@ const CommunityView = () => {
             <div className="mb-6 hidden flex-col items-start justify-between gap-4 sm:flex-row lg:flex">
               <div>
                 <div className={currentHeader.titleClass}>{currentHeader.title}</div>
-                {activeCategory === 'Community Feed' && (
+                {activeCategory === 'All posts' && (
                   <p className="mt-1 text-base text-[#4B5563]">
                     Browse all conversations across the community - from questions to shared
                     experiences.
@@ -311,7 +311,7 @@ const CommunityView = () => {
       </Container>
 
       <StartADiscussion
-        isOpen={showModal && activeCategory === 'Community Feed'}
+        isOpen={showModal && activeCategory === 'All posts'}
         onClose={() => setShowModal(false)}
         onSubmit={handleShareExperience}
       />

@@ -2,7 +2,7 @@
 import { FiX, FiCheck } from 'react-icons/fi';
 
 const categories = [
-  'Community Feed',
+  'All posts',
   'Player',
   'Players',
   'Club Owners',
