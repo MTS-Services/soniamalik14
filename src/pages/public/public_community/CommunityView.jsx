@@ -32,6 +32,7 @@ const CommunityView = () => {
     'Not sport-specific',
   ];
   const itemsPerPage = 6;
+  const subheadingTextClass = 'text-base md:text-lg text-[#585858] leading-relaxed';
 
   const handleShareExperience = (formData) => {
     console.log('New thread created:', formData);
@@ -55,18 +56,18 @@ const CommunityView = () => {
     'Stories & Experiences': {
       title: 'A space to share moments, reflections and stories from your time in sport.',
       buttonText: 'Share an Experience',
-      titleClass: 'text-[18px] lg:text-[20px] font-medium text-[#1A1D1F] max-w-2xl leading-relaxed',
+      titleClass: `${subheadingTextClass} max-w-2xl`,
     },
     'Questions & Advice': {
       title: "Ask for advice, reassurance, or perspectives from others who've been there.",
       buttonText: 'Question',
-      titleClass: 'text-[18px] lg:text-[20px] font-medium text-[#1A1D1F] max-w-2xl leading-relaxed',
+      titleClass: `${subheadingTextClass} max-w-2xl`,
     },
     'Match & event support': {
       title:
         'Need a last-minute sub, referee, or extra help for a match or event? Post here for short-term support from the community.',
       buttonText: 'Add Post',
-      titleClass: 'text-[18px] lg:text-[20px] font-medium text-[#1A1D1F] max-w-3xl leading-relaxed',
+      titleClass: `${subheadingTextClass} max-w-3xl`,
     },
   };
 
@@ -198,9 +199,7 @@ const CommunityView = () => {
             <div className="mb-4 lg:hidden">
               <PageHeader
                 title="ESSA Community"
-                description="Browse all conversations across the community - from questions to shared experiences.
-
-"
+                description="Browse all conversations across the community - from questions to shared experiences."
               />
             </div>
 
@@ -237,7 +236,7 @@ const CommunityView = () => {
               <div>
                 <div className={currentHeader.titleClass}>{currentHeader.title}</div>
                 {activeCategory === 'All posts' && (
-                  <p className="mt-1 text-base text-[#4B5563]">
+                  <p className={`${subheadingTextClass} mt-1 md:mt-2.5 max-w-3xl`}>
                     Browse all conversations across the community - from questions to shared
                     experiences.
                   </p>
