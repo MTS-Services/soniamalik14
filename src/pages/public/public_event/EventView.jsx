@@ -88,9 +88,10 @@ const EventView = () => {
             {/* Mobile Filter Button */}
             <button
               onClick={() => setShowFilters(true)}
-              className="flex shrink-0 items-center justify-center rounded-md bg-[#5EA39E] p-2.5 text-white shadow-sm lg:hidden"
+              className="flex w-full items-center justify-between rounded-2xl border border-[#B9DAD7] bg-white px-5 py-4 text-left shadow-[0_2px_8px_rgba(16,24,40,0.06)] transition-transform hover:-translate-y-0.5 active:scale-[0.99] lg:hidden"
             >
-              <Filter className="h-5 w-5" />
+              <span className="text-base font-semibold leading-none text-gray-900">Filters</span>
+              <Filter className="h-6 w-6 shrink-0 text-gray-900" strokeWidth={2.2} />
             </button>
           </div>
         </div>
@@ -98,7 +99,7 @@ const EventView = () => {
         {/* Mobile Filter Side-Drawer */}
         {showFilters && (
           <div
-            className="fixed inset-0 z-[100] flex justify-end lg:hidden"
+            className="fixed inset-0 z-100 flex justify-end lg:hidden"
             onWheel={(e) => e.stopPropagation()} // Stop scroll leakage
           >
             {/* Overlay Backdrop */}
