@@ -13,11 +13,11 @@ const ProfessionalSupportSection = () => {
                     className="w-full h-full object-cover object-center"
                 />
                 {/* Subtle gradient to transition to white content below on mobile */}
-                <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-white from-0% via-white/60 via-50% to-transparent to-100%"></div>
+                <div className="absolute bottom-0 left-0 right-0 h-32 bg-linear-to-t from-white from-0% via-white/60 via-50% to-transparent to-100%"></div>
             </div>
 
             {/* Desktop Background Image (Hidden on small screens) */}
-            <div className="hidden md:block absolute inset-0 z-0 w-full h-full xl:min-h-[700px]">
+            <div className="hidden md:block absolute inset-0 z-0 w-full h-full xl:min-h-175">
                 <img
                     // Replace with your original image: "/ProfessionalSupport1.png"
                     src="/ProfessionalSupport1.webp"
@@ -29,7 +29,7 @@ const ProfessionalSupportSection = () => {
             </div>
 
             {/* Content Container (Right Side) */}
-            <div className="relative z-10 p-6 sm:p-10 md:p-12 lg:p-16 w-full md:w-[50%] lg:w-[40%] bg-white md:bg-transparent min-h-[450px] md:min-h-[500px] xl:min-h-[550px] flex flex-col justify-center ml-auto">
+            <div className="relative z-10 p-6 sm:p-10 md:p-12 lg:p-16 w-full md:w-[50%] lg:w-[40%] bg-white md:bg-transparent min-h-112.5] md:min-h-125 xl:min-h-137.5 flex flex-col justify-center ml-auto">
 
                 <h2 className="text-3xl md:text-[40px] leading-tight font-medium text-[#0B544E] mb-5 tracking-tight">
                     For Professional Support
@@ -41,13 +41,13 @@ const ProfessionalSupportSection = () => {
 
                 <ul className="space-y-4 mb-8">
                     <li className="flex items-start">
-                        <Check className="w-[22px] h-[22px] text-[#107C66] mr-3 mt-[2px] shrink-0" strokeWidth={2.5} />
+                        <Check className="w-5.5 h-5.5] text-[#107C66] mr-3 mt-0.5 shrink-0" strokeWidth={2.5} />
                         <span className="text-[#1A1A1A] text-base font-medium tracking-tight">
                             Connect with a targeted audience
                         </span>
                     </li>
                     <li className="flex items-start">
-                        <Check className="w-[22px] h-[22px] text-[#107C66] mr-3 mt-[2px] shrink-0" strokeWidth={2.5} />
+                        <Check className="w-5.5 h-5.5] text-[#107C66] mr-3 mt-0.5 shrink-0" strokeWidth={2.5} />
                         <span className="text-[#1A1A1A] text-base font-medium tracking-tight">
                             Increase visibility within a trusted platform
                         </span>
