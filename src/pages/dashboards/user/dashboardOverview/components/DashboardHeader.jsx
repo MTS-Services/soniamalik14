@@ -10,11 +10,11 @@ const DashboardHeader = ({ userName = "Ismail" }) => {
       
       <div className="flex flex-col mt-4 md:mt-0">
         <label className="text-sm text-gray-600 font-medium mb-1">What stage are you at?</label>
-        <div className="relative">
+        <div className="relative w-48 max-w-full">
           <select
             value={stage}
             onChange={(e) => setStage(e.target.value)}
-            className="appearance-none bg-white border border-gray-200 rounded-lg pl-4 pr-10 py-2 text-sm text-gray-700 focus:outline-none focus:ring-1 focus:ring-gray-300 w-48"
+            className="appearance-none bg-white border border-gray-200 rounded-lg pl-4 pr-10 py-2 text-sm text-gray-700 focus:outline-none focus:ring-1 focus:ring-gray-300 w-full"
           >
             <option value="Exploring">Exploring</option>
             <option value="Active">Active</option>
