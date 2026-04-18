@@ -104,20 +104,20 @@ const MarketPlaceView = () => {
                 
 
                 {/*  Filters Wrapper */}
-                <div className="bg-[#E7F1F1] p-4 rounded-xl flex flex-col lg:flex-row items-stretch lg:items-center lg:justify-center gap-3 mb-12 max-w-lg ">
+                <div className="mb-12 w-full rounded-xl bg-[#E7F1F1] p-4 lg:max-w-4xl">
 
                     {/* Filter Buttons as Tabs */}
-                    <div className="flex flex-col lg:flex-row gap-3 w-full lg:w-auto">
+                    <div className="grid w-full grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
                         <button
                             onClick={() => setActiveTab('shop_brands')}
-                            className={`${activeTab === 'shop_brands' ? 'bg-[#0F766E] text-white' : 'bg-white border border-[#0F766E] text-black'} px-6 py-3 rounded-lg text-base font-semibold shadow-sm hover:opacity-90 transition-colors lg:flex-none flex-1`}
+                            className={`min-h-16 w-full rounded-lg px-6 py-3 text-base font-semibold shadow-sm transition-colors hover:opacity-90 ${activeTab === 'shop_brands' ? 'bg-[#0F766E] text-white' : 'border border-[#0F766E] bg-white text-black'}`}
                         >
                             Shop Brands
                         </button>
 
                         <button
                             onClick={() => setActiveTab('pre_loved')}
-                            className={`${activeTab === 'pre_loved' ? 'bg-[#0F766E] text-white' : 'bg-white border border-[#0F766E] text-black'} px-5 py-3 rounded-lg flex flex-col text-base items-center justify-center lg:flex-none flex-1 hover:opacity-90 transition-colors`}
+                            className={`min-h-16 w-full rounded-lg px-6 py-3 text-base transition-colors hover:opacity-90 ${activeTab === 'pre_loved' ? 'bg-[#0F766E] text-white' : 'border border-[#0F766E] bg-white text-black'} flex flex-col items-center justify-center`}
                         >
                             <span className="text-base font-semibold leading-tight">Pre-Loved</span>
                             <span className="text-sm leading-tight opacity-75">(Coming Soon)</span>
@@ -125,7 +125,7 @@ const MarketPlaceView = () => {
 
                         <button
                             onClick={() => setActiveTab('list_item')}
-                            className={`${activeTab === 'list_item' ? 'bg-[#0F766E] text-white' : 'bg-white border border-[#0F766E] text-black'} px-5 py-3 rounded-lg text-base flex flex-col items-center justify-center lg:flex-none flex-1 hover:opacity-90 transition-colors`}
+                            className={`min-h-16 w-full rounded-lg px-6 py-3 text-base transition-colors hover:opacity-90 ${activeTab === 'list_item' ? 'bg-[#0F766E] text-white' : 'border border-[#0F766E] bg-white text-black'} flex flex-col items-center justify-center`}
                         >
                             <span className="text-base font-semibold leading-tight">List Your Item</span>
                             <span className="text-sm leading-tight opacity-75">(Coming Soon)</span>
