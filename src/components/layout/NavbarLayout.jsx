@@ -65,14 +65,14 @@ const NavbarLayout = () => {
   };
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-gray-200 xl:py-4 bg-white/95 shadow-sm backdrop-blur">
+    <header className="sticky top-0 z-50 w-full border-b border-gray-200 bg-white/95 shadow-sm backdrop-blur xl:py-4">
       <Container className="px-1!">
         <div className="flex h-16 items-center justify-between gap-4">
           <Link to="/" className="shrink-0">
             <img src="/logo.png" alt="ESSA HUB Logo" className="h-7 w-auto" />
           </Link>
 
-          <nav className="hidden flex-1 items-center justify-center gap-5 xl:gap-7 xl:flex">
+          <nav className="hidden flex-1 items-center justify-center gap-5 xl:flex xl:gap-7">
             {navigation.map((item) => (
               <Link
                 key={item.name}
@@ -80,7 +80,7 @@ const NavbarLayout = () => {
                 className={`border-b-2 px-0.5 pb-1 text-base font-medium transition-colors ${
                   isActive(item.href)
                     ? 'border-btn-primary text-btn-primary'
-                    : 'border-transparent text-navigation hover:text-btn-primary'
+                    : 'text-navigation hover:text-btn-primary border-transparent'
                 }`}
               >
                 {item.name}
@@ -91,11 +91,12 @@ const NavbarLayout = () => {
           <div className="hidden items-center gap-2 xl:flex">
             {!isAuthenticated ? (
               <Link to="/signin">
-                <Button variant="primary" className="rounded-md px-5">Sign In</Button>
+                <Button variant="primary" className="rounded-md px-5">
+                  Sign In
+                </Button>
               </Link>
             ) : (
               <>
-               
                 <Button
                   variant="primary"
                   size="sm"
@@ -104,12 +105,11 @@ const NavbarLayout = () => {
                 >
                   Dashboard
                 </Button>
-                 <button
+                <button
                   onClick={handleLogout}
-                  className="flex items-center gap-2 rounded-md px-3 py-2 text-base text-btn-primary hover:bg-gray-100"
+                  className="text-btn-primary flex items-center gap-2 rounded-md px-3 py-2 text-base hover:bg-gray-100"
                 >
                   <LogOut className="h-6 w-6" />
-                
                 </button>
               </>
             )}
@@ -147,11 +147,12 @@ const NavbarLayout = () => {
               <div className="pt-2">
                 {!isAuthenticated ? (
                   <Link to="/signin" onClick={() => setIsMenuOpen(false)}>
-                    <Button variant="primary" className="w-full rounded-md">Sign In</Button>
+                    <Button variant="primary" className="w-full rounded-md">
+                      Sign In
+                    </Button>
                   </Link>
                 ) : (
                   <div className="flex flex-col gap-2">
-                   
                     <Button
                       variant="secondary"
                       className="w-full rounded-md"
@@ -159,14 +160,13 @@ const NavbarLayout = () => {
                     >
                       Dashboard
                     </Button>
-                     <button
+                    <button
                       onClick={handleLogout}
                       className="flex items-center justify-center gap-2 rounded-md border border-red-300 px-4 py-2 text-base font-medium text-red-600 hover:bg-red-50"
                     >
                       <LogOut className="h-4 w-4" />
                       <span>Logout</span>
                     </button>
-                    
                   </div>
                 )}
               </div>
