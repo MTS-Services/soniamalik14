@@ -65,7 +65,7 @@ const NavbarLayout = () => {
   };
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-gray-200 bg-white/95 shadow-sm backdrop-blur">
+    <header className="sticky top-0 z-50 w-full border-b border-gray-200 xl:py-4 bg-white/95 shadow-sm backdrop-blur">
       <Container className="px-1!">
         <div className="flex h-16 items-center justify-between gap-4">
           <Link to="/" className="shrink-0">
