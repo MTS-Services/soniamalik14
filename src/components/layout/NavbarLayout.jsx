@@ -251,7 +251,7 @@ const NavbarLayout = () => {
   return (
     <header className="sticky top-0 z-50 w-full border-b border-gray-200 bg-white/95 shadow-sm backdrop-blur xl:py-4">
       <Container className="px-1!">
-        <div className="flex h-16 items-center justify-between gap-4">
+        <div className="relative flex h-16 items-center justify-between gap-4">
           
           {/* 1. Mobile Menu Button (Left) */}
           <button
@@ -274,7 +274,7 @@ const NavbarLayout = () => {
           </div>
 
           {/* 3. Desktop Navigation */}
-          <nav className="hidden flex-1 items-center justify-center gap-5 xl:flex xl:gap-7">
+          <nav className="hidden items-center justify-center gap-5 xl:absolute xl:left-1/2 xl:flex xl:-translate-x-1/2 xl:gap-7">
             {navigation.map((item) => (
               <Link
                 key={item.name}
