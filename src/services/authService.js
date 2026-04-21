@@ -1,4 +1,4 @@
-﻿import { POST, PUT } from './httpMethods';
+﻿import { GET, POST, PUT } from './httpMethods';
 import { ENDPOINT } from './httpEndpoint';
 import { toast } from 'react-toastify';
 
@@ -81,6 +81,32 @@ export const updateUserProfile = async (userId, userData) => {
     toast.error(message);
     // eslint-disable-next-line no-console
     console.error('[authService][updateUserProfile] error:', err);
+    return { success: false, message };
+  }
+};
+
+/**
+ * Fetch user profile by ID
+ * @param {string} userId - User ID
+ * @returns {Promise<{success: boolean, message?: string, user?: Object}>}
+ */
+export const getUserProfile = async (userId) => {
+  if (!userId) {
+    const msg = 'User ID is required';
+    toast.error(msg);
+    return { success: false, message: msg };
+  }
+
+  try {
+    const res = await GET(ENDPOINT.USER.UPDATE(userId));
+    const body = res?.data ?? res;
+    const user = body?.user || body?.data || body;
+    return { success: true, message: body?.message || 'Profile loaded successfully', user };
+  } catch (err) {
+    const message = err?.response?.data?.message || err?.message || 'Failed to load profile';
+    toast.error(message);
+    // eslint-disable-next-line no-console
+    console.error('[authService][getUserProfile] error:', err);
     return { success: false, message };
   }
 };
