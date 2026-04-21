@@ -7,7 +7,7 @@ import { toast } from 'react-toastify';
 
 const OtpVerificationView = () => {
   const navigate = useNavigate();
-  const [otp, setOtp] = useState(['', '', '', '']);
+  const [otp, setOtp] = useState(['', '', '', '', '']);
   const [email, setEmail] = useState(() => localStorage.getItem('forgot_email') || '');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -24,7 +24,7 @@ const OtpVerificationView = () => {
     setError('');
 
     // Auto-focus next input
-    if (value && index < 4) {
+    if (value && index < otp.length - 1) {
       inputRefs.current[index + 1]?.focus();
     }
   };
@@ -38,19 +38,19 @@ const OtpVerificationView = () => {
 
   const handlePaste = (e) => {
     e.preventDefault();
-    const pastedData = e.clipboardData.getData('text').slice(0, 4);
+    const pastedData = e.clipboardData.getData('text').slice(0, otp.length);
     const digits = pastedData.split('').filter(char => /^\d$/.test(char));
 
     const newOtp = [...otp];
     digits.forEach((digit, index) => {
-      if (index < 4) {
+      if (index < otp.length) {
         newOtp[index] = digit;
       }
     });
     setOtp(newOtp);
 
     // Focus last filled input or next empty
-    const lastIndex = Math.min(digits.length, 3);
+    const lastIndex = Math.min(digits.length, otp.length - 1);
     inputRefs.current[lastIndex]?.focus();
   };
 
@@ -64,8 +64,8 @@ const OtpVerificationView = () => {
     }
 
     const otpValue = otp.join('');
-    if (otpValue.length !== 4) {
-      setError('Please enter all 4 digits');
+    if (otpValue.length !== otp.length) {
+      setError('Please enter all 5 digits');
       return;
     }
 
@@ -79,6 +79,8 @@ const OtpVerificationView = () => {
         const res = await POST(ENDPOINT.AUTH.VERIFY_OTP, body);
         const payload = res?.data ?? res;
         const msg = payload?.message || 'OTP verified';
+        localStorage.setItem('verified_otp', otpValue);
+        localStorage.setItem('forgot_email', email);
         setLoading(false);
         toast.success(msg);
         navigate('/reset-password');

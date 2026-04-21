@@ -11,7 +11,6 @@ const ResetPasswordView = () => {
     password: '',
     confirmPassword: '',
   });
-  const [otp, setOtp] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [errors, setErrors] = useState({});
@@ -30,8 +29,11 @@ const ResetPasswordView = () => {
   const validateForm = () => {
     const newErrors = {};
 
-    if (!otp) {
-      newErrors.otp = 'OTP is required';
+    const email = localStorage.getItem('forgot_email');
+    const verifiedOtp = localStorage.getItem('verified_otp');
+
+    if (!email || !verifiedOtp) {
+      newErrors.form = 'Session expired. Please verify OTP again.';
     }
 
     if (!formData.password) {
@@ -59,15 +61,17 @@ const ResetPasswordView = () => {
       (async () => {
         try {
           const email = localStorage.getItem('forgot_email');
+          const verifiedOtp = localStorage.getItem('verified_otp');
           const body = {
             email: email || undefined,
-            otp: otp,
+            otp: verifiedOtp || undefined,
             newPassword: formData.password,
           };
 
           await POST(ENDPOINT.AUTH.RESET_PASSWORD, body);
           setLoading(false);
           localStorage.removeItem('forgot_email');
+          localStorage.removeItem('verified_otp');
           toast.success('Password reset successfully. Please sign in.');
           navigate('/signin');
         } catch (err) {
@@ -102,18 +106,11 @@ const ResetPasswordView = () => {
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-5">
-          {/* Password Field */}
-          <div>
-            <label className="block text-[#282828] font-medium mb-2 text-base">OTP</label>
-            <input
-              type="text"
-              value={otp}
-              onChange={(e) => setOtp(e.target.value)}
-              placeholder="Enter OTP"
-              className="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-btn-primary focus:border-transparent transition-all text-base text-gray-700 placeholder-gray-400"
-            />
-            {errors.otp && <p className="text-red-500 text-xs mt-1">{errors.otp}</p>}
-          </div>
+          {errors.form && (
+            <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-lg text-base text-center">
+              {errors.form}
+            </div>
+          )}
 
           <div>
             <label className="block text-[#282828] font-medium mb-2 text-base">
