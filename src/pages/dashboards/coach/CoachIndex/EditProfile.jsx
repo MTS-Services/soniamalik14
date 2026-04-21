@@ -1,5 +1,4 @@
 ﻿import React from 'react';
-import { FiCamera } from 'react-icons/fi';
 import PasswordSecurity from './PasswordSecurity';
 import ProfileInfoSection from './ProfileInfoSection';
 

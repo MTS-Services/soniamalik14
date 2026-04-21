@@ -2,31 +2,52 @@ import React, { useState } from 'react';
 import { FiCamera } from 'react-icons/fi';
 import { toast } from 'react-toastify';
 import { useAuth } from '../../../../context/AuthContext';
+import { updateUserProfile } from '../../../../services/authService';
 
 const sportsOptions = [
     'Football', 'Squash', 'Rugby', 'Netball', 'Cricket', 
     'Padel', 'Tennis', 'Badminton', 'Golf', 'Running', 'Other'
 ];
 
-const ProfileInfoSection = () => {
-    const { user } = useAuth();
+const resolveUserId = (user) => {
+    if (!user || typeof user !== 'object') return null;
+    return user.id || user._id || user.userId || user.uuid || null;
+};
 
-    const [profile, setProfile] = useState(() => ({
-        clubName: user?.clubName || user?.organization || 'Woking Warriors FC',
-        about: user?.about || '',
-        postcode: user?.postcode || 'SW1',
-        sessionType: user?.sessionType || 'women',
-        sports: user?.sports || ['Football', 'Rugby'],
-        fullName: user?.name || user?.fullName || '',
-        email: user?.email || '',
-        phone: user?.phone || '',
-    }));
+const normalizeSessionType = (value) => {
+    const raw = (value || '').toString().trim().toLowerCase();
+    if (raw === 'women only' || raw === 'women') return 'women';
+    if (raw === 'mixed') return 'mixed';
+    return 'women';
+};
+
+const formatSessionTypeForApi = (value) => (value === 'mixed' ? 'Mixed' : 'Women Only');
+
+const normalizeProfileFromUser = (user) => ({
+    clubName: user?.organizationName || user?.clubName || user?.organization || user?.name || '',
+    about: user?.aboutOrganization || user?.about || user?.bio || '',
+    postcode: user?.postcode || '',
+    sessionType: normalizeSessionType(user?.sessionType),
+    sports: user?.sportsOffered || user?.sports || [],
+    fullName: user?.firstName || user?.fullName || user?.displayName || user?.name || '',
+    email: user?.email || '',
+    phone: user?.phone || user?.phoneNumber || '',
+});
+
+const ProfileInfoSection = () => {
+    const { user, fetchMe } = useAuth();
+    const userId = resolveUserId(user);
+
+    const [profile, setProfile] = useState(() => normalizeProfileFromUser(user));
+    const [avatarFile, setAvatarFile] = useState(null);
+    const [isSaving, setIsSaving] = useState(false);
 
     const [imagePreview, setImagePreview] = useState(user?.avatar || '/coachindex.jpg');
 
     const handleImageSelect = (e) => {
         const file = e.target.files?.[0];
         if (!file) return;
+        setAvatarFile(file);
         const reader = new FileReader();
         reader.onload = () => setImagePreview(reader.result);
         reader.readAsDataURL(file);
@@ -46,9 +67,66 @@ const ProfileInfoSection = () => {
         }));
     };
 
-    const handleSaveProfile = (e) => {
+    const handleSaveProfile = async (e) => {
         e.preventDefault();
-        toast.success('Profile updated successfully!');
+
+        if (!userId) {
+            toast.error('User ID not found. Please login again.');
+            return;
+        }
+
+        const payload = {
+            name: profile.clubName,
+            organizationName: profile.clubName,
+            aboutOrganization: profile.about,
+            postcode: profile.postcode,
+            sessionType: formatSessionTypeForApi(profile.sessionType),
+            sportsOffered: profile.sports,
+            firstName: profile.fullName,
+            email: profile.email,
+            phone: profile.phone,
+        };
+
+        let requestBody = payload;
+
+        if (avatarFile) {
+            const formData = new FormData();
+            formData.append('avatar', avatarFile);
+            Object.entries(payload).forEach(([key, value]) => {
+                if (Array.isArray(value)) {
+                    formData.append(key, JSON.stringify(value));
+                } else {
+                    formData.append(key, value ?? '');
+                }
+            });
+            requestBody = formData;
+        }
+
+        setIsSaving(true);
+        try {
+            const result = await updateUserProfile(userId, requestBody);
+
+            if (!result?.success) {
+                return;
+            }
+
+            const updatedUser = result?.user || {};
+            const nextProfile = normalizeProfileFromUser(updatedUser);
+            setProfile((prev) => ({
+                ...prev,
+                ...nextProfile,
+            }));
+
+            const updatedAvatar = updatedUser?.avatar || updatedUser?.profileImage || updatedUser?.photo;
+            if (updatedAvatar) {
+                setImagePreview(updatedAvatar);
+            }
+
+            setAvatarFile(null);
+            await fetchMe();
+        } finally {
+            setIsSaving(false);
+        }
     };
 
     // Styling constant image er moto
@@ -61,7 +139,7 @@ const ProfileInfoSection = () => {
                 {/* Profile Image with Camera Overlay */}
                 <div className="relative w-24 h-24 mb-8">
                     <div className="h-full w-full rounded-full overflow-hidden bg-gray-100 border border-gray-200">
-                        <img src={imagePreview} alt="Profile" className="h-full w-full object-cover" />
+                        <img src={imagePreview || '/coachindex.jpg'} alt="Profile" className="h-full w-full object-cover" />
                     </div>
                     <label htmlFor="imgInput" className="absolute bottom-1 right-1 bg-white p-1.5 rounded-full shadow-md cursor-pointer border border-gray-200 hover:bg-gray-50 transition-all">
                         <FiCamera size={14} className="text-gray-600" />
@@ -88,7 +166,7 @@ const ProfileInfoSection = () => {
                         name="about" 
                         value={profile.about} 
                         onChange={handleProfileChange} 
-                        className={`${inputClass} min-h-[150px] resize-none`}
+                        className={`${inputClass} min-h-37.5 resize-none`}
                         placeholder="Write about club"
                     />
                 </div>
@@ -195,9 +273,10 @@ const ProfileInfoSection = () => {
                 <div className="pt-4">
                     <button
                         onClick={handleSaveProfile}
+                        disabled={isSaving}
                         className="bg-[#0F766E] text-white px-8 py-2.5 rounded-md font-semibold hover:bg-[#0d635d] transition-colors"
                     >
-                        SAVE CHANGES
+                        {isSaving ? 'SAVING...' : 'SAVE CHANGES'}
                     </button>
                 </div>
             </form>
