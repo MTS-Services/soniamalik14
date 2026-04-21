@@ -63,7 +63,11 @@ export const updateUserProfile = async (userId, userData) => {
     return { success: false, message: msg };
   }
 
-  if (!userData || Object.keys(userData).length === 0) {
+  // Handle both FormData and regular objects
+  const isFormData = userData instanceof FormData;
+  const isEmpty = isFormData ? false : (!userData || Object.keys(userData).length === 0);
+
+  if (isEmpty) {
     const msg = 'No data to update';
     toast.error(msg);
     return { success: false, message: msg };
