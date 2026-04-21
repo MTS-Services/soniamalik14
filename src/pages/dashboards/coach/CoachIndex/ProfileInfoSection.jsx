@@ -130,14 +130,14 @@ const ProfileInfoSection = () => {
     };
 
     // Styling constant image er moto
-    const inputClass = "w-full rounded-md border border-gray-300 bg-white px-4 py-2.5 text-sm text-[#1D1D1D] outline-none focus:border-[#0F766E] transition-all placeholder:text-gray-400";
-    const labelClass = "mb-2 block text-[15px] font-medium text-[#1D1D1D]";
+    const inputClass = "w-full rounded-md border border-gray-300 bg-white px-4 py-2.5 text-base text-[#1D1D1D] outline-none focus:border-[#0F766E] transition-all placeholder:text-gray-400";
+    const labelClass = "mb-2 block text-base font-medium text-[#1D1D1D]";
 
     return (
         <section className="bg-white rounded-lg p-6 md:p-8 shadow-sm">
             <form className="space-y-6">
                 {/* Profile Image with Camera Overlay */}
-                <div className="relative w-24 h-24 mb-8">
+                <div className="relative w-30 h-30 mb-8">
                     <div className="h-full w-full rounded-full overflow-hidden bg-gray-100 border border-gray-200">
                         <img src={imagePreview || '/coachindex.jpg'} alt="Profile" className="h-full w-full object-cover" />
                     </div>
