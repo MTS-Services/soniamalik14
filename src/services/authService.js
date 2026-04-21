@@ -76,8 +76,16 @@ export const updateUserProfile = async (userId, userData) => {
   try {
     const res = await PUT(ENDPOINT.USER.UPDATE(userId), userData);
     const body = res?.data ?? res;
-    const updatedUser = body?.user || body?.data || body;
-    const message = body?.message || 'Profile updated successfully';
+    const isSuccess = body?.success !== undefined ? Boolean(body.success) : true;
+    const message = body?.message || (isSuccess ? 'Profile updated successfully' : 'Failed to update profile');
+
+    if (!isSuccess) {
+      toast.error(message);
+      return { success: false, message };
+    }
+
+    // Extract user from nested structure: { success, message, data: { user, token } }
+    const updatedUser = body?.data?.user || body?.user || body?.profile || body?.data?.profile || body?.data || body;
     toast.success(message);
     return { success: true, message, user: updatedUser };
   } catch (err) {

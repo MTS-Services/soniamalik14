@@ -18,19 +18,32 @@ const sportsOptions = [
   'Other',
 ];
 
+const joiningAsOptions = [
+  'Physiotherapy',
+  'Nutrition',
+  'Personal Training',
+  'Sports Massage',
+  'Mental Health & Wellbeing',
+  'Coaching',
+  'Other',
+];
+
 const resolveUserId = (user) => user?.id || user?._id || user?.userId || null;
 
+const normalizeProfileFromUser = (user) => ({
+  organizationName: user?.organizationName || '',
+  aboutOrganization: user?.aboutOrganization || '',
+  postcode: user?.postcode || '',
+  sessionType: user?.sessionType || 'women',
+  sportsOffered: Array.isArray(user?.sportsOffered) ? user?.sportsOffered : [],
+  serviceTypes: Array.isArray(user?.serviceTypes) ? user?.serviceTypes : [],
+  fullName: user?.name || '',
+  email: user?.email || '',
+  phone: user?.phone || '',
+});
+
 const ProviderProfileSection = ({ user, fetchMe }) => {
-  const [profile, setProfile] = useState({
-    businessName: user?.businessName || user?.company || '',
-    about: user?.about || '',
-    postcode: user?.postcode || '',
-    sessionType: user?.sessionType || 'women',
-    sports: user?.sports || [],
-    fullName: user?.name || '',
-    email: user?.email || '',
-    phone: user?.phone || '',
-  });
+  const [profile, setProfile] = useState(() => normalizeProfileFromUser(user));
 
   const [imageFile, setImageFile] = useState(null);
   const [imagePreview, setImagePreview] = useState(user?.avatar || user?.image || '');
@@ -38,12 +51,22 @@ const ProviderProfileSection = ({ user, fetchMe }) => {
 
   const selectedSports = useMemo(
     () =>
-      Array.isArray(profile.sports)
-        ? profile.sports
-        : String(profile.sports || '')
+      Array.isArray(profile.sportsOffered)
+        ? profile.sportsOffered
+        : String(profile.sportsOffered || '')
             .split(',')
             .filter(Boolean),
-    [profile.sports]
+    [profile.sportsOffered]
+  );
+
+  const selectedServiceTypes = useMemo(
+    () =>
+      Array.isArray(profile.serviceTypes)
+        ? profile.serviceTypes
+        : String(profile.serviceTypes || '')
+            .split(',')
+            .filter(Boolean),
+    [profile.serviceTypes]
   );
 
   const inputClass =
@@ -67,11 +90,21 @@ const ProviderProfileSection = ({ user, fetchMe }) => {
 
   const toggleSport = (sport) => {
     setProfile((prev) => {
-      const existing = Array.isArray(prev.sports) ? prev.sports : [];
+      const existing = Array.isArray(prev.sportsOffered) ? prev.sportsOffered : [];
       const next = existing.includes(sport)
         ? existing.filter((s) => s !== sport)
         : [...existing, sport];
-      return { ...prev, sports: next };
+      return { ...prev, sportsOffered: next };
+    });
+  };
+
+  const toggleServiceType = (service) => {
+    setProfile((prev) => {
+      const existing = Array.isArray(prev.serviceTypes) ? prev.serviceTypes : [];
+      const next = existing.includes(service)
+        ? existing.filter((s) => s !== service)
+        : [...existing, service];
+      return { ...prev, serviceTypes: next };
     });
   };
 
@@ -88,11 +121,12 @@ const ProviderProfileSection = ({ user, fetchMe }) => {
     try {
       const payload = {
         name: profile.fullName,
-        businessName: profile.businessName,
-        about: profile.about,
+        organizationName: profile.organizationName,
+        aboutOrganization: profile.aboutOrganization,
         postcode: profile.postcode,
         sessionType: profile.sessionType,
-        sports: selectedSports,
+        sportsOffered: selectedSports,
+        serviceTypes: selectedServiceTypes,
         email: profile.email,
         phone: profile.phone,
       };
@@ -101,7 +135,8 @@ const ProviderProfileSection = ({ user, fetchMe }) => {
       if (imageFile) {
         const form = new FormData();
         Object.entries(payload).forEach(([key, value]) => {
-          form.append(key, Array.isArray(value) ? value.join(',') : (value ?? ''));
+          const finalValue = Array.isArray(value) ? JSON.stringify(value) : (value ?? '');
+          form.append(key, finalValue);
         });
         form.append('avatar', imageFile);
         result = await updateUserProfile(userId, form);
@@ -123,6 +158,11 @@ const ProviderProfileSection = ({ user, fetchMe }) => {
     };
   }, [imagePreview, imageFile]);
 
+  useEffect(() => {
+    setProfile(normalizeProfileFromUser(user));
+    setImagePreview(user?.avatar || user?.image || '');
+  }, [user]);
+
   return (
     <section className="rounded-lg border border-[#D4E3E2] bg-white">
       <form className="space-y-8 p-6" onSubmit={handleProfileSubmit}>
@@ -141,7 +181,13 @@ const ProviderProfileSection = ({ user, fetchMe }) => {
               className="absolute right-1 bottom-1 cursor-pointer rounded-full border border-gray-200 bg-white p-1.5 shadow-md transition-all hover:bg-gray-50"
             >
               <FiCamera size={14} className="text-gray-600" />
-              <input type="file" id="imgInput" className="hidden" accept="image/*" />
+              <input
+                type="file"
+                id="imgInput"
+                className="hidden"
+                accept="image/*"
+                onChange={handleImageChange}
+              />
             </label>
           </div>
           <div>
@@ -149,8 +195,8 @@ const ProviderProfileSection = ({ user, fetchMe }) => {
               Organization or Coach Name
             </label>
             <input
-              name="businessName"
-              value={profile.businessName}
+              name="organizationName"
+              value={profile.organizationName}
               onChange={handleProfileChange}
               className={inputClass}
               placeholder="Woking Warriors FC"
@@ -162,8 +208,8 @@ const ProviderProfileSection = ({ user, fetchMe }) => {
               About your organisation
             </label>
             <textarea
-              name="about"
-              value={profile.about}
+              name="aboutOrganization"
+              value={profile.aboutOrganization}
               onChange={handleProfileChange}
               className={`${inputClass} min-h-40`}
               placeholder="Write about club"
@@ -171,30 +217,22 @@ const ProviderProfileSection = ({ user, fetchMe }) => {
           </div>
 
           <div>
-            <p className="mb-2 text-base font-medium text-[#1D1D1D]">Session Type</p>
-            <div className="flex flex-wrap gap-4">
-              <label className="inline-flex items-center gap-2 text-base text-[#1D1D1D]">
-                <input
-                  type="radio"
-                  name="sessionType"
-                  value="women"
-                  checked={profile.sessionType === 'women'}
-                  onChange={handleProfileChange}
-                  className="h-4 w-4"
-                />
-                Women Only
-              </label>
-              <label className="inline-flex items-center gap-2 text-base text-[#1D1D1D]">
-                <input
-                  type="radio"
-                  name="sessionType"
-                  value="mixed"
-                  checked={profile.sessionType === 'mixed'}
-                  onChange={handleProfileChange}
-                  className="h-4 w-4"
-                />
-                Mixed
-              </label>
+            <p className="mb-2 text-base font-medium text-[#1D1D1D]">I'm joining as</p>
+            <div className="flex flex-wrap gap-2">
+              {joiningAsOptions.map((option) => (
+                <label
+                  key={option}
+                  className="inline-flex cursor-pointer items-center gap-2 rounded-full bg-[#B7D8D5] px-3 py-2 text-sm text-[#1D1D1D]"
+                >
+                  <input
+                    type="checkbox"
+                    checked={selectedServiceTypes.includes(option)}
+                    onChange={() => toggleServiceType(option)}
+                    className="h-3.5 w-3.5"
+                  />
+                  {option}
+                </label>
+              ))}
             </div>
           </div>
 
@@ -209,25 +247,7 @@ const ProviderProfileSection = ({ user, fetchMe }) => {
             />
           </div>
 
-          <div>
-            <p className="mb-2 text-base font-medium text-[#1D1D1D]">Sport</p>
-            <div className="flex flex-wrap gap-x-5 gap-y-3">
-              {sportsOptions.map((sport) => (
-                <label
-                  key={sport}
-                  className="inline-flex items-center gap-2 text-base text-[#1D1D1D]"
-                >
-                  <input
-                    type="checkbox"
-                    checked={selectedSports.includes(sport)}
-                    onChange={() => toggleSport(sport)}
-                    className="h-4 w-4"
-                  />
-                  {sport}
-                </label>
-              ))}
-            </div>
-          </div>
+       
         </div>
 
         <div className="space-y-5 pt-6">
