@@ -134,7 +134,7 @@ const ProfileInfoSection = () => {
     const labelClass = "mb-2 block text-base font-medium text-[#1D1D1D]";
 
     return (
-        <section className="bg-white rounded-lg p-6 md:p-8 shadow-sm">
+        <section className="bg-white rounded-lg p-4 md:p-8 shadow-sm">
             <form className="space-y-6">
                 {/* Profile Image with Camera Overlay */}
                 <div className="relative w-30 h-30 mb-8">
