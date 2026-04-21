@@ -5,6 +5,7 @@ import {
   ROLES,
   fetchMe as fetchMeThunk,
   login as loginThunk,
+  register as registerThunk,
   logout as logoutThunk,
   selectAuthError,
   selectAuthLoading,
@@ -52,6 +53,17 @@ export const useAuth = () => {
     }
   }, [dispatch]);
 
+  const register = useCallback(async (registrationPayload) => {
+    try {
+      const payload = await dispatch(registerThunk(registrationPayload)).unwrap();
+      return { success: true, data: payload };
+    } catch (err) {
+      const message = err?.message || err?.payload?.message || err?.payload || 'Registration failed';
+      toast.error(message);
+      return { success: false, message };
+    }
+  }, [dispatch]);
+
   useEffect(() => {
     const token = getToken();
 
@@ -71,7 +83,7 @@ export const useAuth = () => {
   const hasRole = (role) => user?.role === role;
   const hasAnyRole = (roles = []) => roles.includes(user?.role);
 
-  return { user, isAuthenticated, loading, error, login, logout, fetchMe, hasRole, hasAnyRole };
+  return { user, isAuthenticated, loading, error, login, register, logout, fetchMe, hasRole, hasAnyRole };
 };
 
 export { ROLES };

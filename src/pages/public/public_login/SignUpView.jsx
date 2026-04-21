@@ -1,6 +1,8 @@
 ﻿import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Eye, EyeOff } from 'lucide-react';
+import { toast } from 'react-toastify';
+import { useAuth, ROLES } from '../../../context/AuthContext';
 
 // Declare components outside to fix "Cannot create components during render" error
 const InputField = ({ label, name, placeholder, type = "text", optional = false, value, onChange }) => (
@@ -20,10 +22,13 @@ const InputField = ({ label, name, placeholder, type = "text", optional = false,
 );
 
 const RegisterView = () => {
+  const navigate = useNavigate();
+  const { register, loading } = useAuth();
 
   const [role, setRole] = useState('Player');
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [error, setError] = useState('');
 
   const [formData, setFormData] = useState({
     email: '',
@@ -63,6 +68,110 @@ const RegisterView = () => {
     });
   };
 
+  const resolveName = () => {
+    if (role === 'Player') {
+      return formData.displayName?.trim() || `${formData.firstName} ${formData.lastName}`.trim() || formData.firstName?.trim() || 'Player';
+    }
+
+    if (role === 'Sport provider') {
+      return formData.orgName?.trim() || formData.fullName?.trim() || 'Sport Provider';
+    }
+
+    return formData.practitionerName?.trim() || formData.fullName?.trim() || 'Service Provider';
+  };
+
+  const buildPayload = () => {
+    const common = {
+      email: formData.email.trim(),
+      password: formData.password,
+      name: resolveName(),
+      phone: formData.phoneNumber?.trim() || undefined,
+      postcode: formData.postcode?.trim() || undefined,
+    };
+
+    if (role === 'Player') {
+      return {
+        ...common,
+        role: ROLES.USER.toUpperCase(),
+        firstName: formData.firstName?.trim() || undefined,
+        lastName: formData.lastName?.trim() || undefined,
+        displayName: formData.displayName?.trim() || undefined,
+        sportsInterests: formData.interestedSports,
+      };
+    }
+
+    if (role === 'Sport provider') {
+      return {
+        ...common,
+        role: ROLES.COACH.toUpperCase(),
+        firstName: formData.fullName?.trim() || undefined,
+        organizationName: formData.orgName?.trim(),
+        sessionType: formData.sessionType,
+        sportsOffered: formData.sportsOffered,
+        aboutOrganization: formData.aboutOrg?.trim() || undefined,
+      };
+    }
+
+    return {
+      ...common,
+      role: ROLES.PROVIDER.toUpperCase(),
+      firstName: formData.fullName?.trim() || undefined,
+      organizationName: formData.practitionerName?.trim(),
+      serviceTypes: formData.serviceType,
+      aboutOrganization: formData.aboutService?.trim() || undefined,
+    };
+  };
+
+  const validateForm = () => {
+    if (!formData.email.trim()) {
+      return 'Email is required';
+    }
+
+    if (!formData.password) {
+      return 'Password is required';
+    }
+
+    if (!resolveName()) {
+      return 'Name is required';
+    }
+
+    if (formData.password !== formData.confirmPassword) {
+      return 'Password and confirm password must match';
+    }
+
+    if (role === 'Sport provider' && !formData.orgName.trim()) {
+      return 'Organization name is required for sport provider';
+    }
+
+    if (role === 'Service Provider' && !formData.practitionerName.trim()) {
+      return 'Organization name is required for service provider';
+    }
+
+    return '';
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError('');
+
+    const validationError = validateForm();
+    if (validationError) {
+      setError(validationError);
+      return;
+    }
+
+    const payload = buildPayload();
+    const result = await register(payload);
+
+    if (!result.success) {
+      setError(result.message || 'Registration failed');
+      return;
+    }
+
+    toast.success('Registration successful. Please sign in.');
+    navigate('/signin');
+  };
+
   return (
     <div className="min-h-screen bg-[#E7F1F1] flex items-center justify-center p-4 sm:p-8">
       <div className="w-full max-w-xl bg-transparent">
@@ -73,7 +182,13 @@ const RegisterView = () => {
           </p>
         </div>
 
-        <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
+        <form className="space-y-6" onSubmit={handleSubmit}>
+          {error && (
+            <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-lg text-sm">
+              {error}
+            </div>
+          )}
+
           {/* I'm joining as */}
           <div>
             <label className="block text-[#1A1D1F] font-medium mb-2">I'm joining as</label>
@@ -163,7 +278,7 @@ const RegisterView = () => {
                 <textarea name="aboutService" placeholder="A short overview of your services and who you support." className="w-full px-4 py-3 bg-[#C2DBD9]/60 rounded-lg outline-none h-28 text-[#1A1D1F]" value={formData.aboutService} onChange={handleChange} />
               </div>
               <InputField label="Postcode" name="postcode" placeholder="SW1" value={formData.postcode} onChange={handleChange} />
-              <div className="pt-4"><h3 className="font-bold text-xl text-[#000]">Primary Contact</h3></div>
+              <div className="pt-4"><h3 className="font-bold text-xl text-black">Primary Contact</h3></div>
               <InputField label="Full Name" name="fullName" placeholder="Enter Your Full Name" value={formData.fullName} onChange={handleChange} />
               <InputField label="Email" name="email" placeholder="Write your email" value={formData.email} onChange={handleChange} />
               <InputField label="Phone Number" name="phoneNumber" placeholder="enter your phone number" value={formData.phoneNumber} onChange={handleChange} />
@@ -184,8 +299,8 @@ const RegisterView = () => {
             </button>
           </div>
 
-          <button type="submit" className="w-full bg-[#00796B] text-white py-4 rounded-xl font-bold text-lg hover:shadow-lg transition-all active:scale-[0.98]">
-            Create Account
+          <button type="submit" disabled={loading} className="w-full bg-[#00796B] text-white py-4 rounded-xl font-bold text-lg hover:shadow-lg transition-all active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed">
+            {loading ? 'Creating Account...' : 'Create Account'}
           </button>
 
           <p className="text-center text-gray-600">

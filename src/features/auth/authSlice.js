@@ -126,6 +126,19 @@ export const login = createAsyncThunk(
   }
 );
 
+export const register = createAsyncThunk(
+  'auth/register',
+  async (registrationPayload, { rejectWithValue, signal }) => {
+    try {
+      const response = await POST(ENDPOINT.AUTH.REGISTER, registrationPayload, signal);
+      const payload = response?.data ?? response;
+      return payload;
+    } catch (error) {
+      return rejectWithValue(getErrorPayload(error, 'Registration failed'));
+    }
+  }
+);
+
 export const fetchMe = createAsyncThunk(
   'auth/fetchMe',
   async (_, { rejectWithValue, signal }) => {
@@ -210,6 +223,18 @@ const authSlice = createSlice({
       .addCase(login.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload || action.error?.message || 'Login failed';
+      })
+      .addCase(register.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(register.fulfilled, (state) => {
+        state.loading = false;
+        state.error = null;
+      })
+      .addCase(register.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload?.message || action.error?.message || 'Registration failed';
       })
       .addCase(fetchMe.pending, (state) => {
         state.loading = true;
