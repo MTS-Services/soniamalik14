@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Eye } from 'lucide-react';
+import { Eye, EyeOff } from 'lucide-react';
 import { changePassword } from '../../../../services/authService';
 
 const PasswordSecurity = () => {
@@ -44,10 +44,17 @@ const PasswordSecurity = () => {
               type={showCurrent ? 'text' : 'password'}
               className="w-full p-2.5 border border-gray-200 rounded-sm focus:outline-none focus:ring-1 focus:ring-teal-600"
             />
-            <Eye
-              className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 cursor-pointer"
-              onClick={() => setShowCurrent(!showCurrent)}
-            />
+            {showCurrent ? (
+              <EyeOff
+                className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 cursor-pointer"
+                onClick={() => setShowCurrent(!showCurrent)}
+              />
+            ) : (
+              <Eye
+                className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 cursor-pointer"
+                onClick={() => setShowCurrent(!showCurrent)}
+              />
+            )}
           </div>
         </div>
 
@@ -62,10 +69,17 @@ const PasswordSecurity = () => {
               placeholder="8+ characters"
               className="w-full p-2.5 border border-gray-200 rounded-sm focus:outline-none focus:ring-1 focus:ring-teal-600 text-sm"
             />
-            <Eye
-              className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 cursor-pointer"
-              onClick={() => setShowNew(!showNew)}
-            />
+            {showNew ? (
+              <EyeOff
+                className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 cursor-pointer"
+                onClick={() => setShowNew(!showNew)}
+              />
+            ) : (
+              <Eye
+                className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 cursor-pointer"
+                onClick={() => setShowNew(!showNew)}
+              />
+            )}
           </div>
         </div>
 
@@ -79,10 +93,17 @@ const PasswordSecurity = () => {
               type={showConfirm ? 'text' : 'password'}
               className="w-full p-2.5 border border-gray-200 rounded-sm focus:outline-none focus:ring-1 focus:ring-teal-600"
             />
-            <Eye
-              className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 cursor-pointer"
-              onClick={() => setShowConfirm(!showConfirm)}
-            />
+            {showConfirm ? (
+              <EyeOff
+                className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 cursor-pointer"
+                onClick={() => setShowConfirm(!showConfirm)}
+              />
+            ) : (
+              <Eye
+                className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 cursor-pointer"
+                onClick={() => setShowConfirm(!showConfirm)}
+              />
+            )}
           </div>
         </div>
 
