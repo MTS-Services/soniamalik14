@@ -7,7 +7,7 @@ const EditProfile = () => {
         <div className="min-h-screen bg-[#F4F7F8] p-4 md:p-8 font-sans">
             <div className="">
                 <header className="mb-8">
-                    <h1 className="text-3xl font-bold text-[#1D1D1D]">Profile Settings</h1>
+                    <h1 className="text-2xl md:text-4xl font-bold text-[#1D1D1D]">Profile Settings</h1>
                     <p className="text-base text-gray-500 mt-1">Manage your account information and security</p>
                 </header>
 
