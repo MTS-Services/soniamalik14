@@ -53,7 +53,7 @@ import ProviderServiceDetails from '../pages/dashboards/provider/service/Service
 import ServiceAnalytics from '../pages/dashboards/provider/serviceAnalytics/ServiceAnalytics.jsx';
 import ProviderThread from '../pages/dashboards/provider/thread/ProviderThread.jsx';
 import ProviderThreadDetails from '../pages/dashboards/provider/thread/ProviderThreadDetails.jsx';
-import ProviderSettings from '../pages/dashboards/provider/ProviderSettings.jsx';
+import ProviderSettings from '../pages/dashboards/provider/settings/ProviderSettings.jsx';
 import AddListing from '../pages/dashboards/provider/addListing/AddListing.jsx';
 import AddListingDetails from '../pages/dashboards/provider/addListing/AddListingDetails.jsx';
 import Insights from '../pages/dashboards/provider/insights/Insights.jsx';
