@@ -4,19 +4,6 @@ import { toast } from 'react-toastify';
 import Button from '../../../../components/ui/Button';
 import { updateUserProfile } from '../../../../services/authService';
 
-const sportsOptions = [
-  'Football',
-  'Squash',
-  'Rugby',
-  'Netball',
-  'Cricket',
-  'Padel',
-  'Tennis',
-  'Badminton',
-  'Golf',
-  'Running',
-  'Other',
-];
 
 const joiningAsOptions = [
   'Physiotherapy',
@@ -86,16 +73,6 @@ const ProviderProfileSection = ({ user, fetchMe }) => {
     } else {
       setImagePreview(user?.avatar || user?.image || '');
     }
-  };
-
-  const toggleSport = (sport) => {
-    setProfile((prev) => {
-      const existing = Array.isArray(prev.sportsOffered) ? prev.sportsOffered : [];
-      const next = existing.includes(sport)
-        ? existing.filter((s) => s !== sport)
-        : [...existing, sport];
-      return { ...prev, sportsOffered: next };
-    });
   };
 
   const toggleServiceType = (service) => {
