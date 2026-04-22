@@ -77,7 +77,7 @@ const ProviderEnquiries = () => {
     <div className="dashboardPy dashboardSpaceY">
       <section className="rounded-lg bg-white">
         <div className="px-5 pt-5 pb-4">
-          <h1 className="text-[36px] text-[#0B544E] leading-9 font-semibold ">Enquaries</h1>
+          <h1 className="text-[36px] text-[#0B544E] leading-9 font-semibold ">Enquiries</h1>
         </div>
 
         <div className="space-y-3 p-4 md:hidden">
