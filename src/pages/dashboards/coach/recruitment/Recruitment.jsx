@@ -1,68 +1,88 @@
-﻿import React, { useState, useEffect } from 'react'
+﻿import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import RecruitmentCard from './RecruitmentCard';
 import PageHeader from '../../../../components/ui/PageHeader';
 import Pagination from '../../../../components/ui/Pagination';
-import { fetchRecruitments, selectRecruitments } from '../../../../features/recruitment/recruitmentSlice';
+import {
+  fetchRecruitments,
+  selectRecruitments,
+} from '../../../../features/recruitment/recruitmentSlice';
 import CreateRecruitmentModal from '../../../../components/ui/CreateRecruitmentModal';
+import { Plus } from 'lucide-react';
 
 const Recruitment = () => {
-    const dispatch = useDispatch();
-    const items = useSelector(selectRecruitments);
-    const loading = useSelector((s) => s.recruitment.loading);
-    const error = useSelector((s) => s.recruitment.error);
+  const dispatch = useDispatch();
+  const items = useSelector(selectRecruitments);
+  const loading = useSelector((s) => s.recruitment.loading);
+  const error = useSelector((s) => s.recruitment.error);
 
-    const [page, setPage] = useState(1);
-    const perPage = 9;
-    const [isModalOpen, setIsModalOpen] = useState(false);
+  const [page, setPage] = useState(1);
+  const perPage = 9;
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-    useEffect(() => {
-        if (items.length === 0) {
-            dispatch(fetchRecruitments());
-        }
-    }, [dispatch, items.length]);
+  useEffect(() => {
+    if (items.length === 0) {
+      dispatch(fetchRecruitments());
+    }
+  }, [dispatch, items.length]);
 
-    const [selectedItem, setSelectedItem] = useState(null);
+  const [selectedItem, setSelectedItem] = useState(null);
 
-    const handleEdit = (it) => {
-        // open modal with existing item for editing
-        setSelectedItem(it);
-        setIsModalOpen(true);
-    };
+  const handleEdit = (it) => {
+    // open modal with existing item for editing
+    setSelectedItem(it);
+    setIsModalOpen(true);
+  };
 
-    const handleDelete = (it) => {
-        // TODO: implement Redux delete action
-        console.log('delete', it.id);
-    };
+  const handleDelete = (it) => {
+    // TODO: implement Redux delete action
+    console.log('delete', it.id);
+  };
 
-    const totalPages = Math.max(1, Math.ceil(items.length / perPage));
+  const totalPages = Math.max(1, Math.ceil(items.length / perPage));
 
-    if (loading) return <div className="dashboardPy">Loading recruitments...</div>;
-    if (error) return <div className="dashboardPy text-red-600">Error: {error}</div>;
+  if (loading) return <div className="dashboardPy">Loading recruitments...</div>;
+  if (error) return <div className="dashboardPy text-red-600">Error: {error}</div>;
 
-    return (
-        <div className="dashboardPy">
-            <div className='mb-6'>
-                <PageHeader title="Manage your Listings" ctaText="Add New Listing" onCtaClick={() => setIsModalOpen(true)} />
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-6">
-                {items.slice((page - 1) * perPage, page * perPage).map((it) => (
-                    <RecruitmentCard key={it.id} item={it} onEdit={handleEdit} onDelete={handleDelete} />
-                ))}
-            </div>
-
-            <Pagination page={page} total={totalPages} onChange={(p) => setPage(p)} />
-
-            {/* Create/Edit Recruitment Modal (separate component) */}
-            <CreateRecruitmentModal
-                isOpen={isModalOpen}
-                onClose={() => { setIsModalOpen(false); setSelectedItem(null); }}
-                initialData={selectedItem}
-                mode={selectedItem ? 'edit' : 'create'}
-            />
+  return (
+    <div className="dashboardPy">
+      <div className="mb-6">
+        <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+          <div>
+            <h1 className="text-4xl font-semibold text-[#0B544E]">Manage your Listings</h1>
+          </div>
+          <div>
+            <button
+              onClick={() => setIsModalOpen(true)}
+              className="inline-flex w-full items-center justify-center gap-1.5 rounded-md bg-[#0F766E] px-4 py-3 text-base font-medium whitespace-nowrap text-white transition-colors hover:bg-[#0d655d]"
+            >
+              <Plus className="h-4 w-4 shrink-0" />
+              Add New Listing
+            </button>
+          </div>
         </div>
-    )
-}
+      </div>
 
-export default Recruitment
+      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
+        {items.slice((page - 1) * perPage, page * perPage).map((it) => (
+          <RecruitmentCard key={it.id} item={it} onEdit={handleEdit} onDelete={handleDelete} />
+        ))}
+      </div>
+
+      <Pagination page={page} total={totalPages} onChange={(p) => setPage(p)} />
+
+      {/* Create/Edit Recruitment Modal (separate component) */}
+      <CreateRecruitmentModal
+        isOpen={isModalOpen}
+        onClose={() => {
+          setIsModalOpen(false);
+          setSelectedItem(null);
+        }}
+        initialData={selectedItem}
+        mode={selectedItem ? 'edit' : 'create'}
+      />
+    </div>
+  );
+};
+
+export default Recruitment;
