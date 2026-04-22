@@ -185,7 +185,7 @@ const CommunityView = () => {
         <div className="grid grid-cols-1 gap-3 lg:grid-cols-4 lg:gap-6">
           {/* Left Sidebar - Categories */}
           <div className="lg:col-span-1">
-            <div className="sticky top-46 hidden lg:block">
+            <div className="sticky top-37 hidden lg:block">
               <CategorySidebar
                 activeCategory={activeCategory}
                 onCategoryChange={setActiveCategory}
