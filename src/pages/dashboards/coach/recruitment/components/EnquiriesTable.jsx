@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { ChevronRight } from 'lucide-react';
+import ApplicantModal from './ApplicantModal';
 
 const EnquiriesTable = ({ data }) => {
     const [currentPage, setCurrentPage] = useState(1);
@@ -8,6 +9,9 @@ const EnquiriesTable = ({ data }) => {
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
     const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
+    const [selected, setSelected] = useState(null);
+
+
 
     return (
         <div className="w-full bg-white rounded-xl border border-gray-200 shadow-md font-sans overflow-hidden">
@@ -37,11 +41,15 @@ const EnquiriesTable = ({ data }) => {
                                 <td className="px-6 py-5 text-base text-gray-700 break-words max-w-[150px]">{e.email}</td>
                                 <td className="px-6 py-5 text-base text-gray-500 max-w-[250px] leading-relaxed">{e.msg}</td>
                                 <td className="px-6 py-5 text-base text-gray-700 whitespace-nowrap">{e.date}</td>
-                                <td className="px-6 py-5 text-base text-gray-700">
-                                    <button className="p-2 hover:bg-gray-100 rounded-full transition-colors flex items-center justify-center">
-                                        <ChevronRight className="w-5 h-5 text-gray-800" />
-                                    </button>
-                                </td>
+                                                                <td className="px-6 py-5 text-base text-gray-700">
+                                                                    <button
+                                                                        className="p-2 hover:bg-gray-100 rounded-full transition-colors flex items-center justify-center"
+                                                                        onClick={() => setSelected(e)}
+                                                                        aria-label="View Details"
+                                                                    >
+                                                                        <ChevronRight className="w-5 h-5 text-gray-800" />
+                                                                    </button>
+                                                                </td>
                             </tr>
                         ))}
                     </tbody>
@@ -68,11 +76,15 @@ const EnquiriesTable = ({ data }) => {
                         <div className="text-base text-gray-700 mb-2">
                             <span className="font-medium">Date:</span> {e.date}
                         </div>
-                        <div className="flex justify-end">
-                            <button className="p-2 hover:bg-gray-100 rounded-full transition-colors flex items-center justify-center">
-                                <ChevronRight className="w-5 h-5 text-gray-800" />
-                            </button>
-                        </div>
+                                                <div className="flex justify-end">
+                                                    <button
+                                                        className="p-2 hover:bg-gray-100 rounded-full transition-colors flex items-center justify-center"
+                                                        onClick={() => setSelected(e)}
+                                                        aria-label="View Details"
+                                                    >
+                                                        <ChevronRight className="w-5 h-5 text-gray-800" />
+                                                    </button>
+                                                </div>
                     </div>
                 ))}
             </div>
@@ -111,6 +123,8 @@ const EnquiriesTable = ({ data }) => {
                     </button>
                 </div>
             </div>
+            {/* Modal for applicant details */}
+            <ApplicantModal enquiry={selected} onClose={() => setSelected(null)} />
         </div>
     );
 };
