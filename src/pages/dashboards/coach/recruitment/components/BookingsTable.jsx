@@ -11,38 +11,29 @@ export default function BookingsTable({ data }) {
  
   return (
     <div
-      style={{
-        background: "#ffffff",
-        borderRadius: "12px",
-        border: "1px solid #e5e7eb",
-        boxShadow: "0 1px 3px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.06)",
-        width: "100%",
-        fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
-        overflow: "hidden",
-      }}
-      className="w-full"
+      className="w-full bg-white rounded-xl border border-gray-200 shadow-md font-sans overflow-hidden"
     >
       {/* Title */}
-      <div style={{ padding: "24px 24px 16px 24px" }}>
-        <h2 style={{ margin: 0, fontSize: "20px", fontWeight: "600", color: "#111827" }}>Bookings</h2>
+      <div className="pt-6 px-6 pb-4">
+        <h2 className="m-0 text-2xl font-semibold text-gray-900">Bookings</h2>
       </div>
 
       {/* Table for desktop, hidden on mobile */}
       <div className="hidden md:block">
-        <table style={{ width: "100%", borderCollapse: "collapse" }}>
+        <table className="w-full border-collapse">
           <thead>
             <tr className="bg-[#F8F8F8]">
-              <th style={{ padding: "12px 24px", textAlign: "left", fontSize: "14px", fontWeight: "500", color: "#6b7280", borderTop: "1px solid #e5e7eb", borderBottom: "1px solid #e5e7eb" }}>Name</th>
-              <th style={{ padding: "12px 24px", textAlign: "left", fontSize: "14px", fontWeight: "500", color: "#6b7280", borderTop: "1px solid #e5e7eb", borderBottom: "1px solid #e5e7eb" }}>Phone Number</th>
-              <th style={{ padding: "12px 24px", textAlign: "left", fontSize: "14px", fontWeight: "500", color: "#6b7280", borderTop: "1px solid #e5e7eb", borderBottom: "1px solid #e5e7eb" }}>Email</th>
+              <th className="px-6 py-3 text-left text-base font-medium text-gray-500 border-t border-b border-gray-200">Name</th>
+              <th className="px-6 py-3 text-left text-base font-medium text-gray-500 border-t border-b border-gray-200">Phone Number</th>
+              <th className="px-6 py-3 text-left text-base font-medium text-gray-500 border-t border-b border-gray-200">Email</th>
             </tr>
           </thead>
           <tbody>
             {currentItems.map((b, i) => (
-              <tr key={i} style={{ borderBottom: "1px solid #e5e7eb" }}>
-                <td style={{ padding: "20px 24px", fontSize: "14px", color: "#111827", fontWeight: "400" }}>{b.name}</td>
-                <td style={{ padding: "20px 24px", fontSize: "14px", color: "#374151" }}>{b.phone}</td>
-                <td style={{ padding: "20px 24px", fontSize: "14px", color: "#374151", wordBreak: "break-word" }}>{b.email}</td>
+              <tr key={i} className="border-b border-gray-200">
+                <td className="px-6 py-5 text-base text-gray-900 font-normal">{b.name}</td>
+                <td className="px-6 py-5 text-base text-gray-700">{b.phone}</td>
+                <td className="px-6 py-5 text-base text-gray-700 break-words">{b.email}</td>
               </tr>
             ))}
           </tbody>
@@ -54,21 +45,14 @@ export default function BookingsTable({ data }) {
         {currentItems.map((b, i) => (
           <div
             key={i}
-            style={{
-              border: "1px solid #e5e7eb",
-              borderRadius: "10px",
-              marginBottom: "16px",
-              background: "#f9fafb",
-              boxShadow: "0 1px 2px rgba(0,0,0,0.04)",
-              padding: "16px 14px",
-            }}
+            className="border border-gray-200 rounded-lg mb-4 bg-gray-50 shadow-sm p-4"
           >
-            <div style={{ fontWeight: 600, color: "#0d9488", fontSize: "16px", marginBottom: "8px" }}>{b.name}</div>
-            <div style={{ fontSize: "14px", color: "#374151", marginBottom: "4px" }}>
-              <span style={{ fontWeight: 500 }}>Phone:</span> {b.phone}
+            <div className="font-semibold text-teal-600 text-[16px] mb-2">{b.name}</div>
+            <div className="text-base text-gray-700 mb-1">
+              <span className="font-medium">Phone:</span> {b.phone}
             </div>
-            <div style={{ fontSize: "14px", color: "#374151" }}>
-              <span style={{ fontWeight: 500 }}>Email:</span> {b.email}
+            <div className="text-base text-gray-700">
+              <span className="font-medium">Email:</span> {b.email}
             </div>
           </div>
         ))}
@@ -76,12 +60,10 @@ export default function BookingsTable({ data }) {
 
       {/* Pagination */}
       <div
-        className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 md:gap-0 px-4 md:px-6 pb-4 md:pb-8"
-        style={{ paddingTop: "16px" }}
+        className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 md:gap-0 px-4 md:px-6 pb-4 md:pb-8 pt-4"
       >
         <span
-          style={{ fontSize: "14px", color: "#0d9488", fontWeight: "500" }}
-          className="text-center md:text-left"
+          className="text-base text-teal-700 font-medium text-center md:text-left"
         >
           Showing {indexOfFirstItem + 1} to {Math.min(indexOfLastItem, data.length)} of {data.length} results
         </span>
@@ -89,32 +71,22 @@ export default function BookingsTable({ data }) {
           <button
             onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
             disabled={currentPage === 1}
-            style={{
-              padding: "8px 16px",
-              fontSize: "14px",
-              fontWeight: "500",
-              color: currentPage === 1 ? "#9ca3af" : "#0d9488",
-              background: "#ffffff",
-              border: `1px solid ${currentPage === 1 ? "#d1d5db" : "#0d9488"}`,
-              borderRadius: "8px",
-              cursor: currentPage === 1 ? "default" : "pointer",
-            }}
+            className={`px-4 py-2 text-base font-medium rounded-lg border transition-colors duration-150 ${
+              currentPage === 1
+                ? 'text-gray-400 border-gray-300 bg-white cursor-default'
+                : 'text-teal-700 border-teal-600 bg-white hover:bg-teal-50 cursor-pointer'
+            }`}
           >
             Previous
           </button>
           <button
             onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
             disabled={currentPage === totalPages}
-            style={{
-              padding: "8px 16px",
-              fontSize: "14px",
-              fontWeight: "500",
-              color: currentPage === totalPages ? "#9ca3af" : "#0d9488",
-              background: "#ffffff",
-              border: `1px solid ${currentPage === totalPages ? "#d1d5db" : "#0d9488"}`,
-              borderRadius: "8px",
-              cursor: currentPage === totalPages ? "default" : "pointer",
-            }}
+            className={`px-4 py-2 text-sm font-medium rounded-lg border transition-colors duration-150 ${
+              currentPage === totalPages
+                ? 'text-gray-400 border-gray-300 bg-white cursor-default'
+                : 'text-teal-700 border-teal-600 bg-white hover:bg-teal-50 cursor-pointer'
+            }`}
           >
             Next
           </button>
