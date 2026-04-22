@@ -199,7 +199,18 @@ const CommunityView = () => {
             <div className="mb-4 lg:hidden">
               <PageHeader
                 title="ESSA Community"
-                description="Browse all conversations across the community - from questions to shared experiences."
+                description={
+                  activeCategory === 'All posts'
+                    ? 'Browse all conversations across the community - from questions to shared experiences.'
+                    : activeCategory === 'Stories & Experiences'
+                    ? 'A space to share moments, reflections and stories from your time in sport.'
+                    : activeCategory === 'Questions & Advice'
+                    ? 
+                      "Ask for advice, reassurance, or perspectives from others who've been there."
+                    : activeCategory === 'Match & event support'
+                    ? 'Need a last-minute sub, referee, or extra help for a match or event? Post here for short-term support from the community.'
+                    : ''
+                }
               />
             </div>
 
@@ -234,11 +245,27 @@ const CommunityView = () => {
             {/* Dynamic Header Section */}
             <div className="mb-6 hidden flex-col items-start justify-between gap-4 sm:flex-row lg:flex">
               <div>
-                <div className={currentHeader.titleClass}>{currentHeader.title}</div>
+                {/* Always show the ESSA Community title */}
+                <div className="text-[32px] font-bold text-[#0B544E]">ESSA Community</div>
+                {/* Show dynamic subheading/description for each category */}
                 {activeCategory === 'All posts' && (
                   <p className={`${subheadingTextClass} mt-1 md:mt-2.5 max-w-3xl`}>
-                    Browse all conversations across the community - from questions to shared
-                    experiences.
+                    Browse all conversations across the community - from questions to shared experiences.
+                  </p>
+                )}
+                {activeCategory === 'Stories & Experiences' && (
+                  <p className={`${subheadingTextClass} mt-1 md:mt-2.5 max-w-2xl`}>
+                    A space to share moments, reflections and stories from your time in sport.
+                  </p>
+                )}
+                {activeCategory === 'Questions & Advice' && (
+                  <p className={`${subheadingTextClass} mt-1 md:mt-2.5 max-w-2xl`}>
+                    Ask for advice, reassurance, or perspectives from others who've been there.
+                  </p>
+                )}
+                {activeCategory === 'Match & event support' && (
+                  <p className={`${subheadingTextClass} mt-1 md:mt-2.5 max-w-3xl`}>
+                    Need a last-minute sub, referee, or extra help for a match or event? Post here for short-term support from the community.
                   </p>
                 )}
               </div>
