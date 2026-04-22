@@ -52,6 +52,7 @@ const RecruitmentDetails = () => {
         { name: 'Annette Black', phone: '(603) 555-0123', email: 'nevaeh.simmons@example.com' },
         { name: 'Dianne Russell', phone: '(219) 555-0114', email: 'dolores.chambers@example.com' },
         { name: 'Albert Flores', phone: '(406) 555-0120', email: 'jackson.graham@example.com' },
+        { name: 'Albert Flores', phone: '(406) 555-0120', email: 'jackson.graham@example.com' },
     ];
 
     const registeredInterestData = [
@@ -90,7 +91,7 @@ const RecruitmentDetails = () => {
                 <SessionDetailsCard item={item} />
 
                 {/* 3-Column Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 lg:gap-8">
+                <div className="grid grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3 gap-6 lg:gap-8">
                     <SessionOverview item={item} />
                     <VenueInformation item={item} />
                     <ContactOrganiser />
