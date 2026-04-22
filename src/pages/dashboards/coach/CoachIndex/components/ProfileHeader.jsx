@@ -8,11 +8,11 @@ const ProfileHeader = () => {
             <img
                 src="/coachindex.jpg"
                 alt="coach"
-                className="w-28 h-28 rounded-lg object-cover shadow-sm"
+                className="w-26 h-26 rounded-lg object-cover shadow-sm"
             />
 
             <div>
-                <PageHeader title="Northside Elite Football" />
+               <h1 className="text-2xl font-bold text-btn-primary">Northside Elite Football</h1>
                 <p className="text-base text-secondary-text mt-1 flex items-center gap-1 ">
                     <IoLocationOutline />Manchester, UK
                 </p>

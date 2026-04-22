@@ -38,12 +38,12 @@ const CoachIndex = () => {
       {/* Two column area (Same as your code) */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Recruitment Ads (moved to component) */}
-        <Card className="p-2 md:p-6">
+        <Card className="p-2 md:p-2">
           <RecruitmentAds onPost={() => setIsPostModalOpen(true)} />
         </Card>
 
         {/* Events (moved to component) */}
-        <Card className="p-2 md:p-6">
+        <Card className="p-2 md:p-2">
           <EventsList onCreateEvent={() => setIsEventModalOpen(true)} />
         </Card>
       </div>
