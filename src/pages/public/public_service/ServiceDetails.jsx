@@ -93,6 +93,7 @@ const ServiceDetails = () => {
     coach: item?.coach || "John Doe",
     avatar: item?.avatar || "/images/login/image_2.jpg",
     description: item?.description || "This physiotherapy service is designed specifically for women athletes who play sports like cricket, football, futsal and other physical games.It helps prevent injuries, improve performance, and support recovery so players can stay fit and confident.",
+    clinicName: item?.clinicName || item?.clinic || 'Active Recovery Clinic',
     addressLine1: item?.addressLine1 || "123 High Street",
     townCity: item?.townCity || "Richmond",
     postcode: item?.postcode || "TW9 1AB",
@@ -152,18 +153,29 @@ const ServiceDetails = () => {
                 </div>
 
                 <h3 className="font-bold text-[#1A1D1F] text-xl mb-4">Service Overview</h3>
-                <div className="space-y-3 mb-8">
-                  
-                  <OverviewRow icon={Building2} label="Clinic name" value={displayData.clinicName} />
-                  <OverviewRow icon={MapPin} label="Address Line 1" value={displayData.addressLine1} />
-                  <OverviewRow icon={Map} label="Town/City" value={displayData.townCity} />
-                  <OverviewRow icon={Mail} label="Postcode" value={displayData.postcode} />
-                  <OverviewRow icon={BriefcaseMedical} label="Primary Profession" value={displayData.profession} />
-                  <OverviewRow icon={Target} label="Session Type" value={displayData.sessionType} />
-                  <OverviewRow icon={Medal} label="Sport" value={displayData.sport} />
-                  <OverviewRow icon={FileCheck} label="Professional Registration" value={displayData.registration} />
-                  <OverviewRow icon={ShieldCheck} label="Insurance in place" value={displayData.insurance} />
+                <div className="mb-8 rounded-2xl border border-gray-100 bg-white p-4 shadow-sm md:p-6">
+                  <div className="grid grid-cols-1 xl:grid-cols-2 gap-5">
+                    <div>
+                      <h4 className="text-lg font-semibold text-[#1A1D1F] mb-4">Location & Clinic</h4>
+                      <div className="space-y-3">
+                        <OverviewRow icon={Building2} label="Clinic name" value={displayData.clinicName} />
+                        <OverviewRow icon={MapPin} label="Address Line 1" value={displayData.addressLine1} />
+                        <OverviewRow icon={Map} label="Town/City" value={displayData.townCity} />
+                        <OverviewRow icon={Mail} label="Postcode" value={displayData.postcode} />
+                      </div>
+                    </div>
 
+                    <div>
+                      <h4 className="text-lg font-semibold text-[#1A1D1F] mb-4">Professional Details</h4>
+                      <div className="space-y-3">
+                        <OverviewRow icon={BriefcaseMedical} label="Primary Profession" value={displayData.profession} />
+                        <OverviewRow icon={Target} label="Session Type" value={displayData.sessionType} />
+                        <OverviewRow icon={Medal} label="Sport" value={displayData.sport} />
+                        <OverviewRow icon={FileCheck} label="Professional Registration" value={displayData.registration} />
+                        <OverviewRow icon={ShieldCheck} label="Insurance in place" value={displayData.insurance} />
+                      </div>
+                    </div>
+                  </div>
                 </div>
 
                 <div className="flex flex-wrap gap-3">
@@ -211,16 +223,20 @@ const ServiceDetails = () => {
 };
 
 // Reusable component for the Service Overview rows
-const OverviewRow = ({ icon: Icon, label, value }) => (
-  <div className="flex items-center gap-4 bg-white p-3.5 rounded-xl border border-gray-100 shadow-sm">
-    <div className="w-10 h-10 rounded-full bg-[#EAF2F1] flex items-center justify-center shrink-0">
-      <Icon className="w-5 h-5 text-[#147B6B]" />
+const OverviewRow = ({ icon, label, value }) => {
+  const IconComponent = icon;
+
+  return (
+    <div className="flex items-start gap-4 rounded-xl bg-[#F8FAFC] p-3.5 border border-[#ECF1F4]">
+      <div className="w-10 h-10 rounded-full bg-[#EAF2F1] flex items-center justify-center shrink-0">
+        {React.createElement(IconComponent, { className: 'w-5 h-5 text-[#147B6B]' })}
+      </div>
+      <div className="min-w-0">
+        <p className="text-base text-[#1A1D1F] font-semibold mb-0.5">{label}</p>
+        <p className="text-base text-[#4A5565] wrap-break-word">{value}</p>
+      </div>
     </div>
-    <div>
-      <p className="text-base text-[#1A1D1F] font-semibold mb-0.5">{label}</p>
-      <p className="text-base text-[#4A5565]">{value}</p>
-    </div>
-  </div>
-);
+  );
+};
 
 export default ServiceDetails;

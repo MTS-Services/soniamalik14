@@ -149,7 +149,7 @@ const DiscoverDetails = () => {
               </div>
               
               {/* Action Buttons */}
-              <div className="flex flex-wrap gap-3">
+              <div className="hidden md:flex flex-wrap gap-3">
                 <button className="bg-[#0F766E] hover:bg-[#0D655D] text-white px-4 py-2.5 rounded-lg text-sm font-medium transition-colors">
                   Book Your Place
                 </button>
@@ -215,9 +215,18 @@ const DiscoverDetails = () => {
                     Send message
                   </button>
                 </form>
+
               </div>
             </div>
 
+                <div className="mt-3 flex flex-wrap justify-center gap-3 md:hidden">
+                  <button className="bg-[#0F766E] hover:bg-[#0D655D] text-white px-3 py-2.5 rounded-lg text-sm font-medium transition-colors">
+                    Book Your Place
+                  </button>
+                  <button className="bg-[#0F766E] hover:bg-[#0D655D] text-white px-5 py-2.5 rounded-lg text-sm font-medium transition-colors">
+                    Register Interest
+                  </button>
+                </div>
           </div>
         </div>
       </Container>
