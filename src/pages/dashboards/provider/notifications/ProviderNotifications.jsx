@@ -13,7 +13,7 @@ const ProviderNotifications = () => {
     <div className="dashboardPy">
       <section className=" ">
         <div className="flex items-center justify-between  px-5 py-4">
-          <h1 className="text-3xl font-semibold text-[#1D1D1D]">Notifications</h1>
+          <h1 className="text-xl font-semibold text-[#1D1D1D]">Notifications</h1>
           <button
             type="button"
             onClick={handleMarkAllRead}
@@ -28,7 +28,7 @@ const ProviderNotifications = () => {
           {notifications.map((notification) => (
             <article
               key={notification.id}
-              className={`flex gap-3 px-4 py-4 md:gap-4 md:px-5 md:py-5  ${notification.read ? 'bg-[#e8e8e8]' : 'bg-[#e8e8e8]'}`}
+              className={`flex gap-3 px-4 py-4 md:gap-4 md:px-5 md:py-6.5  ${notification.read ? 'bg-[#E8E8E8]' : 'bg-[#E8E8E8]'}`}
             >
               <img
                 src={notification.avatar}

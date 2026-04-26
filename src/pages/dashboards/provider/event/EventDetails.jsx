@@ -128,11 +128,11 @@ const ProviderEventDetails = () => {
             <div className="mt-4 grid grid-cols-2 gap-3">
               <button
                 onClick={handleBookPlace}
-                className="rounded-md bg-[#0F766E] px-3 py-2 text-[14px] font-medium text-white transition hover:bg-[#0c5e58]"
+                className="rounded-md bg-[#0F766E] px-3 py-2.5 text-[14px] font-medium text-white transition hover:bg-[#0c5e58]"
               >
                 Book Your Place
               </button>
-              <button className="rounded-md bg-[#0F766E] px-3 py-2 text-[14px] font-medium text-white transition hover:bg-[#0c5e58]">
+              <button className="rounded-md bg-[#0F766E] px-3 py-2.5 text-[14px] font-medium text-white transition hover:bg-[#0c5e58]">
                 Register Interest
               </button>
             </div>

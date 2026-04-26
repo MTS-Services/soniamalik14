@@ -14,7 +14,8 @@ const InfoCard = ({ title, value, icon }) => (
   </div>
 );
 
-const buildDummyRows = (count, factory) => Array.from({ length: count }, (_, index) => factory(index + 1));
+const buildDummyRows = (count, factory) =>
+  Array.from({ length: count }, (_, index) => factory(index + 1));
 
 const withMinimumRows = (rows, minimumCount, factory) => {
   if (Array.isArray(rows) && rows.length >= minimumCount) return rows;
@@ -27,7 +28,11 @@ const EnquiryDetailsModal = ({ isOpen, onClose, enquiry, eventTitle }) => {
   if (!isOpen || !enquiry) return null;
 
   return (
-    <div className="fixed inset-0 z-100 flex items-center justify-center bg-black/50 p-4" role="dialog" aria-modal="true">
+    <div
+      className="fixed inset-0 z-100 flex items-center justify-center bg-black/50 p-4"
+      role="dialog"
+      aria-modal="true"
+    >
       <div className="w-full max-w-2xl overflow-hidden rounded-2xl bg-white shadow-2xl">
         <div className="flex items-center justify-between border-b border-[#E2E8EA] px-5 py-4">
           <h3 className="text-xl font-semibold text-[#1D1D1D]">Enquiry Details</h3>
@@ -43,29 +48,35 @@ const EnquiryDetailsModal = ({ isOpen, onClose, enquiry, eventTitle }) => {
 
         <div className="space-y-4 px-5 py-5">
           <div className="rounded-xl border border-[#E2E8EA] bg-[#F8FAFB] p-4">
-            <p className="text-sm font-semibold uppercase tracking-wide text-[#0F766E]">Event</p>
+            <p className="text-sm font-semibold tracking-wide text-[#0F766E] uppercase">Event</p>
             <p className="mt-1 text-base font-semibold text-[#1D1D1D]">{eventTitle}</p>
           </div>
 
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
             <div className="rounded-xl border border-[#E2E8EA] bg-[#F8FAFB] p-4">
-              <p className="text-sm font-semibold uppercase tracking-wide text-[#6B7280]">Player Name</p>
+              <p className="text-sm font-semibold tracking-wide text-[#6B7280] uppercase">
+                Player Name
+              </p>
               <p className="mt-1 text-base font-medium text-[#1D1D1D]">{enquiry.playerName}</p>
             </div>
             <div className="rounded-xl border border-[#E2E8EA] bg-[#F8FAFB] p-4">
-              <p className="text-sm font-semibold uppercase tracking-wide text-[#6B7280]">Phone Number</p>
+              <p className="text-sm font-semibold tracking-wide text-[#6B7280] uppercase">
+                Phone Number
+              </p>
               <p className="mt-1 text-base font-medium text-[#1D1D1D]">{enquiry.phone}</p>
             </div>
             <div className="rounded-xl border border-[#E2E8EA] bg-[#F8FAFB] p-4 sm:col-span-2">
-              <p className="text-sm font-semibold uppercase tracking-wide text-[#6B7280]">Email</p>
-              <p className="mt-1 break-all text-base font-medium text-[#1D1D1D]">{enquiry.email}</p>
+              <p className="text-sm font-semibold tracking-wide text-[#6B7280] uppercase">Email</p>
+              <p className="mt-1 text-base font-medium break-all text-[#1D1D1D]">{enquiry.email}</p>
             </div>
             <div className="rounded-xl border border-[#E2E8EA] bg-[#F8FAFB] p-4 sm:col-span-2">
-              <p className="text-sm font-semibold uppercase tracking-wide text-[#6B7280]">Message</p>
+              <p className="text-sm font-semibold tracking-wide text-[#6B7280] uppercase">
+                Message
+              </p>
               <p className="mt-1 text-base leading-relaxed text-[#374151]">{enquiry.message}</p>
             </div>
             <div className="rounded-xl border border-[#E2E8EA] bg-[#F8FAFB] p-4 sm:col-span-2">
-              <p className="text-sm font-semibold uppercase tracking-wide text-[#6B7280]">Date</p>
+              <p className="text-sm font-semibold tracking-wide text-[#6B7280] uppercase">Date</p>
               <p className="mt-1 text-base font-medium text-[#1D1D1D]">{enquiry.date}</p>
             </div>
           </div>
@@ -117,7 +128,7 @@ const InsightsPreview = () => {
         phone: `(555) 100-${String(n).padStart(4, '0')}`,
         email: `participant${n}.${event.id}@example.com`,
       })),
-    [event.bookings, event.id],
+    [event.bookings, event.id]
   );
 
   const interests = useMemo(
@@ -127,7 +138,7 @@ const InsightsPreview = () => {
         phone: `(555) 200-${String(n).padStart(4, '0')}`,
         email: `interest${n}.${event.id}@example.com`,
       })),
-    [event.registerInterest, event.id],
+    [event.registerInterest, event.id]
   );
 
   const enquiries = useMemo(
@@ -139,7 +150,7 @@ const InsightsPreview = () => {
         message: `I would like to know more details about schedule, venue support, and registration process for slot ${n}.`,
         date: `${String((n % 28) + 1).padStart(2, '0')} Mar 26`,
       })),
-    [event.enquiries, event.id],
+    [event.enquiries, event.id]
   );
 
   const bookingTotalPages = Math.max(1, Math.ceil(bookings.length / perPage));
@@ -176,7 +187,7 @@ const InsightsPreview = () => {
 
   return (
     <div className="dashboardPy">
-      <div className="rounded-lg bg-[#F1F5F7] p-4 md:p-5">
+      <div className="rounded-lg">
         <button
           type="button"
           onClick={() =>
@@ -193,7 +204,11 @@ const InsightsPreview = () => {
         </button>
 
         <div className="overflow-hidden rounded-lg">
-          <img src={event.coverImage || '/images/Football.jpg'} alt={event.title} className="h-72 w-full object-cover" />
+          <img
+            src={event.coverImage || '/images/Football.jpg'}
+            alt={event.title}
+            className="h-72 w-full object-cover"
+          />
         </div>
 
         <div className="mt-4 grid grid-cols-1 gap-4 lg:grid-cols-[1.5fr_1fr_1fr]">
@@ -201,12 +216,16 @@ const InsightsPreview = () => {
             <div className="flex flex-wrap items-center gap-3">
               <h1 className="text-3xl font-semibold text-[#1D1D1D]">{event.title}</h1>
               {statusConfig && (
-                <span className={`inline-flex rounded-full px-3 py-1 text-base font-semibold ${statusConfig.className}`}>
+                <span
+                  className={`inline-flex rounded-full px-3 py-1 text-base font-semibold ${statusConfig.className}`}
+                >
                   {statusConfig.label}
                 </span>
               )}
             </div>
-            <p className="mt-1 text-base text-[#6B7280]">Event Type: {event.eventType || 'Workshop & Learning'}</p>
+            <p className="mt-1 text-base text-[#6B7280]">
+              Event Type: {event.eventType || 'Workshop & Learning'}
+            </p>
 
             <div className="mt-4 rounded-lg border border-[#E2E8EA] bg-[#F8FAFB] p-4">
               <h2 className="text-base font-semibold text-[#1D1D1D]">Event Type</h2>
@@ -214,13 +233,31 @@ const InsightsPreview = () => {
             </div>
 
             <div className="mt-4 grid grid-cols-1 gap-3 md:grid-cols-[1fr_1.2fr]">
-              <div className="space-y-2">
+              <div className="space-y-3">
                 <h3 className="text-base font-semibold text-[#1D1D1D]">Session Overview</h3>
-                <InfoCard title="Sport" value={event.sport} icon={<Trophy className="h-3.5 w-3.5" />} />
-                <InfoCard title="Event Type" value={event.sessionType || 'Recreational'} icon={<Ticket className="h-3.5 w-3.5" />} />
-                <InfoCard title="Suitable For" value={event.suitableFor || 'New to the sport'} icon={<CircleHelp className="h-3.5 w-3.5" />} />
-                <button className="rounded-md bg-[#0F766E] px-4 py-2 text-sm font-semibold text-white">Book Your Place</button>
-                <button className="ml-2 rounded-md bg-[#0F766E] px-4 py-2 text-sm font-semibold text-white">Register Interest</button>
+                <InfoCard
+                  title="Sport"
+                  value={event.sport}
+                  icon={<Trophy className="h-3.5 w-3.5" />}
+                />
+                <InfoCard
+                  title="Event Type"
+                  value={event.sessionType || 'Recreational'}
+                  icon={<Ticket className="h-3.5 w-3.5" />}
+                />
+                <InfoCard
+                  title="Suitable For"
+                  value={event.suitableFor || 'New to the sport'}
+                  icon={<CircleHelp className="h-3.5 w-3.5" />}
+                />
+                <div className='flex   flex-col md:flex-row gap-4'>
+                  <button className="rounded-md bg-[#0F766E] px-4 py-2 text-sm font-semibold text-white">
+                    Book Your Place
+                  </button>
+                  <button className="rounded-md bg-[#0F766E] px-4 py-2 text-sm font-semibold text-white sm:ml-2">
+                    Register Interest
+                  </button>
+                </div>
               </div>
 
               <div className="space-y-2">
@@ -228,14 +265,18 @@ const InsightsPreview = () => {
                 <div className="rounded-xl border border-[#E2E8EA] bg-[#F8FAFB] p-3">
                   <p className="text-sm whitespace-pre-line text-[#4B5563]">{event.venue}</p>
                   <div className="mt-2 overflow-hidden rounded-md">
-                    <img src="/images/detaisPage/detailsBanner.png" alt="Map" className="h-28 w-full object-cover" />
+                    <img
+                      src="/images/detaisPage/detailsBanner.png"
+                      alt="Map"
+                      className="h-50 w-full object-cover"
+                    />
                   </div>
                 </div>
               </div>
             </div>
           </section>
 
-          <aside className="rounded-lg bg-[#EAF2F1] p-4 shadow-sm h-fit">
+          <aside className="h-fit rounded-lg bg-[#EAF2F1] p-4 shadow-sm">
             <h3 className="text-base font-semibold text-[#1D1D1D]">Contact Organiser</h3>
             <p className="mt-2 text-sm text-[#5B6B69]">Ask the organiser a question</p>
             <textarea
@@ -256,10 +297,13 @@ const InsightsPreview = () => {
 
           <div className="space-y-3 p-4 md:hidden">
             {paginatedBookings.map((booking, idx) => (
-              <div key={`${booking.email}-${idx}`} className="rounded-xl border border-[#E2E8EA] bg-[#F8FAFB] p-3">
+              <div
+                key={`${booking.email}-${idx}`}
+                className="rounded-xl border border-[#E2E8EA] bg-[#F8FAFB] p-3"
+              >
                 <p className="text-base font-semibold text-[#1D1D1D]">{booking.name}</p>
                 <p className="mt-1 text-sm text-[#4B5563]">Phone: {booking.phone}</p>
-                <p className="mt-1 break-all text-sm text-[#4B5563]">Email: {booking.email}</p>
+                <p className="mt-1 text-sm break-all text-[#4B5563]">Email: {booking.email}</p>
               </div>
             ))}
           </div>
@@ -268,9 +312,9 @@ const InsightsPreview = () => {
             <table className="min-w-160 border-collapse lg:min-w-full">
               <thead>
                 <tr className="bg-[#F8FAFA] text-left">
-                  <th className="px-4 py-3 text-sm font-medium text-[#1D1D1D]">Name</th>
-                  <th className="px-4 py-3 text-sm font-medium text-[#1D1D1D]">Phone Number</th>
-                  <th className="px-4 py-3 text-sm font-medium text-[#1D1D1D]">Email</th>
+                  <th className="px-4 py-3 text-base font-medium text-[#1D1D1D]">Name</th>
+                  <th className="px-4 py-3 text-base font-medium text-[#1D1D1D]">Phone Number</th>
+                  <th className="px-4 py-3 text-base font-medium text-[#1D1D1D]">Email</th>
                 </tr>
               </thead>
               <tbody>
@@ -278,7 +322,7 @@ const InsightsPreview = () => {
                   <tr key={`${booking.email}-${idx}`} className="border-t border-gray-100">
                     <td className="px-4 py-3 text-sm text-[#2F3B3A]">{booking.name}</td>
                     <td className="px-4 py-3 text-sm text-[#2F3B3A]">{booking.phone}</td>
-                    <td className="px-4 py-3 text-sm text-[#2F3B3A] break-all">{booking.email}</td>
+                    <td className="px-4 py-3 text-sm break-all text-[#2F3B3A]">{booking.email}</td>
                   </tr>
                 ))}
               </tbody>
@@ -303,10 +347,13 @@ const InsightsPreview = () => {
 
           <div className="space-y-3 p-4 md:hidden">
             {paginatedInterests.map((interest, idx) => (
-              <div key={`${interest.email}-${idx}`} className="rounded-xl border border-[#E2E8EA] bg-[#F8FAFB] p-3">
+              <div
+                key={`${interest.email}-${idx}`}
+                className="rounded-xl border border-[#E2E8EA] bg-[#F8FAFB] p-3"
+              >
                 <p className="text-base font-semibold text-[#1D1D1D]">{interest.name}</p>
                 <p className="mt-1 text-sm text-[#4B5563]">Phone: {interest.phone}</p>
-                <p className="mt-1 break-all text-sm text-[#4B5563]">Email: {interest.email}</p>
+                <p className="mt-1 text-sm break-all text-[#4B5563]">Email: {interest.email}</p>
               </div>
             ))}
           </div>
@@ -315,9 +362,9 @@ const InsightsPreview = () => {
             <table className="min-w-160 border-collapse lg:min-w-full">
               <thead>
                 <tr className="bg-[#F8FAFA] text-left">
-                  <th className="px-4 py-3 text-sm font-medium text-[#1D1D1D]">Name</th>
-                  <th className="px-4 py-3 text-sm font-medium text-[#1D1D1D]">Phone Number</th>
-                  <th className="px-4 py-3 text-sm font-medium text-[#1D1D1D]">Email</th>
+                  <th className="px-4 py-3 text-base font-medium text-[#1D1D1D]">Name</th>
+                  <th className="px-4 py-3 text-base font-medium text-[#1D1D1D]">Phone Number</th>
+                  <th className="px-4 py-3 text-base font-medium text-[#1D1D1D]">Email</th>
                 </tr>
               </thead>
               <tbody>
@@ -325,7 +372,7 @@ const InsightsPreview = () => {
                   <tr key={`${interest.email}-${idx}`} className="border-t border-gray-100">
                     <td className="px-4 py-3 text-sm text-[#2F3B3A]">{interest.name}</td>
                     <td className="px-4 py-3 text-sm text-[#2F3B3A]">{interest.phone}</td>
-                    <td className="px-4 py-3 text-sm text-[#2F3B3A] break-all">{interest.email}</td>
+                    <td className="px-4 py-3 text-sm break-all text-[#2F3B3A]">{interest.email}</td>
                   </tr>
                 ))}
               </tbody>
@@ -350,10 +397,13 @@ const InsightsPreview = () => {
 
           <div className="space-y-3 p-4 md:hidden">
             {paginatedEnquiries.map((enquiry, idx) => (
-              <div key={`${enquiry.email}-${idx}`} className="rounded-xl border border-[#E2E8EA] bg-[#F8FAFB] p-3">
+              <div
+                key={`${enquiry.email}-${idx}`}
+                className="rounded-xl border border-[#E2E8EA] bg-[#F8FAFB] p-3"
+              >
                 <p className="text-base font-semibold text-[#1D1D1D]">{enquiry.playerName}</p>
                 <p className="mt-1 text-sm text-[#4B5563]">Phone: {enquiry.phone}</p>
-                <p className="mt-1 break-all text-sm text-[#4B5563]">Email: {enquiry.email}</p>
+                <p className="mt-1 text-sm break-all text-[#4B5563]">Email: {enquiry.email}</p>
                 <p className="mt-1 text-sm text-[#4B5563]">Date: {enquiry.date}</p>
                 <p className="mt-1 text-sm text-[#4B5563]">Message: {enquiry.message}</p>
                 <div className="mt-2 flex justify-end">
@@ -374,12 +424,14 @@ const InsightsPreview = () => {
             <table className="min-w-230 border-collapse xl:min-w-full">
               <thead>
                 <tr className="bg-[#F8FAFA] text-left">
-                  <th className="px-4 py-3 text-sm font-medium text-[#1D1D1D]">Player Name</th>
-                  <th className="px-4 py-3 text-sm font-medium text-[#1D1D1D]">Phone Number</th>
-                  <th className="px-4 py-3 text-sm font-medium text-[#1D1D1D]">Email</th>
-                  <th className="px-4 py-3 text-sm font-medium text-[#1D1D1D]">Message</th>
-                  <th className="px-4 py-3 text-sm font-medium text-[#1D1D1D]">Date</th>
-                  <th className="px-4 py-3 text-sm font-medium text-[#1D1D1D]">ACTIONS</th>
+                  <th className="px-4 py-3 text-base font-medium text-[#1D1D1D]">Player Name</th>
+                  <th className="px-4 py-3 text-base font-medium text-[#1D1D1D]">Phone Number</th>
+                  <th className="px-4 py-3 text-base font-medium text-[#1D1D1D]">Email</th>
+                  <th className="px-4 py-3 text-base font-medium text-[#1D1D1D]">Message</th>
+                  <th className="px-4 py-3 text-base font-medium text-[#1D1D1D]">Date</th>
+                  <th className="px-4 py-3 text-center text-base font-medium text-[#1D1D1D]">
+                    ACTIONS
+                  </th>
                 </tr>
               </thead>
               <tbody>
@@ -387,17 +439,17 @@ const InsightsPreview = () => {
                   <tr key={`${enquiry.email}-${idx}`} className="border-t border-gray-100">
                     <td className="px-4 py-3 text-sm text-[#2F3B3A]">{enquiry.playerName}</td>
                     <td className="px-4 py-3 text-sm text-[#2F3B3A]">{enquiry.phone}</td>
-                    <td className="px-4 py-3 text-sm text-[#2F3B3A] break-all">{enquiry.email}</td>
+                    <td className="px-4 py-3 text-sm break-all text-[#2F3B3A]">{enquiry.email}</td>
                     <td className="max-w-65 px-4 py-3 text-sm text-[#2F3B3A]">{enquiry.message}</td>
                     <td className="px-4 py-3 text-sm text-[#2F3B3A]">{enquiry.date}</td>
-                    <td className="px-4 py-3">
+                    <td className="px-4 py-3 text-center">
                       <button
                         type="button"
                         onClick={() => openEnquiryModal(enquiry)}
                         className="inline-flex items-center justify-center rounded-md p-1 text-[#1D1D1D] hover:bg-[#EAF2F1]"
                         aria-label={`Open enquiry details for ${enquiry.playerName}`}
                       >
-                        <ChevronRight className="h-4 w-4" />
+                        <ChevronRight className="h-5 w-5" />
                       </button>
                     </td>
                   </tr>
@@ -429,4 +481,3 @@ const InsightsPreview = () => {
 };
 
 export default InsightsPreview;
-

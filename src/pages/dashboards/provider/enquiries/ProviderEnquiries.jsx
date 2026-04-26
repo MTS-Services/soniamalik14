@@ -13,33 +13,49 @@ const EnquiryDetailsModal = ({ open, onClose, enquiry }) => {
 
   return (
     <div
-      className="fixed inset-0 z-100 flex items-center justify-center bg-black/60 p-4"
+      className="fixed inset-0 z-100 flex items-center justify-center bg-black/55 p-4"
       role="dialog"
       aria-modal="true"
       onClick={onClose}
     >
       <div
-        className="w-full max-w-150 overflow-hidden rounded-2xl bg-white shadow-2xl"
+        className="w-full max-w-150 overflow-hidden rounded-2xl bg-[#F3F4F6] shadow-2xl"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="flex items-center justify-between px-5 pt-6 pb-4">
-          <h2 className="text-2xl leading-8 font-semibold text-[#1D1D1D]">Applicant Details</h2>
+        <div className="flex items-center justify-between px-5 pt-6 pb-3">
+          <h2 className="text-xl leading-8 font-semibold text-[#1D1D1D]">Applicant Details</h2>
           <button
             type="button"
             onClick={onClose}
-            className="inline-flex h-9 w-9 items-center justify-center   text-[#1D1D1D]"
+            className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-[#D1D5DB] text-[#1D1D1D] hover:bg-[#C7CCD2]"
             aria-label="Close enquiry modal"
           >
             <X className="h-5 w-5" />
           </button>
         </div>
 
-        <div className="max-h-[70vh] space-y-2 overflow-y-auto px-5 pb-6 text-xl leading-8 text-[#1D1D1D]">
+        <div className="max-h-[75vh] overflow-y-auto px-5 pb-6">
+          <div className="space-y-2 text-base font-semibold leading-8 text-[#1D1D1D]">
           <p className="font-semibold">{enquiry.playerName}</p>
           <p>{enquiry.phone}</p>
           <p className="break-all">{enquiry.email}</p>
           <p>Event Name: {enquiry.eventTitle}</p>
-          <p className="pt-2 text-base leading-7 text-[#374151]">{applicantSummary}</p>
+          </div>
+
+          <p className="pt-3 text-base leading-7 text-[#374151]">{applicantSummary}</p>
+
+          <textarea
+            rows={6}
+            placeholder="write your reply"
+            className="mt-4 w-full resize-none rounded-md border border-[#E5E7EB] bg-[#ECECEC] px-4 py-3 text-base text-[#1D1D1D] outline-none placeholder:text-[#8F949B] focus:border-[#0F766E]/50"
+          />
+
+          <button
+            type="button"
+            className="mt-4 inline-flex items-center rounded-md bg-[#0F766E] px-5 py-2.5 text-lg font-medium text-white hover:bg-[#0D6660]"
+          >
+            Submit
+          </button>
         </div>
       </div>
     </div>
