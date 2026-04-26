@@ -1,4 +1,4 @@
-﻿import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect, useMemo } from 'react';
 import { X, Upload } from 'lucide-react';
 import Button from './Button';
 import { useEvent } from '../../context/EventContext';
@@ -91,6 +91,12 @@ const EventModal = ({ isOpen, onClose, initialData = null, mode = 'create' }) =>
 
     const [errors, setErrors] = useState({});
 
+    const imagePreview = useMemo(() => {
+        if (!formData.image) return '';
+        if (typeof formData.image === 'string') return formData.image;
+        return URL.createObjectURL(formData.image);
+    }, [formData.image]);
+
     const handleChange = (field, value) => {
         setFormData((prev) => ({ ...prev, [field]: value }));
         setErrors((prev) => ({ ...prev, [field]: undefined }));
@@ -107,6 +113,14 @@ const EventModal = ({ isOpen, onClose, initialData = null, mode = 'create' }) =>
             };
         });
     };
+
+    useEffect(() => {
+        return () => {
+            if (imagePreview && imagePreview.startsWith('blob:')) {
+                URL.revokeObjectURL(imagePreview);
+            }
+        };
+    }, [imagePreview]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -207,11 +221,11 @@ const EventModal = ({ isOpen, onClose, initialData = null, mode = 'create' }) =>
                 if (e.target === e.currentTarget) onClose();
             }}
         >
-            <div className="flex max-h-[88vh] w-full max-w-3xl flex-col overflow-hidden rounded-2xl border border-[#DCE7E6] bg-white shadow-2xl">
+            <div className="flex max-h-[88vh] w-full max-w-2xl flex-col overflow-hidden rounded-2xl border border-[#DCE7E6] bg-white shadow-2xl">
                 {/* Sticky Header */}
                 <div className="sticky top-0 z-10 flex items-center justify-between border-b border-[#E3EBEA] bg-white px-5 py-4 sm:px-6">
                     <h2 className="text-2xl font-semibold text-[#1D1D1D]">
-                        {mode === 'edit' ? 'Edit Event' : 'Event Identity'}
+                        {mode === 'edit' ? 'Edit Event' : 'Add Event '}
                     </h2>
                     <button
                         onClick={onClose}
@@ -491,10 +505,28 @@ const EventModal = ({ isOpen, onClose, initialData = null, mode = 'create' }) =>
 
                         {/* Upload Image */}
                         <div>
-                            <label className="relative block cursor-pointer rounded-lg border-2 border-dashed border-gray-400 p-10 text-center hover:bg-gray-50">
-                                <Upload className="mx-auto mb-3 h-10 w-10 text-[#22A547]" />
-                                <p className="text-xl font-medium text-[#22A547]">Upload Image</p>
-                                <p className="mt-1 text-base text-gray-500">JPEG files accepted. Max 100MB</p>
+                            <label className="relative block h-65 cursor-pointer overflow-hidden rounded-lg border-2 border-dashed border-gray-400 p-10 text-center hover:bg-gray-50">
+                                {imagePreview ? (
+                                    <>
+                                        <img
+                                            src={imagePreview}
+                                            alt="Uploaded preview"
+                                            className="absolute inset-0 h-full w-full object-cover"
+                                        />
+                                        <div className="absolute inset-0 bg-black/30" />
+                                        <div className="relative z-10 flex h-full items-center justify-center">
+                                            <span className="rounded-md bg-white/90 px-4 py-2 text-base font-medium text-[#1D1D1D]">
+                                                Click to change image
+                                            </span>
+                                        </div>
+                                    </>
+                                ) : (
+                                    <>
+                                        <Upload className="mx-auto mb-3 h-10 w-10 text-[#22A547]" />
+                                        <p className="text-xl font-medium text-[#22A547]">Upload Image</p>
+                                        <p className="mt-1 text-base text-gray-500">JPEG files accepted. Max 100MB</p>
+                                    </>
+                                )}
                                 <input
                                     type="file"
                                     accept="image/jpeg,image/jpg,image/png"
