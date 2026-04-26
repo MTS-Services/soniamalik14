@@ -1,59 +1,99 @@
-import React, { useState } from 'react';
+import { useState } from "react";
 
-const BookingsTable = ({ data }) => {
-    const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 6;
-    const totalPages = Math.ceil(data.length / itemsPerPage);
 
-    const indexOfLastItem = currentPage * itemsPerPage;
-    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-    const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
+export default function BookingsTable({ data }) {
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 6;
+  const totalPages = Math.ceil(data.length / itemsPerPage);
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
+ 
+  return (
+    <div
+      className="w-full bg-white rounded-xl border border-gray-200 shadow-md font-sans overflow-hidden"
+    >
+      {/* Title */}
+      <div className="pt-6 px-6 pb-4">
+        <h2 className="m-0 text-2xl font-semibold text-gray-900">Bookings</h2>
+      </div>
 
-    return (
-        <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 overflow-hidden">
-            <h3 className="text-lg font-bold text-gray-900 mb-6">Bookings</h3>
-            <div className="overflow-x-auto">
-                <table className="w-full text-left">
-                    <thead className="bg-[#F8FAFB] border-b border-gray-100">
-                        <tr>
-                            <th className="px-5 py-4 text-[13px] font-semibold text-gray-600">Name</th>
-                            <th className="px-5 py-4 text-[13px] font-semibold text-gray-600">Phone Number</th>
-                            <th className="px-5 py-4 text-[13px] font-semibold text-gray-600">Email</th>
-                        </tr>
-                    </thead>
-                    <tbody className="divide-y divide-gray-50">
-                        {currentItems.map((b, i) => (
-                            <tr key={i} className="hover:bg-gray-50/50">
-                                <td className="px-5 py-4 text-[14px] text-gray-800">{b.name}</td>
-                                <td className="px-5 py-4 text-[14px] text-gray-600">{b.phone}</td>
-                                <td className="px-5 py-4 text-[14px] text-gray-600">{b.email}</td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
+      {/* Table for desktop, hidden on mobile */}
+      <div className="hidden md:block">
+        <table className="w-full border-collapse">
+          <thead>
+            <tr className="bg-[#F8F8F8]">
+              <th className="px-6 py-3 text-left text-base font-medium text-gray-500 border-t border-b border-gray-200">Name</th>
+              <th className="px-6 py-3 text-left text-base font-medium text-gray-500 border-t border-b border-gray-200">Phone Number</th>
+              <th className="px-6 py-3 text-left text-base font-medium text-gray-500 border-t border-b border-gray-200">Email</th>
+            </tr>
+          </thead>
+          <tbody>
+            {currentItems.map((b, i) => (
+              <tr key={i} className="border-b border-gray-200">
+                <td className="px-6 py-5 text-base text-gray-900 font-normal">{b.name}</td>
+                <td className="px-6 py-5 text-base text-gray-700">{b.phone}</td>
+                <td className="px-6 py-5 text-base text-gray-700 break-words">{b.email}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      {/* Cards for mobile, hidden on desktop */}
+      <div className="block md:hidden px-4 pb-2">
+        {currentItems.map((b, i) => (
+          <div
+            key={i}
+            className="border border-gray-200 rounded-lg mb-4 bg-gray-50 shadow-sm p-4"
+          >
+            <div className="font-semibold text-teal-600 text-[16px] mb-2">{b.name}</div>
+            <div className="text-base text-gray-700 mb-1">
+              <span className="font-medium">Phone:</span> {b.phone}
             </div>
-            {/* Pagination */}
-            <div className="mt-6 flex items-center justify-between border-t border-gray-50 pt-4">
-                <p className="text-[13px] text-[#0F766E] font-semibold">Showing {indexOfFirstItem + 1} to {Math.min(indexOfLastItem, data.length)} of {data.length} results</p>
-                <div className="flex gap-2">
-                    <button
-                        onClick={() => setCurrentPage(p => Math.max(p - 1, 1))}
-                        disabled={currentPage === 1}
-                        className="px-4 py-2 border border-gray-200 rounded-lg text-[13px] font-medium text-gray-600 bg-white hover:bg-gray-50 disabled:opacity-50 transition-colors"
-                    >
-                        Previous
-                    </button>
-                    <button
-                        onClick={() => setCurrentPage(p => Math.min(p + 1, totalPages))}
-                        disabled={currentPage === totalPages}
-                        className="px-4 py-2 border border-gray-200 rounded-lg text-[13px] font-medium text-gray-600 bg-white hover:bg-gray-50 disabled:opacity-50 transition-colors"
-                    >
-                        Next
-                    </button>
-                </div>
+            <div className="text-base text-gray-700">
+              <span className="font-medium">Email:</span> {b.email}
             </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Pagination */}
+      <div
+        className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 md:gap-0 px-4 md:px-6 pb-4 md:pb-8 pt-4"
+      >
+        <span
+          className="text-base text-teal-700 font-medium text-center md:text-left"
+        >
+          Showing {indexOfFirstItem + 1} to {Math.min(indexOfLastItem, data.length)} of {data.length} results
+        </span>
+        <div className="flex gap-2 justify-center">
+          <button
+            onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
+            disabled={currentPage === 1}
+            className={`px-4 py-2 text-base font-medium rounded-lg border transition-colors duration-150 ${
+              currentPage === 1
+                ? 'text-gray-400 border-gray-300 bg-white cursor-default'
+                : 'text-teal-700 border-teal-600 bg-white hover:bg-teal-50 cursor-pointer'
+            }`}
+          >
+            Previous
+          </button>
+          <button
+            onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
+            disabled={currentPage === totalPages}
+            className={`px-4 py-2 text-sm font-medium rounded-lg border transition-colors duration-150 ${
+              currentPage === totalPages
+                ? 'text-gray-400 border-gray-300 bg-white cursor-default'
+                : 'text-teal-700 border-teal-600 bg-white hover:bg-teal-50 cursor-pointer'
+            }`}
+          >
+            Next
+          </button>
         </div>
-    );
-};
+      </div>
+    </div>
+  );
+}
+ 
 
-export default BookingsTable;

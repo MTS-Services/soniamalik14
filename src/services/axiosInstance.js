@@ -46,6 +46,18 @@ axiosInstance.interceptors.request.use(
     // If sending FormData, let axios set Content-Type automatically (with boundary)
     if (config.data instanceof FormData) {
       delete config.headers['Content-Type'];
+      console.log('[axios] PUT request with FormData:', {
+        url: config.url,
+        method: config.method,
+        headers: config.headers,
+      });
+    } else if (config.method?.toUpperCase() === 'PUT') {
+      console.log('[axios] PUT request with JSON:', {
+        url: config.url,
+        method: config.method,
+        data: config.data,
+        headers: config.headers,
+      });
     }
 
     return config;

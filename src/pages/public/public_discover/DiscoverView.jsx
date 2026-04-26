@@ -76,7 +76,7 @@ const DiscoverView = () => {
     <section className="py-6 lg:py-10 bg-[#F8FAFC] ">
       <Container>
         <div className="mb-8">
-          <PageHeader title="Find your sport" />
+          <PageHeader title="Find your sport" description="Discover women's sports sessions and teams near you, with options to suit different levels and interests."/>
 
           {/* New Filter Section Added Here */}
           <div className="mt-4 bg-[#E7F1F1] p-4 rounded-lg inline-flex flex-col sm:flex-row gap-3 w-full sm:w-auto">

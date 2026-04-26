@@ -10,10 +10,10 @@ const RecruitmentAds = ({ onPost }) => {
     ];
 
     return (
-        <div className="p-2 md:p-6">
+        <div className="p-2 md:p-4">
             <div className="flex items-center justify-between mb-4">
-                <h3 className="text-xl font-semibold">Recruitment Ads</h3>
-                <button onClick={onPost} className="text-btn-primary font-medium gap-2 flex items-center"><Plus size={18} /> Post New</button>
+                <h3 className="text-xl font-semibold">Active Listings</h3>
+                <button onClick={onPost} className="text-btn-primary font-medium">+ Post New</button>
             </div>
 
             <div className="space-y-4">

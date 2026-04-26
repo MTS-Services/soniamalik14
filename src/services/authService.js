@@ -1,4 +1,4 @@
-﻿import { POST, PUT } from './httpMethods';
+﻿import { GET, POST, PUT } from './httpMethods';
 import { ENDPOINT } from './httpEndpoint';
 import { toast } from 'react-toastify';
 
@@ -63,7 +63,11 @@ export const updateUserProfile = async (userId, userData) => {
     return { success: false, message: msg };
   }
 
-  if (!userData || Object.keys(userData).length === 0) {
+  // Handle both FormData and regular objects
+  const isFormData = userData instanceof FormData;
+  const isEmpty = isFormData ? false : (!userData || Object.keys(userData).length === 0);
+
+  if (isEmpty) {
     const msg = 'No data to update';
     toast.error(msg);
     return { success: false, message: msg };
@@ -72,8 +76,16 @@ export const updateUserProfile = async (userId, userData) => {
   try {
     const res = await PUT(ENDPOINT.USER.UPDATE(userId), userData);
     const body = res?.data ?? res;
-    const updatedUser = body?.user || body?.data || body;
-    const message = body?.message || 'Profile updated successfully';
+    const isSuccess = body?.success !== undefined ? Boolean(body.success) : true;
+    const message = body?.message || (isSuccess ? 'Profile updated successfully' : 'Failed to update profile');
+
+    if (!isSuccess) {
+      toast.error(message);
+      return { success: false, message };
+    }
+
+    // Extract user from nested structure: { success, message, data: { user, token } }
+    const updatedUser = body?.data?.user || body?.user || body?.profile || body?.data?.profile || body?.data || body;
     toast.success(message);
     return { success: true, message, user: updatedUser };
   } catch (err) {
@@ -81,6 +93,32 @@ export const updateUserProfile = async (userId, userData) => {
     toast.error(message);
     // eslint-disable-next-line no-console
     console.error('[authService][updateUserProfile] error:', err);
+    return { success: false, message };
+  }
+};
+
+/**
+ * Fetch user profile by ID
+ * @param {string} userId - User ID
+ * @returns {Promise<{success: boolean, message?: string, user?: Object}>}
+ */
+export const getUserProfile = async (userId) => {
+  if (!userId) {
+    const msg = 'User ID is required';
+    toast.error(msg);
+    return { success: false, message: msg };
+  }
+
+  try {
+    const res = await GET(ENDPOINT.USER.UPDATE(userId));
+    const body = res?.data ?? res;
+    const user = body?.user || body?.data || body;
+    return { success: true, message: body?.message || 'Profile loaded successfully', user };
+  } catch (err) {
+    const message = err?.response?.data?.message || err?.message || 'Failed to load profile';
+    toast.error(message);
+    // eslint-disable-next-line no-console
+    console.error('[authService][getUserProfile] error:', err);
     return { success: false, message };
   }
 };

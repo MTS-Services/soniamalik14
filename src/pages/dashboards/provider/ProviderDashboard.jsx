@@ -1,6 +1,6 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { ChevronRight, Plus, Users, X } from 'lucide-react';
-import { useService } from '../../../context/ServiceContext';
 import EventModal from '../../../components/ui/EventModal';
 import CreateServiceModal from './addListing/components/CreateServiceModal';
 import { addListingDummyData } from './addListing/addListingDummyData';
@@ -121,9 +121,14 @@ const getListingStatus = (item, index) => {
   return index < 2 ? 'Active' : 'Pending';
 };
 
-const ProviderDashboard = () => {
-  const { providerServices, fetchProviderServices } = useService();
+const getListingApplicants = (item, index) => {
+  const fallbackApplicants = [12, 45, 3];
+  const baseCount = item?.bookings?.length ?? item?.applicants ?? 0;
+  return baseCount > 0 ? baseCount : fallbackApplicants[index] ?? 0;
+};
 
+const ProviderDashboard = () => {
+  const navigate = useNavigate();
   const [page, setPage] = useState(1);
   const [serviceModalOpen, setServiceModalOpen] = useState(false);
   const [eventModalOpen, setEventModalOpen] = useState(false);
@@ -133,16 +138,16 @@ const ProviderDashboard = () => {
 
   const perPage = 6;
   const totalPages = Math.max(1, Math.ceil(recentPlayers.length / perPage));
-  const usingDummyListings = providerServices.length === 0;
-  const listingSource = usingDummyListings ? localServices : providerServices;
+  const listingSource = localServices;
 
   const activeListings = useMemo(
     () =>
       listingSource.slice(0, 3).map((listing, index) => ({
         id: listing.id,
         title: listing.title,
-        applicants: listing.bookings?.length ?? listing.applicants ?? 0,
+        applicants: getListingApplicants(listing, index),
         status: getListingStatus(listing, index),
+        item: listing,
       })),
     [listingSource],
   );
@@ -165,10 +170,6 @@ const ProviderDashboard = () => {
     const start = (page - 1) * perPage;
     return recentPlayers.slice(start, start + perPage);
   }, [page]);
-
-  useEffect(() => {
-    fetchProviderServices();
-  }, [fetchProviderServices]);
 
   const startResult = recentPlayers.length === 0 ? 0 : (page - 1) * perPage + 1;
   const endResult = Math.min(page * perPage, recentPlayers.length);
@@ -207,26 +208,26 @@ const ProviderDashboard = () => {
   return (
     <div className="dashboardPy dashboardSpaceY">
       <div className="grid grid-cols-1 gap-6 xl:grid-cols-2">
-        <section className="rounded-xl border border-gray-100 bg-white p-4 md:p-5">
+        <section className="rounded-2xl bg-white p-4 md:p-5">
           <div className="mb-4 flex items-center justify-between">
             <h2 className="text-xl font-semibold text-[#121111]">Active Listings</h2>
             <button
               type="button"
               onClick={() => setServiceModalOpen(true)}
-              className="inline-flex items-center gap-1 text-base font-medium text-[#0F766E]"
+              className="inline-flex items-center gap-2 text-[32px] font-medium text-[#0F766E]"
             >
               <Plus className="h-4 w-4" />
-              <span>Post New</span>
+              <span className="text-base">Post New</span>
             </button>
           </div>
 
           <div className="space-y-3">
             {activeListings.map((listing) => (
-              <article key={listing.id} className="rounded-lg border border-gray-100 p-3 md:p-4">
+              <article key={listing.id} className="relative rounded-2xl border border-[#EDEDED] bg-white px-4 pt-4 pb-12 md:px-5">
                 <div className="flex items-start justify-between gap-3">
-                  <h3 className="text-sm font-medium text-[#373737] md:text-base">{listing.title}</h3>
+                <h3 className="text-base leading-tight font-medium text-[#373737] ">{listing.title}</h3>
                   <span
-                    className={`rounded px-2 py-1 text-xs ${
+                    className={`rounded-md px-2 py-1.5  text-sm ${
                       listing.status === 'Active'
                         ? 'bg-[#E7F1F1] text-[#0F766E]'
                         : 'bg-[#FFDAB9] text-[#FF7700]'
@@ -236,12 +237,20 @@ const ProviderDashboard = () => {
                   </span>
                 </div>
 
-                <p className="mt-2 inline-flex items-center gap-1 text-sm text-sidebarLink">
-                  <Users className="h-3.5 w-3.5" />
-                  <span>{listing.applicants} Applications</span>
+                <p className=" inline-flex items-center gap-2 text-base text-sidebarLink py-2 md:py-0">
+                  <Users className="h-3.4 w-3.4" />
+                  <span>{listing.applicants} Applicants</span>
                 </p>
 
-                <button type="button" className="mt-2 text-sm font-medium text-btn-primary underline">
+                <button
+                  type="button"
+                  onClick={() =>
+                    navigate(`/provider/add-listing/${listing.id}`, {
+                      state: { item: listing.item, from: 'add-listing' },
+                    })
+                  }
+                  className="absolute left-4 bottom-4 text-start text-base font-medium text-btn-primary hover:underline md:left-5"
+                >
                   View Listing
                 </button>
               </article>
@@ -258,7 +267,7 @@ const ProviderDashboard = () => {
               className="inline-flex items-center gap-1 text-sm font-medium text-btn-primary"
             >
               <Plus className="h-4 w-4" />
-              <span>Create Event</span>
+              <span className='text-base'>Create Event</span>
             </button>
           </div>
 
@@ -282,7 +291,15 @@ const ProviderDashboard = () => {
                   </div>
                 </div>
 
-                <button type="button" className="w-full rounded-lg bg-[#0F766E] px-4 py-2 text-sm font-medium text-white sm:w-auto">
+                <button
+                  type="button"
+                  onClick={() =>
+                    navigate(`/provider/event/${event.id}`, {
+                      state: { item: event, from: 'event', filter: { status: 'All', query: '' }, currentPage: 1 },
+                    })
+                  }
+                  className="w-full rounded-lg bg-[#0F766E] px-4 py-2 text-sm font-medium text-white sm:w-auto"
+                >
                   See Details
                 </button>
               </article>
@@ -383,11 +400,8 @@ const ProviderDashboard = () => {
         isOpen={serviceModalOpen}
         onClose={() => setServiceModalOpen(false)}
         mode="create"
-        localMode={usingDummyListings}
+        localMode={true}
         onLocalSubmit={handleLocalSubmit}
-        onSuccess={() => {
-          fetchProviderServices();
-        }}
       />
 
       <EventModal isOpen={eventModalOpen} onClose={() => setEventModalOpen(false)} mode="create" />

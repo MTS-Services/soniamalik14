@@ -49,7 +49,8 @@ const AboutMission = () => {
                 {/* Football field - Tall image (Height increased for md/lg, original for xl) */}
                 <div className="w-full aspect-[3/4] md:aspect-[2/3] lg:aspect-[2/3.2] xl:aspect-[2.7/3] 2xl:aspect-[3.5/3] rounded-2xl md:rounded-[24px] overflow-hidden shadow-sm">
                   <img
-                    src="https://i.ibb.co.com/HTH1JGdM/8566dfd34f75b216152413d0df32b95e7a8e5cde.png"
+                    // src="https://i.ibb.co.com/HTH1JGdM/8566dfd34f75b216152413d0df32b95e7a8e5cde.png"
+                    src="mission1.webp"
                     alt="Football field"
                     className="w-full h-full object-cover"
                   />
@@ -58,7 +59,7 @@ const AboutMission = () => {
                 {/* Woman resting - Pill shaped (Height increased for md/lg, original for xl) */}
                 <div className="w-full aspect-[2/1] md:aspect-[2/1.4] lg:aspect-[2/1.3] xl:aspect-[2.5/1] rounded-[100px] overflow-hidden shadow-sm">
                   <img
-                    src="https://i.ibb.co.com/Zz7twh3L/source-3283fe01b0e09f72295fd10412d414c4059d94ea.png"
+                    src="mission4.webp"
                     alt="Woman resting"
                     className="w-full h-full object-cover"
                   />
@@ -70,7 +71,7 @@ const AboutMission = () => {
                 {/* Three women - Pill shaped (Height increased for md/lg, original for xl) */}
                 <div className="w-full aspect-[2/1] md:aspect-[2/1.4] lg:aspect-[2/1.3] xl:aspect-[2.5/1] rounded-[100px] overflow-hidden shadow-sm">
                   <img
-                    src="https://i.ibb.co.com/Zz04brXC/Frame-2147226201.png"
+                    src="mission3.webp"
                     alt="Three women"
                     className="w-full h-full object-cover object-center"
                   />
@@ -79,7 +80,7 @@ const AboutMission = () => {
                 {/* Basketball player - Tall image (Height increased for md/lg, original for xl) */}
                 <div className="w-full aspect-[3/4] md:aspect-[2/3] lg:aspect-[2/3.2] xl:aspect-[2.7/3] 2xl:aspect-[3.5/3] rounded-2xl md:rounded-[24px] overflow-hidden shadow-sm">
                   <img
-                    src="https://i.ibb.co.com/nswVb7Lc/e186ad5a2a26d6d1df719ecff7b35da792473089.jpg"
+                    src="mission2.webp"
                     alt="Basketball player"
                     className="w-full h-full object-cover"
                   />

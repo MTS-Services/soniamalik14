@@ -236,22 +236,22 @@ const Sidebar = ({ isOpen, onClose }) => {
         className={`fixed inset-y-0 left-0 z-50 flex h-screen w-63 transform flex-col overflow-x-hidden border-r border-gray-200 bg-white transition-transform duration-300 ease-in-out lg:static lg:w-80 ${isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'} `}
       >
         {/* Close button for mobile */}
-        <button
+        {/* <button
           onClick={onClose}
-          className="absolute top-4 right-4 rounded-full p-1 hover:bg-gray-100 lg:hidden"
+          className="absolute top-4 right-4  rounded-full p-1 hover:bg-gray-100 lg:hidden"
         >
           <X className="h-5 w-5 text-gray-600" />
-        </button>
+        </button> */}
 
         {/* Logo */}
-        <div className="flex items-center px-5">
+        <div className="flex items-center px-5  border-b border-gray-300">
           <Link to="/" onClick={handleNavClick} className="inline-block" aria-label="Home">
-            <img src="/logo.svg" alt="Logo" className="h-auto w-30 pt-2.5 pb-5" />
+            <img src="/logo.png" alt="Logo" className="h-auto  w-57  py-6.5 " />
           </Link>
         </div>
 
         {/* Menu */}
-        <nav className="flex-1 overflow-x-hidden overflow-y-auto pt-2 pb-4">
+        <nav className="flex-1 overflow-x-hidden overflow-y-auto pt-4 pb-4">
           {menuItems.map((item) => (
             <div key={item.id}>
               <NavLink

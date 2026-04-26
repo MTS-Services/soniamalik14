@@ -6,6 +6,7 @@ import Pagination from '../../../../components/ui/Pagination';
 import EventModal from '../../../../components/ui/EventModal';
 import DeleteConfirmationModal from '../../../../components/ui/DeleteConfirmationModal';
 import { useEvent } from '../../../../context/EventContext';
+import { Plus } from 'lucide-react';
 
 const Event = ({ filterComponent: FilterComponent, detailsRoute = '/coach/event' }) => {
     const { events, loading, error, fetchEvents, deleteEvent } = useEvent();
@@ -84,12 +85,24 @@ const Event = ({ filterComponent: FilterComponent, detailsRoute = '/coach/event'
     return (
         <div className="dashboardPy dashboardSpaceY ">
             <div className='mb-6'>
-                <PageHeader
-                    title="Create a New Event"
-                    description="Host matches, training sessions, trials, and community events for your club."
-                    ctaText="Create Event"
-                    onCtaClick={handleCreateNew}
-                />
+             
+
+                <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+          <div>
+            <h1 className="text-2xl md:text-4xl font-semibold text-[#0B544E] mb-2">Create a New Event</h1>
+            <p className="text-gray-600">Host matches, training sessions, trials, and community events for your club.</p>
+            
+          </div>
+          <div>
+            <button
+                onClick={handleCreateNew}
+              className="inline-flex w-full items-center justify-center gap-1.5 rounded-md bg-[#0F766E] px-4 py-3 text-base font-medium whitespace-nowrap text-white transition-colors hover:bg-[#0d655d]"
+            >
+              <Plus className="h-4 w-4 shrink-0" />
+              Add New Listing
+            </button>
+          </div>
+        </div>
             </div>
 
             {FilterComponent && (

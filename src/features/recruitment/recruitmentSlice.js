@@ -9,7 +9,7 @@ export const fetchRecruitments = createAsyncThunk(
       const data = await recruitmentAPI.fetchRecruitmentsJSON();
       return data;
     } catch (err) {
-      return rejectWithValue(err.message || 'Failed to fetch recruitments');
+      return rejectWithValue(err.message);
     }
   }
 );

@@ -1,11 +1,11 @@
 ﻿import React from 'react';
 
-const CategorySidebar = ({ activeCategory = 'All Discussion', onCategoryChange }) => {
+const CategorySidebar = ({ activeCategory = 'All posts', onCategoryChange }) => {
   const categoryGroups = [
   {
       title: 'Browse',
       items: [
-        'All Discussion',
+        'All posts',
         'Stories & Experiences',
         'Questions & Advice'
       ]

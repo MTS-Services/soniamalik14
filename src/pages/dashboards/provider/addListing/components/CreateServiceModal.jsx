@@ -222,7 +222,7 @@ const   CreateServiceModal = ({
         if (e.target === e.currentTarget) onClose?.();
       }}
     >
-      <div className="bg-white rounded-lg shadow-xl w-full max-w-lg mx-4 sm:mx-6 flex flex-col max-h-[80vh]">
+      <div className="bg-white rounded-lg shadow-xl w-full max-w-2xl mx-4 sm:mx-6 flex flex-col max-h-[80vh]">
         <div className="flex items-center justify-between border-b border-gray-200 px-4 py-3 sm:px-6">
           <h2 className="text-xl font-semibold text-[#1D1D1D] sm:text-2xl">{mode === 'edit' ? 'Edit Listing' : 'Add Listing'}</h2>
           <button
@@ -236,14 +236,14 @@ const   CreateServiceModal = ({
         </div>
 
         <form onSubmit={handleSubmit} className="max-h-[calc(92vh-64px)] overflow-y-auto px-4 py-4 sm:max-h-[calc(90vh-64px)] sm:px-6 sm:py-5">
-          <p className="text-sm font-medium text-[#363636]">Service Provider Listing Form</p>
-          <p className="mb-4 text-xs text-[#6B7280]">
+          <p className="text-base font-medium text-[#363636] py-2">Service Provider Listing Form</p>
+          <p className="mb-4 text-sm text-[#6B7280] font-medium">
             Join our community of professional support services aimed at empowering women in sport and fitness.
           </p>
 
           <div className="grid gap-3 sm:grid-cols-2">
             <div>
-              <label className="mb-1 block text-sm text-[#1D1D1D]">Provider / Business Name</label>
+              <label className="mb-1 block text-base text-[#1D1D1D]">Provider / Business Name</label>
               <input
                 value={formData.providerBusinessName}
                 onChange={(e) => updateField('providerBusinessName', e.target.value)}
@@ -253,7 +253,7 @@ const   CreateServiceModal = ({
               {errors.providerBusinessName && <p className="mt-1 text-xs text-red-600">{errors.providerBusinessName}</p>}
             </div>
             <div>
-              <label className="mb-1 block text-sm text-[#1D1D1D]">Contact Name</label>
+              <label className="mb-1 block text-base text-[#1D1D1D]">Contact Name</label>
               <input
                 value={formData.contactName}
                 onChange={(e) => updateField('contactName', e.target.value)}
@@ -265,8 +265,8 @@ const   CreateServiceModal = ({
           </div>
 
           <div className="mt-3">
-            <label className="mb-1 block text-sm text-[#1D1D1D]">Logo</label>
-            <label className="relative flex h-52 cursor-pointer flex-col items-center justify-center overflow-hidden rounded-md border-2 border-dashed border-[#000000] bg-[#FAFAFA] p-6 text-center sm:h-60">
+            <label className="mb-1 block text-base text-[#1D1D1D]">Logo</label>
+            <label className="relative flex h-52 cursor-pointer flex-col items-center justify-center overflow-hidden rounded-md border-2 border-dashed border-gray-400 bg-[#FAFAFA] p-6 text-center sm:h-60">
               {previewImage ? (
                 <>
                   <img src={previewImage} alt="Uploaded preview" className="absolute inset-0 h-full w-full object-contain bg-[#f3f4f6]" />
@@ -292,10 +292,10 @@ const   CreateServiceModal = ({
           </div>
 
           <div className="mt-4">
-            <p className="mb-2 text-sm font-medium text-[#1D1D1D]">Location Details</p>
+            <p className="mb-2 text-base font-medium text-[#1D1D1D]">Location Details</p>
             <div className="grid gap-3 sm:grid-cols-2">
               <div>
-                <label className="mb-1 block text-xs text-[#1D1D1D]">Clinic Name</label>
+                <label className="mb-1 block text-sm text-[#1D1D1D]">Clinic Name</label>
                 <input
                   value={formData.clinicName}
                   onChange={(e) => updateField('clinicName', e.target.value)}
@@ -304,7 +304,7 @@ const   CreateServiceModal = ({
                 />
               </div>
               <div>
-                <label className="mb-1 block text-xs text-[#1D1D1D]">Address Line 1</label>
+                <label className="mb-1 block text-sm text-[#1D1D1D]">Address Line 1</label>
                 <input
                   value={formData.address1}
                   onChange={(e) => updateField('address1', e.target.value)}
@@ -313,7 +313,7 @@ const   CreateServiceModal = ({
                 />
               </div>
               <div>
-                <label className="mb-1 block text-xs text-[#1D1D1D]">Town/City</label>
+                <label className="mb-1 block text-sm text-[#1D1D1D]">Town/City</label>
                 <input
                   value={formData.city}
                   onChange={(e) => updateField('city', e.target.value)}
@@ -322,7 +322,7 @@ const   CreateServiceModal = ({
                 />
               </div>
               <div>
-                <label className="mb-1 block text-xs text-[#1D1D1D]">Postcode</label>
+                <label className="mb-1 block text-sm text-[#1D1D1D]">Postcode</label>
                 <input
                   value={formData.postcode}
                   onChange={(e) => updateField('postcode', e.target.value)}
@@ -334,7 +334,7 @@ const   CreateServiceModal = ({
           </div>
 
           <div className="mt-5">
-            <label className="mb-2 block text-sm font-medium text-[#1D1D1D]">Provider Type</label>
+            <label className="mb-2 block text-base font-medium text-[#1D1D1D]">Provider Type</label>
             <div className="flex flex-wrap gap-2">
               {providerTypeOptions.map((option) => (
                 <PillButton
@@ -350,10 +350,10 @@ const   CreateServiceModal = ({
           </div>
 
           <div className="mt-5">
-            <p className="mb-2 text-sm font-medium text-[#1D1D1D]">About & Services</p>
+            <p className="mb-2 text-base font-medium text-[#1D1D1D]">About & Services</p>
             <div className="space-y-3">
               <div>
-                <label className="mb-1 block text-xs text-[#1D1D1D]">Listing Headline</label>
+                <label className="mb-1 block text-sm text-[#1D1D1D]">Listing Headline</label>
                 <input
                   value={formData.listingHeadline}
                   onChange={(e) => updateField('listingHeadline', e.target.value)}
@@ -363,7 +363,7 @@ const   CreateServiceModal = ({
                 {errors.listingHeadline && <p className="mt-1 text-xs text-red-600">{errors.listingHeadline}</p>}
               </div>
               <div>
-                <label className="mb-1 block text-xs text-[#1D1D1D]">About you / your service</label>
+                <label className="mb-1 block text-sm text-[#1D1D1D]">About you / your service</label>
                 <textarea
                   value={formData.about}
                   onChange={(e) => updateField('about', e.target.value)}
@@ -409,8 +409,8 @@ const   CreateServiceModal = ({
 
           <div className="mt-5 space-y-3">
             <div>
-              <label className="mb-1 block text-sm font-medium text-[#1D1D1D]">Professional Credentials</label>
-              <label className="mb-1 block text-xs text-[#1D1D1D]">Professional Registration</label>
+              <label className="mb-1 block text-base font-medium text-[#1D1D1D]">Professional Credentials</label>
+              <label className="mb-1 block text-sm text-[#1D1D1D]">Professional Registration</label>
               <input
                 value={formData.registration}
                 onChange={(e) => updateField('registration', e.target.value)}
@@ -420,7 +420,7 @@ const   CreateServiceModal = ({
             </div>
 
             <div>
-              <label className="mb-2 block text-sm font-medium text-[#1D1D1D]">Insurance in place?</label>
+              <label className="mb-2 block text-base font-medium text-[#1D1D1D]">Insurance in place?</label>
               <div className="flex gap-2">
                 {['Yes', 'No'].map((v) => (
                   <PillButton key={v} active={formData.insuranceInPlace === v} onClick={() => updateField('insuranceInPlace', v)}>
@@ -431,7 +431,7 @@ const   CreateServiceModal = ({
             </div>
 
             <div>
-              <label className="mb-2 block text-sm font-medium text-[#1D1D1D]">How would you like participants to respond?</label>
+              <label className="mb-2 block text-base font-medium text-[#1D1D1D]">How would you like participants to respond?</label>
               <div className="flex flex-wrap gap-2">
                 {responseOptions.map((option) => (
                   <PillButton
@@ -446,7 +446,7 @@ const   CreateServiceModal = ({
             </div>
 
             <div>
-              <label className="mb-1 block text-xs text-[#1D1D1D]">Booking Link</label>
+              <label className="mb-1 block text-base text-[#1D1D1D]">Booking Link</label>
               <input
                 value={formData.bookingLink}
                 onChange={(e) => updateField('bookingLink', e.target.value)}
@@ -457,7 +457,7 @@ const   CreateServiceModal = ({
 
           </div>
 
-          <div className="mt-6 flex flex-wrap gap-2">
+          <div className="sticky bottom-0 z-10 -mx-4 mt-6 flex flex-wrap gap-2 border-t border-gray-200 bg-white px-4 py-3 sm:-mx-6 sm:px-6">
             <button
               type="button"
               onClick={() => setShowPreview(true)}

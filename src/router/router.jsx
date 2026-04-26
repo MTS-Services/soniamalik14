@@ -53,22 +53,22 @@ import ProviderServiceDetails from '../pages/dashboards/provider/service/Service
 import ServiceAnalytics from '../pages/dashboards/provider/serviceAnalytics/ServiceAnalytics.jsx';
 import ProviderThread from '../pages/dashboards/provider/thread/ProviderThread.jsx';
 import ProviderThreadDetails from '../pages/dashboards/provider/thread/ProviderThreadDetails.jsx';
-import ProviderSettings from '../pages/dashboards/provider/ProviderSettings.jsx';
+import ProviderSettings from '../pages/dashboards/provider/settings/ProviderSettings.jsx';
 import AddListing from '../pages/dashboards/provider/addListing/AddListing.jsx';
 import AddListingDetails from '../pages/dashboards/provider/addListing/AddListingDetails.jsx';
 import Insights from '../pages/dashboards/provider/insights/Insights.jsx';
 import InsightsPreview from '../pages/dashboards/provider/insights/InsightsPreview.jsx';
 import ProviderEnquiries from '../pages/dashboards/provider/enquiries/ProviderEnquiries.jsx';
 import ProviderNotifications from '../pages/dashboards/provider/notifications/ProviderNotifications.jsx';
-import MyOrders from '../pages/myOrders/MyOrders.jsx';
+
 
 // Admin Dashboard Pages
 import DashboardOverview from '../pages/dashboards/user/dashboardOverview/DashboardOverview.jsx';
-import ManageProducts from '../pages/dashboards/user/manageProducts/ManageProducts.jsx';
-import UserOrderList from '../pages/dashboards/user/order/OrderList.jsx';
-import Finances from '../pages/dashboards/user/finances/Finances.jsx';
-import Account from '../pages/dashboards/user/account/Account.jsx';
-
+import EventDetails from '../pages/dashboards/user/myEvents/EventDetails.jsx';
+import UserNotifications from '../pages/dashboards/user/notifications/Notifications.jsx';
+import MyEvents from '../pages/dashboards/user/myEvents/MyEvents.jsx';
+import UserCommunity from '../pages/dashboards/user/community/Community.jsx';
+import Saved from '../pages/dashboards/user/saved/Saved.jsx';
 
 import AdminSettings from '../pages/dashboards/admin/settings/Settings.jsx';
 
@@ -84,6 +84,7 @@ import Content from '../pages/dashboards/admin/Content/Content.jsx';
 import Revenue from '../pages/dashboards/admin/Revenue/Revenue.jsx';
 import Analytics from '../pages/dashboards/admin/Analytics/Analytics.jsx';
 import Notifications from '../pages/dashboards/coach/Notifications/Notifications.jsx';
+import AccountDetails from '../pages/dashboards/user/account/AccountDetails.jsx';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -112,7 +113,7 @@ const router = createBrowserRouter(
         {/* <Route path="marketplace/:id" element={<MarketplaceDetails />} /> */}
         {/* <Route path="checkout" element={<Checkout />} />
         <Route path="order-confirmed" element={<OrderConfirmed />} /> */}
-        <Route path="my-orders" element={<MyOrders />} />
+        {/* <Route path="my-orders" element={<MyOrders />} /> */}
         <Route path="services" element={<ServiceView />} />
         <Route path="services/:id" element={<ServiceDetails />} />
         <Route path="news" element={<NewsView />} />
@@ -124,10 +125,12 @@ const router = createBrowserRouter(
       {/* Public Dashboard (no landing header) */}
       <Route path="/dashboard" element={<DashboardLayout />}>
         <Route index element={<DashboardOverview />} />
-        <Route path="/dashboard/product" element={<ManageProducts />} />
-        <Route path="/dashboard/orders" element={<UserOrderList />} />
-        <Route path="/dashboard/finances" element={<Finances />} />
-        <Route path="/dashboard/account" element={<Account />} />
+        <Route path="/dashboard/notifications" element={<UserNotifications />} />
+        <Route path="/dashboard/my-events" element={<MyEvents />} />
+        <Route path="/dashboard/my-events/:id" element={<EventDetails />} />
+        <Route path="/dashboard/community" element={<UserCommunity />} />
+        <Route path="/dashboard/saved" element={<Saved />} />
+        <Route path="/dashboard/account" element={<AccountDetails />} />
       </Route>
 
       {/* Admin Dashboard - Protected */}

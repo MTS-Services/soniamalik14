@@ -3,7 +3,6 @@ import CallToAction from '../../../../components/ui/CallToAction';
 
 const JoinCta = () => {
     const handleJoinClick = () => {
-        // Add your join logic here (e.g., navigate to signup, open modal, etc.)
         console.log('Join ESSA Hub clicked');
     };
 

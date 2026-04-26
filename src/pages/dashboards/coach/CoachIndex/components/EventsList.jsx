@@ -3,7 +3,7 @@ import Button from '../../../../../components/ui/Button';
 
 const EventsList = ({ onCreateEvent }) => {
     return (
-        <div className= "p-2 md:p-6">
+        <div className= "p-2 md:p-2">
             <div className="flex items-center justify-between mb-4">
                 <h3 className="text-xl font-semibold">Your Events</h3>
                 <button onClick={onCreateEvent} className="text-btn-primary font-medium">+ Create Event</button>

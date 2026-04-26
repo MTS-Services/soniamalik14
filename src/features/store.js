@@ -1,4 +1,5 @@
 ﻿import { configureStore } from '@reduxjs/toolkit';
+import authReducer from './auth/authSlice';
 import productsReducer from '../features/products/productsSlice';
 import eventsReducer from '../features/events/eventsSlice';
 import recruitmentReducer from '../features/recruitment/recruitmentSlice';
@@ -7,6 +8,7 @@ import newsReducer from '../features/news/newsSlice';
 
 const store = configureStore({
   reducer: {
+    auth: authReducer,
     products: productsReducer, // <- key must match useSelector
     events: eventsReducer,
     recruitment: recruitmentReducer,

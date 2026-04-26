@@ -1,15 +1,13 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Edit3, Trash2, Plus, ChevronLeft, ChevronRight } from 'lucide-react';
 import Pagination from '../../../../components/ui/Pagination';
 import DeleteConfirmationModal from '../../../../components/ui/DeleteConfirmationModal';
-import { useService } from '../../../../context/ServiceContext';
 import CreateServiceModal from './components/CreateServiceModal';
 import { addListingDummyData } from './addListingDummyData';
 
 const AddListing = () => {
   const navigate = useNavigate();
-  const { providerServices, loading, fetchProviderServices, deleteService } = useService();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalMode, setModalMode] = useState('create');
@@ -18,8 +16,7 @@ const AddListing = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [localServices, setLocalServices] = useState(addListingDummyData);
 
-  const usingDummy = providerServices.length === 0;
-  const listingSource = usingDummy ? localServices : providerServices;
+  const listingSource = localServices;
 
   const itemsPerPage = 6;
   const totalPages = Math.max(1, Math.ceil(listingSource.length / itemsPerPage));
@@ -29,10 +26,6 @@ const AddListing = () => {
     const startIndex = (safeCurrentPage - 1) * itemsPerPage;
     return listingSource.slice(startIndex, startIndex + itemsPerPage);
   }, [listingSource, safeCurrentPage]);
-
-  useEffect(() => {
-    fetchProviderServices();
-  }, [fetchProviderServices]);
 
   const openCreateModal = () => {
     setModalMode('create');
@@ -48,11 +41,7 @@ const AddListing = () => {
 
   const handleDeleteConfirm = async () => {
     if (!deleteItem) return;
-    if (usingDummy) {
-      setLocalServices((prev) => prev.filter((item) => item.id !== deleteItem.id));
-    } else {
-      await deleteService(deleteItem.id);
-    }
+    setLocalServices((prev) => prev.filter((item) => item.id !== deleteItem.id));
     setDeleteItem(null);
   };
 
@@ -107,11 +96,7 @@ const AddListing = () => {
           </button>
         </div>
 
-        {loading && listingSource.length === 0 ? (
-          <div className="rounded-lg border border-gray-200 bg-white px-4 py-8 text-center text-gray-500">
-            Loading listings...
-          </div>
-        ) : listingSource.length === 0 ? (
+        {listingSource.length === 0 ? (
           <div className="rounded-lg border border-gray-200 bg-white px-4 py-10 text-center">
             <p className="text-base text-gray-600">No listing available yet. Create your first service listing.</p>
             <button
@@ -124,7 +109,7 @@ const AddListing = () => {
           </div>
         ) : (
           <>
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
               {paginatedServices.map((service) => (
                 <article
                   key={service.id}
@@ -214,11 +199,8 @@ const AddListing = () => {
         onClose={() => setIsModalOpen(false)}
         mode={modalMode}
         initialData={editingService}
-        localMode={usingDummy}
+        localMode={true}
         onLocalSubmit={handleLocalSubmit}
-        onSuccess={() => {
-          fetchProviderServices();
-        }}
       />
 
       <DeleteConfirmationModal
