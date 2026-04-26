@@ -38,7 +38,7 @@ const EnquiriesTable = ({ data }) => {
               <th className="border-t border-b border-gray-200 px-6 py-3 text-left text-base font-medium text-gray-500">
                 Date
               </th>
-              <th className="border-t border-b border-gray-200 px-6 py-3 text-left text-base font-medium text-gray-500 uppercase">
+              <th className="border-t border-b border-gray-200 px-6 py-3  text-base text-center font-medium text-gray-500 uppercase">
                 Actions
               </th>
             </tr>
@@ -57,7 +57,7 @@ const EnquiriesTable = ({ data }) => {
                   {e.msg}
                 </td>
                 <td className="px-6 py-5 text-base whitespace-nowrap text-gray-700">{e.date}</td>
-                <td className="px-6 py-5 text-base text-gray-700">
+                <td className="px-6 py-5 text-base text-gray-700 flex justify-center">
                   <button
                     className="flex items-center justify-center rounded-full p-2 transition-colors hover:bg-gray-100"
                     onClick={() => setSelected(e)}
