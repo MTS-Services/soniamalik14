@@ -77,7 +77,7 @@ const AddListing = () => {
 
   return (
     <div className="dashboardPy">
-      <div className="rounded-lg bg-[#F8FAFC] p-4 md:p-6">
+      <div className="rounded-lg bg-[#F8FAFC] ">
         <div className="mb-5 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <h1 className="text-3xl font-semibold text-[#1D1D1D]">Manage Your Services</h1>
@@ -109,7 +109,7 @@ const AddListing = () => {
           </div>
         ) : (
           <>
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4 ">
               {paginatedServices.map((service) => (
                 <article
                   key={service.id}
@@ -118,9 +118,9 @@ const AddListing = () => {
                       state: { item: service, from: 'add-listing' },
                     })
                   }
-                  className="flex h-full min-h-88.75 flex-col rounded-lg border border-[#DDE8E8] bg-[#E7F1F180] p-3 shadow-sm"
+                  className="flex h-full min-h-88.75 flex-col rounded-lg border border-[#DDE8E8] bg-[#E7F1F180] p-3 shadow-sm cursor-pointer"
                 >
-                  <div className="relative mb-3 h-40 overflow-hidden rounded-md bg-[#D9D9D9]">
+                  <div className="relative mb-3 h-40 overflow-hidden rounded-md bg-[#D9D9D9] ">
                     {service.image ? (
                       <img src={service.image} alt={service.title} className="h-full w-full object-cover" />
                     ) : null}

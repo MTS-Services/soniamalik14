@@ -316,12 +316,12 @@ const ProviderDashboard = () => {
             <table className="min-w-245 w-full">
               <thead>
                 <tr className="bg-[#E7F1F1]">
-                  <th className="px-4 py-3 text-left text-sm font-medium text-[#121111]">Player Name</th>
-                  <th className="px-4 py-3 text-left text-sm font-medium text-[#121111]">Phone Number</th>
-                  <th className="px-4 py-3 text-left text-sm font-medium text-[#121111]">Email</th>
-                  <th className="px-4 py-3 text-left text-sm font-medium text-[#121111]">Message</th>
-                  <th className="px-4 py-3 text-left text-sm font-medium text-[#121111]">Date</th>
-                  <th className="px-4 py-3 text-left text-sm font-medium text-[#121111]">ACTIONS</th>
+                  <th className="px-4 py-3 text-left text-base font-medium text-[#121111]">Player Name</th>
+                  <th className="px-4 py-3 text-left text-base font-medium text-[#121111]">Phone Number</th>
+                  <th className="px-4 py-3 text-left text-base font-medium text-[#121111]">Email</th>
+                  <th className="px-4 py-3 text-left text-base font-medium text-[#121111]">Message</th>
+                  <th className="px-4 py-3 text-left text-base font-medium text-[#121111]">Date</th>
+                  <th className="px-4 py-3 text-left text-base font-medium text-[#121111]">ACTIONS</th>
                 </tr>
               </thead>
               <tbody>
@@ -330,7 +330,7 @@ const ProviderDashboard = () => {
                     <td className="px-4 py-4 text-sm font-medium text-[#373737]">{player.name}</td>
                     <td className="px-4 py-4 text-sm text-[#373737]">{player.phone}</td>
                     <td className="break-all px-4 py-4 text-sm text-[#373737]">{player.email}</td>
-                    <td className="px-4 py-4 text-sm text-[#373737]">{player.message}</td>
+                    <td className="px-4 py-4 text-base text-[#373737]">{player.message}</td>
                     <td className="whitespace-nowrap px-4 py-4 text-sm text-[#373737]">{player.date}</td>
                     <td className="px-4 py-4">
                       <button

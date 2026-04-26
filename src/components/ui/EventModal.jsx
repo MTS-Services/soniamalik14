@@ -21,7 +21,10 @@ const EventModal = ({ isOpen, onClose, initialData = null, mode = 'create' }) =>
         googleMapLinks: '',
         minAge: '18',
         maxParticipant: '20',
-        skillLevel: 'Beginner',
+        skillLevel: 'New To Sport',
+        costType: 'Free',
+        price: '',
+        responseMethods: ['Add booking link'],
         organizerName: '',
         organizerPhone: '',
         organizerEmail: '',
@@ -46,7 +49,12 @@ const EventModal = ({ isOpen, onClose, initialData = null, mode = 'create' }) =>
                 googleMapLinks: initialData.googleMapLink || initialData.googleMapLinks || '',
                 minAge: initialData.minAge || '18',
                 maxParticipant: initialData.maxParticipants || initialData.maxParticipant || '20',
-                skillLevel: initialData.skillLevel ? (typeof initialData.skillLevel === 'string' ? initialData.skillLevel.charAt(0).toUpperCase() + initialData.skillLevel.slice(1).toLowerCase() : 'Beginner') : 'Beginner',
+                skillLevel: initialData.skillLevel || 'New To Sport',
+                costType: initialData.costType || 'Free',
+                price: initialData.price || '',
+                responseMethods: Array.isArray(initialData.responseMethods)
+                    ? initialData.responseMethods
+                    : ['Add booking link'],
                 organizerName: initialData.organizerName || '',
                 organizerPhone: initialData.organizerPhone || '',
                 organizerEmail: initialData.organizerEmail || '',
@@ -69,7 +77,10 @@ const EventModal = ({ isOpen, onClose, initialData = null, mode = 'create' }) =>
                 googleMapLinks: '',
                 minAge: '18',
                 maxParticipant: '20',
-                skillLevel: 'Beginner',
+                skillLevel: 'New To Sport',
+                costType: 'Free',
+                price: '',
+                responseMethods: ['Add booking link'],
                 organizerName: '',
                 organizerPhone: '',
                 organizerEmail: '',
@@ -85,21 +96,54 @@ const EventModal = ({ isOpen, onClose, initialData = null, mode = 'create' }) =>
         setErrors((prev) => ({ ...prev, [field]: undefined }));
     };
 
+    const toggleResponseMethod = (method) => {
+        setFormData((prev) => {
+            const hasMethod = prev.responseMethods.includes(method);
+            return {
+                ...prev,
+                responseMethods: hasMethod
+                    ? prev.responseMethods.filter((item) => item !== method)
+                    : [...prev.responseMethods, method],
+            };
+        });
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         // Validate required fields (image is optional)
-        const newErrors = {};
-        Object.entries(formData).forEach(([key, val]) => {
-            // Skip image validation - it's optional
-            if (key === 'image') return;
+        const requiredFields = [
+            'eventTitle',
+            'sportType',
+            'eventType',
+            'description',
+            'startDate',
+            'endDate',
+            'startTime',
+            'endTime',
+            'venueName',
+            'city',
+            'fullAddress',
+            'googleMapLinks',
+            'skillLevel',
+            'costType',
+        ];
 
-            if (val === null) {
-                newErrors[key] = 'This field is required';
-            } else if (typeof val === 'string' && val.trim() === '') {
+        const newErrors = {};
+        requiredFields.forEach((key) => {
+            const val = formData[key];
+            if (val === null || (typeof val === 'string' && val.trim() === '')) {
                 newErrors[key] = 'This field is required';
             }
         });
+
+        if (formData.costType === 'Paid' && String(formData.price || '').trim() === '') {
+            newErrors.price = 'Price is required for paid events';
+        }
+
+        if (!Array.isArray(formData.responseMethods) || formData.responseMethods.length === 0) {
+            newErrors.responseMethods = 'Select at least one response option';
+        }
 
         if (Object.keys(newErrors).length > 0) {
             setErrors(newErrors);
@@ -123,12 +167,15 @@ const EventModal = ({ isOpen, onClose, initialData = null, mode = 'create' }) =>
         payload.append('city', formData.city);
         payload.append('fullAddress', formData.fullAddress);
         payload.append('googleMapLink', formData.googleMapLinks);
-        payload.append('minAge', formData.minAge);
-        payload.append('maxParticipants', formData.maxParticipant);
-        payload.append('skillLevel', formData.skillLevel.toUpperCase());
-        payload.append('organizerName', formData.organizerName);
-        payload.append('organizerPhone', formData.organizerPhone);
-        payload.append('organizerEmail', formData.organizerEmail);
+        payload.append('minAge', formData.minAge || '18');
+        payload.append('maxParticipants', formData.maxParticipant || '20');
+        payload.append('skillLevel', formData.skillLevel);
+        payload.append('costType', formData.costType);
+        payload.append('price', formData.costType === 'Paid' ? formData.price : '0');
+        payload.append('responseMethods', formData.responseMethods.join(', '));
+        payload.append('organizerName', formData.organizerName || 'N/A');
+        payload.append('organizerPhone', formData.organizerPhone || 'N/A');
+        payload.append('organizerEmail', formData.organizerEmail || 'no-reply@example.com');
 
         // Debug: Log FormData entries
         console.log('Submitting event with data:', Object.fromEntries(payload.entries()));
@@ -155,20 +202,20 @@ const EventModal = ({ isOpen, onClose, initialData = null, mode = 'create' }) =>
 
     return (
         <div
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 bg-opacity-50"
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/55 p-3 sm:p-4"
             onMouseDown={(e) => {
                 if (e.target === e.currentTarget) onClose();
             }}
         >
-            <div className="bg-white rounded-lg shadow-xl w-full max-w-lg mx-4 sm:mx-6 flex flex-col max-h-[80vh]">
+            <div className="flex max-h-[88vh] w-full max-w-3xl flex-col overflow-hidden rounded-2xl border border-[#DCE7E6] bg-white shadow-2xl">
                 {/* Sticky Header */}
-                <div className="flex items-center justify-between p-4 border-b border-gray-200 sticky top-0 bg-white rounded-t-lg z-10">
-                    <h2 className="text-xl font-semibold text-gray-900">
+                <div className="sticky top-0 z-10 flex items-center justify-between border-b border-[#E3EBEA] bg-white px-5 py-4 sm:px-6">
+                    <h2 className="text-2xl font-semibold text-[#1D1D1D]">
                         {mode === 'edit' ? 'Edit Event' : 'Event Identity'}
                     </h2>
                     <button
                         onClick={onClose}
-                        className="text-[#000000] bg-[#D9D9D9] rounded-full p-1 transition-colors"
+                        className="rounded-full bg-[#D9D9D9] p-1 text-[#000000] transition-colors hover:bg-[#CFCFCF]"
                         aria-label="Close"
                     >
                         <X className="w-6 h-6" />
@@ -176,8 +223,8 @@ const EventModal = ({ isOpen, onClose, initialData = null, mode = 'create' }) =>
                 </div>
 
                 {/* Scrollable Content */}
-                <div className="overflow-y-auto flex-1 p-4 sm:p-6">
-                    <form id="event-form" onSubmit={handleSubmit} className="space-y-4">
+                <div className="flex-1 overflow-y-auto bg-[#F8FAFB] p-4 sm:p-6">
+                    <form id="event-form" onSubmit={handleSubmit} className="space-y-5">
                         {/* Event Title & Sport Type */}
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div>
@@ -321,7 +368,7 @@ const EventModal = ({ isOpen, onClose, initialData = null, mode = 'create' }) =>
 
                         {/* Full Address */}
                         <div>
-                            <label className="block text-base font-medium text-gray-700 mb-1">Full Address</label>
+                            <label className="block text-base font-medium text-gray-700 mb-1"> Location</label>
                             <input
                                 type="text"
                                 placeholder="enter full address"
@@ -345,44 +392,18 @@ const EventModal = ({ isOpen, onClose, initialData = null, mode = 'create' }) =>
                             {errors.googleMapLinks && <p className="text-base text-red-600 mt-1">{errors.googleMapLinks}</p>}
                         </div>
 
-                        {/* Min Age & Maximum Participant */}
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            <div>
-                                <label className="block text-base font-medium text-gray-700 mb-1">Min Age</label>
-                                <input
-                                    type="text"
-                                    placeholder="18"
-                                    value={formData.minAge}
-                                    onChange={(e) => handleChange('minAge', e.target.value)}
-                                    className="w-full px-3 py-2 border border-gray-300 rounded-md text-base focus:outline-none focus:ring-2 focus:ring-btn-primary"
-                                />
-                                {errors.minAge && <p className="text-base text-red-600 mt-1">{errors.minAge}</p>}
-                            </div>
-                            <div>
-                                <label className="block text-base font-medium text-gray-700 mb-1">Maximum Participant</label>
-                                <input
-                                    type="text"
-                                    placeholder="20"
-                                    value={formData.maxParticipant}
-                                    onChange={(e) => handleChange('maxParticipant', e.target.value)}
-                                    className="w-full px-3 py-2 border border-gray-300 rounded-md text-base focus:outline-none focus:ring-2 focus:ring-btn-primary"
-                                />
-                                {errors.maxParticipant && <p className="text-base text-red-600 mt-1">{errors.maxParticipant}</p>}
-                            </div>
-                        </div>
-
-                        {/* Skill Level */}
+                        {/* Who it's suitable for */}
                         <div>
-                            <label className="block text-base font-medium text-gray-700 mb-2">Skill Level</label>
-                            <div className="flex gap-2 flex-wrap">
-                                {['Beginner', 'Intermediate', 'Advanced'].map((level) => (
+                            <label className="block text-base font-medium text-gray-700 mb-2">Who it&apos;s suitable for</label>
+                            <div className="flex flex-wrap gap-2">
+                                {['New To Sport', 'Open to all levels', 'Regular players', 'Coaches', 'Referees'].map((level) => (
                                     <button
                                         key={level}
                                         type="button"
                                         onClick={() => handleChange('skillLevel', level)}
-                                        className={`px-4 py-2 rounded-md text-base font-medium transition-colors flex-1 sm:flex-none text-center min-w-[110px] ${formData.skillLevel === level
-                                            ? 'bg-btn-primary text-white'
-                                            : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                                        className={`rounded-sm px-4 py-2 text-base font-medium transition-colors ${formData.skillLevel === level
+                                            ? 'bg-[#0F766E] text-white'
+                                            : 'bg-[#A7C8C7] text-[#1F2B2A] hover:bg-[#97BCBA]'
                                             }`}
                                     >
                                         {level}
@@ -392,82 +413,120 @@ const EventModal = ({ isOpen, onClose, initialData = null, mode = 'create' }) =>
                             {errors.skillLevel && <p className="text-base text-red-600 mt-1">{errors.skillLevel}</p>}
                         </div>
 
-                        {/* Organizer Name & Phone */}
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        {/* Cost and Price */}
+                        <div className="grid grid-cols-1 sm:grid-cols-[auto_1fr] gap-4 items-end">
                             <div>
-                                <label className="block text-base font-medium text-gray-700 mb-1">Organizer Name</label>
-                                <input
-                                    type="text"
-                                    placeholder="name"
-                                    value={formData.organizerName}
-                                    onChange={(e) => handleChange('organizerName', e.target.value)}
-                                    className="w-full px-3 py-2 border border-gray-300 rounded-md text-base focus:outline-none focus:ring-2 focus:ring-btn-primary"
-                                />
-                                {errors.organizerName && <p className="text-base text-red-600 mt-1">{errors.organizerName}</p>}
+                                <label className="block text-base font-medium text-gray-700 mb-2">Cost</label>
+                                <div className="flex gap-2">
+                                    {['Free', 'Paid'].map((type) => (
+                                        <button
+                                            key={type}
+                                            type="button"
+                                            onClick={() => handleChange('costType', type)}
+                                            className={`rounded-sm px-5 py-2 text-base font-medium transition-colors ${formData.costType === type
+                                                ? 'bg-[#0F766E] text-white'
+                                                : 'bg-[#A7C8C7] text-[#1F2B2A] hover:bg-[#97BCBA]'
+                                                }`}
+                                        >
+                                            {type}
+                                        </button>
+                                    ))}
+                                </div>
                             </div>
                             <div>
-                                <label className="block text-base font-medium text-gray-700 mb-1">Organizer Phone Number</label>
+                                <label className="block text-base font-medium text-gray-700 mb-2">Price</label>
                                 <input
                                     type="text"
-                                    placeholder="Phone number"
-                                    value={formData.organizerPhone}
-                                    onChange={(e) => handleChange('organizerPhone', e.target.value)}
-                                    className="w-full px-3 py-2 border border-gray-300 rounded-md text-base focus:outline-none focus:ring-2 focus:ring-btn-primary"
+                                    placeholder="Price"
+                                    value={formData.price}
+                                    onChange={(e) => handleChange('price', e.target.value)}
+                                    disabled={formData.costType !== 'Paid'}
+                                    className="w-full rounded-md border border-gray-300 px-3 py-2 text-base focus:outline-none focus:ring-2 focus:ring-btn-primary disabled:cursor-not-allowed disabled:bg-gray-100"
                                 />
-                                {errors.organizerPhone && <p className="text-base text-red-600 mt-1">{errors.organizerPhone}</p>}
+                                {errors.price && <p className="text-base text-red-600 mt-1">{errors.price}</p>}
                             </div>
                         </div>
 
-                        {/* Organizer Email */}
+                        {/* Response methods */}
                         <div>
-                            <label className="block text-base font-medium text-gray-700 mb-1">Organizer Email</label>
+                            <label className="block text-base font-medium text-gray-700 mb-2">
+                                How would you like participants to respond? (one or more can be selected)
+                            </label>
+                            <div className="flex flex-wrap gap-2">
+                                {['Add booking link', 'Allow users to register interest', 'Allow users to ask a question'].map((method) => {
+                                    const selected = formData.responseMethods.includes(method);
+                                    return (
+                                        <button
+                                            key={method}
+                                            type="button"
+                                            onClick={() => toggleResponseMethod(method)}
+                                            className={`inline-flex items-center gap-2 rounded-full px-4 py-2 text-base font-medium transition-colors ${selected
+                                                ? 'bg-[#A7C8C7] text-[#123634]'
+                                                : 'bg-[#D6EBEA] text-[#2A4D4B] hover:bg-[#C2E0DE]'
+                                                }`}
+                                        >
+                                            <span className="inline-flex h-4 w-4 items-center justify-center rounded-sm border border-current text-xs">
+                                                {selected ? '✓' : ''}
+                                            </span>
+                                            {method}
+                                        </button>
+                                    );
+                                })}
+                            </div>
+                            {errors.responseMethods && <p className="text-base text-red-600 mt-1">{errors.responseMethods}</p>}
+                        </div>
+
+                        {/* Booking Link */}
+                        <div>
+                            <label className="block text-base font-medium text-gray-700 mb-2">Booking Link</label>
                             <input
-                                type="email"
-                                placeholder="enter your email"
-                                value={formData.organizerEmail}
-                                onChange={(e) => handleChange('organizerEmail', e.target.value)}
-                                className="w-full px-3 py-2 border border-gray-300 rounded-md text-base focus:outline-none focus:ring-2 focus:ring-btn-primary"
+                                type="text"
+                                placeholder="enter booking link"
+                                value={formData.googleMapLinks}
+                                onChange={(e) => handleChange('googleMapLinks', e.target.value)}
+                                className="w-full rounded-md border border-gray-300 px-3 py-2 text-base focus:outline-none focus:ring-2 focus:ring-btn-primary"
                             />
-                            {errors.organizerEmail && <p className="text-base text-red-600 mt-1">{errors.organizerEmail}</p>}
+                            {errors.googleMapLinks && <p className="text-base text-red-600 mt-1">{errors.googleMapLinks}</p>}
                         </div>
 
                         {/* Upload Image */}
                         <div>
-                            <label className="block text-base font-medium text-gray-700 mb-2">Upload Image</label>
-                            <div className="border-2 border-dashed border-gray-300 rounded-md p-8 text-center">
-                                <Upload className="w-8 h-8 text-green-600 mx-auto mb-2" />
-                                <p className="text-green-600 font-medium text-base mb-1">Upload Image</p>
-                                <p className="text-gray-400 text-xs">JPEG files accepted. Max 100MB</p>
+                            <label className="relative block cursor-pointer rounded-lg border-2 border-dashed border-gray-400 p-10 text-center hover:bg-gray-50">
+                                <Upload className="mx-auto mb-3 h-10 w-10 text-[#22A547]" />
+                                <p className="text-xl font-medium text-[#22A547]">Upload Image</p>
+                                <p className="mt-1 text-base text-gray-500">JPEG files accepted. Max 100MB</p>
                                 <input
                                     type="file"
-                                    accept="image/jpeg,image/jpg"
-                                    onChange={(e) => handleChange('image', e.target.files[0])}
+                                    accept="image/jpeg,image/jpg,image/png"
+                                    onChange={(e) => handleChange('image', e.target.files?.[0] || null)}
                                     className="hidden"
-                                    id="image-upload"
                                 />
-                                <label
-                                    htmlFor="image-upload"
-                                    className="mt-3 inline-block cursor-pointer px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-md text-base text-gray-700"
-                                >
-                                    Choose File
-                                </label>
-                                {errors.image && <p className="text-base text-red-600 mt-2">{errors.image}</p>}
-                            </div>
+                            </label>
+                            {errors.image && <p className="text-base text-red-600 mt-2">{errors.image}</p>}
                         </div>
                     </form>
                 </div>
 
                 {/* Sticky Footer */}
-                <div className="p-4 border-t border-gray-200 sticky bottom-0 bg-white rounded-b-lg z-10">
-                    <Button
-                        type="submit"
-                        form="event-form"
-                        variant="primary"
-                        className="w-full rounded-lg py-3"
-                        disabled={createLoading || updateLoading}
-                    >
-                        {createLoading || updateLoading ? 'Submitting...' : mode === 'edit' ? 'Update Event' : 'Submit For Approval'}
-                    </Button>
+                <div className="sticky bottom-0 z-10 border-t border-[#E3EBEA] bg-white px-5 py-4 sm:px-6">
+                    <div className="flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
+                        <button
+                            type="button"
+                            onClick={onClose}
+                            className="rounded-lg border border-[#0F766E] px-5 py-2.5 text-sm font-medium text-[#0F766E] hover:bg-[#F0FAF9]"
+                        >
+                            Cancel
+                        </button>
+                        <Button
+                            type="submit"
+                            form="event-form"
+                            variant="primary"
+                            className="rounded-lg px-6 py-2.5 text-sm font-semibold"
+                            disabled={createLoading || updateLoading}
+                        >
+                            {createLoading || updateLoading ? 'Submitting...' : mode === 'edit' ? 'Update Event' : 'Submit For Approval'}
+                        </Button>
+                    </div>
                 </div>
             </div>
         </div>

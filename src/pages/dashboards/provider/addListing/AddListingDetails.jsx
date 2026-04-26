@@ -16,11 +16,11 @@ import TablePagination from '../../../../components/ui/TablePagination';
 import { addListingDummyData } from './addListingDummyData';
 
 const ServiceOverviewItem = ({ icon, label, value }) => (
-  <div className="flex items-start gap-3 rounded-lg border border-[#E5EBEC] bg-[#F8FAFB] px-6 py-4">
-    <div className="mt-0.5 rounded-full bg-[#E7F1F1] p-2 text-[#0F766E]">{icon}</div>
+  <div className="rounded-xl border border-[#E4ECEC] bg-white p-4 shadow-[0_4px_14px_rgba(15,118,110,0.08)]">
+    <div className="mb-3 inline-flex rounded-full bg-[#E7F1F1] p-2 text-[#0F766E]">{icon}</div>
     <div>
-      <p className="text-base font-medium text-[#1D1D1D]">{label}</p>
-      <p className="text-base text-[#5B6B69]">{value}</p>
+      <p className="text-sm font-semibold tracking-[0.01em] text-[#1D1D1D]">{label}</p>
+      <p className="mt-1 text-sm leading-6 text-[#5B6B69]">{value}</p>
     </div>
   </div>
 );
@@ -46,6 +46,17 @@ const AddListingDetails = () => {
     insuranceInPlace: 'Yes',
   };
 
+  const fullAddress = [serviceOverview.clinicName, serviceOverview.addressLine1, serviceOverview.townCity, serviceOverview.postcode]
+    .filter(Boolean)
+    .join(', ');
+
+  const providerInitials = String(item?.providerName || 'RW')
+    .split(' ')
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((part) => part[0]?.toUpperCase() || '')
+    .join('');
+
   const bookings = item?.bookings || addListingDummyData[0].bookings;
   const enquiries = item?.enquiries || addListingDummyData[0].enquiries;
 
@@ -68,8 +79,8 @@ const AddListingDetails = () => {
   }, [enquiries, enquiryPage]);
 
   return (
-    <div className="dashboardPy">
-      <div className="rounded-lg bg-[#F1F5F7] p-4 md:p-5">
+    <div className="dashboardPy min-h-screen bg-[#EEF2F3]">
+      <div className="rounded-lg">
         <button
           type="button"
           onClick={() => navigate('/provider/add-listing')}
@@ -79,46 +90,46 @@ const AddListingDetails = () => {
           Back
         </button>
 
-        <div className="grid grid-cols-1 gap-4 lg:grid-cols-[1.45fr_1fr]">
-          <section className="rounded-lg  p-4">
-            <div className="mb-4 flex items-start gap-3">
-              <div className="h-18 w-18 overflow-hidden rounded-full bg-[#D9D9D9]">
-                {item?.image ? <img src={item.image} alt={item.title} className="h-full w-full object-cover" /> : null}
+        <div className="grid grid-cols-1 gap-6 xl:grid-cols-[minmax(0,1fr)_minmax(380px,460px)]">
+          <section className="space-y-6">
+            <article className="rounded-2xl ">
+              <div className="flex items-center gap-3">
+                <div className="inline-flex h-20 w-20 shrink-0 items-center justify-center rounded-full bg-[#111827] text-sm font-semibold text-white shadow-sm">
+                  {providerInitials || 'RW'}
+                </div>
+
+                <div>
+                  <h1 className="text-3xl leading-tight font-semibold text-subtitle md:text-4xl">
+                    {item?.providerName || 'Richmond Wellness'}
+                  </h1>
+                  <p className="mt-0.5 text-sm text-[#4B5563]">
+                    Coach: <span className="font-semibold text-[#1D1D1D] text-base">{item?.organizer || 'John Doe'}</span>
+                  </p>
+                </div>
               </div>
-              <div>
-                <h1 className="text-3xl font-semibold leading-tight text-[#1D1D1D]">
-                  {item?.providerName || 'Women\'s Sports Physio'}
-                </h1>
-                <p className="mt-0.5 text-sm text-[#6B7280]">
-                  Contact: <span className="font-medium text-[#1D1D1D]">{item?.organizer || 'John Doe'}</span>
+
+              <div className="mt-4 rounded-xl bg-[#FFFFFF] p-5">
+                <h2 className="mb-2 text-xl font-semibold text-[#1D1D1D]">About This Service</h2>
+                <p className="text-base leading-relaxed text-[#4B5563]">
+                  {item?.about ||
+                    'This physiotherapy service is designed specifically for women athletes who play sports like cricket, football, futsal and other physical games. It helps prevent injuries, improve performance, and support recovery so players can stay fit and confident.'}
                 </p>
               </div>
-            </div>
+            </article>
 
-            <div className='bg-[#FFFFFF] p-6 rounded-2xl'>
-              <h2 className="mb-1 text-xl font-semibold text-[#1D1D1D]">About This Service</h2>
-              <p className="text-base leading-relaxed text-[#4B5563]">
-                {item?.about ||
-                  'This physiotherapy service is designed specifically for women athletes who play sports like cricket, football, futsal and other physical games. It helps prevent injuries, improve performance, and support recovery so players can stay fit and confident.'}
-              </p>
-            </div>
-
-            <div className="mt-5">
-              <h3 className="mb-2 text-xl font-semibold text-[#1D1D1D]">Service Overview</h3>
-              <div className="grid grid-cols-1 gap-2 sm:max-w-67.5">
-                <ServiceOverviewItem icon={<Building2 className="h-6 w-6" />} label="Clinic Name" value={serviceOverview.clinicName} />
-                <ServiceOverviewItem icon={<MapPin className="h-6 w-6" />} label="Address Line 1" value={serviceOverview.addressLine1} />
-                <ServiceOverviewItem icon={<MapPinned className="h-6 w-6" />} label="Town/City" value={serviceOverview.townCity} />
-                <ServiceOverviewItem icon={<MapPinned className="h-6 w-6" />} label="Postcode" value={serviceOverview.postcode} />
-                <ServiceOverviewItem icon={<Briefcase className="h-6 w-6" />} label="Primary Profession" value={serviceOverview.primaryProfession} />
-                <ServiceOverviewItem icon={<CalendarDays className="h-6 w-6" />} label="Session Type" value={serviceOverview.sessionType} />
-                <ServiceOverviewItem icon={<Trophy className="h-6 w-6" />} label="Sport" value={serviceOverview.sport} />
-                <ServiceOverviewItem icon={<FileBadge2 className="h-6 w-6" />} label="Professional Registration" value={serviceOverview.professionalRegistration} />
-                <ServiceOverviewItem icon={<ShieldCheck className="h-6 w-6" />} label="Insurance in place" value={serviceOverview.insuranceInPlace} />
+            <div>
+              <h3 className="mb-3 text-xl font-semibold text-[#1D1D1D]">Service Overview</h3>
+              <div className="grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-3">
+                <ServiceOverviewItem icon={<MapPinned className="h-5 w-5" />} label="Address" value={fullAddress || '-'} />
+                <ServiceOverviewItem icon={<Briefcase className="h-5 w-5" />} label="Primary Profession" value={serviceOverview.primaryProfession} />
+                <ServiceOverviewItem icon={<CalendarDays className="h-5 w-5" />} label="Session Type" value={serviceOverview.sessionType} />
+                <ServiceOverviewItem icon={<Trophy className="h-5 w-5" />} label="Sport" value={serviceOverview.sport} />
+                <ServiceOverviewItem icon={<FileBadge2 className="h-5 w-5" />} label="Professional Registration" value={serviceOverview.professionalRegistration} />
+                <ServiceOverviewItem icon={<ShieldCheck className="h-5 w-5" />} label="Insurance in Place" value={serviceOverview.insuranceInPlace} />
               </div>
             </div>
 
-            <div className="mt-4 flex items-center gap-2">
+            <div className="mt-2 flex items-center gap-2">
               <button className="rounded-md bg-[#0F766E] px-4 py-2 text-base font-semibold text-white hover:bg-[#0d655d]">
                 Book Now
               </button>
@@ -128,17 +139,19 @@ const AddListingDetails = () => {
             </div>
           </section>
 
-          <aside className="rounded-lg bg-[#E7F1F1] p-4 shadow-sm h-fit">
-            <h3 className="text-lg font-semibold text-[#1D1D1D]">Contact</h3>
-            <p className="mt-2 text-base text-[#5B6B69]">Ask the organiser a question</p>
-            <textarea
-              rows={6}
-              placeholder="Write your message"
-              className="mt-2 w-full resize-none rounded-md border border-[#B5D5D2] bg-[#B5D5D2]/55 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-[#0F766E]"
-            />
-            <button className="mt-3 rounded-md bg-[#0F766E] px-4 py-2 text-base font-semibold text-white hover:bg-[#0d655d]">
-              Submit
-            </button>
+          <aside className="h-fit xl:sticky xl:top-6">
+            <div className="rounded-xl bg-[#E7F1F1] p-4">
+              <h3 className="text-xl font-semibold text-[#111827]">Contact</h3>
+              <p className="mt-3 text-lg leading-11 text-[#374151]">Ask the organiser a question</p>
+              <textarea
+                rows={8}
+                placeholder="Write your message"
+                className="mt-3 w-full resize-none rounded-xl border-0 bg-[#B5D5D2] px-5 py-4  outline-none placeholder:text-[#4B5563] focus:ring-2 focus:ring-[#0F766E]"
+              />
+              <button className="mt-6 rounded-lg bg-[#0F766E] px-10 py-3 text-base font-semibold text-white hover:bg-[#0d655d]">
+                Submit
+              </button>
+            </div>
           </aside>
         </div>
 

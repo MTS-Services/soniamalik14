@@ -84,13 +84,13 @@ const ProviderEvent = () => {
 
   return (
     <div className="dashboardPy dashboardSpaceY">
-      <section className="rounded-xl bg-white p-4 shadow-sm md:p-5">
+      <section className="  py-4">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <h1 className="text-2xl font-semibold text-[#1D1D1D] md:text-3xl">Your Events</h1>
-            <p className="mt-1 text-sm text-[#6B7280] md:text-base">
+            <h1 className="text-2xl font-semibold text-[#1D1D1D] md:text-3xl">Manage Your Events</h1>
+            {/* <p className="mt-1 text-sm text-[#6B7280] md:text-base">
               Manage your event listings, update details, and track approvals.
-            </p>
+            </p> */}
           </div>
           <button
             type="button"
