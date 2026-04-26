@@ -332,7 +332,7 @@ const ProviderDashboard = () => {
                     <td className="break-all px-4 py-4 text-sm text-[#373737]">{player.email}</td>
                     <td className="px-4 py-4 text-base text-[#373737]">{player.message}</td>
                     <td className="whitespace-nowrap px-4 py-4 text-sm text-[#373737]">{player.date}</td>
-                    <td className="px-4 py-4">
+                    <td className="px-4 py-4 text-center">
                       <button
                         type="button"
                         onClick={() => setSelectedPlayer(player)}

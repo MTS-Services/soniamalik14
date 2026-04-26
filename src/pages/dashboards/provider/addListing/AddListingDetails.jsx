@@ -243,7 +243,7 @@ const AddListingDetails = () => {
                   <th className="px-4 py-2 text-base font-medium text-[#1D1D1D]">Email</th>
                   <th className="px-4 py-2 text-base font-medium text-[#1D1D1D]">Message</th>
                   <th className="px-4 py-2 text-base font-medium text-[#1D1D1D]">Date</th>
-                  <th className="px-4 py-2 text-base font-medium text-[#1D1D1D]">Actions</th>
+                  <th className="px-4 py-2 text-base font-medium text-[#1D1D1D] text-center">Actions</th>
                 </tr>
               </thead>
               <tbody>
@@ -254,7 +254,7 @@ const AddListingDetails = () => {
                     <td className="break-all px-4 py-2 text-base text-[#2F3B3A]">{enquiry.email}</td>
                     <td className="max-w-65 px-4 py-2 text-base text-[#2F3B3A]">{enquiry.message}</td>
                     <td className="px-4 py-2 text-base text-[#2F3B3A]">{enquiry.date}</td>
-                    <td className="px-4 py-2 text-base text-[#1D1D1D]">
+                    <td className="px-4 py-2 text-base text-[#1D1D1D] flex justify-center">
                       <ChevronRight className="h-4 w-4" />
                     </td>
                   </tr>
