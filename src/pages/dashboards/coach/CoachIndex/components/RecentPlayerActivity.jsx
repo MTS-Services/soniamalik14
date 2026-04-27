@@ -17,10 +17,33 @@ const RecentPlayerActivity = ({ players }) => {
             </div>
 
             {/* Main Content Area */}
-            <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+            <div className="  overflow-hidden">
 
-                {/* Table Area */}
-                <div className="overflow-x-auto">
+                {/* Mobile Card View */}
+                <div className="block md:hidden  space-y-3">
+                    {players.map((player, idx) => (
+                        <div key={idx} className="border border-gray-200 rounded-xl p-4 space-y-2 bg-white shadow-sm">
+                            <div className="flex items-start justify-between gap-2">
+                                <div className="flex-1 min-w-0">
+                                    <p className="font-semibold text-sm text-[#374151] pb-2">{player.name}</p>
+                                    <p className="text-sm text-[#374151] py-0.5">{player.phone}</p>
+                                    <p className="text-sm text-[#374151] py-0.5 break-all">{player.email}</p>
+                                </div>
+                                <button
+                                    onClick={() => openModal(player)}
+                                    className="flex-shrink-0 flex items-center justify-center w-9 h-9 rounded-full hover:bg-gray-100 transition-all"
+                                >
+                                    <IoChevronForwardOutline className="text-xl text-black" />
+                                </button>
+                            </div>
+                            <p className="text-sm text-[#4B5563] leading-relaxed line-clamp-2">{player.message}</p>
+                            <p className="text-xs text-[#374151] font-medium">{player.date}</p>
+                        </div>
+                    ))}
+                </div>
+
+                {/* Desktop Table View */}
+                <div className="hidden md:block overflow-x-auto">
                     <table className="w-full text-left border-collapse">
                         <thead>
                             <tr className="bg-[#E7F1F1] border-b border-gray-100">
@@ -29,8 +52,7 @@ const RecentPlayerActivity = ({ players }) => {
                                 <th className="px-6 py-4 text-base font-semibold text-black whitespace-nowrap">Email</th>
                                 <th className="px-6 py-4 text-base font-semibold text-black whitespace-nowrap">Message</th>
                                 <th className="px-6 py-4 text-base font-semibold text-black whitespace-nowrap">Date</th>
-                                <th className="px-6 py-4 text-base font-semibold text-black whitespace-nowrap  text-center">ACTIONS</th>
-
+                                <th className="px-6 py-4 text-base font-semibold text-black whitespace-nowrap text-center">ACTIONS</th>
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-gray-100 bg-white">
@@ -39,11 +61,9 @@ const RecentPlayerActivity = ({ players }) => {
                                     <td className="px-6 py-6 text-sm text-[#374151] font-medium">{player.name}</td>
                                     <td className="px-6 py-6 text-sm text-[#374151] whitespace-nowrap">{player.phone}</td>
                                     <td className="px-6 py-6 text-sm text-[#374151] max-w-[150px] break-words leading-relaxed">{player.email}</td>
-                                    <td className="px-6 py-6 text-sm text-[#4B5563] max-w-[300px] leading-relaxed">
-                                        {player.message}
-                                    </td>
+                                    <td className="px-6 py-6 text-sm text-[#4B5563] max-w-[300px] leading-relaxed">{player.message}</td>
                                     <td className="px-6 py-6 text-sm text-[#374151] whitespace-nowrap">{player.date}</td>
-                                    <td className="px-6 py-6 text-sm  flex items-center justify-center gap-2 whitespace-nowrap">
+                                    <td className="px-6 py-6 text-sm flex items-center justify-center gap-2 whitespace-nowrap">
                                         <button onClick={() => openModal(player)} className="flex items-center justify-center w-10 h-10 rounded-full hover:bg-white hover:shadow-sm transition-all">
                                             <IoChevronForwardOutline className="text-xl text-black" />
                                         </button>

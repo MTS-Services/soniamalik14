@@ -26,7 +26,7 @@ const CoachIndex = () => {
   return (
     <div className="dashboardPy dashboardSpaceY">
       {/* Profile header (moved to component) */}
-      <Card className="flex flex-col lg:flex-row items-center justify-between gap-4 p-6">
+      <Card className="flex flex-col lg:flex-row items-center justify-between gap-4 p-4 md:p-6">
         <ProfileHeader />
         <div className="self-stretch lg:self-auto flex items-center justify-end w-full lg:w-auto">
           <Link to="/coach/settings" className="w-full lg:w-auto lg:ml-2">
