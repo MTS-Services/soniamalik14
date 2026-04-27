@@ -27,14 +27,10 @@ const DeleteConfirmationModal = ({ isOpen, onClose, onConfirm, title = "Delete E
                 </div>
 
                 {/* Content */}
-                <div className="p-6">
-                    <div className="flex items-start gap-4">
-                        <div className="flex-shrink-0">
-                            <AlertTriangle className="w-6 h-6 text-red-600" />
-                        </div>
-                        <div>
-                            <p className="text-gray-700 text-base">{message}</p>
-                        </div>
+                <div className=" p-4 md:p-6">
+                    <div className="flex flex-col items-center justify-center gap-4">
+                        <AlertTriangle className="w-8 h-8 text-red-600 mb-2" />
+                        <p className="text-gray-700 text-base text-center">{message}</p>
                     </div>
                 </div>
 

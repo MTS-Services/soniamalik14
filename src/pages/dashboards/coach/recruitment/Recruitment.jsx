@@ -135,7 +135,7 @@ const Recruitment = () => {
       <div className="mb-6">
         <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
           <div>
-            <h1 className="text-2xl md:text-4xl font-semibold text-[#0B544E]">Manage your Listings</h1>
+            <h1 className="text-2xl md:text-3xl font-semibold text-[#0B544E]">Manage your Listings</h1>
             
           </div>
           <div>
