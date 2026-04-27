@@ -1,6 +1,6 @@
 ﻿import React from 'react';
 import { useLocation, useParams, useNavigate } from 'react-router-dom';
-import { ArrowLeft, Heart, Medal, Calendar, Users } from 'lucide-react';
+import { ArrowLeft, Heart, Medal, Calendar, Users, MapPin } from 'lucide-react';
 import Container from '../../../components/layout/Container';
 
 const DiscoverDetails = () => {
@@ -164,25 +164,24 @@ const DiscoverDetails = () => {
               <h3 className="text-xl font-semibold text-[#1A1D1F] mb-4">Venue Information</h3>
               <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-100 h-100 flex flex-col">
                 <div className="space-y-3 mb-6 flex-1">
-                  <p className="text-base flex">
-                    <span className="text-[#1A1D1F] w-28 shrink-0 font-medium">Venue Name:</span> 
-                    <span className=" text-[#1A1D1F] truncate">{item.location}</span>
+                  <p className="text-base flex items-start gap-2">
+                    <span className="text-[#1A1D1F] shrink-0 font-medium">Venue Name:</span>
+                    <span className="text-[#1A1D1F]">{item.location}</span>
                   </p>
-                  <p className="text-base flex">
-                    <span className="text-[#1A1D1F] w-28 shrink-0 font-medium">Postcode:</span> 
-                    <span className=" text-[#1A1D1F]">{item.postcode}</span>
+
+                  <div className="flex items-start gap-2 text-base text-[#1A1D1F]">
+                    <MapPin className="w-4 h-4 mt-1 shrink-0 text-[#6B7280]" />
+                    <p>{`${item.location}, ${item.town}, ${item.postcode}`}</p>
+                  </div>
+
+                  <p className="text-base flex items-start gap-2">
+                    <span className="text-[#1A1D1F] shrink-0 font-medium">Session Days:</span>
+                    <span className="text-[#1A1D1F]">{item.day}</span>
                   </p>
-                  <p className="text-base flex">
-                    <span className="text-[#1A1D1F] w-28 shrink-0 font-medium">Town/City:</span> 
-                    <span className=" text-[#1A1D1F]">{item.town}</span>
-                  </p>
-                  <p className="text-base flex">
-                    <span className="text-[#1A1D1F] w-28 shrink-0 font-medium">Session Days:</span> 
-                    <span className=" text-[#1A1D1F]">{item.day}</span>
-                  </p>
-                  <p className="text-base flex">
-                    <span className="text-[#1A1D1F] w-28 shrink-0 font-medium">Session Time:</span> 
-                    <span className=" text-[#1A1D1F]">{item.time}</span>
+
+                  <p className="text-base flex items-start gap-2">
+                    <span className="text-[#1A1D1F] shrink-0 font-medium">Session Time:</span>
+                    <span className="text-[#1A1D1F]">{item.time}</span>
                   </p>
                 </div>
                 

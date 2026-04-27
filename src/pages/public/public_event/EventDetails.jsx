@@ -147,7 +147,7 @@ const EventDetails = () => {
               </div>
               
               {/* Action Buttons */}
-              <div className="flex flex-wrap gap-3">
+              <div className="hidden md:flex flex-wrap gap-3">
                 <button className="bg-[#0F766E] hover:bg-[#0D655D] text-white px-4 py-2.5 rounded-lg text-sm font-medium transition-colors">
                   Book Your Place
                 </button>
@@ -160,41 +160,53 @@ const EventDetails = () => {
             {/* Column 2: Venue Information */}
             <div>
               <h3 className="text-xl font-semibold text-[#1A1D1F] mb-4">Venue Information</h3>
-              <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-100 h-105 flex flex-col">
-                <div className="space-y-4 mb-6 flex-1">
+              <div className="overflow-hidden bg-white p-4 rounded-lg shadow-sm border border-gray-100 h-auto md:h-105 flex flex-col">
+                <div className="space-y-4 mb-6 md:flex-1">
                   
-                  <div className="flex gap-2">
+                  <div className="flex flex-wrap gap-2">
                     <span className="text-[#1A1D1F] w-28 shrink-0 text-base">Venue Name:</span> 
-                    <span className="text-[#1A1D1F] text-base">{event.location}</span>
+                    <span className="text-[#1A1D1F] text-base min-w-0 wrap-break-word">{event.location}</span>
                   </div>
 
-                  <div className="flex gap-2 items-start">
+                  <div className="flex gap-2 items-start min-w-0">
                     <MapPin className="w-4 h-4 text-gray-500 shrink-0 mt-0.5" />
-                    <span className="text-[#1A1D1F] text-base leading-tight">
+                    <span className="text-[#1A1D1F] text-base leading-tight wrap-break-word">
                       {event.locationFull}
                     </span>
                   </div>
 
-                  <div className="flex gap-2">
+                  <div className="flex flex-wrap gap-2">
                     <span className="text-[#1A1D1F] w-28 shrink-0 text-base">Session Days:</span> 
-                    <span className="text-[#1A1D1F] text-base">{event.day}</span>
+                    <span className="text-[#1A1D1F] text-base min-w-0 wrap-break-word">{event.day}</span>
                   </div>
                   
-                  <div className="flex gap-2">
+                  <div className="flex flex-wrap gap-2">
                     <span className="text-[#1A1D1F] w-28 shrink-0 text-base">Session Time:</span> 
-                    <span className="text-[#1A1D1F] text-base">{event.time}</span>
+                    <span className="text-[#1A1D1F] text-base min-w-0 wrap-break-word">{event.time}</span>
                   </div>
                   
                 </div>
                 
-                {/* Map Placeholder Image */}
-                <div className="w-full h-55 rounded-lg overflow-hidden bg-gray-200 shrink-0">
-                  {event.mapImage ? (
-                    <img src={event.mapImage} alt="Map View" className="w-full h-full object-cover" />
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center text-gray-400 text-sm">Map Image</div>
-                  )}
+                {/* Map */}
+                <div className="relative w-full h-44 min-h-44 sm:h-55 rounded-lg overflow-hidden bg-gray-200 shrink-0">
+                  <iframe
+                    src="https://www.google.com/maps?q=23.8127682252437,90.42088993992539&z=16&output=embed"
+                    title="Event location map"
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                    allowFullScreen
+                    className="absolute inset-0 block h-full w-full max-w-full border-0"
+                  />
                 </div>
+              </div>
+
+              <div className="mt-5 flex flex-col sm:flex-row gap-3 md:hidden">
+                <button className="w-full sm:flex-1 bg-[#0F766E] hover:bg-[#0D655D] text-white px-4 py-2.5 rounded-lg text-sm font-medium transition-colors">
+                  Book Your Place
+                </button>
+                <button className="w-full sm:flex-1 bg-[#0F766E] hover:bg-[#0D655D] text-white px-5 py-2.5 rounded-lg text-sm font-medium transition-colors">
+                  Register Interest
+                </button>
               </div>
             </div>
 

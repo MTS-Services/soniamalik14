@@ -6,10 +6,7 @@ import { ENDPOINT } from '../../../services/httpEndpoint';
 import { toast } from 'react-toastify';
 import { 
   ArrowLeft, 
-  Building2, 
   MapPin, 
-  Map, 
-  Mail, 
   BriefcaseMedical, 
   Target, 
   Medal, 
@@ -153,24 +150,34 @@ const ServiceDetails = () => {
                 <h3 className="font-bold text-[#1A1D1F] text-xl mb-4">Service Overview</h3>
                 <div className="mb-8 rounded-2xl border border-gray-100 bg-white p-4 shadow-sm md:p-6">
                   <div className="grid grid-cols-1 xl:grid-cols-2 gap-5">
-                    <div>
-                      <h4 className="text-lg font-semibold text-[#1A1D1F] mb-4">Location & Clinic</h4>
-                      <div className="space-y-3">
-                        <OverviewRow icon={Building2} label="Clinic name" value={displayData.clinicName} />
-                        <OverviewRow icon={MapPin} label="Address Line 1" value={displayData.addressLine1} />
-                        <OverviewRow icon={Map} label="Town/City" value={displayData.townCity} />
-                        <OverviewRow icon={Mail} label="Postcode" value={displayData.postcode} />
+                    <div className='flex  flex-col gap-2.5'>
+                      <h4 className="text-lg font-semibold text-[#1A1D1F] mb-">Location & Clinic</h4>
+                      <div className="flex items-start gap-4 rounded-xl bg-[#F8FAFC] p-3.5 border border-[#ECF1F4]">
+                        <div className="w-10 h-10 rounded-full bg-[#EAF2F1] flex items-center justify-center shrink-0">
+                          <MapPin className="w-5 h-5 text-[#147B6B]" />
+                        </div>
+                        <div className="min-w-0">
+                          <p className="text-base text-[#1A1D1F] font-semibold mb-1">{displayData.clinicName}</p>
+                          <p className="text-base text-[#4A5565]">{displayData.addressLine1}</p>
+                          <p className="text-base text-[#4A5565]">{displayData.townCity}</p>
+                          <p className="text-base text-[#4A5565]">{displayData.postcode}</p>
+
+
+                        </div>
+                        
                       </div>
+
+                       <OverviewRow icon={FileCheck} label="Professional Registration" value={displayData.registration} />
+                        <OverviewRow icon={ShieldCheck} label="Insurance in place" value={displayData.insurance} />
                     </div>
 
                     <div>
                       <h4 className="text-lg font-semibold text-[#1A1D1F] mb-4">Professional Details</h4>
-                      <div className="space-y-3">
+                      <div className="space-y-5.5">
                         <OverviewRow icon={BriefcaseMedical} label="Primary Profession" value={displayData.profession} />
                         <OverviewRow icon={Target} label="Session Type" value={displayData.sessionType} />
                         <OverviewRow icon={Medal} label="Sport" value={displayData.sport} />
-                        <OverviewRow icon={FileCheck} label="Professional Registration" value={displayData.registration} />
-                        <OverviewRow icon={ShieldCheck} label="Insurance in place" value={displayData.insurance} />
+                       
                       </div>
                     </div>
                   </div>
@@ -180,9 +187,9 @@ const ServiceDetails = () => {
                   <button className="bg-[#147B6B] hover:bg-[#0D655D] text-white px-6 py-2.5 rounded-lg text-[14px] font-medium transition-colors">
                     Book Now
                   </button>
-                  <button className="bg-[#147B6B] hover:bg-[#0D655D] text-white px-6 py-2.5 rounded-lg text-[14px] font-medium transition-colors">
+                  {/* <button className="bg-[#147B6B] hover:bg-[#0D655D] text-white px-6 py-2.5 rounded-lg text-[14px] font-medium transition-colors">
                     Register Interest
-                  </button>
+                  </button> */}
                 </div>
 
               </div>
