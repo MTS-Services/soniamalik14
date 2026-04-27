@@ -5,7 +5,7 @@ const Card = ({
   children, 
   className = '', 
   variant = 'default',
-  padding = 'p-6',
+  padding = 'p-4 md:p-6',
   hover = false,
   ...props 
 }) => {

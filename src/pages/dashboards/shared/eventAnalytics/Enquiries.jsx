@@ -35,7 +35,10 @@ const DataTable = ({
                     <thead>
                         <tr className="bg-[#E7F1F1]">
                             {columns.map((col) => (
-                                <th key={col} className="px-5 py-3 text-left text-[16px] font-normal text-[#0C0C0C]">
+                                <th
+                                    key={col}
+                                    className={`px-5 py-3 text-[16px] font-normal text-[#0C0C0C] ${col === 'ACTIONS' ? 'text-center' : 'text-left'}`}
+                                >
                                     {col}
                                 </th>
                             ))}
@@ -112,7 +115,7 @@ const Enquiries = () => {
                                 <p className="line-clamp-4" style={{ maxWidth: '220px' }}>{row.message}</p>
                             </td>
                             <td className="px-5 py-6 text-[16px] text-[#373737]">{row.date}</td>
-                            <td className="px-5 py-6 text-right">
+                            <td className="px-5 py-6 text-center text-[16px] text-[#373737] whitespace-nowrap">
                                 <button
                                     type="button"
                                     onClick={() => setSelectedApplicant(row)}

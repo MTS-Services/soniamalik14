@@ -58,7 +58,7 @@ const Notifications = () => {
     };
 
     return (
-        <div className="bg-[#E8E8E8] min-h-screen py-10 px-4 sm:px-8 font-sans flex justify-center">
+        <div className=" min-h-screen py-10 px-4 sm:px-8 font-sans flex justify-center">
             <div className="w-full ">
 
                 {/* Header */}
@@ -79,8 +79,8 @@ const Notifications = () => {
                         <div
                             key={notif.id}
                             className={`flex gap-4 p-5 sm:p-6 ${
-                                index !== notifications.length - 1 ? 'border-b border-[#C2C2C2]' : ''
-                            } hover:bg-[#E2E2E2] transition-colors cursor-pointer`}
+                                index !== notifications.length - 1 ? 'border-b border-[#767676]' : ''
+                            }  transition-colors cursor-pointer`}
                         >
                             {/* Avatar */}
                             <div className="w-[42px] h-[42px] sm:w-[46px] sm:h-[46px] rounded-full overflow-hidden flex-shrink-0 bg-gray-300">
