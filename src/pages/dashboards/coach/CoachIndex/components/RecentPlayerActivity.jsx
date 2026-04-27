@@ -29,7 +29,7 @@ const RecentPlayerActivity = ({ players }) => {
                                 <th className="px-6 py-4 text-base font-semibold text-black whitespace-nowrap">Email</th>
                                 <th className="px-6 py-4 text-base font-semibold text-black whitespace-nowrap">Message</th>
                                 <th className="px-6 py-4 text-base font-semibold text-black whitespace-nowrap">Date</th>
-                                <th className="px-6 py-4 text-base font-semibold text-black whitespace-nowrap">ACTIONS</th>
+                                <th className="px-6 py-4 text-base font-semibold text-black whitespace-nowrap  text-center">ACTIONS</th>
 
                             </tr>
                         </thead>
@@ -43,9 +43,9 @@ const RecentPlayerActivity = ({ players }) => {
                                         {player.message}
                                     </td>
                                     <td className="px-6 py-6 text-sm text-[#374151] whitespace-nowrap">{player.date}</td>
-                                    <td className="px-6 py-6 text-sm">
+                                    <td className="px-6 py-6 text-sm  flex items-center justify-center gap-2 whitespace-nowrap">
                                         <button onClick={() => openModal(player)} className="flex items-center justify-center w-10 h-10 rounded-full hover:bg-white hover:shadow-sm transition-all">
-                                            <IoChevronForwardOutline className="text-2xl text-black" />
+                                            <IoChevronForwardOutline className="text-xl text-black" />
                                         </button>
                                     </td>
                                 </tr>
