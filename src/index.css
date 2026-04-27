@@ -122,9 +122,14 @@
     transition-duration: 150ms;
   }
 
-  button {
+  button:not(:disabled) {
     cursor: pointer;
   }
+
+  button:disabled {
+    cursor: not-allowed;
+  }
+
   body {
     background: #f8fafc;
     font-family: var(--font-primary);

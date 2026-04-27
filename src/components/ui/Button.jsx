@@ -8,7 +8,7 @@ const Button = ({
 
 
   const base =
-    "inline-flex items-center lg:px-4 py-2 px-3 lg:py-2 justify-center font-medium transition focus:outline-none";
+    "inline-flex cursor-pointer items-center justify-center px-3 py-2 font-medium transition focus:outline-none disabled:cursor-not-allowed lg:px-4 lg:py-2";
 
   // Color / variant styles
   const variants = {
