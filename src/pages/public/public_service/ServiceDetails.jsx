@@ -11,7 +11,8 @@ import {
   Target, 
   Medal, 
   FileCheck, 
-  ShieldCheck 
+  ShieldCheck, 
+  Hospital
 } from 'lucide-react';
 
 const ServiceDetails = () => {
@@ -154,13 +155,14 @@ const ServiceDetails = () => {
                       <h4 className="text-lg font-semibold text-[#1A1D1F] mb-">Location & Clinic</h4>
                       <div className="flex items-start gap-4 rounded-xl bg-[#F8FAFC] p-3.5 border border-[#ECF1F4]">
                         <div className="w-10 h-10 rounded-full bg-[#EAF2F1] flex items-center justify-center shrink-0">
-                          <MapPin className="w-5 h-5 text-[#147B6B]" />
+                          <Hospital className="w-5 h-5 text-[#147B6B]" />
+                          {/* < /> */}
                         </div>
                         <div className="min-w-0">
                           <p className="text-base text-[#1A1D1F] font-semibold mb-1">{displayData.clinicName}</p>
-                          <p className="text-base text-[#4A5565]">{displayData.addressLine1}</p>
-                          <p className="text-base text-[#4A5565]">{displayData.townCity}</p>
-                          <p className="text-base text-[#4A5565]">{displayData.postcode}</p>
+                          <p className="text-base text-[#4A5565]">{displayData.addressLine1} , {displayData.townCity} , {displayData.postcode} </p>
+                          {/* <p className="text-base text-[#4A5565]"></p>
+                          <p className="text-base text-[#4A5565]"></p> */}
 
 
                         </div>
@@ -172,8 +174,8 @@ const ServiceDetails = () => {
                     </div>
 
                     <div>
-                      <h4 className="text-lg font-semibold text-[#1A1D1F] mb-4">Professional Details</h4>
-                      <div className="space-y-5.5">
+                      <h4 className="text-lg font-semibold text-[#1A1D1F] mb-3">Professional Details</h4>
+                      <div className="space-y-3">
                         <OverviewRow icon={BriefcaseMedical} label="Primary Profession" value={displayData.profession} />
                         <OverviewRow icon={Target} label="Session Type" value={displayData.sessionType} />
                         <OverviewRow icon={Medal} label="Sport" value={displayData.sport} />

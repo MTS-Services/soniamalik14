@@ -244,11 +244,12 @@ const EventAnallyticsDetails = () => {
                     </div>
                     <p className="mt-2 text-[14px] text-[#101828]"><span className="font-medium">Session Days:</span> Saturday</p>
                     <p className="text-[14px] text-[#101828]"><span className="font-medium">Session Time:</span> {item.time || '10:00 - 12:00'}</p>
-                    <div className="mt-3 h-35 overflow-hidden rounded-lg bg-[#d9d9d9]">
+                    <div className="mt-3 h-55 w-full overflow-hidden rounded-lg bg-[#d9d9d9] sm:h-55 lg:h-65">
                         <iframe
                             src={`https://maps.google.com/maps?q=${encodeURIComponent(item.venue?.address || '')}&t=&z=13&ie=UTF8&iwloc=&output=embed`}
                             width="100%"
                             height="100%"
+                            className="h-full w-full"
                             style={{ border: 0 }}
                             loading="lazy"
                             title="Venue Location"
@@ -261,7 +262,7 @@ const EventAnallyticsDetails = () => {
                     <p className="mb-2 text-[14px] text-[#4a5565]">Ask the organiser a question</p>
                     <textarea
                         placeholder="Write your message"
-                        rows={8}
+                        rows={13}
                         className="w-full resize-none rounded-md border border-[#9ec9c7] bg-[#a9cdca] p-3 text-[14px] outline-none placeholder:text-[#5f7e7c]"
                     />
                     <button className="mt-3 inline-flex items-center gap-2 rounded bg-[#0F766E] px-4 py-2 text-[12px] font-medium text-white">

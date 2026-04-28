@@ -2,9 +2,7 @@ import React, { useMemo, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import {
   ArrowLeft,
-  Building2,
   MapPin,
-  MapPinned,
   Briefcase,
   CalendarDays,
   Trophy,
@@ -16,11 +14,13 @@ import TablePagination from '../../../../components/ui/TablePagination';
 import { addListingDummyData } from './addListingDummyData';
 
 const ServiceOverviewItem = ({ icon, label, value }) => (
-  <div className="rounded-xl border border-[#E4ECEC] bg-white p-4 shadow-[0_4px_14px_rgba(15,118,110,0.08)]">
-    <div className="mb-3 inline-flex rounded-full bg-[#E7F1F1] p-2 text-[#0F766E]">{icon}</div>
-    <div>
-      <p className="text-sm font-semibold tracking-[0.01em] text-[#1D1D1D]">{label}</p>
-      <p className="mt-1 text-sm leading-6 text-[#5B6B69]">{value}</p>
+  <div className="rounded-xl border border-[#DEE6E8] bg-[#F3F5F8] p-4">
+    <div className="flex items-start gap-3">
+      <div className="mt-0.5 inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#E7F1F1] text-[#0F766E]">{icon}</div>
+      <div className="min-w-0">
+        <p className="text-base font-semibold tracking-[0.01em] text-[#1D1D1D]">{label}</p>
+        <p className="mt-1 whitespace-pre-line text-sm leading-7 text-[#374151]">{value}</p>
+      </div>
     </div>
   </div>
 );
@@ -49,6 +49,8 @@ const AddListingDetails = () => {
   const fullAddress = [serviceOverview.clinicName, serviceOverview.addressLine1, serviceOverview.townCity, serviceOverview.postcode]
     .filter(Boolean)
     .join(', ');
+
+  const clinicAddress = [serviceOverview.addressLine1, serviceOverview.townCity, serviceOverview.postcode].filter(Boolean).join(', ');
 
   const providerInitials = String(item?.providerName || 'RW')
     .split(' ')
@@ -119,13 +121,46 @@ const AddListingDetails = () => {
 
             <div>
               <h3 className="mb-3 text-xl font-semibold text-[#1D1D1D]">Service Overview</h3>
-              <div className="grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-3">
-                <ServiceOverviewItem icon={<MapPinned className="h-5 w-5" />} label="Address" value={fullAddress || '-'} />
-                <ServiceOverviewItem icon={<Briefcase className="h-5 w-5" />} label="Primary Profession" value={serviceOverview.primaryProfession} />
-                <ServiceOverviewItem icon={<CalendarDays className="h-5 w-5" />} label="Session Type" value={serviceOverview.sessionType} />
-                <ServiceOverviewItem icon={<Trophy className="h-5 w-5" />} label="Sport" value={serviceOverview.sport} />
-                <ServiceOverviewItem icon={<FileBadge2 className="h-5 w-5" />} label="Professional Registration" value={serviceOverview.professionalRegistration} />
-                <ServiceOverviewItem icon={<ShieldCheck className="h-5 w-5" />} label="Insurance in Place" value={serviceOverview.insuranceInPlace} />
+              <div className="rounded-2xl border border-[#DDE4E8] bg-[#F9FBFB] p-4 shadow-[0_2px_10px_rgba(15,118,110,0.08)] md:p-5">
+                <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-5">
+                  <div>
+                    <h4 className="mb-3 text-lg font-semibold text-[#1D1D1D] ">Location &amp; Clinic</h4>
+                    <div className="space-y-3">
+                      <ServiceOverviewItem
+                        icon={<MapPin className="h-5 w-5" />}
+                        label={serviceOverview.clinicName || 'Clinic'}
+                        value={clinicAddress || fullAddress || '-'}
+                      />
+                      <ServiceOverviewItem
+                        icon={<FileBadge2 className="h-5 w-5" />}
+                        label="Professional Registration"
+                        value={serviceOverview.professionalRegistration || '-'}
+                      />
+                      <ServiceOverviewItem
+                        icon={<ShieldCheck className="h-5 w-5" />}
+                        label="Insurance in place"
+                        value={serviceOverview.insuranceInPlace || '-'}
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <h4 className="mb-3 text-lg font-semibold text-[#1D1D1D] ">Professional Details</h4>
+                    <div className="space-y-3">
+                      <ServiceOverviewItem
+                        icon={<Briefcase className="h-5 w-5" />}
+                        label="Primary Profession"
+                        value={serviceOverview.primaryProfession || '-'}
+                      />
+                      <ServiceOverviewItem
+                        icon={<CalendarDays className="h-5 w-5" />}
+                        label="Session Type"
+                        value={serviceOverview.sessionType || '-'}
+                      />
+                      <ServiceOverviewItem icon={<Trophy className="h-5 w-5" />} label="Sport" value={serviceOverview.sport || '-'} />
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -133,9 +168,9 @@ const AddListingDetails = () => {
               <button className="rounded-md bg-[#0F766E] px-4 py-2 text-base font-semibold text-white hover:bg-[#0d655d]">
                 Book Now
               </button>
-              <button className="rounded-md bg-[#0F766E] px-4 py-2 text-base font-semibold text-white hover:bg-[#0d655d]">
+              {/* <button className="rounded-md bg-[#0F766E] px-4 py-2 text-base font-semibold text-white hover:bg-[#0d655d]">
                 Register Interest
-              </button>
+              </button> */}
             </div>
           </section>
 

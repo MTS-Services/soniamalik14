@@ -189,7 +189,7 @@
 
 import React, { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Menu, X, LogOut, User } from 'lucide-react'; // User আইকন ইমপোর্ট করা হয়েছে
+import { Menu, X, LogOut, User } from 'lucide-react'; 
 import Container from './Container';
 import Button from '../ui/Button';
 import { useAuth, ROLES } from '../../context/AuthContext';
@@ -262,13 +262,13 @@ const NavbarLayout = () => {
             {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
           </button>
 
-          {/* 2. Logo - Desktop এ Left এ, Mobile এ Center এ */}
+      
           <div className="flex flex-1 justify-center xl:justify-start">
             <Link to="/" className="shrink-0">
               <img 
                 src="/logo.png" 
                 alt="ESSA HUB Logo" 
-                className="h-5 w-auto xl:h-7" // Mobile এ সাইজ কমানো হয়েছে (h-5)
+                className="h-5 w-auto xl:h-7" // Mobile
               />
             </Link>
           </div>
@@ -322,7 +322,7 @@ const NavbarLayout = () => {
             <div className="xl:hidden">
               <button 
                 onClick={handleDashboardClick}
-                className="p-2 text-blue-500" // ইমেজের মতো নীল রঙ দিতে চাইলে
+                className="p-2 text-blue-500" 
               >
                 <User className="h-6 w-6" />
               </button>
