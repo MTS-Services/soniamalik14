@@ -226,7 +226,7 @@ const ServiceDetails = () => {
   );
 };
 
-// Reusable component for the Service Overview rows
+// Reusable component for 
 const OverviewRow = ({ icon, label, value }) => {
   const IconComponent = icon;
 
