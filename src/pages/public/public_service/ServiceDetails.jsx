@@ -186,9 +186,16 @@ const ServiceDetails = () => {
                 </div>
 
                 <div className="flex flex-wrap gap-3">
-                  <button className="bg-[#147B6B] hover:bg-[#0D655D] text-white px-6 py-2.5 rounded-lg text-[14px] font-medium transition-colors">
+                  <button className="w-full md:w-auto bg-[#147B6B] hover:bg-[#0D655D] text-white px-6 py-2.5 rounded-lg text-[14px] font-medium transition-colors">
                     Book Now
                   </button>
+
+
+
+
+
+
+                  
                   {/* <button className="bg-[#147B6B] hover:bg-[#0D655D] text-white px-6 py-2.5 rounded-lg text-[14px] font-medium transition-colors">
                     Register Interest
                   </button> */}

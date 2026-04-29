@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import { ArrowLeft, CalendarDays, MapPin, MessageCircle, Target, Trophy, Users } from 'lucide-react';
 import { useEvent } from '../../../../context/EventContext';
