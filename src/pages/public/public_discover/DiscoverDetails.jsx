@@ -195,11 +195,11 @@ const DiscoverDetails = () => {
                 </div>
               </div>
 
-              <div className="mt-5 flex flex-wrap justify-center gap-3 md:hidden">
-                <button className="bg-[#0F766E] hover:bg-[#0D655D] text-white px-3 py-2.5 rounded-lg text-sm font-medium transition-colors">
+            <div className="mt-5 flex flex-col sm:flex-row gap-3 md:hidden">
+                <button className="w-full sm:flex-1 bg-[#0F766E] hover:bg-[#0D655D] text-white px-4 py-2.5 rounded-lg text-sm font-medium transition-colors">
                   Book Your Place
                 </button>
-                <button className="bg-[#0F766E] hover:bg-[#0D655D] text-white px-5 py-2.5 rounded-lg text-sm font-medium transition-colors">
+                <button className="w-full sm:flex-1 bg-[#0F766E] hover:bg-[#0D655D] text-white px-5 py-2.5 rounded-lg text-sm font-medium transition-colors">
                   Register Interest
                 </button>
               </div>
