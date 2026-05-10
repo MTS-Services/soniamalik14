@@ -133,7 +133,7 @@ const CreateRecruitmentModal = ({ isOpen, onClose, initialData = null, mode = 'c
                     <form id="create-recruitment-form" onSubmit={handleSubmit} className="space-y-3">
 
                         {/* Section 1: Service Provider Listing Form */}
-                        <div className="bg-white rounded-[8px] p-4 space-y-4">
+                        <div className="bg-white rounded-lg p-4 space-y-4">
                             <div>
                                 <p className="text-[18px] text-[#0a0a0a] leading-[28.8px]" style={{ fontFamily: 'Roboto, sans-serif' }}>
                                     Service Provider Listing Form
@@ -143,7 +143,7 @@ const CreateRecruitmentModal = ({ isOpen, onClose, initialData = null, mode = 'c
                                 </p>
                             </div>
 
-                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-[10px]">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                                 <div className="space-y-2">
                                     <label className="block text-[16px] text-[#0a0a0a] leading-6" style={{ fontFamily: 'Roboto, sans-serif' }}>
                                         Provider / Business Name
@@ -151,7 +151,7 @@ const CreateRecruitmentModal = ({ isOpen, onClose, initialData = null, mode = 'c
                                     <input
                                         value={form.organisationName}
                                         onChange={(e) => handleChange('organisationName', e.target.value)}
-                                        className="w-full h-[49px] bg-[#f3f3f5] border-0 rounded-[8px] px-3 text-[14px] text-black placeholder-[#717182] outline-none focus:ring-2 focus:ring-[#0F766E]"
+                                        className="w-full h-12.25 bg-[#f3f3f5] border-0 rounded-lg px-3 text-[14px] text-black placeholder-[#717182] outline-none focus:ring-2 focus:ring-[#0F766E]"
                                         placeholder="e.g. Richmond Women's Physios"
                                         style={{ fontFamily: 'Inter, sans-serif' }}
                                     />
@@ -163,7 +163,7 @@ const CreateRecruitmentModal = ({ isOpen, onClose, initialData = null, mode = 'c
                                     <input
                                         value={form.contactPerson}
                                         onChange={(e) => handleChange('contactPerson', e.target.value)}
-                                        className="w-full h-[49px] bg-[#f3f3f5] border-0 rounded-[8px] px-3 text-[14px] text-black placeholder-[#717182] outline-none focus:ring-2 focus:ring-[#0F766E]"
+                                        className="w-full h-12.25 bg-[#f3f3f5] border-0 rounded-lg px-3 text-[14px] text-black placeholder-[#717182] outline-none focus:ring-2 focus:ring-[#0F766E]"
                                         placeholder="Enter name"
                                         style={{ fontFamily: 'Inter, sans-serif' }}
                                     />
@@ -173,7 +173,7 @@ const CreateRecruitmentModal = ({ isOpen, onClose, initialData = null, mode = 'c
                             {/* Logo Upload */}
                             <div className="space-y-2">
                                 <label className="block text-[16px] text-[#0a0a0a] leading-6" style={{ fontFamily: 'Roboto, sans-serif' }}>Logo</label>
-                                <div className="border border-dashed border-black rounded-[8px] flex flex-col items-center justify-center h-[238px] px-6 text-center">
+                                <div className="border border-dashed border-black rounded-lg flex flex-col items-center justify-center h-59.5 px-6 text-center">
                                     {imagePreviewUrl ? (
                                         <img src={imagePreviewUrl} alt="Logo preview" className="h-32 w-32 rounded-md object-cover mb-3" />
                                     ) : (
@@ -182,7 +182,7 @@ const CreateRecruitmentModal = ({ isOpen, onClose, initialData = null, mode = 'c
                                             <p className="text-[16px] font-medium text-[#28a844] leading-6" style={{ fontFamily: 'Roboto, sans-serif' }}>
                                                 Upload Image
                                             </p>
-                                            <p className="text-[12px] text-[#626262] leading-[19px]" style={{ fontFamily: 'Roboto, sans-serif' }}>
+                                            <p className="text-[12px] text-[#626262] leading-4.75" style={{ fontFamily: 'Roboto, sans-serif' }}>
                                                 JPEG files accepted. Max 100MB
                                             </p>
                                         </div>
@@ -207,17 +207,17 @@ const CreateRecruitmentModal = ({ isOpen, onClose, initialData = null, mode = 'c
                         </div>
 
                         {/* Section 2: Location Details */}
-                        <div className="bg-white rounded-[8px] p-4 space-y-4">
+                        <div className="bg-white rounded-lg p-4 space-y-4">
                             <p className="text-[18px] text-[#0a0a0a] leading-[28.8px]" style={{ fontFamily: 'Roboto, sans-serif' }}>
                                 Location Details
                             </p>
-                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-[10px]">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                                 <div className="space-y-2">
                                     <label className="block text-[16px] text-[#0a0a0a] leading-6" style={{ fontFamily: 'Roboto, sans-serif' }}>Clinic Name</label>
                                     <input
                                         value={form.clinicName}
                                         onChange={(e) => handleChange('clinicName', e.target.value)}
-                                        className="w-full h-[49px] bg-[#f3f3f5] border-0 rounded-[8px] px-3 text-[14px] text-black placeholder-[#717182] outline-none focus:ring-2 focus:ring-[#0F766E]"
+                                        className="w-full h-12.25 bg-[#f3f3f5] border-0 rounded-lg px-3 text-[14px] text-black placeholder-[#717182] outline-none focus:ring-2 focus:ring-[#0F766E]"
                                         placeholder="e.g. The Wellness Centre"
                                         style={{ fontFamily: 'Inter, sans-serif' }}
                                     />
@@ -227,19 +227,19 @@ const CreateRecruitmentModal = ({ isOpen, onClose, initialData = null, mode = 'c
                                     <input
                                         value={form.addressLine1}
                                         onChange={(e) => handleChange('addressLine1', e.target.value)}
-                                        className="w-full h-[49px] bg-[#f3f3f5] border-0 rounded-[8px] px-3 text-[14px] text-black placeholder-[#717182] outline-none focus:ring-2 focus:ring-[#0F766E]"
+                                        className="w-full h-12.25 bg-[#f3f3f5] border-0 rounded-lg px-3 text-[14px] text-black placeholder-[#717182] outline-none focus:ring-2 focus:ring-[#0F766E]"
                                         placeholder="e.g. 123 High Street"
                                         style={{ fontFamily: 'Inter, sans-serif' }}
                                     />
                                 </div>
                             </div>
-                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-[10px]">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                                 <div className="space-y-2">
                                     <label className="block text-[16px] text-[#0a0a0a] leading-6" style={{ fontFamily: 'Roboto, sans-serif' }}>Town/City</label>
                                     <input
                                         value={form.town}
                                         onChange={(e) => handleChange('town', e.target.value)}
-                                        className="w-full h-[49px] bg-[#f3f3f5] border-0 rounded-[8px] px-3 text-[14px] text-black placeholder-[#717182] outline-none focus:ring-2 focus:ring-[#0F766E]"
+                                        className="w-full h-12.25 bg-[#f3f3f5] border-0 rounded-lg px-3 text-[14px] text-black placeholder-[#717182] outline-none focus:ring-2 focus:ring-[#0F766E]"
                                         placeholder="e.g. Richmond"
                                         style={{ fontFamily: 'Inter, sans-serif' }}
                                     />
@@ -249,7 +249,7 @@ const CreateRecruitmentModal = ({ isOpen, onClose, initialData = null, mode = 'c
                                     <input
                                         value={form.postcode}
                                         onChange={(e) => handleChange('postcode', e.target.value)}
-                                        className="w-full h-[49px] bg-[#f3f3f5] border-0 rounded-[8px] px-3 text-[14px] text-black placeholder-[#717182] outline-none focus:ring-2 focus:ring-[#0F766E]"
+                                        className="w-full h-12.25 bg-[#f3f3f5] border-0 rounded-lg px-3 text-[14px] text-black placeholder-[#717182] outline-none focus:ring-2 focus:ring-[#0F766E]"
                                         placeholder="e.g. TW9 IAB"
                                         style={{ fontFamily: 'Inter, sans-serif' }}
                                     />
@@ -258,11 +258,11 @@ const CreateRecruitmentModal = ({ isOpen, onClose, initialData = null, mode = 'c
                         </div>
 
                         {/* Section 3: Provider Type */}
-                        <div className="bg-white rounded-[8px] p-4 space-y-4">
+                        <div className="bg-white rounded-lg p-4 space-y-4">
                             <p className="text-[18px] text-[#0a0a0a] leading-[28.8px]" style={{ fontFamily: 'Roboto, sans-serif' }}>Provider Type</p>
-                            <div className="space-y-[10px]">
+                            <div className="space-y-2.5">
                                 <p className="text-[16px] text-black leading-6" style={{ fontFamily: 'Roboto, sans-serif' }}>Primary Profession</p>
-                                <div className="flex flex-wrap gap-[10px]">
+                                <div className="flex flex-wrap gap-2.5">
                                     {professionOptions.map((item) => {
                                         const isSelected = form.profession.includes(item);
                                         return (
@@ -284,7 +284,7 @@ const CreateRecruitmentModal = ({ isOpen, onClose, initialData = null, mode = 'c
                         </div>
 
                         {/* Section 4: About & Services */}
-                        <div className="bg-white rounded-[8px] p-4 space-y-4">
+                        <div className="bg-white rounded-lg p-4 space-y-4">
                             <p className="text-[18px] text-[#0a0a0a] leading-[28.8px]" style={{ fontFamily: 'Roboto, sans-serif' }}>About &amp; Services</p>
                             <div className="space-y-4">
                                 <div className="space-y-2">
@@ -292,7 +292,7 @@ const CreateRecruitmentModal = ({ isOpen, onClose, initialData = null, mode = 'c
                                     <input
                                         value={form.listingHeadline}
                                         onChange={(e) => handleChange('listingHeadline', e.target.value)}
-                                        className="w-full h-[49px] bg-[#f3f3f5] border-0 rounded-[8px] px-3 text-[14px] text-black placeholder-[#717182] outline-none focus:ring-2 focus:ring-[#0F766E]"
+                                        className="w-full h-12.25 bg-[#f3f3f5] border-0 rounded-lg px-3 text-[14px] text-black placeholder-[#717182] outline-none focus:ring-2 focus:ring-[#0F766E]"
                                         placeholder="e.g. The Wellness Centre"
                                         style={{ fontFamily: 'Inter, sans-serif' }}
                                     />
@@ -302,7 +302,7 @@ const CreateRecruitmentModal = ({ isOpen, onClose, initialData = null, mode = 'c
                                     <textarea
                                         value={form.aboutService}
                                         onChange={(e) => handleChange('aboutService', e.target.value)}
-                                        className="w-full h-[130px] bg-[#f3f3f5] border-0 rounded-[8px] px-3 py-3 text-[14px] text-black placeholder-[#717182] outline-none focus:ring-2 focus:ring-[#0F766E] resize-none"
+                                        className="w-full h-32.5 bg-[#f3f3f5] border-0 rounded-lg px-3 py-3 text-[14px] text-black placeholder-[#717182] outline-none focus:ring-2 focus:ring-[#0F766E] resize-none"
                                         placeholder="e.g. 123 High Street"
                                         style={{ fontFamily: 'Inter, sans-serif' }}
                                     />
@@ -310,9 +310,9 @@ const CreateRecruitmentModal = ({ isOpen, onClose, initialData = null, mode = 'c
                             </div>
 
                             {/* Session Types */}
-                            <div className="space-y-[10px]">
+                            <div className="space-y-2.5">
                                 <p className="text-[16px] text-black leading-6" style={{ fontFamily: 'Roboto, sans-serif' }}>Session Types</p>
-                                <div className="flex flex-wrap gap-[10px]">
+                                <div className="flex flex-wrap gap-2.5">
                                     {sessionTypeOptions.map((item) => {
                                         const isSelected = form.sessionTypes.includes(item);
                                         return (
