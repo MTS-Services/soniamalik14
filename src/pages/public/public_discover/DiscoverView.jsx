@@ -16,7 +16,8 @@ const sample = Array.from({ length: 9 }).map((_, i) => ({
   location: '2972 Wetherden Rd, Santa Ana, Illinois 85486',
   summary: 'Login to see contact details & ability requirements',
   image: ['/player1.png', '/player2.png', '/player3.jpg'][i % 3],
-  about: 'Woking Warriors FC is a women-focused football club committed to developing talent, teamwork, and confidence. We provide a supportive environment for players to grow both on and off the field.',
+  about:
+    'Woking Warriors FC is a women-focused football club committed to developing talent, teamwork, and confidence. We provide a supportive environment for players to grow both on and off the field.',
   homeGround: 'Woking Community Football Stadium',
   level: 'Beginner to Intermediate',
   ageGroup: '16+ Years',
@@ -53,10 +54,10 @@ const DiscoverView = () => {
 
     // Filter by location/postcode if entered
     if (location) {
-      match = match && (
-        item.location.toLowerCase().includes(location.toLowerCase()) ||
-        item.homeGround?.toLowerCase().includes(location.toLowerCase())
-      );
+      match =
+        match &&
+        (item.location.toLowerCase().includes(location.toLowerCase()) ||
+          item.homeGround?.toLowerCase().includes(location.toLowerCase()));
     }
 
     if (distance) {
@@ -73,40 +74,17 @@ const DiscoverView = () => {
   const paginatedItems = filtered.slice(startIndex, endIndex);
 
   return (
-    <section className="py-6 lg:py-10 bg-[#F8FAFC] ">
+    <section className="bg-[#F8FAFC] py-6 lg:py-10">
       <Container>
         <div className="mb-8">
-          <PageHeader title="Find your sport" description="Discover women's sports sessions and teams near you, with options to suit different levels and interests."/>
+          <PageHeader
+            title="Find your sport"
+            description="Discover women's sports sessions and teams near you, with options to suit different levels and interests."
+          />
 
           {/* New Filter Section Added Here */}
-          <div className="mt-4 bg-[#E7F1F1] p-4 rounded-lg inline-flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
 
-            {/* Select Sports Dropdown */}
-            <div className="relative w-full sm:w-45">
-              <select
-                value={selectedSport}
-                onChange={(e) => {
-                  setSelectedSport(e.target.value);
-                  setPage(1);
-                }}
-                className="appearance-none w-full bg-white border-none text-gray-700 text-base rounded-md px-3 py-3 outline-none focus:ring-1 focus:ring-teal-500 cursor-pointer shadow-sm"
-              >
-                <option value="">Select sports</option>
-                <option value="Football">Football</option>
-                <option value="Cricket">Cricket</option>
-                <option value="Netball">Netball</option>
-                <option value="Tennis">Tennis</option>
-                <option value="Padel">Padel</option>
-                <option value="Rugby">Rugby</option>
-
-              </select>
-              <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-gray-800">
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
-                </svg>
-              </div>
-            </div>
-
+          <div className="mt-4 inline-flex w-full flex-col gap-3 rounded-lg bg-[#E7F1F1] p-4 sm:w-auto sm:flex-row">
             {/* Postcode/City Input */}
             <input
               type="text"
@@ -116,8 +94,39 @@ const DiscoverView = () => {
                 setLocation(e.target.value);
                 setPage(1);
               }}
-              className="w-full sm:w-55 bg-white border-none text-gray-700 text-base rounded-md px-3 py-2 outline-none focus:ring-1 focus:ring-teal-500 shadow-sm placeholder-gray-400"
+              className="w-full rounded-md border-none bg-white px-3 py-2 text-base text-gray-700 placeholder-gray-400 shadow-sm outline-none focus:ring-1 focus:ring-teal-500 sm:w-55"
             />
+            {/* Select Sports Dropdown */}
+            <div className="relative w-full sm:w-45">
+              <select
+                value={selectedSport}
+                onChange={(e) => {
+                  setSelectedSport(e.target.value);
+                  setPage(1);
+                }}
+                className="w-full cursor-pointer appearance-none rounded-md border-none bg-white px-3 py-3 text-base text-gray-700 shadow-sm outline-none focus:ring-1 focus:ring-teal-500"
+              >
+                <option value="">Select sports</option>
+                <option value="Football">Football</option>
+                <option value="Cricket">Cricket</option>
+                <option value="Netball">Netball</option>
+                <option value="Tennis">Tennis</option>
+                <option value="Padel">Padel</option>
+                <option value="Rugby">Rugby</option>
+              </select>
+              <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-gray-800">
+                <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M19 9l-7 7-7-7"
+                  />
+                </svg>
+              </div>
+            </div>
+
+            
 
             {/* Distance Dropdown */}
             <div className="relative w-full sm:w-35">
@@ -127,7 +136,7 @@ const DiscoverView = () => {
                   setDistance(e.target.value);
                   setPage(1);
                 }}
-                className="appearance-none w-full bg-white border-none text-gray-700 text-base rounded-md px-3 py-3 outline-none focus:ring-1 focus:ring-teal-500 cursor-pointer shadow-sm"
+                className="w-full cursor-pointer appearance-none rounded-md border-none bg-white px-3 py-3 text-base text-gray-700 shadow-sm outline-none focus:ring-1 focus:ring-teal-500"
               >
                 <option value="">Distance</option>
                 <option value="5">5 Miles</option>
@@ -135,24 +144,30 @@ const DiscoverView = () => {
                 <option value="20">20 Miles</option>
               </select>
               <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-gray-800">
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+                <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M19 9l-7 7-7-7"
+                  />
                 </svg>
               </div>
             </div>
-
           </div>
         </div>
 
         {filtered.length > 0 ? (
           <>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {paginatedItems.map((item) => (
                 <DiscoverCard key={item.id} item={item} />
               ))}
             </div>
 
-            {totalPages > 1 && <Pagination page={page} total={totalPages} onChange={(p) => setPage(p)} />}
+            {totalPages > 1 && (
+              <Pagination page={page} total={totalPages} onChange={(p) => setPage(p)} />
+            )}
           </>
         ) : (
           <DiscoverEmptyPage />
