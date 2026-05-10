@@ -122,7 +122,7 @@ const CreateRecruitmentModal = ({ isOpen, onClose, initialData = null, mode = 'c
                 />
               </div>
 
-              <div className="relative flex h-36 flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-300 bg-white overflow-hidden">
+              <div className="relative flex  flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-300 bg-white overflow-hidden h-60">
                 <input 
                   type="file" id="file-upload" className="hidden" 
                   onChange={(e) => handleChange('image', e.target.files[0])}
