@@ -264,13 +264,13 @@ const CreateRecruitmentModal = ({ isOpen, onClose, initialData = null, mode = 'c
         <div className="flex gap-4 p-4 px-6 border-t border-gray-200 bg-gray-50 rounded-b-xl">
           <button 
             type="submit" form="add-listing-form"
-            className="rounded-md bg-[#0f766e] px-6 py-2.5 text-sm font-semibold text-white hover:bg-[#0d635d]"
+            className="rounded-md bg-btn-primary px-6 py-2.5 text-sm font-semibold text-white hover:bg-[#0d635d]"
           >
             Submit For Approval
           </button>
           <button 
             type="button"
-            className="rounded-md bg-[#0f766e] px-6 py-2.5 text-sm font-semibold text-white hover:bg-[#0d635d]"
+            className="rounded-md bg-btn-primary px-6 py-2.5 text-sm font-semibold text-white hover:bg-[#0d635d]"
           >
             View Preview
           </button>
