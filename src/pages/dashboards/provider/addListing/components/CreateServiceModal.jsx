@@ -394,14 +394,7 @@ const CreateServiceModal = ({
             {isBusy ? 'Submitting...' : 'Submit For Approval'}
           </button>
 
-          <button
-            type="button"
-            onClick={() => setShowPreview(true)}
-            className="border-btn-primary text-btn-primary flex items-center gap-2 rounded-md border bg-white px-6 py-2 text-[15px] font-medium transition-colors hover:bg-gray-50"
-          >
-            <Eye className="h-4 w-4" />
-            Preview
-          </button>
+      
         </div>
       </div>
     </div>
