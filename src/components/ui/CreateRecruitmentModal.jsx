@@ -42,6 +42,7 @@ const createInitialForm = () => ({
   sessionTypes: [],
   suitableFor: [],
   womensOnly: '',
+  otherSport: '',
   venueName: '',
   postcode: '',
   townCity: '',
@@ -76,8 +77,13 @@ const CreateRecruitmentModal = ({ isOpen, onClose, initialData = null, mode = 'c
   const toggleArrayField = (field, value) => {
     setForm((s) => {
       const arr = s[field] || [];
-      if (arr.includes(value)) return { ...s, [field]: arr.filter((a) => a !== value) };
-      return { ...s, [field]: [...arr, value] };
+      const exists = arr.includes(value);
+      const newArr = exists ? arr.filter((a) => a !== value) : [...arr, value];
+      const extra = {};
+      if (field === 'sports' && value === 'Other' && exists) {
+        extra.otherSport = '';
+      }
+      return { ...s, [field]: newArr, ...extra };
     });
   };
 
@@ -210,6 +216,17 @@ const CreateRecruitmentModal = ({ isOpen, onClose, initialData = null, mode = 'c
                     );
                   })}
                 </div>
+                {form.sports.includes('Other') && (
+                  <div className="mt-3">
+                    <input
+                      type="text"
+                      placeholder="Please specify"
+                      value={form.otherSport || ''}
+                      onChange={(e) => handleChange('otherSport', e.target.value)}
+                      className="w-full rounded bg-[#f3f4f6] p-2 text-sm outline-none"
+                    />
+                  </div>
+                )}
               </div>
               <div className="grid grid-cols-1 gap-6 pt-2">
                 <div className="space-y-2">

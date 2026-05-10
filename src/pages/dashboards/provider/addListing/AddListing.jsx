@@ -136,7 +136,7 @@ const AddListing = () => {
                       {service.title || 'Untitled service'}
                     </h3>
 
-                    <p className="mt-2 line-clamp-2 text-sm text-[#4B5563]">
+                    <p className="mt-2 line-clamp-2 text-base text-[#4B5563]">
                       {service.description || 'No description available.'}
                     </p>
                   </div>

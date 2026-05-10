@@ -10,7 +10,7 @@ const providerTypeOptions = [
   'Nutritionist',
   'Mental Health & Wellbeing',
   'Coach / Trainer',
-  'Other',
+
 ];
 
 const sessionTypeOptions = ['In clinic', 'At-home visits', 'Online video'];
@@ -46,6 +46,7 @@ const buildInitialState = (initialData) => ({
   sports: initialData?.whoServiceFor
     ? initialData.whoServiceFor.split(',').map((s) => s.trim())
     : [],
+  otherSport: initialData?.otherSport || '',
   registration: '',
   insuranceInPlace: 'Yes',
   responseMethods: ['By default'],
@@ -124,9 +125,15 @@ const CreateServiceModal = ({
     setFormData((prev) => {
       const list = prev[field] || [];
       const exists = list.includes(value);
+      const newList = exists ? list.filter((x) => x !== value) : [...list, value];
+      const extra = {};
+      if (field === 'sports' && value === 'Other' && exists) {
+        extra.otherSport = '';
+      }
       return {
         ...prev,
-        [field]: exists ? list.filter((x) => x !== value) : [...list, value],
+        [field]: newList,
+        ...extra,
       };
     });
   };
@@ -321,6 +328,17 @@ const CreateServiceModal = ({
                   </CheckboxPill>
                 ))}
               </div>
+              {formData.sports.includes('Other') && (
+                <div className="mt-3">
+                  <input
+                    type="text"
+                    placeholder="Please specify"
+                    value={formData.otherSport}
+                    onChange={(e) => updateField('otherSport', e.target.value)}
+                    className="w-full rounded-lg bg-[#F3F3F5] p-3 text-sm outline-none"
+                  />
+                </div>
+              )}
             </div>
           </div>
 
