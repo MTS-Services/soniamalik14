@@ -67,7 +67,7 @@ const CreateRecruitmentModal = ({ isOpen, onClose, initialData = null, mode = 'c
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
       <div className="mx-4 flex max-h-[95vh] w-full max-w-2xl flex-col rounded-xl bg-[#f9fafb] shadow-2xl">
         
-        <div className="flex items-center justify-between px-6 py-4 border-b">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200">
           <h2 className="text-xl font-bold text-[#1a1a1a]">Add Listing</h2>
           <button onClick={onClose} className="rounded-full bg-gray-200 p-1 hover:bg-gray-300">
             <X className="h-5 w-5 text-gray-600" />
@@ -78,12 +78,12 @@ const CreateRecruitmentModal = ({ isOpen, onClose, initialData = null, mode = 'c
           <form id="add-listing-form" className="space-y-6">
             
             <div className="space-y-4 rounded-lg bg-white p-5 border border-gray-100">
-              <h3 className="text-md font-semibold text-gray-800">Organisation Details</h3>
-              <p className="text-sm text-gray-500 mt-[-10px]">Tell us about your organization or club</p>
+              <h3 className="text-lg font-semibold text-gray-800">Organisation Details</h3>
+              <p className="text-base text-gray-500 mt-[-10px]">Tell us about your organization or club</p>
               
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-1">
-                  <label className="text-sm font-medium text-gray-700">Organisation / Club Name</label>
+                  <label className="text-base font-medium text-gray-700">Organisation / Club Name</label>
                   <input 
                     value={form.organisationName}
                     onChange={(e) => handleChange('organisationName', e.target.value)}
@@ -92,7 +92,7 @@ const CreateRecruitmentModal = ({ isOpen, onClose, initialData = null, mode = 'c
                   />
                 </div>
                 <div className="space-y-1">
-                  <label className="text-sm font-medium text-gray-700">Contact Person Name</label>
+                  <label className="text-base font-medium text-gray-700">Contact Person Name</label>
                   <input 
                     value={form.contactPerson}
                     onChange={(e) => handleChange('contactPerson', e.target.value)}
@@ -103,7 +103,7 @@ const CreateRecruitmentModal = ({ isOpen, onClose, initialData = null, mode = 'c
               </div>
 
               <div className="space-y-1">
-                <label className="text-sm font-medium text-gray-700">Role</label>
+                <label className="text-base font-medium text-gray-700">Role</label>
                 <input 
                   value={form.role}
                   onChange={(e) => handleChange('role', e.target.value)}
@@ -113,7 +113,7 @@ const CreateRecruitmentModal = ({ isOpen, onClose, initialData = null, mode = 'c
               </div>
 
               <div className="space-y-1">
-                <label className="text-sm font-medium text-gray-700">About</label>
+                <label className="text-base font-medium text-gray-700">About</label>
                 <textarea 
                   value={form.about}
                   onChange={(e) => handleChange('about', e.target.value)}
@@ -136,25 +136,25 @@ const CreateRecruitmentModal = ({ isOpen, onClose, initialData = null, mode = 'c
                     />
                     <label htmlFor="file-upload" className="absolute inset-0 flex flex-col items-center justify-center bg-black/40 opacity-0 hover:opacity-100 transition-opacity cursor-pointer">
                       <Upload className="h-8 w-8 text-white mb-2" />
-                      <span className="text-white font-semibold text-sm">Change Image</span>
+                      <span className="text-white font-semibold text-base">Change Image</span>
                     </label>
                   </div>
                 ) : (
                   <label htmlFor="file-upload" className="cursor-pointer flex flex-col items-center">
                     <Upload className="h-8 w-8 text-green-500 mb-2" />
                     <span className="text-green-600 font-semibold">Upload Image</span>
-                    <span className="text-xs text-gray-400">JPEG files accepted. Max 100MB</span>
+                    <span className="text-sm text-gray-400">JPEG files accepted. Max 100MB</span>
                   </label>
                 )}
               </div>
             </div>
 
             <div className="space-y-4 rounded-lg bg-white p-5 border border-gray-100">
-              <h3 className="text-md font-semibold text-gray-800">Sport & Session Information</h3>
-              <p className="text-sm text-gray-500 mt-[-10px]">Details about the sport and session you offer</p>
+              <h3 className="text-lg font-semibold text-gray-800">Sport & Session Information</h3>
+              <p className="text-base text-gray-500 mt-[-10px]">Details about the sport and session you offer</p>
 
               <div className="space-y-2">
-                <label className="text-sm font-medium text-gray-700">Sports</label>
+                <label className="text-base font-medium text-gray-700">Sports</label>
                 <div className="flex flex-wrap gap-2">
                   {sportOptions.map(sport => (
                     <button
@@ -171,9 +171,9 @@ const CreateRecruitmentModal = ({ isOpen, onClose, initialData = null, mode = 'c
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
+              <div className="grid grid-cols-1  gap-6 pt-2">
                 <div className="space-y-2">
-                  <label className="text-sm font-medium text-gray-700">Session Type</label>
+                  <label className="text-base font-medium text-gray-700">Session Type</label>
                   {sessionTypeOptions.map(type => (
                     <label key={type} className="flex items-center gap-2 text-sm text-gray-600 cursor-pointer">
                       <input 
@@ -188,7 +188,7 @@ const CreateRecruitmentModal = ({ isOpen, onClose, initialData = null, mode = 'c
                 </div>
 
                 <div className="space-y-2">
-                  <label className="text-sm font-medium text-gray-700">Suitable for(more than one can be selected)</label>
+                  <label className="text-base font-medium text-gray-700">Suitable for(more than one can be selected)</label>
                   {suitabilityOptions.map(opt => (
                     <label key={opt} className="flex items-center gap-2 text-sm text-gray-600 cursor-pointer">
                       <input 
@@ -204,7 +204,7 @@ const CreateRecruitmentModal = ({ isOpen, onClose, initialData = null, mode = 'c
               </div>
 
               <div className="space-y-2 pt-2">
-                <label className="text-sm font-medium text-gray-700">Women's Only</label>
+                <label className="text-base font-medium text-gray-700">Women's Only</label>
                 <div className="flex flex-col gap-2">
                   {['YES', 'NO'].map(val => (
                     <label key={val} className="flex items-center gap-2 text-sm text-gray-600 cursor-pointer">
@@ -222,46 +222,46 @@ const CreateRecruitmentModal = ({ isOpen, onClose, initialData = null, mode = 'c
             </div>
 
             <div className="space-y-4 rounded-lg bg-white p-5 border border-gray-100">
-              <h3 className="text-md font-semibold text-gray-800">Location & Timing</h3>
+              <h3 className="text-lg font-semibold text-gray-800">Location & Timing</h3>
               <div className="grid grid-cols-3 gap-3">
                 <div className="space-y-1">
-                  <label className="text-xs font-medium text-gray-700">Venue Name</label>
+                  <label className="text-base font-medium text-gray-700">Venue Name</label>
                   <input className="w-full rounded bg-[#f3f4f6] p-2 text-sm outline-none" placeholder="Venue name" />
                 </div>
                 <div className="space-y-1">
-                  <label className="text-xs font-medium text-gray-700">Postcode</label>
+                  <label className="text-base font-medium text-gray-700">Postcode</label>
                   <input className="w-full rounded bg-[#f3f4f6] p-2 text-sm outline-none" placeholder="Postcode" />
                 </div>
                 <div className="space-y-1">
-                  <label className="text-xs font-medium text-gray-700">Town / City</label>
+                  <label className="text-base font-medium text-gray-700">Town / City</label>
                   <input className="w-full rounded bg-[#f3f4f6] p-2 text-sm outline-none" placeholder="e.g london" />
                 </div>
                 <div className="space-y-1">
-                  <label className="text-xs font-medium text-gray-700">Typical Session Days</label>
+                  <label className="text-base font-medium text-gray-700">Typical Session Days</label>
                   <input className="w-full rounded bg-[#f3f4f6] p-2 text-sm outline-none" placeholder="e.g mon, sat, tues" />
                 </div>
                 <div className="space-y-1">
-                  <label className="text-xs font-medium text-gray-700">Date/Day</label>
+                  <label className="text-base font-medium text-gray-700">Date/Day</label>
                   <input className="w-full rounded bg-[#f3f4f6] p-2 text-sm outline-none" placeholder="DD/MM/YYYY" />
                 </div>
                 <div className="space-y-1">
-                  <label className="text-xs font-medium text-gray-700">Time</label>
+                  <label className="text-base font-medium text-gray-700">Time</label>
                   <input className="w-full rounded bg-[#f3f4f6] p-2 text-sm outline-none" placeholder="write time" />
                 </div>
               </div>
             </div>
 
             <div className="space-y-4 rounded-lg bg-white p-5 border border-gray-100">
-              <h3 className="text-md font-semibold text-gray-800">Booking Details</h3>
+              <h3 className="text-lg font-semibold text-gray-800">Booking Details</h3>
               <div className="space-y-1">
-                <label className="text-sm font-medium text-gray-700">Booking link</label>
+                <label className="text-base font-medium text-gray-700">Booking link</label>
                 <input className="w-full rounded bg-[#f3f4f6] p-2.5 text-sm outline-none" placeholder="Venue name" />
               </div>
             </div>
           </form>
         </div>
 
-        <div className="flex gap-4 p-4 px-6 border-t bg-gray-50 rounded-b-xl">
+        <div className="flex gap-4 p-4 px-6 border-t border-gray-200 bg-gray-50 rounded-b-xl">
           <button 
             type="submit" form="add-listing-form"
             className="rounded-md bg-[#0f766e] px-6 py-2.5 text-sm font-semibold text-white hover:bg-[#0d635d]"
