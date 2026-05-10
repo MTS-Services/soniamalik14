@@ -64,13 +64,12 @@ const PillButton = ({ active, onClick, children }) => (
   </button>
 );
 
-
 const CheckboxPill = ({ active, onClick, children }) => (
   <label
-    className={`flex items-center gap-2 rounded-full px-4 py-2 text-xs font-semibold cursor-pointer transition-all ${
-      active 
-        ? 'bg-btn-primary text-white border-btn-primary' 
-        : 'bg-[#B5D5D2] text-[#06322E] border-transparent'
+    className={`flex cursor-pointer items-center gap-2 rounded-full px-4 py-2 text-xs font-semibold transition-all ${
+      active
+        ? 'bg-btn-primary border-btn-primary text-white'
+        : 'border-transparent bg-[#B5D5D2] text-[#06322E]'
     } border`}
   >
     {/* Input checkbox with custom accent color */}
@@ -78,10 +77,9 @@ const CheckboxPill = ({ active, onClick, children }) => (
       type="checkbox"
       checked={active}
       onChange={onClick}
-      className="w-4 h-4 rounded cursor-pointer accent-[#06322E]" 
+      className="h-4 w-4 cursor-pointer rounded accent-[#06322E]"
     />
-  
-    
+
     {children}
   </label>
 );
@@ -311,19 +309,19 @@ const CreateServiceModal = ({
             </div>
 
             <div className="space-y-3">
-  <label className="text-base font-medium text-[#0A0A0A]">Sports</label>
-  <div className="flex flex-wrap gap-2">
-    {sportOptions.map((sport) => (
-      <CheckboxPill
-        key={sport}
-        active={formData.sports.includes(sport)}
-        onClick={() => toggleMulti('sports', sport)}
-      >
-        {sport}
-      </CheckboxPill>
-    ))}
-  </div>
-</div>
+              <label className="text-base font-medium text-[#0A0A0A]">Sports</label>
+              <div className="flex flex-wrap gap-2">
+                {sportOptions.map((sport) => (
+                  <CheckboxPill
+                    key={sport}
+                    active={formData.sports.includes(sport)}
+                    onClick={() => toggleMulti('sports', sport)}
+                  >
+                    {sport}
+                  </CheckboxPill>
+                ))}
+              </div>
+            </div>
           </div>
 
           {/* Section 5: Credentials */}
@@ -391,7 +389,7 @@ const CreateServiceModal = ({
             type="submit"
             form="service-form"
             disabled={isBusy}
-            className="rounded-md bg-[#0f766e] px-6 py-2 text-[15px] font-semibold text-white transition-colors hover:bg-[#0d655d] disabled:opacity-60"
+            className="bg-btn-primary hover:bg-btn-primary-dark rounded-md px-6 py-2 text-[15px] font-semibold text-white transition-colors disabled:opacity-60"
           >
             {isBusy ? 'Submitting...' : 'Submit For Approval'}
           </button>
@@ -399,7 +397,7 @@ const CreateServiceModal = ({
           <button
             type="button"
             onClick={() => setShowPreview(true)}
-            className="flex items-center gap-2 rounded-md border border-[#0f766e] bg-white px-6 py-2 text-[15px] font-medium text-[#0f766e] transition-colors hover:bg-gray-50"
+            className="border-btn-primary text-btn-primary flex items-center gap-2 rounded-md border bg-white px-6 py-2 text-[15px] font-medium transition-colors hover:bg-gray-50"
           >
             <Eye className="h-4 w-4" />
             Preview
