@@ -49,7 +49,7 @@ const Foundersection = () => {
             opportunity isn't always obvious or accessible.
           </p>
           <p className="text-[15px] leading-relaxed text-[#1A1D1F]/80 md:text-lg">
-            I wanted to build something that makes getting involved easier_in ways that fit around
+            I wanted to build something that makes getting involved easier-in ways that fit around
             real life. A space where women can explore opportunities, connect with others and take
             part in ways that feel right for them, without pressure or judgement.
           </p>
