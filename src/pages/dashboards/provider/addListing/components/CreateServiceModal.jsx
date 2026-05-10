@@ -29,7 +29,7 @@ const sportOptions = [
   'Other',
 ];
 
-const responseOptions = ['Add booking link', 'Allow users to register interest', 'By default'];
+const responseOptions = ['Add booking link', 'Allow users to register interest'];
 
 const buildInitialState = (initialData) => ({
   providerBusinessName: initialData?.providerName || '',
