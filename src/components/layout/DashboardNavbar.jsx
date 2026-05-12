@@ -52,7 +52,7 @@ const DashboardNavbar = ({ onMenuClick }) => {
         </div>
 
         <div className="flex flex-1 justify-center">
-          <img src="/logo.png" alt="Logo" className="h-8 w-38 " />
+          <img src="/logo.png" alt="Logo" className="h-5 w-auto max-w-[150px]" />
         </div>
 
         <div className="flex flex-1 justify-end">
