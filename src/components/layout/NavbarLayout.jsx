@@ -147,9 +147,9 @@ const NavbarLayout = () => {
 
       {/* Mobile Drawer Menu */}
       {isMenuOpen && (
-        <div className="border-t border-gray-200 bg-white xl:hidden">
+        <div className="absolute left-0 right-0 top-full z-50 border-t border-gray-200 bg-white shadow-lg xl:hidden">
           <Container>
-            <nav className="flex flex-col space-y-1 py-3">
+            <nav className="max-h-[calc(100vh-4rem)] overflow-y-auto flex flex-col space-y-1 py-3">
               {navigation.map((item) => (
                 <Link
                   key={item.name}
