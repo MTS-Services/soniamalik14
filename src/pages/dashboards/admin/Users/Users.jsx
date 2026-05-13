@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Download } from 'lucide-react';
 import FilterSection from './components/FilterSection';
 import PlayersTable from './components/PlayersTable';
@@ -7,58 +8,32 @@ import ServiceProvidersTable from './components/ServiceProvidersTable';
 import TabsSection from './components/TabsSection';
 import PaginationSection from './components/PaginationSection';
 import SuspendModal from './components/SuspendModal';
+import {
+  fetchAllUsers,
+  suspendUser,
+  selectUsersByRole,
+  selectUsersLoading,
+} from '../../../../features/users/usersSlice';
 
 const Users = () => {
+    const dispatch = useDispatch();
     const [activeTab, setActiveTab] = useState('players');
     const [activeSubTab, setActiveSubTab] = useState('all');
     const [isSuspendModalOpen, setIsSuspendModalOpen] = useState(false);
     const [selectedUserId, setSelectedUserId] = useState(null);
+    const [page] = useState(1);
+    const [limit] = useState(100);
 
-    // Dummy Data
-    const playersData = Array(6).fill({
-        name: 'Floyd Miles',
-        email: 'michael.mitc@example.com',
-        postcode: '10282',
-        sport: 'Cricket',
-        joined: '3/3/2026',
-        lastLogin: '3/3/2026',
-        events: 20,
-        interest: 16,
-        status: 'Active',
-        suspendedReason: 'Fake listing',
-    }).map((item, i) => ({
-        ...item,
-        id: i,
-        name: ['Leslie Alexander', 'Savannah Nguyen', 'Floyd Miles', 'Cody Fisher', 'Eleanor Pena', 'Esther Howard'][i],
-        email: ['dolores.chambers@example.com', 'deanna.curtis@example.com', 'michael.mitc@example.com', 'debra.holt@example.com', 'bill.sanders@example.com', 'debbie.baker@example.com'][i],
-        status: activeSubTab === 'all' ? 'Active' : ['Fake listing', 'Inactivity', 'Policy breach', 'Fake listing', 'Harassment', 'Inactivity'][i],
-    }));
+    // Redux Selectors
+    const playersData = useSelector((state) => selectUsersByRole('USER')(state));
+    const sportProvidersData = useSelector((state) => selectUsersByRole('COACH')(state));
+    const serviceProvidersData = useSelector((state) => selectUsersByRole('PROVIDER')(state));
+    const isLoading = useSelector(selectUsersLoading);
 
-    const sportProvidersData = Array(6).fill({
-        businessName: 'Woking Warriors FC',
-        contactName: 'sara cruz',
-        email: 'sara.cruz@example.com',
-        postcode: '10282',
-        sport: 'Cricket',
-        joined: '3/3/2026',
-        listingsCount: 20,
-        eventsCount: 20,
-        interestReceived: 16,
-        externalLinkClicks: 10,
-        avgResponseTime: '1 ms',
-    }).map((item, i) => ({ ...item, id: i }));
-
-    const serviceProvidersData = Array(6).fill({
-        providerName: 'Floyd Miles',
-        email: 'sara.cruz@example.com',
-        postcode: '10282',
-        sport: 'Cricket',
-        joined: '3/3/2026',
-        lastLogin: '3/3/2026',
-        phone: '(316) 555-0116',
-        organization: 'Woking Warriors FC',
-        status: 'Active',
-    }).map((item, i) => ({ ...item, id: i }));
+    // Fetch all users on mount
+    useEffect(() => {
+        dispatch(fetchAllUsers({ page, limit }));
+    }, [dispatch, page, limit]);
 
     // Modal handlers
     const handleOpenSuspendModal = (userId) => {
@@ -71,16 +46,33 @@ const Users = () => {
         setSelectedUserId(null);
     };
 
-    const handleSubmitSuspend = (userId, reason) => {
-        console.log(`User ${userId} suspended with reason: ${reason}`);
-        // TODO: Make API call to suspend user
-        handleCloseSuspendModal();
+    const handleSubmitSuspend = async (userId, reason) => {
+        try {
+            await dispatch(suspendUser({ userId, reason })).unwrap();
+            handleCloseSuspendModal();
+        } catch (error) {
+            console.error('Failed to suspend user:', error);
+        }
     };
 
     const renderTableContent = () => {
-        if (activeTab === 'players') return <PlayersTable data={playersData} activeSubTab={activeSubTab} onSuspend={handleOpenSuspendModal} />;
-        if (activeTab === 'sportProviders') return <SportProvidersTable data={sportProvidersData} activeSubTab={activeSubTab} onSuspend={handleOpenSuspendModal} />;
-        if (activeTab === 'serviceProviders') return <ServiceProvidersTable data={serviceProvidersData} activeSubTab={activeSubTab} onSuspend={handleOpenSuspendModal} />;
+        if (isLoading) {
+            return (
+                <div className="flex justify-center items-center py-12">
+                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+                </div>
+            );
+        }
+
+        if (activeTab === 'players') {
+            return <PlayersTable data={playersData || []} activeSubTab={activeSubTab} onSuspend={handleOpenSuspendModal} />;
+        }
+        if (activeTab === 'sportProviders') {
+            return <SportProvidersTable data={sportProvidersData || []} activeSubTab={activeSubTab} onSuspend={handleOpenSuspendModal} />;
+        }
+        if (activeTab === 'serviceProviders') {
+            return <ServiceProvidersTable data={serviceProvidersData || []} activeSubTab={activeSubTab} onSuspend={handleOpenSuspendModal} />;
+        }
     };
 
     return (

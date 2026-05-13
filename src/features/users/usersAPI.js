@@ -1,0 +1,9 @@
+import { GET, POST } from '../../services/httpMethods';
+import { ENDPOINT } from '../../services/httpEndpoint';
+
+export const usersAPI = {
+  getAllUsers: (params, signal) => GET(ENDPOINT.USERS.LIST, params, signal),
+  suspendUser: (userId, payload, signal) => POST(ENDPOINT.USERS.SUSPEND(userId), payload, signal),
+};
+
+export default usersAPI;

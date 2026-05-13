@@ -5,6 +5,7 @@ import eventsReducer from '../features/events/eventsSlice';
 import recruitmentReducer from '../features/recruitment/recruitmentSlice';
 import serviceReducer from '../features/service/serviceSlice';
 import newsReducer from '../features/news/newsSlice';
+import usersReducer from './users/usersSlice';
 
 const store = configureStore({
   reducer: {
@@ -14,6 +15,7 @@ const store = configureStore({
     recruitment: recruitmentReducer,
     service: serviceReducer,
     news: newsReducer,
+    users: usersReducer,
   },
 });
 

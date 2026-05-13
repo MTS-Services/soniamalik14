@@ -1,0 +1,115 @@
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import usersAPI from './usersAPI';
+
+const getErrorPayload = (error, fallbackMessage) => {
+  return {
+    message: error?.response?.data?.message || error?.response?.data?.error || error?.message || fallbackMessage,
+    status: error?.response?.status || 0,
+  };
+};
+
+const initialState = {
+  allUsers: [],
+  loading: false,
+  error: null,
+  suspend: {
+    loading: false,
+    error: null,
+  },
+  pagination: {
+    page: 1,
+    limit: 10,
+    total: 0,
+  },
+};
+
+export const fetchAllUsers = createAsyncThunk(
+  'users/fetchAllUsers',
+  async ({ page = 1, limit = 100 }, { rejectWithValue, signal }) => {
+    try {
+      const params = { page, limit };
+      const response = await usersAPI.getAllUsers(params, signal);
+      const payload = response?.data ?? response;
+      return payload;
+    } catch (error) {
+      return rejectWithValue(getErrorPayload(error, 'Failed to fetch users'));
+    }
+  }
+);
+
+export const suspendUser = createAsyncThunk(
+  'users/suspendUser',
+  async ({ userId, reason }, { rejectWithValue, signal }) => {
+    try {
+      const response = await usersAPI.suspendUser(userId, { reason }, signal);
+      const payload = response?.data ?? response;
+      return { userId, ...payload };
+    } catch (error) {
+      return rejectWithValue(getErrorPayload(error, 'Failed to suspend user'));
+    }
+  }
+);
+
+const usersSlice = createSlice({
+  name: 'users',
+  initialState,
+  reducers: {
+    resetError: (state, action) => {
+      const { type } = action.payload || {};
+      if (type === 'users') state.error = null;
+      if (type === 'suspend') state.suspend.error = null;
+    },
+  },
+  extraReducers: (builder) => {
+    // Fetch All Users
+    builder
+      .addCase(fetchAllUsers.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchAllUsers.fulfilled, (state, action) => {
+        state.loading = false;
+        state.allUsers = action.payload?.data || action.payload || [];
+        state.pagination = action.payload?.pagination || state.pagination;
+      })
+      .addCase(fetchAllUsers.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload?.message || action.error?.message || 'Failed to fetch users';
+      });
+
+    // Suspend User
+    builder
+      .addCase(suspendUser.pending, (state) => {
+        state.suspend.loading = true;
+        state.suspend.error = null;
+      })
+      .addCase(suspendUser.fulfilled, (state) => {
+        state.suspend.loading = false;
+      })
+      .addCase(suspendUser.rejected, (state, action) => {
+        state.suspend.loading = false;
+        state.suspend.error = action.payload?.message || action.error?.message || 'Failed to suspend user';
+      });
+  },
+});
+
+export const { resetError } = usersSlice.actions;
+
+// Selectors
+export const selectAllUsers = (state) => state.users.allUsers;
+export const selectUsersLoading = (state) => state.users.loading;
+export const selectUsersError = (state) => state.users.error;
+export const selectSuspendLoading = (state) => state.users.suspend.loading;
+export const selectPagination = (state) => state.users.pagination;
+
+// Helper selector to filter users by role
+export const selectUsersByRole = (role) => (state) => {
+  const ROLE_MAP = {
+    USER: 'USER',
+    COACH: 'COACH',
+    PROVIDER: 'PROVIDER',
+  };
+  return state.users.allUsers.filter((user) => user.role === ROLE_MAP[role]);
+};
+
+export default usersSlice.reducer;
