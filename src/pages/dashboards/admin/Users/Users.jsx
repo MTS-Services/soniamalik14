@@ -40,8 +40,7 @@ const Users = () => {
     const pagination = useSelector(selectPagination);
 
     useEffect(() => {
-        // reset to first page when tab changes
-        // (handled by dependency on activeTab/activeSubTab below via effect that sets page)
+       
         if (activeSubTab === 'suspended') {
             const role = activeTab === 'players' ? 'USER' : activeTab === 'sportProviders' ? 'COACH' : 'PROVIDER';
             dispatch(fetchSuspendedUsers({ page, limit, filters: { role } }));
