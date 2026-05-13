@@ -1,6 +1,6 @@
 ﻿import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, Loader } from 'lucide-react';
 import { POST } from '../../../services/httpMethods';
 import { ENDPOINT } from '../../../services/httpEndpoint';
 import { toast } from 'react-toastify';
@@ -146,7 +146,7 @@ const OtpVerificationView = () => {
           )}
 
           {/* Email Field (prefilled from forgot-password) */}
-          <div>
+          {/* <div>
             <label className="block text-[#282828] font-medium mb-2 text-base">Email</label>
             <input
               type="email"
@@ -154,7 +154,7 @@ const OtpVerificationView = () => {
               onChange={(e) => setEmail(e.target.value)}
               className="w-full px-3 py-2 bg-white border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-btn-primary transition-all text-base text-gray-700"
             />
-          </div>
+          </div> */}
 
           {/* OTP Input Boxes */}
           <div className="flex justify-center gap-3">
@@ -179,8 +179,9 @@ const OtpVerificationView = () => {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-btn-primary hover:bg-[#0d655d] text-white py-3 rounded-lg font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full bg-btn-primary hover:bg-[#0d655d] text-white py-3 rounded-lg font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
           >
+            {loading && <Loader className="w-5 h-5 animate-spin" />}
             {loading ? 'Verifying...' : 'Verify'}
           </button>
 

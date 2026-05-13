@@ -1,6 +1,6 @@
 ﻿import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { ArrowRight, ArrowLeft } from 'lucide-react';
+import { ArrowRight, ArrowLeft, Loader } from 'lucide-react';
 import { POST } from '../../../services/httpMethods';
 import { ENDPOINT } from '../../../services/httpEndpoint';
 import { toast } from 'react-toastify';
@@ -63,13 +63,7 @@ const ForgotPasswordView = () => {
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-5">
-          {/* Success Message */}
-          {message && (
-            <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg text-base">
-              {message}
-            </div>
-          )}
-
+        
           {/* Email Field */}
           <div>
             <label className="block text-[#282828] font-medium mb-2 text-base">
@@ -91,8 +85,9 @@ const ForgotPasswordView = () => {
             disabled={loading}
             className="w-full bg-btn-primary hover:bg-[#0d655d] text-white py-3 rounded-lg font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 uppercase text-base tracking-wide"
           >
+            {loading && <Loader className="w-5 h-5 animate-spin" />}
             {loading ? 'SENDING...' : 'SEND CODE'}
-            <ArrowRight className="w-5 h-5" />
+            {!loading && <ArrowRight className="w-5 h-5" />}
           </button>
 
           {/* Sign In Link */}

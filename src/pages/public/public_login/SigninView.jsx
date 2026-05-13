@@ -1,6 +1,6 @@
 ﻿import React, { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { Eye, EyeOff } from 'lucide-react';
+import { Eye, EyeOff, Loader } from 'lucide-react';
 import { useAuth, ROLES } from '../../../context/AuthContext';
 import { FaArrowLeft } from 'react-icons/fa';
 
@@ -158,8 +158,9 @@ const LoginView = () => {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-btn-primary hover:bg-[#0d655d] text-white py-3 rounded-lg font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full bg-btn-primary hover:bg-[#0d655d] text-white py-3 rounded-lg font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
             >
+              {loading && <Loader className="w-5 h-5 animate-spin" />}
               {loading ? 'Logging in...' : 'Log In'}
             </button>
 
