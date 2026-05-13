@@ -9,10 +9,14 @@ import TabsSection from './components/TabsSection';
 import PaginationSection from './components/PaginationSection';
 import SuspendModal from './components/SuspendModal';
 import {
-  fetchAllUsers,
-  suspendUser,
-  selectUsersByRole,
-  selectUsersLoading,
+    fetchAllUsers,
+    fetchSuspendedUsers,
+    suspendUser,
+    selectUsersByRole,
+    selectUsersLoading,
+    selectSuspendedUsers,
+    selectSuspendedLoading,
+    selectPagination,
 } from '../../../../features/users/usersSlice';
 
 const Users = () => {
@@ -21,8 +25,8 @@ const Users = () => {
     const [activeSubTab, setActiveSubTab] = useState('all');
     const [isSuspendModalOpen, setIsSuspendModalOpen] = useState(false);
     const [selectedUserId, setSelectedUserId] = useState(null);
-    const [page] = useState(1);
-    const [limit] = useState(100);
+    const [page, setPage] = useState(1);
+    const [limit] = useState(6);
 
     // Redux Selectors
     const playersData = useSelector((state) => selectUsersByRole('USER')(state));
@@ -30,10 +34,22 @@ const Users = () => {
     const serviceProvidersData = useSelector((state) => selectUsersByRole('PROVIDER')(state));
     const isLoading = useSelector(selectUsersLoading);
 
-    // Fetch all users on mount
+    // Fetch users depending on subtab
+    const suspendedData = useSelector(selectSuspendedUsers);
+    const suspendedLoading = useSelector(selectSuspendedLoading);
+    const pagination = useSelector(selectPagination);
+
     useEffect(() => {
-        dispatch(fetchAllUsers({ page, limit }));
-    }, [dispatch, page, limit]);
+        // reset to first page when tab changes
+        // (handled by dependency on activeTab/activeSubTab below via effect that sets page)
+        if (activeSubTab === 'suspended') {
+            const role = activeTab === 'players' ? 'USER' : activeTab === 'sportProviders' ? 'COACH' : 'PROVIDER';
+            dispatch(fetchSuspendedUsers({ page, limit, filters: { role } }));
+        } else {
+            const role = activeTab === 'players' ? 'USER' : activeTab === 'sportProviders' ? 'COACH' : 'PROVIDER';
+            dispatch(fetchAllUsers({ page, limit, filters: { role } }));
+        }
+    }, [dispatch, activeTab, activeSubTab, page, limit]);
 
     // Modal handlers
     const handleOpenSuspendModal = (userId) => {
@@ -56,7 +72,7 @@ const Users = () => {
     };
 
     const renderTableContent = () => {
-        if (isLoading) {
+        if (isLoading || suspendedLoading) {
             return (
                 <div className="flex justify-center items-center py-12">
                     <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
@@ -98,8 +114,8 @@ const Users = () => {
                     <TabsSection
                         activeTab={activeTab}
                         activeSubTab={activeSubTab}
-                        setActiveTab={setActiveTab}
-                        setActiveSubTab={setActiveSubTab}
+                        setActiveTab={(tab) => { setActiveTab(tab); setActiveSubTab('all'); setPage(1); }}
+                        setActiveSubTab={(sub) => { setActiveSubTab(sub); setPage(1); }}
                     />
 
                     {/* Filters */}
@@ -109,7 +125,14 @@ const Users = () => {
                     {renderTableContent()}
 
                     {/* Pagination */}
-                    <PaginationSection />
+                    <PaginationSection
+                        page={page}
+                        limit={limit}
+                        total={pagination?.total || (suspendedData?.length || 0)}
+                        totalPages={pagination?.totalPages || 1}
+                        onPrev={() => setPage((p) => Math.max(1, p - 1))}
+                        onNext={() => setPage((p) => Math.min((pagination?.totalPages || 1), p + 1))}
+                    />
 
                 </div>
             </div>

@@ -40,6 +40,7 @@ export const ENDPOINT = {
     SPORT_PROVIDERS: '/api/users/sport-providers',
     SERVICE_PROVIDERS: '/api/users/service-providers',
     SUSPEND: (userId) => `/api/users/${userId}/suspend`,
+    SUSPENDED_LIST: '/api/admin/suspended-users',
   },
   SERVICES: {
     LIST: '/api/services',

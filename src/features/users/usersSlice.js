@@ -8,6 +8,19 @@ const getErrorPayload = (error, fallbackMessage) => {
   };
 };
 
+export const fetchSuspendedUsers = createAsyncThunk(
+  'users/fetchSuspendedUsers',
+  async ({ page = 1, limit = 100, filters = {} }, { rejectWithValue, signal }) => {
+    try {
+      const params = { page, limit, ...filters };
+      const response = await usersAPI.getSuspendedUsers(params, signal);
+      const payload = response?.data ?? response;
+      return payload;
+    } catch (error) {
+      return rejectWithValue(getErrorPayload(error, 'Failed to fetch suspended users'));
+    }
+  }
+);
 const initialState = {
   allUsers: [],
   loading: false,
@@ -25,9 +38,9 @@ const initialState = {
 
 export const fetchAllUsers = createAsyncThunk(
   'users/fetchAllUsers',
-  async ({ page = 1, limit = 100 }, { rejectWithValue, signal }) => {
+  async ({ page = 1, limit = 100, filters = {} }, { rejectWithValue, signal }) => {
     try {
-      const params = { page, limit };
+      const params = { page, limit, ...filters };
       const response = await usersAPI.getAllUsers(params, signal);
       const payload = response?.data ?? response;
       return payload;
@@ -61,6 +74,23 @@ const usersSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
+    // Fetch Suspended Users
+    builder
+      .addCase(fetchSuspendedUsers.pending, (state) => {
+        state.suspend.loading = true;
+        state.suspend.error = null;
+      })
+      .addCase(fetchSuspendedUsers.fulfilled, (state, action) => {
+        state.suspend.loading = false;
+        // store suspended users separately on state for clarity
+        state.suspendedUsers = action.payload?.data || action.payload || [];
+        state.pagination = action.payload?.pagination || state.pagination;
+      })
+      .addCase(fetchSuspendedUsers.rejected, (state, action) => {
+        state.suspend.loading = false;
+        state.suspend.error = action.payload?.message || action.error?.message || 'Failed to fetch suspended users';
+      });
+
     // Fetch All Users
     builder
       .addCase(fetchAllUsers.pending, (state) => {
@@ -101,6 +131,9 @@ export const selectUsersLoading = (state) => state.users.loading;
 export const selectUsersError = (state) => state.users.error;
 export const selectSuspendLoading = (state) => state.users.suspend.loading;
 export const selectPagination = (state) => state.users.pagination;
+export const selectSuspendedUsers = (state) => state.users.suspendedUsers || [];
+export const selectSuspendedLoading = (state) => state.users.suspend.loading;
+export const selectSuspendedError = (state) => state.users.suspend.error;
 
 // Helper selector to filter users by role
 export const selectUsersByRole = (role) => (state) => {
