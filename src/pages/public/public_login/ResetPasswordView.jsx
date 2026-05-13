@@ -1,6 +1,6 @@
 ﻿import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowRight, ArrowLeft, Eye, EyeOff } from 'lucide-react';
+import { ArrowRight, ArrowLeft, Eye, EyeOff, Loader } from 'lucide-react';
 import { POST } from '../../../services/httpMethods';
 import { ENDPOINT } from '../../../services/httpEndpoint';
 import { toast } from 'react-toastify';
@@ -179,8 +179,9 @@ const ResetPasswordView = () => {
             disabled={loading}
             className="w-full bg-btn-primary hover:bg-[#0d655d] text-white py-3 rounded-lg font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 uppercase text-base tracking-wide"
           >
+            {loading && <Loader className="w-5 h-5 animate-spin" />}
             {loading ? 'RESETTING...' : 'RESET PASSWORD'}
-            <ArrowRight className="w-5 h-5" />
+            {!loading && <ArrowRight className="w-5 h-5" />}
           </button>
         </form>
       </div>
