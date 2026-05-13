@@ -1,44 +1,32 @@
 ﻿import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { ArrowRight, ArrowLeft, Loader } from 'lucide-react';
-import { POST } from '../../../services/httpMethods';
-import { ENDPOINT } from '../../../services/httpEndpoint';
+import { useDispatch, useSelector } from 'react-redux';
+import { forgotPassword as forgotPasswordThunk, selectAuthLoading } from '../../../features/auth/authSlice';
 import { toast } from 'react-toastify';
 
 const ForgotPasswordView = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [email, setEmail] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState('');
+  const loading = useSelector(selectAuthLoading);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!email.trim()) {
       toast.error('Please enter your email');
       return;
     }
 
-    setLoading(true);
-    setMessage('');
-
-    (async () => {
-      try {
-        const response = await POST(ENDPOINT.AUTH.FORGOT_PASSWORD, { email });
-        const payload = response?.data ?? response;
-        const msg = payload?.message || 'Reset code sent to your email';
-        // persist email for OTP verification step
-        localStorage.setItem('forgot_email', email);
-        setLoading(false);
-        setMessage(msg);
-        toast.success(msg);
-        navigate('/otp-verification');
-      } catch (err) {
-        setLoading(false);
-        const message = err?.response?.data?.message || err?.message || 'Failed to send reset code';
-        setMessage(message);
-        toast.error(message);
-      }
-    })();
+    try {
+      const payload = await dispatch(forgotPasswordThunk({ email })).unwrap();
+      const msg = payload?.message || 'Reset code sent to your email';
+      toast.success(msg);
+      navigate('/otp-verification');
+    } catch (err) {
+      const message = err?.message || err?.payload?.message || 'Failed to send reset code';
+      toast.error(message);
+    }
   };
 
   return (
@@ -90,26 +78,7 @@ const ForgotPasswordView = () => {
             {!loading && <ArrowRight className="w-5 h-5" />}
           </button>
 
-          {/* Sign In Link */}
-          {/* <div className="text-center pt-2">
-            <p className="text-base text-[#666666]">
-              Already have account?{' '}
-              <Link to="/signin" className="text-btn-primary font-medium hover:underline">
-                Sign In
-              </Link>
-            </p>
-          </div> */}
-
-          {/* Sign Up Link */}
-          {/* <div className="text-center">
-            <p className="text-base text-[#666666]">
-              Don't have account?{' '}
-              <Link to="/register" className="text-btn-primary font-medium hover:underline">
-                Sign Up
-              </Link>
-            </p>
-          </div> */}
-
+     
           {/* Customer Service */}
           <div className="text-center pt-4 border-t border-gray-200">
             <p className="text-base text-[#666666]">

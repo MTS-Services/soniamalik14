@@ -1,12 +1,13 @@
 ﻿import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowRight, ArrowLeft, Eye, EyeOff, Loader } from 'lucide-react';
-import { POST } from '../../../services/httpMethods';
-import { ENDPOINT } from '../../../services/httpEndpoint';
+import { useDispatch, useSelector } from 'react-redux';
+import { resetPassword as resetPasswordThunk, selectAuthLoading, selectPasswordResetEmail, selectVerifiedOtp } from '../../../features/auth/authSlice';
 import { toast } from 'react-toastify';
 
 const ResetPasswordView = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [formData, setFormData] = useState({
     password: '',
     confirmPassword: '',
@@ -14,7 +15,9 @@ const ResetPasswordView = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [errors, setErrors] = useState({});
-  const [loading, setLoading] = useState(false);
+  const loading = useSelector(selectAuthLoading);
+  const email = useSelector(selectPasswordResetEmail);
+  const verifiedOtp = useSelector(selectVerifiedOtp);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -28,9 +31,6 @@ const ResetPasswordView = () => {
 
   const validateForm = () => {
     const newErrors = {};
-
-    const email = localStorage.getItem('forgot_email');
-    const verifiedOtp = localStorage.getItem('verified_otp');
 
     if (!email || !verifiedOtp) {
       newErrors.form = 'Session expired. Please verify OTP again.';
@@ -56,27 +56,20 @@ const ResetPasswordView = () => {
     e.preventDefault();
 
     if (validateForm()) {
-      setLoading(true);
-
       (async () => {
         try {
-          const email = localStorage.getItem('forgot_email');
-          const verifiedOtp = localStorage.getItem('verified_otp');
-          const body = {
-            email: email || undefined,
-            otp: verifiedOtp || undefined,
-            newPassword: formData.password,
-          };
+          const payload = await dispatch(
+            resetPasswordThunk({
+              email,
+              otp: verifiedOtp,
+              newPassword: formData.password,
+            })
+          ).unwrap();
 
-          await POST(ENDPOINT.AUTH.RESET_PASSWORD, body);
-          setLoading(false);
-          localStorage.removeItem('forgot_email');
-          localStorage.removeItem('verified_otp');
-          toast.success('Password reset successfully. Please sign in.');
+          toast.success(payload?.message || 'Password reset successfully. Please sign in.');
           navigate('/signin');
         } catch (err) {
-          setLoading(false);
-          const message = err?.response?.data?.message || err?.message || 'Password reset failed';
+          const message = err?.message || err?.payload?.message || 'Password reset failed';
           setErrors({ form: message });
           toast.error(message);
         }

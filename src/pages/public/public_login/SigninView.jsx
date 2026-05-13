@@ -1,19 +1,20 @@
 ﻿import React, { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { Eye, EyeOff, Loader } from 'lucide-react';
-import { useAuth, ROLES } from '../../../context/AuthContext';
+import { useDispatch, useSelector } from 'react-redux';
+import { login as loginThunk, ROLES, selectAuthLoading } from '../../../features/auth/authSlice';
 import { FaArrowLeft } from 'react-icons/fa';
 
 const LoginView = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { login } = useAuth();
+  const dispatch = useDispatch();
+  const loading = useSelector(selectAuthLoading);
   const [formData, setFormData] = useState({
     email: '',
     password: '',
   });
   const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
   const handleChange = (e) => {
@@ -23,39 +24,31 @@ const LoginView = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
     setError('');
 
     try {
-      const result = await login(formData.email, formData.password);
-      setLoading(false);
+      const result = await dispatch(loginThunk({ email: formData.email, password: formData.password })).unwrap();
+      const intended = location?.state?.from;
+      const userRoleRaw = result?.user?.role || result?.role || '';
+      const role = String(userRoleRaw).toLowerCase();
 
-      if (result.success) {
-        const intended = location?.state?.from;
-        const userRoleRaw = result.user?.role || result.role || '';
-        const role = String(userRoleRaw).toLowerCase();
+      if (intended) {
+        navigate(intended, { replace: true });
+        return;
+      }
 
-        if (intended) {
-          navigate(intended, { replace: true });
-          return;
-        }
-
-        if (role === ROLES.USER) {
-          navigate('/');
-        } else if (role === ROLES.ADMIN) {
-          navigate('/admin');
-        } else if (role === ROLES.PROVIDER) {
-          navigate('/provider');
-        } else if (role === ROLES.COACH) {
-          navigate('/coach');
-        } else {
-          navigate('/dashboard');
-        }
+      if (role === ROLES.USER) {
+        navigate('/');
+      } else if (role === ROLES.ADMIN) {
+        navigate('/admin');
+      } else if (role === ROLES.PROVIDER) {
+        navigate('/provider');
+      } else if (role === ROLES.COACH) {
+        navigate('/coach');
       } else {
-        setError(result.message || 'Login failed');
+        navigate('/dashboard');
       }
     } catch (err) {
-      setLoading(false);
       const message = err?.message || 'Login failed';
       setError(message);
     }

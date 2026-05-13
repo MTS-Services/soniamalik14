@@ -1,18 +1,19 @@
 ﻿import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, Loader } from 'lucide-react';
-import { POST } from '../../../services/httpMethods';
-import { ENDPOINT } from '../../../services/httpEndpoint';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectAuthLoading, selectPasswordResetEmail, verifyOtp as verifyOtpThunk } from '../../../features/auth/authSlice';
 import { toast } from 'react-toastify';
 
 const OtpVerificationView = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [otp, setOtp] = useState(['', '', '', '', '']);
-  const [email, setEmail] = useState(() => localStorage.getItem('forgot_email') || '');
-  const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [resendMessage, setResendMessage] = useState('');
   const inputRefs = useRef([]);
+  const email = useSelector(selectPasswordResetEmail);
+  const loading = useSelector(selectAuthLoading);
 
   const handleChange = (index, value) => {
     // Only allow numbers
@@ -54,7 +55,7 @@ const OtpVerificationView = () => {
     inputRefs.current[lastIndex]?.focus();
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     // validate email + otp
@@ -69,37 +70,23 @@ const OtpVerificationView = () => {
       return;
     }
 
-    setLoading(true);
     setError('');
 
-    (async () => {
-      try {
-        // backend expects `otp` field
-        const body = { otp: otpValue, email };
-        const res = await POST(ENDPOINT.AUTH.VERIFY_OTP, body);
-        const payload = res?.data ?? res;
-        const msg = payload?.message || 'OTP verified';
-        localStorage.setItem('verified_otp', otpValue);
-        localStorage.setItem('forgot_email', email);
-        setLoading(false);
-        toast.success(msg);
-        navigate('/reset-password');
-      } catch (err) {
-        setLoading(false);
-        // extract validation errors if provided
-        const resp = err?.response?.data;
-        let message = err?.message || 'OTP verification failed';
-        if (resp) {
-          if (resp.message) message = resp.message;
-          if (Array.isArray(resp.errors) && resp.errors.length) {
-            const msgs = resp.errors.map(e => e?.msg || e?.message || JSON.stringify(e));
-            message = `${message}: ${msgs.join(', ')}`;
-          }
-        }
-        setError(message);
-        toast.error(message);
+    try {
+      const payload = await dispatch(verifyOtpThunk({ email, otp: otpValue })).unwrap();
+      const msg = payload?.message || 'OTP verified';
+      toast.success(msg);
+      navigate('/reset-password');
+    } catch (err) {
+      let message = err?.message || err?.payload?.message || 'OTP verification failed';
+      const errors = err?.payload?.errors;
+      if (Array.isArray(errors) && errors.length) {
+        const msgs = errors.map((entry) => entry?.msg || entry?.message || JSON.stringify(entry));
+        message = `${message}: ${msgs.join(', ')}`;
       }
-    })();
+      setError(message);
+      toast.error(message);
+    }
   };
 
   const handleResend = () => {

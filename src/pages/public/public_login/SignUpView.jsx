@@ -2,7 +2,8 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { Eye, EyeOff } from 'lucide-react';
 import { toast } from 'react-toastify';
-import { useAuth, ROLES } from '../../../context/AuthContext';
+import { useDispatch, useSelector } from 'react-redux';
+import { register as registerThunk, ROLES, selectAuthLoading } from '../../../features/auth/authSlice';
 
 // Declare components outside to fix "Cannot create components during render" error
 const InputField = ({ label, name, placeholder, type = "text", optional = false, value, onChange }) => (
@@ -23,7 +24,8 @@ const InputField = ({ label, name, placeholder, type = "text", optional = false,
 
 const RegisterView = () => {
   const navigate = useNavigate();
-  const { register, loading } = useAuth();
+  const dispatch = useDispatch();
+  const loading = useSelector(selectAuthLoading);
 
   const [role, setRole] = useState('Player');
   const [showPassword, setShowPassword] = useState(false);
@@ -161,10 +163,11 @@ const RegisterView = () => {
     }
 
     const payload = buildPayload();
-    const result = await register(payload);
-
-    if (!result.success) {
-      setError(result.message || 'Registration failed');
+    try {
+      await dispatch(registerThunk(payload)).unwrap();
+    } catch (err) {
+      const message = err?.message || err?.payload?.message || err?.payload || 'Registration failed';
+      setError(message);
       return;
     }
 
