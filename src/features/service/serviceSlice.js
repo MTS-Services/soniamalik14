@@ -1,4 +1,4 @@
-﻿import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import {
   fetchApprovedServices,
   fetchProviderServices,
@@ -25,6 +25,7 @@ const initialState = {
     loading: false,
     error: null,
   },
+
   pending: {
     list: [],
     loading: false,
@@ -92,6 +93,7 @@ const serviceSlice = createSlice({
         state.providerServices.loading = false;
         state.providerServices.error = action.payload || 'Failed to fetch provider services';
       });
+
 
     // Fetch Pending Services (admin)
     builder
@@ -206,6 +208,7 @@ export const selectApprovedError = (state) => state.service.approved.error;
 export const selectProviderServices = (state) => state.service.providerServices.list;
 export const selectProviderServicesLoading = (state) => state.service.providerServices.loading;
 export const selectProviderServicesError = (state) => state.service.providerServices.error;
+
 
 export const selectPendingServices = (state) => state.service.pending.list;
 export const selectPendingLoading = (state) => state.service.pending.loading;

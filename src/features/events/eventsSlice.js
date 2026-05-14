@@ -1,5 +1,5 @@
-﻿import { createSlice } from '@reduxjs/toolkit';
-import { fetchEvents, fetchEventAnalytics } from './eventsAPI';
+import { createSlice } from '@reduxjs/toolkit';
+import { fetchEvents, fetchEventAnalytics, fetchProviderEvents } from './eventsAPI';
 
 const initialState = {
   events: {
@@ -14,6 +14,12 @@ const initialState = {
     error: null,
     loading: false,
   },
+  providerEvents: {
+    list: [],
+    success: null,
+    error: null,
+    loading: false,
+  },
 };
 
 const eventsSlice = createSlice({
@@ -23,6 +29,7 @@ const eventsSlice = createSlice({
     resetEventsError: (state) => {
       state.events.error = null;
       state.analytics.error = null;
+      state.providerEvents.error = null;
     },
     resetEvents: () => initialState,
   },
@@ -64,6 +71,25 @@ const eventsSlice = createSlice({
         state.analytics.success = false;
         state.analytics.error = action.payload || 'Failed to fetch event analytics';
       });
+
+    // Fetch Provider Events
+    builder
+      .addCase(fetchProviderEvents.pending, (state) => {
+        state.providerEvents.loading = true;
+        state.providerEvents.error = null;
+        state.providerEvents.success = null;
+      })
+      .addCase(fetchProviderEvents.fulfilled, (state, action) => {
+        state.providerEvents.loading = false;
+        state.providerEvents.success = true;
+        state.providerEvents.error = null;
+        state.providerEvents.list = action.payload || [];
+      })
+      .addCase(fetchProviderEvents.rejected, (state, action) => {
+        state.providerEvents.loading = false;
+        state.providerEvents.success = false;
+        state.providerEvents.error = action.payload || 'Failed to fetch provider events';
+      });
   },
 });
 
@@ -77,5 +103,9 @@ export const selectEventsError = (state) => state.events.events.error;
 export const selectEventAnalytics = (state) => state.events.analytics.list;
 export const selectAnalyticsLoading = (state) => state.events.analytics.loading;
 export const selectAnalyticsError = (state) => state.events.analytics.error;
+
+export const selectProviderEvents = (state) => state.events.providerEvents.list;
+export const selectProviderEventsLoading = (state) => state.events.providerEvents.loading;
+export const selectProviderEventsError = (state) => state.events.providerEvents.error;
 
 export default eventsSlice.reducer;

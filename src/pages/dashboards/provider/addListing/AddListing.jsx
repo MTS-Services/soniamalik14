@@ -1,20 +1,36 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import { Edit3, Trash2, Plus, ChevronLeft, ChevronRight } from 'lucide-react';
 import Pagination from '../../../../components/ui/Pagination';
 import DeleteConfirmationModal from '../../../../components/ui/DeleteConfirmationModal';
 import CreateServiceModal from './components/CreateServiceModal';
-import { addListingDummyData } from './addListingDummyData';
+import { fetchProviderListings } from '../../../../features/providerListing/providerListingAPI';
+import { selectProviderListings, selectProviderListingsLoading } from '../../../../features/providerListing/providerListingSlice';
 
 const AddListing = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalMode, setModalMode] = useState('create');
   const [editingService, setEditingService] = useState(null);
   const [deleteItem, setDeleteItem] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
-  const [localServices, setLocalServices] = useState(addListingDummyData);
+  const [localServices, setLocalServices] = useState([]);
+
+  const reduxServices = useSelector(selectProviderListings);
+  const isLoading = useSelector(selectProviderListingsLoading);
+
+  useEffect(() => {
+    dispatch(fetchProviderListings());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (reduxServices) {
+      setLocalServices(Array.isArray(reduxServices) ? reduxServices : []);
+    }
+  }, [reduxServices]);
 
   const listingSource = localServices;
 

@@ -1,5 +1,6 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   AlertTriangle,
   Calendar,
@@ -12,7 +13,8 @@ import {
 } from 'lucide-react';
 import EventModal from '../../../../components/ui/EventModal';
 import Pagination from '../../../../components/ui/Pagination';
-import providerEventDummyData from './providerEventDummyData.json';
+import { fetchProviderEvents } from '../../../../features/events/eventsAPI';
+import { selectProviderEvents, selectProviderEventsLoading } from '../../../../features/events/eventsSlice';
 
 const formatDateLabel = (value) => {
   if (!value) return 'Date not set';
@@ -24,11 +26,15 @@ const formatDateLabel = (value) => {
 const ProviderEvent = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const restoredFilter = location.state?.filter;
   const restoredPage = location.state?.currentPage;
 
-  const [events, setEvents] = useState(providerEventDummyData);
+  const reduxEvents = useSelector(selectProviderEvents);
+  const isLoading = useSelector(selectProviderEventsLoading);
+
+  const [events, setEvents] = useState([]);
   const [page, setPage] = useState(Number.isInteger(restoredPage) && restoredPage > 0 ? restoredPage : 1);
   const [filter, setFilter] = useState({
     status:
@@ -41,6 +47,16 @@ const ProviderEvent = () => {
   const [editingEvent, setEditingEvent] = useState(null);
   const [eventToDelete, setEventToDelete] = useState(null);
   const [isCreateOpen, setIsCreateOpen] = useState(false);
+
+  useEffect(() => {
+    dispatch(fetchProviderEvents());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (reduxEvents) {
+      setEvents(Array.isArray(reduxEvents) ? reduxEvents : []);
+    }
+  }, [reduxEvents]);
 
   const perPage = 9;
   const statusOptions = ['All', 'Approved', 'Pending'];
