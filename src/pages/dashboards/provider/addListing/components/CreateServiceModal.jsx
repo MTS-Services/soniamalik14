@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useMemo } from 'react';
-import { X, Upload, Eye } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { X, Upload } from 'lucide-react';
 import { useAuth } from '../../../../../context/AuthContext';
 import { useService } from '../../../../../context/ServiceContext';
 
@@ -31,33 +31,77 @@ const sportOptions = [
 
 const responseOptions = ['Add booking link', 'Allow users to register interest'];
 
+const normalizeSessionType = (value) => {
+  const val = String(value || '').trim().toLowerCase();
+  if (val === 'in clinic') return 'In Clinic';
+  if (val === 'at-home visits') return 'At-home Visits';
+  if (val === 'online video') return 'Online Video';
+  return value;
+};
+
+const getParticipantResponseType = (methods = []) => {
+  if (methods.includes('Add booking link')) return 'ADD_BOOKING_LINK';
+  if (methods.includes('Allow users to register interest')) return 'ALLOW_REGISTER_INTEREST';
+  return 'ADD_BOOKING_LINK';
+};
+
+const buildSportsList = (sports = [], otherSport = '') => {
+  const customSport = String(otherSport || '').trim();
+  return sports
+    .filter((sport) => sport !== 'Other')
+    .concat(customSport ? [customSport] : []);
+};
+
+const appendIfPresent = (formData, key, value) => {
+  const normalized = typeof value === 'string' ? value.trim() : value;
+  if (
+    normalized !== undefined &&
+    normalized !== null &&
+    !(typeof normalized === 'string' && normalized.length === 0)
+  ) {
+    formData.append(key, normalized);
+  }
+};
+
 const buildInitialState = (initialData) => ({
   providerBusinessName: initialData?.providerName || '',
-  contactName: initialData?.providerName || '',
+  contactName: initialData?.contactName || initialData?.providerName || '',
   logo: initialData?.image || null,
-  clinicName: '',
-  address1: initialData?.fullAddress || '',
-  townCity: '',
-  postcode: '',
-  providerTypes: initialData?.category ? [initialData.category] : [],
-  listingHeadline: initialData?.title || '',
-  about: initialData?.description || '',
-  sessionTypes: ['In clinic'],
+  clinicName: initialData?.clinicName || '',
+  address1: initialData?.addressLine1 || initialData?.fullAddress || '',
+  townCity: initialData?.city || '',
+  postcode: initialData?.postcode || '',
+  providerTypes: initialData?.providerType
+    ? [initialData.providerType]
+    : initialData?.category
+      ? [initialData.category]
+      : [],
+  listingHeadline: initialData?.listingHeadline || initialData?.title || '',
+  about: initialData?.aboutService || initialData?.description || '',
+  sessionTypes:
+    Array.isArray(initialData?.sessionTypes) && initialData.sessionTypes.length > 0
+      ? initialData.sessionTypes
+      : ['In clinic'],
   sports: initialData?.whoServiceFor
     ? initialData.whoServiceFor.split(',').map((s) => s.trim())
     : [],
-  otherSport: initialData?.otherSport || '',
-  registration: '',
-  insuranceInPlace: 'Yes',
-  responseMethods: ['By default'],
-  bookingLink: initialData?.googleMapLink || '',
+  otherSport: '',
+  registration: initialData?.professionalRegistration || '',
+  insuranceInPlace: initialData?.insuranceInPlace === false ? 'No' : 'Yes',
+  responseMethods: ['Add booking link'],
+  bookingLink: initialData?.bookingLink || '',
+  price: initialData?.price ?? '',
+  duration: initialData?.duration ?? '',
+  availableDays: initialData?.availableDays || '',
+  timeSlots: initialData?.timeSlots || '',
+  category: initialData?.category || '',
 });
 
 const PillButton = ({ active, onClick, children }) => (
   <button
     type="button"
     onClick={onClick}
-    className={`rounded-[4px] px-4 py-2 text-sm font-medium transition-colors ${
+    className={`rounded-sm px-4 py-2 text-sm font-medium transition-colors ${
       active ? 'bg-[#0F766E] text-white' : 'bg-[#91C0BC] text-[#242424]'
     }`}
   >
@@ -96,7 +140,6 @@ const CreateServiceModal = ({
   const { user } = useAuth();
   const { createService, createLoading, updateService, updateLoading } = useService();
   const [formData, setFormData] = useState(() => buildInitialState(initialData));
-  const [showPreview, setShowPreview] = useState(false);
   const [previewImage, setPreviewImage] = useState(
     initialData?.image && typeof initialData.image === 'string' ? initialData.image : ''
   );
@@ -140,12 +183,110 @@ const CreateServiceModal = ({
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     if (localMode && onLocalSubmit) {
       onLocalSubmit(formData, mode, initialData);
       onClose?.();
       return;
     }
-    // API logic remains same...
+
+    const serviceTitle = String(formData.listingHeadline || '').trim();
+    const serviceDescription = String(formData.about || '').trim();
+    const providerName = String(formData.providerBusinessName || '').trim();
+    const contactName = String(formData.contactName || '').trim();
+    const providerType = formData.providerTypes?.[0] || '';
+    const sportsList = buildSportsList(formData.sports, formData.otherSport);
+    const mapLink = String(initialData?.googleMapLink || '').trim();
+    const providerPhone =
+      user?.phone || user?.phoneNumber || user?.mobile || user?.contactNumber || user?.providerPhone || '';
+    const providerEmail = user?.email || user?.providerEmail || '';
+    const fullAddress = [
+      formData.clinicName,
+      formData.address1,
+      formData.townCity,
+      formData.postcode,
+    ]
+      .map((item) => String(item || '').trim())
+      .filter(Boolean)
+      .join(', ');
+
+    const payload = new FormData();
+    payload.append('title', serviceTitle);
+    payload.append('listingHeadline', serviceTitle);
+    payload.append('description', serviceDescription);
+    payload.append('aboutService', serviceDescription);
+    payload.append('providerName', providerName);
+    appendIfPresent(payload, 'contactName', contactName || providerName);
+    appendIfPresent(payload, 'providerPhone', providerPhone);
+    appendIfPresent(payload, 'providerEmail', providerEmail);
+    appendIfPresent(payload, 'providerType', providerType);
+    payload.append('serviceType', initialData?.serviceType || 'COACHING');
+    payload.append('clinicName', String(formData.clinicName || '').trim());
+    payload.append('addressLine1', String(formData.address1 || '').trim());
+    payload.append('city', String(formData.townCity || '').trim());
+    payload.append('postcode', String(formData.postcode || '').trim());
+    payload.append('fullAddress', fullAddress);
+    appendIfPresent(payload, 'googleMapLink', mapLink);
+    payload.append('location', String(formData.townCity || '').trim());
+    payload.append(
+      'sessionTypes',
+      JSON.stringify((formData.sessionTypes || []).map((item) => normalizeSessionType(item)))
+    );
+    payload.append('sports', JSON.stringify(sportsList));
+    payload.append(
+      'isOnline',
+      String((formData.sessionTypes || []).some((item) => String(item).toLowerCase() === 'online video'))
+    );
+    payload.append('professionalRegistration', String(formData.registration || '').trim());
+    payload.append('insuranceInPlace', String(formData.insuranceInPlace === 'Yes'));
+    payload.append('participantResponseType', getParticipantResponseType(formData.responseMethods));
+    payload.append('bookingLink', String(formData.bookingLink || '').trim());
+    // Note: status and isApproved are set by backend, not sent by frontend
+    payload.append('category', formData.category || providerType || 'Other');
+    // Note: whoServiceFor may not be a frontend field
+    appendIfPresent(payload, 'availableDays', formData.availableDays);
+    appendIfPresent(payload, 'timeSlots', formData.timeSlots);
+    appendIfPresent(payload, 'price', formData.price);
+    appendIfPresent(payload, 'duration', formData.duration);
+
+    if (formData.logo && typeof formData.logo !== 'string') {
+      payload.append('image', formData.logo);
+    }
+
+    // Debug: Log FormData entries to console
+    try {
+      const payloadDebug = {};
+      const payloadFieldsList = [];
+      for (const [key, value] of payload.entries()) {
+        if (value instanceof File) {
+          payloadDebug[key] = `[File: ${value.name}]`;
+        } else {
+          payloadDebug[key] = value;
+        }
+        payloadFieldsList.push(key);
+      }
+      // eslint-disable-next-line no-console
+      console.log('[CreateServiceModal] FormData payload fields:', payloadFieldsList);
+      // eslint-disable-next-line no-console
+      console.log('[CreateServiceModal] FormData payload data:', payloadDebug);
+      // eslint-disable-next-line no-console
+      console.log('[CreateServiceModal] Total fields:', payloadFieldsList.length);
+    } catch (e) {
+      // eslint-disable-next-line no-console
+      console.error('[CreateServiceModal] Error logging payload:', e);
+    }
+
+    let result;
+    if (mode === 'edit' && initialData?.id) {
+      result = await updateService(initialData.id, payload);
+    } else {
+      result = await createService(payload);
+    }
+
+    if (result?.success) {
+      onSuccess?.(result?.service || result, mode);
+      onClose?.();
+    }
   };
 
   if (!isOpen) return null;

@@ -2,8 +2,8 @@
 import { API_CONFIG } from '../config/constants';
 import { getToken } from '../utils/storage';
 
-// In development we prefer relative requests so Vite dev server proxy can forward /api to backend
-const baseURL = import.meta.env.DEV ? '' : API_CONFIG.BASE_URL;
+// Always use direct backend URL (no Vite proxy)
+const baseURL = API_CONFIG.BASE_URL;
 
 // Debug: Log environment info to help diagnose production issues
 // eslint-disable-next-line no-console
@@ -46,9 +46,10 @@ axiosInstance.interceptors.request.use(
     // If sending FormData, let axios set Content-Type automatically (with boundary)
     if (config.data instanceof FormData) {
       delete config.headers['Content-Type'];
-      console.log('[axios] PUT request with FormData:', {
+      console.log('[axios] FormData request:', {
         url: config.url,
         method: config.method,
+        timeout: config.timeout,
         headers: config.headers,
       });
     } else if (config.method?.toUpperCase() === 'PUT') {
@@ -76,6 +77,7 @@ axiosInstance.interceptors.response.use(
   (error) => {
     // Detailed error logging for debugging network/auth issues
     try {
+      const isTimeout = error?.code === 'ECONNABORTED' || /timeout/i.test(error?.message || '');
       // eslint-disable-next-line no-console
       console.error('[axios][error]', {
         url: error?.config?.url,
@@ -83,6 +85,11 @@ axiosInstance.interceptors.response.use(
         status: error?.response?.status,
         response: error?.response?.data,
         message: error?.message,
+        timeout: error?.config?.timeout,
+        isTimeout,
+        hint: isTimeout
+          ? 'Request timed out before backend responded. Verify API/proxy reachability and backend latency.'
+          : undefined,
       });
     } catch (e) {
       // noop

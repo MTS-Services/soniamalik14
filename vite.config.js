@@ -9,10 +9,6 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 export default ({ mode }) => {
-  // Load .env files so we can read VITE_API_BASE_URL for the dev proxy
-  const env = loadEnv(mode, process.cwd(), '');
-  const apiTarget = env.VITE_API_BASE_URL || '';
-
   return defineConfig({
     plugins: [react(), tailwindcss()],
     resolve: {
@@ -21,16 +17,7 @@ export default ({ mode }) => {
       },
     },
     server: {
-      // Dev proxy to avoid CORS issues during local development
-      proxy: apiTarget
-        ? {
-            '/api': {
-              target: apiTarget,
-              changeOrigin: true,
-              secure: false,
-            },
-          }
-        : undefined,
+      // Proxy disabled: axios makes direct calls to backend URL
     },
   });
 };

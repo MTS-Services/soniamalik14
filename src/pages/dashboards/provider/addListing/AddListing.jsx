@@ -5,8 +5,8 @@ import { Edit3, Trash2, Plus, ChevronLeft, ChevronRight } from 'lucide-react';
 import Pagination from '../../../../components/ui/Pagination';
 import DeleteConfirmationModal from '../../../../components/ui/DeleteConfirmationModal';
 import CreateServiceModal from './components/CreateServiceModal';
-import { fetchProviderListings } from '../../../../features/providerListing/providerListingAPI';
-import { selectProviderListings, selectProviderListingsLoading } from '../../../../features/providerListing/providerListingSlice';
+import { fetchProviderListings, deleteProviderListing } from '../../../../features/providerListing/providerListingAPI';
+import { selectProviderListings } from '../../../../features/providerListing/providerListingSlice';
 
 const AddListing = () => {
   const navigate = useNavigate();
@@ -17,22 +17,17 @@ const AddListing = () => {
   const [editingService, setEditingService] = useState(null);
   const [deleteItem, setDeleteItem] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
-  const [localServices, setLocalServices] = useState([]);
 
   const reduxServices = useSelector(selectProviderListings);
-  const isLoading = useSelector(selectProviderListingsLoading);
 
   useEffect(() => {
     dispatch(fetchProviderListings());
   }, [dispatch]);
 
-  useEffect(() => {
-    if (reduxServices) {
-      setLocalServices(Array.isArray(reduxServices) ? reduxServices : []);
-    }
-  }, [reduxServices]);
-
-  const listingSource = localServices;
+  const listingSource = useMemo(
+    () => (Array.isArray(reduxServices) ? reduxServices : []),
+    [reduxServices]
+  );
 
   const itemsPerPage = 6;
   const totalPages = Math.max(1, Math.ceil(listingSource.length / itemsPerPage));
@@ -57,37 +52,16 @@ const AddListing = () => {
 
   const handleDeleteConfirm = async () => {
     if (!deleteItem) return;
-    setLocalServices((prev) => prev.filter((item) => item.id !== deleteItem.id));
+    try {
+      await dispatch(deleteProviderListing(deleteItem.id)).unwrap();
+    } catch (error) {
+      console.error('Failed to delete listing:', error);
+    }
     setDeleteItem(null);
   };
 
-  const handleLocalSubmit = (formData, submitMode, initialData) => {
-    const imageValue =
-      formData.logo && typeof formData.logo !== 'string'
-        ? URL.createObjectURL(formData.logo)
-        : formData.logo || '/images/marketplace/image_1.jpg';
-
-    const localItem = {
-      id:
-        submitMode === 'edit'
-          ? initialData?.id
-          : `demo-${Date.now()}-${Math.random().toString(16).slice(2, 8)}`,
-      title: formData.listingHeadline,
-      description: formData.about,
-      category: formData.providerTypes[0] || 'Other',
-      image: imageValue,
-      providerName: formData.providerBusinessName,
-      fullAddress: [formData.clinicName, formData.address1, formData.city, formData.postcode]
-        .filter(Boolean)
-        .join(', '),
-    };
-
-    if (submitMode === 'edit') {
-      setLocalServices((prev) => prev.map((item) => (item.id === localItem.id ? localItem : item)));
-      return;
-    }
-
-    setLocalServices((prev) => [localItem, ...prev]);
+  const handleModalSuccess = () => {
+    dispatch(fetchProviderListings());
     setCurrentPage(1);
   };
 
@@ -215,8 +189,7 @@ const AddListing = () => {
         onClose={() => setIsModalOpen(false)}
         mode={modalMode}
         initialData={editingService}
-        localMode={true}
-        onLocalSubmit={handleLocalSubmit}
+        onSuccess={handleModalSuccess}
       />
 
       <DeleteConfirmationModal

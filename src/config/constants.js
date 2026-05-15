@@ -15,7 +15,7 @@ export const APP_CONFIG = Object.freeze({
 /* ----------------------------- API ----------------------------- */
 export const API_CONFIG = Object.freeze({
   BASE_URL: ENV.API_BASE_URL,
-  TIMEOUT: ENV.IS_DEV ? 10_000 : 5_000,
+  TIMEOUT: ENV.IS_DEV ? 20_000 : 8_000,
   WITH_CREDENTIALS: false,
 });
 

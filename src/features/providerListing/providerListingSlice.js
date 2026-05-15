@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchProviderListings } from './providerListingAPI';
+import { fetchProviderListings, deleteProviderListing } from './providerListingAPI';
 
 const initialState = {
   listings: {
@@ -36,6 +36,17 @@ const providerListingSlice = createSlice({
         state.listings.loading = false;
         state.listings.success = false;
         state.listings.error = action.payload || 'Failed to fetch provider listings';
+      });
+
+    builder
+      .addCase(deleteProviderListing.pending, (state) => {
+        // optional: state.listings.loading = true;
+      })
+      .addCase(deleteProviderListing.fulfilled, (state, action) => {
+        state.listings.list = state.listings.list.filter((item) => item.id !== action.payload);
+      })
+      .addCase(deleteProviderListing.rejected, (state, action) => {
+        state.listings.error = action.payload || 'Failed to delete provider listing';
       });
   },
 });
