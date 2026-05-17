@@ -1,5 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { DELETE, GET, POST, PUT } from '../../services/httpMethods';
+import { ENDPOINT } from '../../services/httpEndpoint';
 import { apiExecutor } from '../../services/apiExecutor';
 import eventAnalyticsData from '../../data/eventAnalyticsData.json';
 import { toast } from 'react-toastify';
@@ -32,13 +33,13 @@ const getApiErrorMessage = (error, fallbackMessage) => {
   return payload?.message || fallback;
 };
 
-// Fetch all events - using local data
+// Fetch approved public events
 export const fetchEvents = createAsyncThunk(
   'events/fetchAll',
   async (_, { rejectWithValue, signal }) => {
     try {
       const response = await apiExecutor(
-        (signal) => GET('/api/events', {}, signal, { skipAuth: true, withCredentials: false }),
+        (signal) => GET(ENDPOINT.EVENTS.APPROVED, {}, signal, { skipAuth: true, withCredentials: false }),
         rejectWithValue,
         signal
       );

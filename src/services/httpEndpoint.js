@@ -57,6 +57,7 @@ export const ENDPOINT = {
   },
   EVENTS: {
     LIST: '/api/events',
+    APPROVED: '/api/events?status=APPROVED',
     MY_LIST: '/api/events/my/list',
     ANALYTICS: '/api/events/analytics',
     CREATE: '/api/events',
