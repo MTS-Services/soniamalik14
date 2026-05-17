@@ -26,6 +26,7 @@ const axiosInstance = axios.create({
 // Request interceptor
 axiosInstance.interceptors.request.use(
   (config) => {
+    const skipAuth = Boolean(config?.skipAuth);
     const token = getToken();
     // Temporary debug: log whether a token was found (masked)
     try {
@@ -36,8 +37,10 @@ axiosInstance.interceptors.request.use(
       // noop
     }
 
-    if (token) {
+    if (token && !skipAuth) {
       config.headers.Authorization = `Bearer ${token}`;
+    } else if (skipAuth && config.headers?.Authorization) {
+      delete config.headers.Authorization;
     }
 
     if (config.data instanceof FormData) {

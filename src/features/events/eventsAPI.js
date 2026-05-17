@@ -38,7 +38,7 @@ export const fetchEvents = createAsyncThunk(
   async (_, { rejectWithValue, signal }) => {
     try {
       const response = await apiExecutor(
-        (signal) => GET('/api/events', {}, signal),
+        (signal) => GET('/api/events', {}, signal, { skipAuth: true, withCredentials: false }),
         rejectWithValue,
         signal
       );
