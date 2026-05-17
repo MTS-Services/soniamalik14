@@ -66,7 +66,7 @@ const appendIfPresent = (formData, key, value) => {
 const buildInitialState = (initialData) => ({
   providerBusinessName: initialData?.providerName || '',
   contactName: initialData?.contactName || initialData?.providerName || '',
-  logo: initialData?.image || null,
+  logo: initialData?.logo || null,
   clinicName: initialData?.clinicName || '',
   address1: initialData?.addressLine1 || initialData?.fullAddress || '',
   townCity: initialData?.city || '',
@@ -141,17 +141,21 @@ const CreateServiceModal = ({
   const { createService, createLoading, updateService, updateLoading } = useService();
   const [formData, setFormData] = useState(() => buildInitialState(initialData));
   const [previewImage, setPreviewImage] = useState(
-    initialData?.image && typeof initialData.image === 'string' ? initialData.image : ''
+    initialData?.logo && typeof initialData.logo === 'string' ? initialData.logo : ''
   );
 
   const isBusy = createLoading || updateLoading;
 
   useEffect(() => {
     if (isOpen) {
-      setFormData(buildInitialState(initialData));
-      setPreviewImage(
-        initialData?.image && typeof initialData.image === 'string' ? initialData.image : ''
-      );
+      const nextFormData = buildInitialState(initialData);
+      const nextPreviewImage =
+        initialData?.logo && typeof initialData.logo === 'string' ? initialData.logo : '';
+
+      queueMicrotask(() => {
+        setFormData(nextFormData);
+        setPreviewImage(nextPreviewImage);
+      });
     }
   }, [isOpen, initialData]);
 
@@ -250,7 +254,7 @@ const CreateServiceModal = ({
     appendIfPresent(payload, 'duration', formData.duration);
 
     if (formData.logo && typeof formData.logo !== 'string') {
-      payload.append('image', formData.logo);
+      payload.append('logo', formData.logo);
     }
 
     // Debug: Log FormData entries to console
@@ -265,14 +269,10 @@ const CreateServiceModal = ({
         }
         payloadFieldsList.push(key);
       }
-      // eslint-disable-next-line no-console
       console.log('[CreateServiceModal] FormData payload fields:', payloadFieldsList);
-      // eslint-disable-next-line no-console
       console.log('[CreateServiceModal] FormData payload data:', payloadDebug);
-      // eslint-disable-next-line no-console
       console.log('[CreateServiceModal] Total fields:', payloadFieldsList.length);
     } catch (e) {
-      // eslint-disable-next-line no-console
       console.error('[CreateServiceModal] Error logging payload:', e);
     }
 
