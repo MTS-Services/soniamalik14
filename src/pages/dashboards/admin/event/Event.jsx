@@ -1,12 +1,13 @@
 ﻿import React, { useEffect, useMemo, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import EventHeaderSection from './components/EventHeaderSection';
 import EventSearchAndFilters from './components/EventSearchAndFilters';
 import EventTableHeader from './components/EventTableHeader';
 import EventTableRow from './components/EventTableRow';
 import EventEmptyState from './components/EventEmptyState';
 import EventPagination from './components/EventPagination';
-import { GET } from '../../../../services/httpMethods';
-import { ENDPOINT } from '../../../../services/httpEndpoint';
+import { fetchAdminEvents } from '../../../../features/events/eventsAPI';
+import { selectAdminEvents, selectAdminEventsError, selectAdminEventsLoading } from '../../../../features/events/eventsSlice';
 
 const normalizeEventsList = (value) => {
   if (Array.isArray(value)) return value;
@@ -50,67 +51,39 @@ const formatPostcode = (event) => event?.postcode || event?.zipCode || event?.po
 const formatEngagement = (event) => event?.engagement || event?.metrics || null;
 
 const Events = () => {
+  const dispatch = useDispatch();
   // Filter States
   const [activeTab, setActiveTab] = useState('All Events');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedSport, setSelectedSport] = useState('All Sports');
   const [fromDate, setFromDate] = useState('');
   const [toDate, setToDate] = useState('');
-  const [eventsData, setEventsData] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const eventsData = useSelector(selectAdminEvents);
+  const loading = useSelector(selectAdminEventsLoading);
+  const error = useSelector(selectAdminEventsError);
+
+  const renderedEvents = useMemo(() => {
+    return normalizeEventsList(eventsData).map((event) => ({
+      id: event?.id,
+      name: event?.name || event?.title || 'Untitled Event',
+      date: formatDate(event?.date || event?.startDate || event?.eventDate),
+      provider: formatProviderName(event),
+      providerSub: formatProviderSub(event),
+      sport: formatSport(event),
+      postcode: formatPostcode(event),
+      status: formatStatus(event?.status || event?.approvalStatus || event?.eventStatus),
+      engagement: formatEngagement(event),
+    }));
+  }, [eventsData]);
 
   useEffect(() => {
-    let isActive = true;
-    const controller = new AbortController();
-
-    const loadEvents = async () => {
-      setLoading(true);
-      setError(null);
-
-      try {
-        const response = await GET(ENDPOINT.EVENTS.LIST, {}, controller.signal);
-        const rows = normalizeEventsList(response?.data?.data || response?.data || response || []);
-
-        if (!isActive) return;
-
-        setEventsData(
-          rows.map((event) => ({
-            id: event?.id,
-            name: event?.name || event?.title || 'Untitled Event',
-            date: formatDate(event?.date || event?.startDate || event?.eventDate),
-            provider: formatProviderName(event),
-            providerSub: formatProviderSub(event),
-            sport: formatSport(event),
-            postcode: formatPostcode(event),
-            status: formatStatus(event?.status || event?.approvalStatus || event?.eventStatus),
-            engagement: formatEngagement(event),
-          }))
-        );
-      } catch (err) {
-        if (!isActive) return;
-
-        setEventsData([]);
-        setError(err?.response?.data?.message || err?.message || 'Failed to fetch events');
-      } finally {
-        if (isActive) {
-          setLoading(false);
-        }
-      }
-    };
-
-    loadEvents();
-
-    return () => {
-      isActive = false;
-      controller.abort();
-    };
-  }, []);
+    dispatch(fetchAdminEvents());
+  }, [dispatch]);
 
   const tabs = ['All Events', 'Pending', 'Featured', 'Live', 'Past', 'Banned'];
 
   // Get unique sports for the dropdown
-  const uniqueSports = ['All Sports', ...Array.from(new Set(eventsData.map((item) => item.sport).filter(Boolean)))];
+  const uniqueSports = ['All Sports', ...Array.from(new Set(renderedEvents.map((item) => item.sport).filter(Boolean)))];
 
   // Helper function to parse "DD/MM/YYYY" to a comparable Date object
   const parseDate = (dateString) => {
@@ -121,7 +94,7 @@ const Events = () => {
 
   // Filter Logic
   const filteredData = useMemo(() => {
-    return eventsData.filter((event) => {
+    return renderedEvents.filter((event) => {
       // 1. Tab Filter
       const matchesTab = activeTab === 'All Events' || event.status === activeTab;
 
@@ -147,7 +120,7 @@ const Events = () => {
 
       return matchesTab && matchesSearch && matchesSport && matchesFromDate && matchesToDate;
     });
-  }, [activeTab, searchQuery, selectedSport, fromDate, toDate, eventsData]);
+  }, [activeTab, searchQuery, selectedSport, fromDate, toDate, renderedEvents]);
 
   return (
     <div className="flex-1 overflow-auto bg-gray-50 dashboardPy dashboardSpaceY">

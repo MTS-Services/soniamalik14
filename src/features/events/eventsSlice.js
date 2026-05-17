@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import {
   fetchEvents,
+  fetchAdminEvents,
   fetchEventAnalytics,
   fetchProviderEvents,
   fetchOrganizerEvents,
@@ -8,10 +9,28 @@ import {
   createOrganizerEvent,
   updateOrganizerEvent,
   deleteOrganizerEvent,
+  approveAdminEvent,
+  rejectAdminEvent,
 } from './eventsAPI';
+
+const normalizeEventsList = (value) => {
+  if (Array.isArray(value)) return value;
+  if (!value || typeof value !== 'object') return [];
+  if (Array.isArray(value.events)) return value.events;
+  if (Array.isArray(value.data)) return value.data;
+  if (Array.isArray(value.rows)) return value.rows;
+  if (Array.isArray(value.items)) return value.items;
+  return [];
+};
 
 const initialState = {
   events: {
+    list: [],
+    success: null,
+    error: null,
+    loading: false,
+  },
+  adminEvents: {
     list: [],
     success: null,
     error: null,
@@ -64,6 +83,7 @@ const eventsSlice = createSlice({
   reducers: {
     resetEventsError: (state) => {
       state.events.error = null;
+      state.adminEvents.error = null;
       state.analytics.error = null;
       state.providerEvents.error = null;
       state.organizerEvents.error = null;
@@ -92,6 +112,70 @@ const eventsSlice = createSlice({
         state.events.loading = false;
         state.events.success = false;
         state.events.error = action.payload || 'Failed to fetch events';
+      });
+
+    builder
+      .addCase(fetchAdminEvents.pending, (state) => {
+        state.adminEvents.loading = true;
+        state.adminEvents.error = null;
+        state.adminEvents.success = null;
+      })
+      .addCase(fetchAdminEvents.fulfilled, (state, action) => {
+        state.adminEvents.loading = false;
+        state.adminEvents.success = true;
+        state.adminEvents.error = null;
+        state.adminEvents.list = normalizeEventsList(action.payload);
+      })
+      .addCase(fetchAdminEvents.rejected, (state, action) => {
+        state.adminEvents.loading = false;
+        state.adminEvents.success = false;
+        state.adminEvents.error = action.payload || 'Failed to fetch admin events';
+      });
+
+    builder
+      .addCase(approveAdminEvent.pending, (state) => {
+        state.adminEvents.loading = true;
+        state.adminEvents.error = null;
+        state.adminEvents.success = null;
+      })
+      .addCase(approveAdminEvent.fulfilled, (state, action) => {
+        state.adminEvents.loading = false;
+        state.adminEvents.success = true;
+        state.adminEvents.error = null;
+        const updated = action.payload;
+        if (updated && typeof updated === 'object' && updated.id) {
+          state.adminEvents.list = normalizeEventsList(state.adminEvents.list).map((event) =>
+            String(event?.id) === String(updated.id) ? { ...event, ...updated } : event
+          );
+        }
+      })
+      .addCase(approveAdminEvent.rejected, (state, action) => {
+        state.adminEvents.loading = false;
+        state.adminEvents.success = false;
+        state.adminEvents.error = action.payload || 'Failed to approve event';
+      });
+
+    builder
+      .addCase(rejectAdminEvent.pending, (state) => {
+        state.adminEvents.loading = true;
+        state.adminEvents.error = null;
+        state.adminEvents.success = null;
+      })
+      .addCase(rejectAdminEvent.fulfilled, (state, action) => {
+        state.adminEvents.loading = false;
+        state.adminEvents.success = true;
+        state.adminEvents.error = null;
+        const updated = action.payload;
+        if (updated && typeof updated === 'object' && updated.id) {
+          state.adminEvents.list = normalizeEventsList(state.adminEvents.list).map((event) =>
+            String(event?.id) === String(updated.id) ? { ...event, ...updated } : event
+          );
+        }
+      })
+      .addCase(rejectAdminEvent.rejected, (state, action) => {
+        state.adminEvents.loading = false;
+        state.adminEvents.success = false;
+        state.adminEvents.error = action.payload || 'Failed to ban event';
       });
 
     // Fetch Event Analytics
@@ -244,6 +328,10 @@ export const { resetEventsError, resetEvents } = eventsSlice.actions;
 export const selectAllEvents = (state) => state.events.events.list;
 export const selectEventsLoading = (state) => state.events.events.loading;
 export const selectEventsError = (state) => state.events.events.error;
+
+export const selectAdminEvents = (state) => state.events.adminEvents.list;
+export const selectAdminEventsLoading = (state) => state.events.adminEvents.loading;
+export const selectAdminEventsError = (state) => state.events.adminEvents.error;
 
 export const selectEventAnalytics = (state) => state.events.analytics.list;
 export const selectAnalyticsLoading = (state) => state.events.analytics.loading;

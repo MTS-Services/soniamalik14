@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { DELETE, GET, POST, PUT } from '../../services/httpMethods';
+import { DELETE, GET, PATCH, POST, PUT } from '../../services/httpMethods';
 import { ENDPOINT } from '../../services/httpEndpoint';
 import { apiExecutor } from '../../services/apiExecutor';
 import eventAnalyticsData from '../../data/eventAnalyticsData.json';
@@ -46,6 +46,70 @@ export const fetchEvents = createAsyncThunk(
       return response?.data?.data || response?.data || response || [];
     } catch (error) {
       return rejectWithValue(error?.message || 'Failed to fetch events');
+    }
+  }
+);
+
+export const fetchAdminEvents = createAsyncThunk(
+  'events/fetchAdminEvents',
+  async (_, { rejectWithValue, signal }) => {
+    try {
+      const response = await apiExecutor(
+        (signal) => GET(ENDPOINT.EVENTS.LIST, {}, signal),
+        rejectWithValue,
+        signal
+      );
+      return response?.data?.data || response?.data || response || [];
+    } catch (error) {
+      return rejectWithValue(error?.message || 'Failed to fetch admin events');
+    }
+  }
+);
+
+export const approveAdminEvent = createAsyncThunk(
+  'events/approveAdminEvent',
+  async (eventId, { rejectWithValue, signal }) => {
+    try {
+      if (!eventId) {
+        return rejectWithValue('Event id is required');
+      }
+
+      const response = await apiExecutor(
+        (signal) => PATCH(ENDPOINT.EVENTS.APPROVAL_STATUS(eventId), { action: 'approve' }, signal),
+        rejectWithValue,
+        signal
+      );
+      const result = response?.data || response;
+      toast.success(result?.message || 'Event approved successfully');
+      return result?.data || result || { id: eventId, status: 'Approved' };
+    } catch (error) {
+      const message = getApiErrorMessage(error, 'Failed to approve event');
+      toast.error(message);
+      return rejectWithValue(message);
+    }
+  }
+);
+
+export const rejectAdminEvent = createAsyncThunk(
+  'events/rejectAdminEvent',
+  async ({ eventId, reason }, { rejectWithValue, signal }) => {
+    try {
+      if (!eventId) {
+        return rejectWithValue('Event id is required');
+      }
+
+      const response = await apiExecutor(
+        (signal) => PATCH(ENDPOINT.EVENTS.APPROVAL_STATUS(eventId), { action: 'reject', reason }, signal),
+        rejectWithValue,
+        signal
+      );
+      const result = response?.data || response;
+      toast.success(result?.message || 'Event banned successfully');
+      return result?.data || result || { id: eventId, status: 'Banned' };
+    } catch (error) {
+      const message = getApiErrorMessage(error, 'Failed to ban event');
+      toast.error(message);
+      return rejectWithValue(message);
     }
   }
 );
