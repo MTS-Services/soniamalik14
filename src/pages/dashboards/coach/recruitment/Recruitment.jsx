@@ -2,7 +2,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import RecruitmentCard from './RecruitmentCard';
 import Pagination from '../../../../components/ui/Pagination';
-import CreateServiceModal from '../../provider/addListing/components/CreateServiceModal';
+import CreateRecruitmentModal from '../../../../components/ui/CreateRecruitmentModal';
 import { Plus } from 'lucide-react';
 import { fetchProviderServices, deleteService } from '../../../../features/service/serviceApi';
 import {
@@ -95,7 +95,7 @@ const Recruitment = () => {
         <Pagination page={page} total={totalPages} onChange={(p) => setPage(p)} />
       )}
 
-      <CreateServiceModal
+      <CreateRecruitmentModal
         isOpen={isModalOpen}
         onClose={() => {
           setIsModalOpen(false);

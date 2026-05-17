@@ -1,5 +1,8 @@
 ﻿import React, { useEffect, useMemo, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Upload, X } from 'lucide-react';
+import { createService, updateService } from '../../features/service/serviceApi';
+import { selectCreateLoading } from '../../features/service/serviceSlice';
 
 const sportOptions = [
   'Football',
@@ -52,16 +55,84 @@ const createInitialForm = () => ({
   bookingLink: '',
 });
 
-const CreateRecruitmentModal = ({ isOpen, onClose, initialData = null, mode = 'create' }) => {
+const appendIfPresent = (formData, key, value) => {
+  const normalized = typeof value === 'string' ? value.trim() : value;
+  if (
+    normalized !== undefined &&
+    normalized !== null &&
+    !(typeof normalized === 'string' && normalized.length === 0)
+  ) {
+    formData.append(key, normalized);
+  }
+};
+
+const appendArrayValues = (formData, key, values = []) => {
+  values.forEach((value) => appendIfPresent(formData, key, value));
+};
+
+const toArray = (value) => {
+  if (Array.isArray(value)) return value;
+  if (value === undefined || value === null) return [];
+  const text = String(value).trim();
+  if (!text) return [];
+  if (text.startsWith('[') && text.endsWith(']')) {
+    try {
+      const parsed = JSON.parse(text);
+      if (Array.isArray(parsed)) return parsed;
+    } catch {
+      // Fall back to comma-separated parsing.
+    }
+  }
+  return text.split(',').map((item) => item.trim()).filter(Boolean);
+};
+
+const mapInitialDataToForm = (initialData) => {
+  const sportsFromService = toArray(initialData?.sports);
+  const sportsFromWhoServiceFor = toArray(initialData?.whoServiceFor);
+  const mergedSports = [...sportsFromService, ...sportsFromWhoServiceFor].filter(Boolean);
+  const knownSports = mergedSports.filter((sport) => sportOptions.includes(sport) && sport !== 'Other');
+  const customSports = mergedSports.filter((sport) => !sportOptions.includes(sport));
+
+  return {
+    ...createInitialForm(),
+    organisationName: initialData?.providerName || initialData?.title || '',
+    contactPerson: initialData?.contactName || '',
+    role: initialData?.providerType || initialData?.category || 'coach_manager',
+    about: initialData?.aboutService || initialData?.description || '',
+    image: initialData?.logo || initialData?.image || null,
+    sports: customSports.length ? [...new Set([...knownSports, 'Other'])] : [...new Set(knownSports)],
+    otherSport: customSports.join(', '),
+    sessionTypes: toArray(initialData?.sessionTypes),
+    venueName: initialData?.clinicName || '',
+    postcode: initialData?.postcode || '',
+    townCity: initialData?.city || '',
+    sessionDays: initialData?.availableDays || '',
+    time: initialData?.timeSlots || '',
+    bookingLink: initialData?.bookingLink || '',
+  };
+};
+
+const CreateRecruitmentModal = ({
+  isOpen,
+  onClose,
+  initialData = null,
+  mode = 'create',
+  onSuccess,
+}) => {
+  const dispatch = useDispatch();
+  const createLoading = useSelector(selectCreateLoading);
   const [form, setForm] = useState(createInitialForm);
 
   useEffect(() => {
     if (!isOpen) return;
-    if (initialData && mode === 'edit') {
-      setForm({ ...createInitialForm(), ...initialData });
-    } else {
-      setForm(createInitialForm());
-    }
+    const nextForm =
+      initialData && mode === 'edit'
+        ? mapInitialDataToForm(initialData)
+        : createInitialForm();
+
+    queueMicrotask(() => {
+      setForm(nextForm);
+    });
   }, [isOpen, initialData, mode]);
 
   const imagePreviewUrl = useMemo(() => {
@@ -87,21 +158,82 @@ const CreateRecruitmentModal = ({ isOpen, onClose, initialData = null, mode = 'c
     });
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const sportsList = (form.sports || [])
+      .filter((sport) => sport !== 'Other')
+      .concat(String(form.otherSport || '').trim() ? [String(form.otherSport || '').trim()] : []);
+
+    const serviceTitle = String(form.organisationName || '').trim();
+    const serviceDescription = String(form.about || '').trim();
+    const fullAddress = [form.venueName, form.townCity, form.postcode]
+      .map((item) => String(item || '').trim())
+      .filter(Boolean)
+      .join(', ');
+
+    if (!serviceTitle || !serviceDescription) {
+      return;
+    }
+
+    const payload = new FormData();
+    payload.append('title', serviceTitle);
+    payload.append('listingHeadline', serviceTitle);
+    payload.append('description', serviceDescription);
+    payload.append('aboutService', serviceDescription);
+    payload.append('providerName', serviceTitle);
+    appendIfPresent(payload, 'contactName', form.contactPerson || serviceTitle);
+    appendIfPresent(payload, 'providerType', form.role || 'Coach / Trainer');
+    payload.append('serviceType', 'COACHING');
+    appendIfPresent(payload, 'clinicName', form.venueName);
+    appendIfPresent(payload, 'city', form.townCity);
+    appendIfPresent(payload, 'postcode', form.postcode);
+    appendIfPresent(payload, 'fullAddress', fullAddress);
+    appendIfPresent(payload, 'location', form.townCity || fullAddress);
+    appendArrayValues(payload, 'sessionTypes', form.sessionTypes || []);
+    appendArrayValues(payload, 'sports', sportsList);
+    appendIfPresent(payload, 'whoServiceFor', sportsList.join(', '));
+    appendIfPresent(payload, 'availableDays', form.sessionDays);
+    appendIfPresent(payload, 'timeSlots', form.time);
+    appendIfPresent(payload, 'bookingLink', form.bookingLink);
+    appendIfPresent(payload, 'category', form.role || 'Coach / Trainer');
+
+    if (form.image && typeof form.image !== 'string') {
+      payload.append('logo', form.image);
+    }
+
+    const resultAction =
+      mode === 'edit' && initialData?.id
+        ? await dispatch(updateService({ id: initialData.id, serviceData: payload }))
+        : await dispatch(createService(payload));
+
+    const isSuccess =
+      (mode === 'edit' && updateService.fulfilled.match(resultAction)) ||
+      (mode !== 'edit' && createService.fulfilled.match(resultAction));
+
+    if (isSuccess) {
+      onSuccess?.();
+      onClose?.();
+    }
+  };
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
       <div className="mx-4 flex max-h-[95vh] w-full max-w-2xl flex-col rounded-xl bg-[#f9fafb] shadow-2xl">
         <div className="flex items-center justify-between border-b border-gray-200 px-6 py-4">
-          <h2 className="text-xl font-bold text-[#1a1a1a]">Add Listing</h2>
+          <h2 className="text-xl font-bold text-[#1a1a1a]">
+            {mode === 'edit' ? 'Edit Listing' : 'Add Listing'}
+          </h2>
           <button onClick={onClose} className="rounded-full bg-gray-200 p-1 hover:bg-gray-300">
             <X className="h-5 w-5 text-gray-600" />
           </button>
         </div>
 
         <div className="flex-1 space-y-6 overflow-y-auto p-4 md:p-6">
-          <form id="add-listing-form" className="space-y-6">
+          <form id="add-listing-form" className="space-y-6" onSubmit={handleSubmit}>
             <div className="space-y-4 rounded-lg border border-gray-100 bg-white p-5">
               <h3 className="text-lg font-semibold text-gray-800">Organisation Details</h3>
-              <p className="mt-[-10px] text-base text-gray-500">
+              <p className="-mt-2.5 text-base text-gray-500">
                 Tell us about your organization or club
               </p>
 
@@ -296,6 +428,8 @@ const CreateRecruitmentModal = ({ isOpen, onClose, initialData = null, mode = 'c
                 <div className="space-y-1">
                   <label className="text-base font-medium text-gray-700">Venue Name</label>
                   <input
+                    value={form.venueName}
+                    onChange={(e) => handleChange('venueName', e.target.value)}
                     className="w-full rounded bg-[#f3f4f6] p-2 text-sm outline-none"
                     placeholder="Venue name"
                   />
@@ -303,6 +437,8 @@ const CreateRecruitmentModal = ({ isOpen, onClose, initialData = null, mode = 'c
                 <div className="space-y-1">
                   <label className="text-base font-medium text-gray-700">Postcode</label>
                   <input
+                    value={form.postcode}
+                    onChange={(e) => handleChange('postcode', e.target.value)}
                     className="w-full rounded bg-[#f3f4f6] p-2 text-sm outline-none"
                     placeholder="Postcode"
                   />
@@ -310,6 +446,8 @@ const CreateRecruitmentModal = ({ isOpen, onClose, initialData = null, mode = 'c
                 <div className="space-y-1">
                   <label className="text-base font-medium text-gray-700">Town / City</label>
                   <input
+                    value={form.townCity}
+                    onChange={(e) => handleChange('townCity', e.target.value)}
                     className="w-full rounded bg-[#f3f4f6] p-2 text-sm outline-none"
                     placeholder="e.g london"
                   />
@@ -319,6 +457,8 @@ const CreateRecruitmentModal = ({ isOpen, onClose, initialData = null, mode = 'c
                     Typical Session Days
                   </label>
                   <input
+                    value={form.sessionDays}
+                    onChange={(e) => handleChange('sessionDays', e.target.value)}
                     className="w-full rounded bg-[#f3f4f6] p-2 text-sm outline-none"
                     placeholder="e.g mon, sat, tues"
                   />
@@ -326,6 +466,8 @@ const CreateRecruitmentModal = ({ isOpen, onClose, initialData = null, mode = 'c
                 <div className="space-y-1">
                   <label className="text-base font-medium text-gray-700">Date/Day</label>
                   <input
+                    value={form.dateDay}
+                    onChange={(e) => handleChange('dateDay', e.target.value)}
                     className="w-full rounded bg-[#f3f4f6] p-2 text-sm outline-none"
                     placeholder="DD/MM/YYYY"
                   />
@@ -333,6 +475,8 @@ const CreateRecruitmentModal = ({ isOpen, onClose, initialData = null, mode = 'c
                 <div className="space-y-1">
                   <label className="text-base font-medium text-gray-700">Time</label>
                   <input
+                    value={form.time}
+                    onChange={(e) => handleChange('time', e.target.value)}
                     className="w-full rounded bg-[#f3f4f6] p-2 text-sm outline-none"
                     placeholder="write time"
                   />
@@ -345,6 +489,8 @@ const CreateRecruitmentModal = ({ isOpen, onClose, initialData = null, mode = 'c
               <div className="space-y-1">
                 <label className="text-base font-medium text-gray-700">Booking link</label>
                 <input
+                  value={form.bookingLink}
+                  onChange={(e) => handleChange('bookingLink', e.target.value)}
                   className="w-full rounded bg-[#f3f4f6] p-2.5 text-sm outline-none"
                   placeholder="Venue name"
                 />
@@ -357,9 +503,10 @@ const CreateRecruitmentModal = ({ isOpen, onClose, initialData = null, mode = 'c
           <button
             type="submit"
             form="add-listing-form"
+            disabled={createLoading}
             className="bg-btn-primary rounded-md px-6 py-2.5 text-sm font-semibold text-white hover:bg-[#0d635d]"
           >
-            Submit For Approval
+            {createLoading ? 'Submitting...' : 'Submit For Approval'}
           </button>
           <button
             type="button"
