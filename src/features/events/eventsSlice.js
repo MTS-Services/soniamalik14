@@ -5,6 +5,7 @@ import {
   fetchProviderEvents,
   fetchOrganizerEvents,
   createOrganizerEvent,
+  updateOrganizerEvent,
   deleteOrganizerEvent,
 } from './eventsAPI';
 
@@ -38,6 +39,11 @@ const initialState = {
     success: null,
     error: null,
   },
+  updateOrganizerEvent: {
+    loading: false,
+    success: null,
+    error: null,
+  },
   deleteOrganizerEvent: {
     loading: false,
     success: null,
@@ -55,6 +61,7 @@ const eventsSlice = createSlice({
       state.providerEvents.error = null;
       state.organizerEvents.error = null;
       state.createOrganizerEvent.error = null;
+      state.updateOrganizerEvent.error = null;
       state.deleteOrganizerEvent.error = null;
     },
     resetEvents: () => initialState,
@@ -156,6 +163,30 @@ const eventsSlice = createSlice({
         state.createOrganizerEvent.error = action.payload || 'Failed to create organizer event';
       })
 
+      // Update Organizer Event
+      .addCase(updateOrganizerEvent.pending, (state) => {
+        state.updateOrganizerEvent.loading = true;
+        state.updateOrganizerEvent.error = null;
+        state.updateOrganizerEvent.success = null;
+      })
+      .addCase(updateOrganizerEvent.fulfilled, (state, action) => {
+        state.updateOrganizerEvent.loading = false;
+        state.updateOrganizerEvent.success = true;
+        state.updateOrganizerEvent.error = null;
+        const updated = action.payload;
+        if (updated && typeof updated === 'object' && updated.id) {
+          state.organizerEvents.list = (Array.isArray(state.organizerEvents.list)
+            ? state.organizerEvents.list
+            : []
+          ).map((event) => String(event?.id) === String(updated.id) ? updated : event);
+        }
+      })
+      .addCase(updateOrganizerEvent.rejected, (state, action) => {
+        state.updateOrganizerEvent.loading = false;
+        state.updateOrganizerEvent.success = false;
+        state.updateOrganizerEvent.error = action.payload || 'Failed to update organizer event';
+      })
+
       // Delete Organizer Event
       .addCase(deleteOrganizerEvent.pending, (state) => {
         state.deleteOrganizerEvent.loading = true;
@@ -201,6 +232,9 @@ export const selectOrganizerEventsError = (state) => state.events.organizerEvent
 
 export const selectCreateOrganizerEventLoading = (state) => state.events.createOrganizerEvent.loading;
 export const selectCreateOrganizerEventError = (state) => state.events.createOrganizerEvent.error;
+
+export const selectUpdateOrganizerEventLoading = (state) => state.events.updateOrganizerEvent.loading;
+export const selectUpdateOrganizerEventError = (state) => state.events.updateOrganizerEvent.error;
 
 export const selectDeleteOrganizerEventLoading = (state) => state.events.deleteOrganizerEvent.loading;
 export const selectDeleteOrganizerEventError = (state) => state.events.deleteOrganizerEvent.error;

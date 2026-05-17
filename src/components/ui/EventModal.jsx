@@ -4,9 +4,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import Button from './Button';
 import { useEvent } from '../../context/EventContext';
 import { toast } from 'react-toastify';
-import { createOrganizerEvent } from '../../features/events/eventsAPI';
+import { createOrganizerEvent, updateOrganizerEvent } from '../../features/events/eventsAPI';
 import { selectAuthUser } from '../../features/auth/authSlice';
-import { selectCreateOrganizerEventLoading } from '../../features/events/eventsSlice';
+import {
+    selectCreateOrganizerEventLoading,
+    selectUpdateOrganizerEventLoading,
+} from '../../features/events/eventsSlice';
 
 const toDateInputValue = (value) => {
     if (!value) return '';
@@ -60,6 +63,7 @@ const EventModal = ({
     const { createEvent, updateEvent, createLoading, updateLoading } = useEvent();
     const authUser = useSelector(selectAuthUser);
     const createOrganizerLoading = useSelector(selectCreateOrganizerEventLoading);
+    const updateOrganizerLoading = useSelector(selectUpdateOrganizerEventLoading);
     const [formData, setFormData] = useState({
         eventTitle: '',
         sportType: '',
@@ -271,7 +275,10 @@ const EventModal = ({
         // Call create or update based on mode
         let isSuccess = false;
 
-        if (useOrganizerApi && mode === 'create') {
+        if (useOrganizerApi && mode === 'edit' && initialData?.id) {
+            const action = await dispatch(updateOrganizerEvent({ id: initialData.id, eventData: payload }));
+            isSuccess = updateOrganizerEvent.fulfilled.match(action);
+        } else if (useOrganizerApi && mode === 'create') {
             const action = await dispatch(createOrganizerEvent(payload));
             isSuccess = createOrganizerEvent.fulfilled.match(action);
         } else if (mode === 'edit' && initialData?.id) {
@@ -288,7 +295,7 @@ const EventModal = ({
         }
     };
 
-    const isSubmitting = createLoading || updateLoading || createOrganizerLoading;
+    const isSubmitting = createLoading || updateLoading || createOrganizerLoading || updateOrganizerLoading;
 
     if (!isOpen) return null;
 
