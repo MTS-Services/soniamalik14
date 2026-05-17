@@ -5,6 +5,7 @@ import {
   fetchProviderEvents,
   fetchOrganizerEvents,
   createOrganizerEvent,
+  deleteOrganizerEvent,
 } from './eventsAPI';
 
 const initialState = {
@@ -37,6 +38,11 @@ const initialState = {
     success: null,
     error: null,
   },
+  deleteOrganizerEvent: {
+    loading: false,
+    success: null,
+    error: null,
+  },
 };
 
 const eventsSlice = createSlice({
@@ -49,6 +55,7 @@ const eventsSlice = createSlice({
       state.providerEvents.error = null;
       state.organizerEvents.error = null;
       state.createOrganizerEvent.error = null;
+      state.deleteOrganizerEvent.error = null;
     },
     resetEvents: () => initialState,
   },
@@ -147,6 +154,28 @@ const eventsSlice = createSlice({
         state.createOrganizerEvent.loading = false;
         state.createOrganizerEvent.success = false;
         state.createOrganizerEvent.error = action.payload || 'Failed to create organizer event';
+      })
+
+      // Delete Organizer Event
+      .addCase(deleteOrganizerEvent.pending, (state) => {
+        state.deleteOrganizerEvent.loading = true;
+        state.deleteOrganizerEvent.error = null;
+        state.deleteOrganizerEvent.success = null;
+      })
+      .addCase(deleteOrganizerEvent.fulfilled, (state, action) => {
+        state.deleteOrganizerEvent.loading = false;
+        state.deleteOrganizerEvent.success = true;
+        state.deleteOrganizerEvent.error = null;
+        const deletedId = action.payload;
+        state.organizerEvents.list = (Array.isArray(state.organizerEvents.list)
+          ? state.organizerEvents.list
+          : []
+        ).filter((event) => String(event?.id) !== String(deletedId));
+      })
+      .addCase(deleteOrganizerEvent.rejected, (state, action) => {
+        state.deleteOrganizerEvent.loading = false;
+        state.deleteOrganizerEvent.success = false;
+        state.deleteOrganizerEvent.error = action.payload || 'Failed to delete organizer event';
       });
   },
 });
@@ -172,5 +201,8 @@ export const selectOrganizerEventsError = (state) => state.events.organizerEvent
 
 export const selectCreateOrganizerEventLoading = (state) => state.events.createOrganizerEvent.loading;
 export const selectCreateOrganizerEventError = (state) => state.events.createOrganizerEvent.error;
+
+export const selectDeleteOrganizerEventLoading = (state) => state.events.deleteOrganizerEvent.loading;
+export const selectDeleteOrganizerEventError = (state) => state.events.deleteOrganizerEvent.error;
 
 export default eventsSlice.reducer;

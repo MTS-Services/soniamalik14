@@ -8,7 +8,7 @@ import EventModal from '../../../../components/ui/EventModal';
 import DeleteConfirmationModal from '../../../../components/ui/DeleteConfirmationModal';
 import { useEvent } from '../../../../context/EventContext';
 import { Plus } from 'lucide-react';
-import { fetchOrganizerEvents } from '../../../../features/events/eventsAPI';
+import { deleteOrganizerEvent, fetchOrganizerEvents } from '../../../../features/events/eventsAPI';
 import {
     selectOrganizerEvents,
     selectOrganizerEventsLoading,
@@ -82,9 +82,13 @@ const Event = ({
 
     const confirmDelete = async () => {
         if (eventToDelete) {
-            await deleteEvent(eventToDelete.id);
             if (useOrganizerApi) {
-                dispatch(fetchOrganizerEvents());
+                const action = await dispatch(deleteOrganizerEvent(eventToDelete.id));
+                if (deleteOrganizerEvent.fulfilled.match(action)) {
+                    dispatch(fetchOrganizerEvents());
+                }
+            } else {
+                await deleteEvent(eventToDelete.id);
             }
             setEventToDelete(null);
         }

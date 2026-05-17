@@ -1,5 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { GET, POST } from '../../services/httpMethods';
+import { DELETE, GET, POST } from '../../services/httpMethods';
 import { apiExecutor } from '../../services/apiExecutor';
 import eventAnalyticsData from '../../data/eventAnalyticsData.json';
 import { toast } from 'react-toastify';
@@ -111,6 +111,26 @@ export const createOrganizerEvent = createAsyncThunk(
       return result?.data || result;
     } catch (error) {
       const message = getApiErrorMessage(error, 'Failed to create event');
+      toast.error(message);
+      return rejectWithValue(message);
+    }
+  }
+);
+
+export const deleteOrganizerEvent = createAsyncThunk(
+  'events/deleteOrganizerEvent',
+  async (eventId, { rejectWithValue, signal }) => {
+    try {
+      if (!eventId) {
+        return rejectWithValue('Event id is required');
+      }
+
+      const response = await DELETE(`/api/events/${eventId}`, signal);
+      const result = response?.data || response;
+      toast.success(result?.message || 'Event deleted successfully');
+      return eventId;
+    } catch (error) {
+      const message = getApiErrorMessage(error, 'Failed to delete event');
       toast.error(message);
       return rejectWithValue(message);
     }
