@@ -239,7 +239,37 @@ export const ServiceProvider = ({ children }) => {
         setDeleteLoading(true);
         setError(null);
         try {
-            await DELETE(ENDPOINT.SERVICES.DELETE(serviceId));
+            try {
+                await DELETE(ENDPOINT.SERVICES.DELETE(serviceId));
+            } catch (err) {
+                // Some backends restrict delete to provider-scoped routes.
+                if (err?.response?.status === 403) {
+                    let fallbackSuccess = false;
+                    const fallbackUrls = [
+                        `/api/services/provider/my/${serviceId}`,
+                        `/api/services/provider/${serviceId}`,
+                    ];
+
+                    for (const url of fallbackUrls) {
+                        try {
+                            await DELETE(url);
+                            fallbackSuccess = true;
+                            break;
+                        } catch (fallbackErr) {
+                            if (fallbackErr?.response?.status === 403 || fallbackErr?.response?.status === 404) {
+                                continue;
+                            }
+                            throw fallbackErr;
+                        }
+                    }
+
+                    if (!fallbackSuccess) {
+                        throw err;
+                    }
+                } else {
+                    throw err;
+                }
+            }
 
             // Remove from all lists
             setProviderServices(prev => prev.filter(s => s.id !== serviceId));
@@ -249,7 +279,10 @@ export const ServiceProvider = ({ children }) => {
             toast.success('Service deleted successfully!');
             return { success: true };
         } catch (err) {
-            const message = err?.response?.data?.message || err?.message || 'Failed to delete service';
+            const responseMessage = err?.response?.data?.message;
+            const message = err?.response?.status === 403
+                ? responseMessage || 'You do not have permission to delete this service.'
+                : responseMessage || err?.message || 'Failed to delete service';
             setError(message);
             toast.error(message);
             return { success: false, message };

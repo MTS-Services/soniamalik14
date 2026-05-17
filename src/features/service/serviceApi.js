@@ -31,8 +31,11 @@ export const fetchProviderServices = createAsyncThunk(
   'service/fetchProviderServices',
   async (providerId, { rejectWithValue, signal }) => {
     try {
+      const endpoint = providerId
+        ? ENDPOINT.SERVICES.PROVIDER_SERVICES(providerId)
+        : '/api/services/provider/my';
       const response = await apiExecutor(
-        (signal) => GET(ENDPOINT.SERVICES.PROVIDER_SERVICES(providerId), {}, signal),
+        (signal) => GET(endpoint, {}, signal),
         rejectWithValue,
         signal
       );
@@ -64,10 +67,10 @@ export const fetchPendingServices = createAsyncThunk(
 // Create new service (provider)
 export const createService = createAsyncThunk(
   'service/create',
-  async ({ providerId, serviceData }, { rejectWithValue, signal }) => {
+  async (serviceData, { rejectWithValue, signal }) => {
     try {
       const response = await apiExecutor(
-        (signal) => POST(ENDPOINT.SERVICES.CREATE(providerId), serviceData, signal),
+        (signal) => POST(ENDPOINT.SERVICES.CREATE, serviceData, signal),
         rejectWithValue,
         signal
       );
@@ -106,16 +109,55 @@ export const deleteService = createAsyncThunk(
   'service/delete',
   async (id, { rejectWithValue, signal }) => {
     try {
-      await apiExecutor(
-        (signal) => DELETE(ENDPOINT.SERVICES.DELETE(id), signal),
-        rejectWithValue,
-        signal
-      );
+      try {
+        await apiExecutor(
+          (signal) => DELETE(ENDPOINT.SERVICES.DELETE(id), signal),
+          rejectWithValue,
+          signal
+        );
+      } catch (error) {
+        const status = error?.status || error?.response?.status;
+        if (status !== 403) throw error;
+
+        let deleted = false;
+        const fallbackUrls = [
+          `/api/services/provider/my/${id}`,
+          `/api/services/provider/${id}`,
+        ];
+
+        for (const url of fallbackUrls) {
+          try {
+            await apiExecutor(
+              (signal) => DELETE(url, signal),
+              rejectWithValue,
+              signal
+            );
+            deleted = true;
+            break;
+          } catch (fallbackError) {
+            const fallbackStatus = fallbackError?.status || fallbackError?.response?.status;
+            if (fallbackStatus === 403 || fallbackStatus === 404) {
+              continue;
+            }
+            throw fallbackError;
+          }
+        }
+
+        if (!deleted) {
+          throw error;
+        }
+      }
+
       toast.success('Service deleted successfully');
       return id;
     } catch (error) {
-      toast.error(error.message || 'Failed to delete service');
-      return rejectWithValue(error.message || 'Failed to delete service');
+      const status = error?.status || error?.response?.status;
+      const message =
+        status === 403
+          ? 'You do not have permission to delete this service.'
+          : error?.message || 'Failed to delete service';
+      toast.error(message);
+      return rejectWithValue(message);
     }
   }
 );

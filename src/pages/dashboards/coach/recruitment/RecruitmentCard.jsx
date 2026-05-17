@@ -4,7 +4,6 @@ import Card from '../../../../components/ui/Card';
 import Button from '../../../../components/ui/Button';
 import { MapPin, Calendar, Clock } from 'lucide-react';
 import { FiEdit, FiTrash2 } from 'react-icons/fi';
-import EventModal from '../../../../components/ui/EventModal';
 import DeleteConfirmationModal from '../../../../components/ui/DeleteConfirmationModal';
 
 const RecruitmentCard = ({ item = {}, editLink, onEdit, onDelete, className = '' }) => {
@@ -24,8 +23,11 @@ const RecruitmentCard = ({ item = {}, editLink, onEdit, onDelete, className = ''
         setIsDeleteModalOpen(true);
     };
 
-    const handleDeleteConfirm = () => {
-        if (onDelete) onDelete(item);
+    const handleDeleteConfirm = async () => {
+        if (onDelete) {
+            await onDelete(item);
+        }
+        setIsDeleteModalOpen(false);
     };
 
     return (
@@ -76,7 +78,7 @@ const RecruitmentCard = ({ item = {}, editLink, onEdit, onDelete, className = ''
                                 </Button>
                             )}
 
-                            <Button onClick={handleDeleteClick} className="w-1/2 rounded-lg flex items-center justify-center gap-2 !border-2 !border-[#0F766E] !bg-[#B5D5D2] !text-[#0E6B64] hover:!bg-[#a0c4c1]" variant="outline">
+                            <Button onClick={handleDeleteClick} className="w-1/2 rounded-lg flex items-center justify-center gap-2 border-2! border-[#0F766E]! bg-[#B5D5D2]! text-[#0E6B64]! hover:bg-[#a0c4c1]!" variant="outline">
                                 <FiTrash2 className="w-4 h-4" /> <span>Delete</span>
                             </Button>
                         </div>

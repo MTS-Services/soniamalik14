@@ -1,13 +1,23 @@
 ﻿
 import React, { useEffect, useMemo, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import RecruitmentCard from './RecruitmentCard';
 import Pagination from '../../../../components/ui/Pagination';
 import CreateServiceModal from '../../provider/addListing/components/CreateServiceModal';
 import { Plus } from 'lucide-react';
-import { useService } from '../../../../context/ServiceContext';
+import {
+  fetchProviderServices,
+  deleteService,
+} from '../../../../features/service/serviceApi';
+import {
+  selectProviderServices,
+  selectProviderServicesLoading,
+} from '../../../../features/service/serviceSlice';
 
 const Recruitment = () => {
-  const { providerServices, fetchProviderServices, deleteService, loading } = useService();
+  const dispatch = useDispatch();
+  const providerServices = useSelector(selectProviderServices);
+  const loading = useSelector(selectProviderServicesLoading);
 
   const [page, setPage] = useState(1);
   const perPage = 9;
@@ -15,8 +25,8 @@ const Recruitment = () => {
   const [selectedItem, setSelectedItem] = useState(null);
 
   useEffect(() => {
-    fetchProviderServices();
-  }, [fetchProviderServices]);
+    dispatch(fetchProviderServices());
+  }, [dispatch]);
 
   const items = useMemo(
     () =>
@@ -37,12 +47,12 @@ const Recruitment = () => {
 
   const handleDelete = async (it) => {
     if (!it?.id) return;
-    await deleteService(it.id);
-    fetchProviderServices();
+    await dispatch(deleteService(it.id)).unwrap();
+    dispatch(fetchProviderServices());
   };
 
   const handleModalSuccess = () => {
-    fetchProviderServices();
+    dispatch(fetchProviderServices());
     setPage(1);
   };
 
@@ -77,7 +87,7 @@ const Recruitment = () => {
             key={it.id} 
             item={it} 
             onEdit={handleEdit} 
-            onDelete={() => handleDelete(it)} 
+            onDelete={handleDelete} 
           />
         ))}
       </div>
