@@ -37,6 +37,64 @@ const normalizeSessionType = (value) => {
   return value;
 };
 
+const mapSessionTypeToUi = (value) => {
+  const val = String(value || '').trim().toLowerCase();
+  if (val === 'in clinic') return 'In clinic';
+  if (val === 'at-home visits') return 'At-home visits';
+  if (val === 'online video') return 'Online video';
+  return String(value || '').trim();
+};
+
+const toArray = (value) => {
+  if (Array.isArray(value)) return value;
+  if (value === undefined || value === null) return [];
+
+  const text = String(value).trim();
+  if (!text) return [];
+
+  // Supports backend values like '["In Clinic","Online Video"]'
+  if (text.startsWith('[') && text.endsWith(']')) {
+    try {
+      const parsed = JSON.parse(text);
+      if (Array.isArray(parsed)) return parsed;
+    } catch {
+      // fall through to comma split
+    }
+  }
+
+  return text
+    .split(',')
+    .map((item) => item.trim())
+    .filter(Boolean);
+};
+
+const getInitialSessionTypes = (initialData) => {
+  const parsed = toArray(initialData?.sessionTypes).map(mapSessionTypeToUi);
+  const filtered = parsed.filter((item) => sessionTypeOptions.includes(item));
+  return filtered.length > 0 ? filtered : ['In clinic'];
+};
+
+const getInitialSports = (initialData) => {
+  const rawSports = toArray(initialData?.sports);
+  const rawWhoServiceFor = toArray(initialData?.whoServiceFor);
+  const merged = [...rawSports, ...rawWhoServiceFor]
+    .map((item) => String(item || '').trim())
+    .filter(Boolean);
+
+  if (merged.length === 0) {
+    return { sports: [], otherSport: '' };
+  }
+
+  const unique = [...new Set(merged)];
+  const knownSports = unique.filter((item) => sportOptions.includes(item) && item !== 'Other');
+  const customSports = unique.filter((item) => !sportOptions.includes(item));
+
+  return {
+    sports: customSports.length > 0 ? [...knownSports, 'Other'] : knownSports,
+    otherSport: customSports.join(', '),
+  };
+};
+
 const getParticipantResponseType = (methods = []) => {
   if (methods.includes('Add booking link')) return 'ADD_BOOKING_LINK';
   if (methods.includes('Allow users to register interest')) return 'ALLOW_REGISTER_INTEREST';
@@ -68,6 +126,7 @@ const appendArrayValues = (formData, key, values = []) => {
 };
 
 const buildInitialState = (initialData) => ({
+  ...getInitialSports(initialData),
   providerBusinessName: initialData?.providerName || '',
   contactName: initialData?.contactName || initialData?.providerName || '',
   logo: initialData?.logo || initialData?.image || null,
@@ -82,14 +141,7 @@ const buildInitialState = (initialData) => ({
       : [],
   listingHeadline: initialData?.listingHeadline || initialData?.title || '',
   about: initialData?.aboutService || initialData?.description || '',
-  sessionTypes:
-    Array.isArray(initialData?.sessionTypes) && initialData.sessionTypes.length > 0
-      ? initialData.sessionTypes
-      : ['In clinic'],
-  sports: initialData?.whoServiceFor
-    ? initialData.whoServiceFor.split(',').map((s) => s.trim())
-    : [],
-  otherSport: '',
+  sessionTypes: getInitialSessionTypes(initialData),
   registration: initialData?.professionalRegistration || '',
   insuranceInPlace: initialData?.insuranceInPlace === false ? 'No' : 'Yes',
   responseMethods: ['Add booking link'],
