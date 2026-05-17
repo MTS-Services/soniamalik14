@@ -28,7 +28,7 @@ const Recruitment = () => {
     () =>
       (Array.isArray(providerServices) ? providerServices : []).map((service) => ({
         ...service,
-        image: service.logo || service.image || '',
+        image: service.logo || service.image || null,
         location:
           service.fullAddress || service.location || service.city || service.addressLine1 || 'N/A',
         days: service.availableDays || 'N/A',
@@ -80,8 +80,13 @@ const Recruitment = () => {
       </div>
 
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
-        {items.slice((page - 1) * perPage, page * perPage).map((it) => (
-          <RecruitmentCard key={it.id} item={it} onEdit={handleEdit} onDelete={handleDelete} />
+        {items.slice((page - 1) * perPage, page * perPage).map((it, index) => (
+          <RecruitmentCard
+            key={it?.id ? `recruitment-${it.id}` : `recruitment-${page}-${index}`}
+            item={it}
+            onEdit={handleEdit}
+            onDelete={handleDelete}
+          />
         ))}
       </div>
 

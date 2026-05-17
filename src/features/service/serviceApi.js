@@ -4,6 +4,34 @@ import { ENDPOINT } from '../../services/httpEndpoint';
 import { apiExecutor } from '../../services/apiExecutor';
 import { toast } from 'react-toastify';
 
+const getApiErrorMessage = (error, fallbackMessage) => {
+  const payload = error?.response?.data || error;
+  const fallback = fallbackMessage || error?.message || 'Request failed';
+
+  if (!payload || typeof payload !== 'object') {
+    return fallback;
+  }
+
+  if (Array.isArray(payload?.errors) && payload.errors.length > 0) {
+    const details = payload.errors
+      .map((entry) => {
+        if (typeof entry === 'string') return entry;
+        const field = entry?.path || entry?.field || entry?.param || entry?.name;
+        const message = entry?.msg || entry?.message || entry?.error;
+        if (field && message) return `${field}: ${message}`;
+        return message || field || null;
+      })
+      .filter(Boolean)
+      .join(' | ');
+
+    if (details) {
+      return `${payload?.message || 'Validation error'}: ${details}`;
+    }
+  }
+
+  return payload?.message || fallback;
+};
+
 /**
  * Professional Service API Layer
  * Handles all service-related API calls with proper error handling and toast notifications
@@ -69,17 +97,14 @@ export const createService = createAsyncThunk(
   'service/create',
   async (serviceData, { rejectWithValue, signal }) => {
     try {
-      const response = await apiExecutor(
-        (signal) => POST(ENDPOINT.SERVICES.CREATE, serviceData, signal),
-        rejectWithValue,
-        signal
-      );
+      const response = await POST(ENDPOINT.SERVICES.CREATE, serviceData, signal);
       const result = response?.data || response;
       toast.success('Service submitted for approval');
       return result;
     } catch (error) {
-      toast.error(error.message || 'Failed to create service');
-      return rejectWithValue(error.message || 'Failed to create service');
+      const message = getApiErrorMessage(error, 'Failed to create service');
+      toast.error(message);
+      return rejectWithValue(message);
     }
   }
 );
@@ -89,17 +114,14 @@ export const updateService = createAsyncThunk(
   'service/update',
   async ({ id, serviceData }, { rejectWithValue, signal }) => {
     try {
-      const response = await apiExecutor(
-        (signal) => PUT(ENDPOINT.SERVICES.UPDATE(id), serviceData, signal),
-        rejectWithValue,
-        signal
-      );
+      const response = await PUT(ENDPOINT.SERVICES.UPDATE(id), serviceData, signal);
       const result = response?.data || response;
       toast.success('Service updated successfully');
       return result;
     } catch (error) {
-      toast.error(error.message || 'Failed to update service');
-      return rejectWithValue(error.message || 'Failed to update service');
+      const message = getApiErrorMessage(error, 'Failed to update service');
+      toast.error(message);
+      return rejectWithValue(message);
     }
   }
 );

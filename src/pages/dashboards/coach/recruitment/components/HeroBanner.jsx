@@ -22,8 +22,10 @@ const HeroBanner = ({ item }) => {
             <div className="absolute -bottom-10 left-6 md:left-10 w-20 h-20 md:w-24 md:h-24 rounded-full border-4 border-[#F8FAFC] overflow-hidden bg-gray-200">
                 {item.avatar ? (
                     <img src={item.avatar} alt={item.coach} className="w-full h-full object-cover" />
-                ) : (
+                ) : item.image ? (
                     <img src={item.image} alt="fallback" className="w-full h-full object-cover" />
+                ) : (
+                    <div className="w-full h-full bg-gray-300" />
                 )}
             </div>
         </div>

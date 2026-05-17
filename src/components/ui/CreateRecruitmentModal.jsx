@@ -1,8 +1,10 @@
 ﻿import React, { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Upload, X } from 'lucide-react';
+import { toast } from 'react-toastify';
 import { createService, updateService } from '../../features/service/serviceApi';
 import { selectCreateLoading } from '../../features/service/serviceSlice';
+import { selectAuthUser } from '../../features/auth/authSlice';
 
 const sportOptions = [
   'Football',
@@ -86,6 +88,38 @@ const toArray = (value) => {
   return text.split(',').map((item) => item.trim()).filter(Boolean);
 };
 
+const toDateInputValue = (value) => {
+  if (!value) return '';
+  const text = String(value).trim();
+  if (!text) return '';
+
+  if (/^\d{4}-\d{2}-\d{2}$/.test(text)) return text;
+
+  const parsed = new Date(text);
+  if (Number.isNaN(parsed.getTime())) return '';
+
+  const year = parsed.getFullYear();
+  const month = String(parsed.getMonth() + 1).padStart(2, '0');
+  const day = String(parsed.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+};
+
+const toTimeInputValue = (value) => {
+  if (!value) return '';
+  const text = String(value).trim();
+  if (!text) return '';
+
+  const hhmm = text.match(/^(\d{2}):(\d{2})/);
+  if (hhmm) return `${hhmm[1]}:${hhmm[2]}`;
+
+  const parsed = new Date(`1970-01-01T${text}`);
+  if (Number.isNaN(parsed.getTime())) return '';
+
+  const hours = String(parsed.getHours()).padStart(2, '0');
+  const minutes = String(parsed.getMinutes()).padStart(2, '0');
+  return `${hours}:${minutes}`;
+};
+
 const mapInitialDataToForm = (initialData) => {
   const sportsFromService = toArray(initialData?.sports);
   const sportsFromWhoServiceFor = toArray(initialData?.whoServiceFor);
@@ -107,7 +141,8 @@ const mapInitialDataToForm = (initialData) => {
     postcode: initialData?.postcode || '',
     townCity: initialData?.city || '',
     sessionDays: initialData?.availableDays || '',
-    time: initialData?.timeSlots || '',
+    dateDay: toDateInputValue(initialData?.dateDay),
+    time: toTimeInputValue(initialData?.timeSlots),
     bookingLink: initialData?.bookingLink || '',
   };
 };
@@ -120,6 +155,7 @@ const CreateRecruitmentModal = ({
   onSuccess,
 }) => {
   const dispatch = useDispatch();
+  const user = useSelector(selectAuthUser);
   const createLoading = useSelector(selectCreateLoading);
   const [form, setForm] = useState(createInitialForm);
 
@@ -167,12 +203,36 @@ const CreateRecruitmentModal = ({
 
     const serviceTitle = String(form.organisationName || '').trim();
     const serviceDescription = String(form.about || '').trim();
+    const providerPhone =
+      user?.phone ||
+      user?.phoneNumber ||
+      user?.mobile ||
+      user?.contactNumber ||
+      user?.providerPhone ||
+      '';
+    const providerEmail = user?.email || user?.providerEmail || '';
+    const availableDays = [form.sessionDays, form.dateDay]
+      .map((item) => String(item || '').trim())
+      .filter(Boolean)
+      .join(' | ');
+    const timeSlots = String(form.time || '').trim();
     const fullAddress = [form.venueName, form.townCity, form.postcode]
       .map((item) => String(item || '').trim())
       .filter(Boolean)
       .join(', ');
 
     if (!serviceTitle || !serviceDescription) {
+      toast.error('Organization name and about are required.');
+      return;
+    }
+
+    if (!providerPhone || !providerEmail) {
+      toast.error('Provider phone and email are missing from your profile.');
+      return;
+    }
+
+    if (!availableDays || !timeSlots) {
+      toast.error('Typical session days and time are required.');
       return;
     }
 
@@ -183,6 +243,8 @@ const CreateRecruitmentModal = ({
     payload.append('aboutService', serviceDescription);
     payload.append('providerName', serviceTitle);
     appendIfPresent(payload, 'contactName', form.contactPerson || serviceTitle);
+    appendIfPresent(payload, 'providerPhone', providerPhone);
+    appendIfPresent(payload, 'providerEmail', providerEmail);
     appendIfPresent(payload, 'providerType', form.role || 'Coach / Trainer');
     payload.append('serviceType', 'COACHING');
     appendIfPresent(payload, 'clinicName', form.venueName);
@@ -193,8 +255,8 @@ const CreateRecruitmentModal = ({
     appendArrayValues(payload, 'sessionTypes', form.sessionTypes || []);
     appendArrayValues(payload, 'sports', sportsList);
     appendIfPresent(payload, 'whoServiceFor', sportsList.join(', '));
-    appendIfPresent(payload, 'availableDays', form.sessionDays);
-    appendIfPresent(payload, 'timeSlots', form.time);
+    appendIfPresent(payload, 'availableDays', availableDays);
+    appendIfPresent(payload, 'timeSlots', timeSlots);
     appendIfPresent(payload, 'bookingLink', form.bookingLink);
     appendIfPresent(payload, 'category', form.role || 'Coach / Trainer');
 
@@ -466,19 +528,19 @@ const CreateRecruitmentModal = ({
                 <div className="space-y-1">
                   <label className="text-base font-medium text-gray-700">Date/Day</label>
                   <input
+                    type="date"
                     value={form.dateDay}
                     onChange={(e) => handleChange('dateDay', e.target.value)}
                     className="w-full rounded bg-[#f3f4f6] p-2 text-sm outline-none"
-                    placeholder="DD/MM/YYYY"
                   />
                 </div>
                 <div className="space-y-1">
                   <label className="text-base font-medium text-gray-700">Time</label>
                   <input
+                    type="time"
                     value={form.time}
                     onChange={(e) => handleChange('time', e.target.value)}
                     className="w-full rounded bg-[#f3f4f6] p-2 text-sm outline-none"
-                    placeholder="write time"
                   />
                 </div>
               </div>

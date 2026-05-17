@@ -55,10 +55,10 @@ const RecruitmentCard = ({ item = {}, editLink, onEdit, onDelete, className = ''
                             <span className="text-base">{item.location || "Dhaka"} </span>
                         </div>
                         <div className="text-base text-[#363636] mb-2 flex items-start gap-2 flex-col">
-                            <div className="flex items-center gap-2"><Calendar className="w-4 h-4 text-[#363636]" /> <span className="text-base">{item.days || "12 march 2026"}</span></div>
+                            <div className="flex items-center gap-2"><Calendar className="w-4 h-4 text-[#363636]" /> <span className="text-base">{item.days || item.availableDays || "N/A"}</span></div>
                         </div>
                         <div className="text-base text-[#363636] mb-3 flex items-start gap-2 flex-col">
-                            <div className="flex items-center gap-2"><Clock className="w-4 h-4 text-[#363636]" /> <span className="text-base">{item.time}</span></div>
+                            <div className="flex items-center gap-2"><Clock className="w-4 h-4 text-[#363636]" /> <span className="text-base">{item.time || item.timeSlots || "N/A"}</span></div>
                         </div>
 
 
