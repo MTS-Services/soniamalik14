@@ -4,6 +4,7 @@ import {
   fetchEventAnalytics,
   fetchProviderEvents,
   fetchOrganizerEvents,
+  fetchOrganizerEventById,
   createOrganizerEvent,
   updateOrganizerEvent,
   deleteOrganizerEvent,
@@ -34,6 +35,12 @@ const initialState = {
     error: null,
     loading: false,
   },
+  organizerEventDetails: {
+    item: null,
+    loading: false,
+    success: null,
+    error: null,
+  },
   createOrganizerEvent: {
     loading: false,
     success: null,
@@ -60,6 +67,7 @@ const eventsSlice = createSlice({
       state.analytics.error = null;
       state.providerEvents.error = null;
       state.organizerEvents.error = null;
+      state.organizerEventDetails.error = null;
       state.createOrganizerEvent.error = null;
       state.updateOrganizerEvent.error = null;
       state.deleteOrganizerEvent.error = null;
@@ -140,6 +148,25 @@ const eventsSlice = createSlice({
         state.organizerEvents.loading = false;
         state.organizerEvents.success = false;
         state.organizerEvents.error = action.payload || 'Failed to fetch organizer events';
+      })
+
+      // Fetch Organizer Event Details
+      .addCase(fetchOrganizerEventById.pending, (state) => {
+        state.organizerEventDetails.loading = true;
+        state.organizerEventDetails.error = null;
+        state.organizerEventDetails.success = null;
+      })
+      .addCase(fetchOrganizerEventById.fulfilled, (state, action) => {
+        state.organizerEventDetails.loading = false;
+        state.organizerEventDetails.success = true;
+        state.organizerEventDetails.error = null;
+        state.organizerEventDetails.item = action.payload || null;
+      })
+      .addCase(fetchOrganizerEventById.rejected, (state, action) => {
+        state.organizerEventDetails.loading = false;
+        state.organizerEventDetails.success = false;
+        state.organizerEventDetails.error = action.payload || 'Failed to fetch event details';
+        state.organizerEventDetails.item = null;
       })
 
       // Create Organizer Event
@@ -229,6 +256,10 @@ export const selectProviderEventsError = (state) => state.events.providerEvents.
 export const selectOrganizerEvents = (state) => state.events.organizerEvents.list;
 export const selectOrganizerEventsLoading = (state) => state.events.organizerEvents.loading;
 export const selectOrganizerEventsError = (state) => state.events.organizerEvents.error;
+
+export const selectOrganizerEventDetails = (state) => state.events.organizerEventDetails.item;
+export const selectOrganizerEventDetailsLoading = (state) => state.events.organizerEventDetails.loading;
+export const selectOrganizerEventDetailsError = (state) => state.events.organizerEventDetails.error;
 
 export const selectCreateOrganizerEventLoading = (state) => state.events.createOrganizerEvent.loading;
 export const selectCreateOrganizerEventError = (state) => state.events.createOrganizerEvent.error;

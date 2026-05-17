@@ -1,19 +1,37 @@
-﻿import React, { useState } from 'react';
+﻿import React, { useEffect, useState } from 'react';
 import { useParams, useLocation, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import { ArrowLeft, CalendarDays, MapPin, MessageCircle, Target, Trophy, Users } from 'lucide-react';
 import { useEvent } from '../../../../context/EventContext';
+import { fetchOrganizerEventById } from '../../../../features/events/eventsAPI';
+import {
+    selectOrganizerEventDetails,
+    selectOrganizerEventDetailsError,
+    selectOrganizerEventDetailsLoading,
+} from '../../../../features/events/eventsSlice';
 
-const EventDetails = ({ backRoute = '/coach/events' }) => {
+const EventDetails = ({ backRoute = '/coach/events', useOrganizerApi = false }) => {
     const { id } = useParams();
     const { state } = useLocation();
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const { events } = useEvent();
+    const organizerEventDetails = useSelector(selectOrganizerEventDetails);
+    const organizerEventDetailsLoading = useSelector(selectOrganizerEventDetailsLoading);
+    const organizerEventDetailsError = useSelector(selectOrganizerEventDetailsError);
     const [message, setMessage] = useState('');
     const [bookingSuccess, setBookingSuccess] = useState(false);
     const [messageSuccess, setMessageSuccess] = useState(false);
 
-    const itemData = state?.item || events?.find((e) => String(e.id) === String(id)) || null;
+    useEffect(() => {
+        if (!useOrganizerApi || !id) return;
+        dispatch(fetchOrganizerEventById(id));
+    }, [dispatch, id, useOrganizerApi]);
+
+    const itemData = useOrganizerApi
+        ? organizerEventDetails || state?.item || null
+        : state?.item || events?.find((e) => String(e.id) === String(id)) || null;
 
     const handleBack = () => {
         const filter = state?.filter;
@@ -40,6 +58,14 @@ const EventDetails = ({ backRoute = '/coach/events' }) => {
         window.setTimeout(() => setMessageSuccess(false), 2200);
     };
 
+    if (useOrganizerApi && organizerEventDetailsLoading && !itemData) {
+        return <div className="py-20 text-center text-gray-600">Loading event...</div>;
+    }
+
+    if (useOrganizerApi && organizerEventDetailsError && !itemData) {
+        return <div className="py-20 text-center text-red-600">Error: {organizerEventDetailsError}</div>;
+    }
+
     if (!itemData) {
         return <div className="py-20 text-center text-gray-600">Loading event...</div>;
     }
@@ -64,17 +90,17 @@ const EventDetails = ({ backRoute = '/coach/events' }) => {
                     <span>Back</span>
                 </button>
 
-                <div className="h-[260px] w-full overflow-hidden rounded-xl bg-gray-200 md:h-[420px]">
+                <div className="h-65 w-full overflow-hidden rounded-xl bg-gray-200 md:h-105">
                     <img
-                        src={event.image || 'https://picsum.photos/1200/700?random=50'}
+                        src={event.image }
                         alt={event.title}
                         className="h-full w-full object-cover"
                     />
                 </div>
 
-                <div className="relative -mt-6 ml-3 h-[64px] w-[64px] overflow-hidden rounded-full border-4 border-white bg-white shadow-sm md:-mt-8 md:ml-4 md:h-[84px] md:w-[84px]">
+                <div className="relative -mt-6 ml-3 h-16 w-16 overflow-hidden rounded-full border-4 border-white bg-white shadow-sm md:-mt-8 md:ml-4 md:h-21 md:w-21">
                     <img
-                        src={event.organizer?.avatar || 'https://picsum.photos/120/120?random=70'}
+                        src={event.organizer?.avatar }
                         alt={event.organizer?.name || 'Organizer'}
                         className="h-full w-full object-cover"
                     />
@@ -135,11 +161,11 @@ const EventDetails = ({ backRoute = '/coach/events' }) => {
                     <section className="rounded-[14px] border border-[#e5e7eb] bg-white p-4">
                         <h3 className="mb-3 text-[20px] font-semibold leading-8 text-black">Venue Information</h3>
                         <p className="text-[14px] font-medium text-[#101828]">Venue Name:</p>
-                        <p className="mb-2 text-[14px] text-[#4a5565]">{event.venue?.name || 'Bashundhara turbo tough'}</p>
+                        <p className="mb-2 text-[14px] text-[#4a5565]">{event.venueName || event.venue?.name || 'Bashundhara turbo tough'}</p>
 
                         <div className="mb-2 flex items-start gap-1 text-[14px] text-[#4a5565]">
                             <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-[#4a5565]" />
-                            <span>{event.venue?.address || '2118 Thornridge Cir. Syracuse, Connecticut 35624'}</span>
+                            <span>{event.fullAddress || event.venue?.address || '2118 Thornridge Cir. Syracuse, Connecticut 35624'}</span>
                         </div>
 
                         <div className="mt-2 text-[14px] text-[#101828]">
@@ -147,14 +173,14 @@ const EventDetails = ({ backRoute = '/coach/events' }) => {
                                 <span className="font-medium">Session Days:</span> Saturday
                             </p>
                             <p>
-                                <span className="font-medium">Session Time:</span> {event.time || '10:00 - 12:00'}
+                                <span className="font-medium">Session Time:</span> {event.startTime && event.endTime ? `${event.startTime} - ${event.endTime}` : event.time || '10:00 - 12:00'}
                             </p>
                         </div>
 
-                        <div className="mt-3 h-[140px] w-full overflow-hidden rounded-lg bg-[#d9d9d9]">
-                            {event.venue?.address ? (
+                        <div className="mt-3 h-35 w-full overflow-hidden rounded-lg bg-[#d9d9d9]">
+                            {event.fullAddress || event.venue?.address ? (
                                 <iframe
-                                    src={`https://maps.google.com/maps?q=${encodeURIComponent(event.venue.address)}&t=&z=13&ie=UTF8&iwloc=&output=embed`}
+                                    src={`https://maps.google.com/maps?q=${encodeURIComponent(event.fullAddress || event.venue?.address)}&t=&z=13&ie=UTF8&iwloc=&output=embed`}
                                     width="100%"
                                     height="100%"
                                     style={{ border: 0 }}
@@ -165,7 +191,7 @@ const EventDetails = ({ backRoute = '/coach/events' }) => {
                         </div>
                     </section>
 
-                    <section className="rounded-[14px] bg-[#e7f1f1] p-4">
+                    <section className="rounded-[14px] bg-secondary p-4">
                         <h3 className="mb-1 text-[20px] font-semibold leading-8 text-black">Contact Organiser</h3>
                         <p className="mb-2 text-[14px] text-[#4a5565]">Ask the organiser a question</p>
 
@@ -188,7 +214,7 @@ const EventDetails = ({ backRoute = '/coach/events' }) => {
                 </div>
 
                 {(bookingSuccess || messageSuccess) && (
-                    <div className="mt-4 rounded-md border border-[#b5d5d2] bg-white px-4 py-2 text-[14px] text-[#0F766E]">
+                    <div className="mt-4 rounded-md border border-loginInput bg-white px-4 py-2 text-[14px] text-[#0F766E]">
                         {bookingSuccess ? 'Successfully booked your place.' : 'Message sent to organiser.'}
                     </div>
                 )}

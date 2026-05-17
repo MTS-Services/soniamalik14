@@ -1,22 +1,50 @@
 ﻿import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import Container from '../../../components/layout/Container';
-import { Search, X, Filter } from 'lucide-react';
+import { X, Filter } from 'lucide-react';
 import EventFilters from './components/EventFilters';
 import EventCard from './components/EventCard';
 import Pagination from '../../../components/ui/Pagination';
 import PageHeader from '../../../components/ui/PageHeader';
+import { fetchEvents } from '../../../features/events/eventsAPI';
+import {
+  selectAllEvents,
+  selectEventsLoading,
+  selectEventsError,
+} from '../../../features/events/eventsSlice';
 
-const sampleEvents = new Array(12).fill(0).map((_, i) => ({
-  id: i + 1,
-  title: `Womens Football Friendly Match Day`,
-  titleColor: '#0B544E',
-  date: '4 Dec 2025',
-  location: '1901 Thornridge Cir. Shiloh',
-  tag: 'Tournament',
-  image: '/images/login/image_1.jpg',
-}));
+const normalizeEventsList = (value) => {
+  if (Array.isArray(value)) return value;
+  if (!value || typeof value !== 'object') return [];
+  if (Array.isArray(value.events)) return value.events;
+  if (Array.isArray(value.data)) return value.data;
+  if (Array.isArray(value.rows)) return value.rows;
+  if (Array.isArray(value.items)) return value.items;
+  return [];
+};
+
+const formatDate = (value) => {
+  if (!value) return 'Date not set';
+  const parsed = new Date(value);
+  if (Number.isNaN(parsed.getTime())) return String(value);
+  return parsed.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
+};
+
+const formatEventTypeTag = (value) => {
+  if (!value) return 'Event';
+  return String(value)
+    .toLowerCase()
+    .split('_')
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .join(' ');
+};
 
 const EventView = () => {
+  const dispatch = useDispatch();
+  const reduxEvents = useSelector(selectAllEvents);
+  const loading = useSelector(selectEventsLoading);
+  const error = useSelector(selectEventsError);
+
   const [page, setPage] = useState(1);
   const [showFilters, setShowFilters] = useState(false);
   const [filters, setFilters] = useState({
@@ -26,6 +54,10 @@ const EventView = () => {
     sport: '',
   });
   const perPage = 9;
+
+  useEffect(() => {
+    dispatch(fetchEvents());
+  }, [dispatch]);
 
   useEffect(() => {
     if (showFilters) {
@@ -38,8 +70,19 @@ const EventView = () => {
     };
   }, [showFilters]);
 
+  const events = normalizeEventsList(reduxEvents).map((event) => ({
+    id: event.id,
+    title: event.title || 'Untitled Event',
+    titleColor: '#0B544E',
+    date: formatDate(event.startDate || event.date),
+    location: event.fullAddress || event.location || event.city || event.venueName || 'Location not set',
+    tag: formatEventTypeTag(event.eventType),
+    image: event.image || null,
+    sport: event.sportType || '',
+  }));
+
   // apply simple client-side filtering
-  const filtered = sampleEvents.filter((e) => {
+  const filtered = events.filter((e) => {
     // city / search
     if (filters.city) {
       const q = filters.city.toLowerCase();
@@ -61,8 +104,15 @@ const EventView = () => {
     }
 
     // sport
-    if (filters.sport) {
-      if ((e.sport || '') !== filters.sport) return false;
+    const selectedSports = Array.isArray(filters.sport)
+      ? filters.sport.filter(Boolean)
+      : filters.sport
+        ? [filters.sport]
+        : [];
+    if (selectedSports.length > 0) {
+      const sport = String(e.sport || '').toLowerCase();
+      const matchedSport = selectedSports.some((s) => String(s).toLowerCase() === sport);
+      if (!matchedSport) return false;
     }
 
     return true;
@@ -169,22 +219,36 @@ const EventView = () => {
 
           {/* Main Events List */}
           <div className="lg:col-span-3">
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:gap-6 xl:grid-cols-3">
-              {paged.map((e) => (
-                <EventCard key={e.id} event={e} />
-              ))}
-            </div>
+            {loading && (
+              <div className="rounded-md border border-gray-200 bg-white p-6 text-center text-gray-600">
+                Loading events...
+              </div>
+            )}
+
+            {error && !loading && (
+              <div className="rounded-md border border-red-200 bg-red-50 p-6 text-center text-red-600">
+                Error: {error}
+              </div>
+            )}
+
+            {!loading && !error && (
+              <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:gap-6 xl:grid-cols-3">
+                {paged.map((e) => (
+                  <EventCard key={e.id} event={e} />
+                ))}
+              </div>
+            )}
 
             {/* Pagination Area */}
-            {filtered.length === 0 ? (
+            {!loading && !error && filtered.length === 0 ? (
               <div className="mt-10 rounded-md border border-dashed border-gray-200 bg-white p-6 text-center text-gray-600">
                 No events match your filters yet — try widening your search or exploring all events.
               </div>
-            ) : (
+            ) : !loading && !error ? (
               <div className="mt-10 flex justify-center">
                 <Pagination page={page} total={total} onChange={(p) => setPage(p)} />
               </div>
-            )}
+            ) : null}
           </div>
         </div>
       </Container>

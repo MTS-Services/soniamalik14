@@ -35,11 +35,14 @@ const getApiErrorMessage = (error, fallbackMessage) => {
 // Fetch all events - using local data
 export const fetchEvents = createAsyncThunk(
   'events/fetchAll',
-  async (_, { rejectWithValue }) => {
+  async (_, { rejectWithValue, signal }) => {
     try {
-      // Simulate async call with local data
-      await new Promise(resolve => setTimeout(resolve, 300));
-      return eventAnalyticsData || [];
+      const response = await apiExecutor(
+        (signal) => GET('/api/events', {}, signal),
+        rejectWithValue,
+        signal
+      );
+      return response?.data?.data || response?.data || response || [];
     } catch (error) {
       return rejectWithValue(error?.message || 'Failed to fetch events');
     }
@@ -97,6 +100,23 @@ export const fetchOrganizerEvents = createAsyncThunk(
       return response?.data?.data || response?.data || response || [];
     } catch (error) {
       return rejectWithValue(error?.message || 'Failed to fetch organizer events');
+    }
+  }
+);
+
+export const fetchOrganizerEventById = createAsyncThunk(
+  'events/fetchOrganizerEventById',
+  async (eventId, { rejectWithValue, signal }) => {
+    try {
+      if (!eventId) {
+        return rejectWithValue('Event id is required');
+      }
+
+      const response = await GET(`/api/events/${eventId}`, {}, signal);
+      const result = response?.data || response;
+      return result?.data || result;
+    } catch (error) {
+      return rejectWithValue(getApiErrorMessage(error, 'Failed to fetch event details'));
     }
   }
 );
