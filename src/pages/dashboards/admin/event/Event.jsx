@@ -1,10 +1,53 @@
-﻿import React, { useState, useMemo } from 'react';
+﻿import React, { useEffect, useMemo, useState } from 'react';
 import EventHeaderSection from './components/EventHeaderSection';
 import EventSearchAndFilters from './components/EventSearchAndFilters';
 import EventTableHeader from './components/EventTableHeader';
 import EventTableRow from './components/EventTableRow';
 import EventEmptyState from './components/EventEmptyState';
 import EventPagination from './components/EventPagination';
+import { GET } from '../../../../services/httpMethods';
+import { ENDPOINT } from '../../../../services/httpEndpoint';
+
+const normalizeEventsList = (value) => {
+  if (Array.isArray(value)) return value;
+  if (!value || typeof value !== 'object') return [];
+  if (Array.isArray(value.events)) return value.events;
+  if (Array.isArray(value.data)) return value.data;
+  if (Array.isArray(value.rows)) return value.rows;
+  if (Array.isArray(value.items)) return value.items;
+  return [];
+};
+
+const formatDate = (value) => {
+  if (!value) return 'Date not set';
+  const parsed = new Date(value);
+  if (Number.isNaN(parsed.getTime())) return String(value);
+  return parsed.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
+};
+
+const formatStatus = (value) => {
+  const normalized = String(value || '').trim().toLowerCase();
+
+  if (['approved', 'live', 'active'].includes(normalized)) return 'Live';
+  if (['pending', 'pending_approval', 'awaiting'].includes(normalized)) return 'Pending';
+  if (['featured'].includes(normalized)) return 'Featured';
+  if (['banned', 'blocked', 'rejected'].includes(normalized)) return 'Banned';
+  if (['past', 'completed', 'ended'].includes(normalized)) return 'Past';
+
+  return value ? String(value) : 'Pending';
+};
+
+const formatProviderName = (event) =>
+  event?.provider || event?.organizer?.name || event?.organizerName || event?.providerName || 'Provider not set';
+
+const formatProviderSub = (event) =>
+  event?.providerSub || event?.organizer?.subtitle || event?.providerSubtitle || event?.organizerName || '';
+
+const formatSport = (event) => event?.sport || event?.sportType || event?.category || 'Sport not set';
+
+const formatPostcode = (event) => event?.postcode || event?.zipCode || event?.postalCode || event?.venue?.postcode || 'N/A';
+
+const formatEngagement = (event) => event?.engagement || event?.metrics || null;
 
 const Events = () => {
   // Filter States
@@ -13,81 +56,61 @@ const Events = () => {
   const [selectedSport, setSelectedSport] = useState('All Sports');
   const [fromDate, setFromDate] = useState('');
   const [toDate, setToDate] = useState('');
+  const [eventsData, setEventsData] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-  // Hardcoded dummy data matching the image exactly
-  const eventsData = [
-    {
-      id: 1,
-      name: 'Beginner Tennis Sessions',
-      date: '03/03/2025',
-      provider: "Sarah's Tennis Academy",
-      providerSub: '',
-      sport: 'Tennis',
-      postcode: 'SW1A 1AA',
-      status: 'Pending',
-      engagement: null
-    },
-    {
-      id: 2,
-      name: 'City 5x5 Football Championship',
-      date: '03/03/2025',
-      provider: 'City Sports',
-      providerSub: 'Texnsports',
-      sport: 'Football',
-      postcode: 'EC1A 1BB',
-      status: 'Featured',
-      engagement: { views: 1250, trend: 45, messages: 28, shares: 28 }
-    },
-    {
-      id: 3,
-      name: 'Future Tennis Stars Clinic',
-      date: '04/03/2025',
-      provider: 'Grand Slam Acad..',
-      providerSub: 'ExmoRatsmanades',
-      sport: 'Badminton',
-      postcode: 'M1 1AE',
-      status: 'Live',
-      engagement: { views: 1250, trend: 45, messages: 28, shares: 28 }
-    },
-    {
-      id: 4,
-      name: 'Weekend Yoga Retreat',
-      date: '05/03/2025',
-      provider: 'ZenFit Retreats',
-      providerSub: 'Fionstranics',
-      sport: 'Cricket',
-      postcode: 'B1 1AA',
-      status: 'Live',
-      engagement: { views: 1250, trend: 48, messages: 28, shares: 28 }
-    },
-    {
-      id: 5,
-      name: 'Flag Football League Kickoff',
-      date: '06/03/2025',
-      provider: 'Kickoff League',
-      providerSub: 'EESTRoone Lounge',
-      sport: 'Football',
-      postcode: 'LS1 1UR',
-      status: 'Banned',
-      engagement: { views: 1250, trend: 45, messages: 28, shares: 28 }
-    },
-    {
-      id: 6,
-      name: 'Padel Tournament - Semi Finals',
-      date: '07/03/2025',
-      provider: 'ESSA Hub',
-      providerSub: 'FESL , Whoe Hub',
-      sport: 'Padel',
-      postcode: 'G1 1AA',
-      status: 'Live',
-      engagement: { views: 1250, trend: 45, messages: 28, shares: 28 }
-    }
-  ];
+  useEffect(() => {
+    let isActive = true;
+    const controller = new AbortController();
+
+    const loadEvents = async () => {
+      setLoading(true);
+      setError(null);
+
+      try {
+        const response = await GET(ENDPOINT.EVENTS.LIST, {}, controller.signal);
+        const rows = normalizeEventsList(response?.data?.data || response?.data || response || []);
+
+        if (!isActive) return;
+
+        setEventsData(
+          rows.map((event) => ({
+            id: event?.id,
+            name: event?.name || event?.title || 'Untitled Event',
+            date: formatDate(event?.date || event?.startDate || event?.eventDate),
+            provider: formatProviderName(event),
+            providerSub: formatProviderSub(event),
+            sport: formatSport(event),
+            postcode: formatPostcode(event),
+            status: formatStatus(event?.status || event?.approvalStatus || event?.eventStatus),
+            engagement: formatEngagement(event),
+          }))
+        );
+      } catch (err) {
+        if (!isActive) return;
+
+        setEventsData([]);
+        setError(err?.response?.data?.message || err?.message || 'Failed to fetch events');
+      } finally {
+        if (isActive) {
+          setLoading(false);
+        }
+      }
+    };
+
+    loadEvents();
+
+    return () => {
+      isActive = false;
+      controller.abort();
+    };
+  }, []);
 
   const tabs = ['All Events', 'Pending', 'Featured', 'Live', 'Past', 'Banned'];
 
   // Get unique sports for the dropdown
-  const uniqueSports = ['All Sports', ...Array.from(new Set(eventsData.map(item => item.sport)))];
+  const uniqueSports = ['All Sports', ...Array.from(new Set(eventsData.map((item) => item.sport).filter(Boolean)))];
 
   // Helper function to parse "DD/MM/YYYY" to a comparable Date object
   const parseDate = (dateString) => {
@@ -124,24 +147,7 @@ const Events = () => {
 
       return matchesTab && matchesSearch && matchesSport && matchesFromDate && matchesToDate;
     });
-  }, [activeTab, searchQuery, selectedSport, fromDate, toDate]);
-
-  const getStatusBadge = (status) => {
-    switch (status) {
-      case 'Featured':
-        return <span className="px-3 py-1 text-xs font-medium text-amber-700 bg-amber-100 rounded-full">Featured</span>;
-      case 'Pending':
-        return <span className="px-3 py-1 text-xs font-medium text-orange-600 bg-orange-100 rounded-full">Pending</span>;
-      case 'Live':
-        return <span className="px-3 py-1 text-xs font-medium text-teal-700 bg-teal-100 rounded-full">Live</span>;
-      case 'Banned':
-        return <span className="px-3 py-1 text-xs font-medium text-red-600 bg-red-100 rounded-full">Banned</span>;
-      case 'Past':
-        return <span className="px-3 py-1 text-xs font-medium text-gray-600 bg-gray-100 rounded-full">Past</span>;
-      default:
-        return null;
-    }
-  };
+  }, [activeTab, searchQuery, selectedSport, fromDate, toDate, eventsData]);
 
   return (
     <div className="flex-1 overflow-auto bg-gray-50 dashboardPy dashboardSpaceY">
@@ -171,18 +177,24 @@ const Events = () => {
 
           {/* Table Area */}
           <div className="overflow-x-auto">
-            <table className="w-full text-left border-collapse">
-              <EventTableHeader />
-              <tbody className="bg-white divide-y divide-gray-100">
-                {filteredData.length > 0 ? (
-                  filteredData.map((row) => (
-                    <EventTableRow key={row.id} row={row} />
-                  ))
-                ) : (
-                  <EventEmptyState />
-                )}
-              </tbody>
-            </table>
+            {loading ? (
+              <div className="p-6 text-center text-gray-600">Loading events from the backend...</div>
+            ) : error ? (
+              <div className="p-6 text-center text-red-600">Error: {error}</div>
+            ) : (
+              <table className="w-full text-left border-collapse">
+                <EventTableHeader />
+                <tbody className="bg-white divide-y divide-gray-100">
+                  {filteredData.length > 0 ? (
+                    filteredData.map((row) => (
+                      <EventTableRow key={row.id} row={row} />
+                    ))
+                  ) : (
+                    <EventEmptyState />
+                  )}
+                </tbody>
+              </table>
+            )}
           </div>
 
           {/* Pagination */}
