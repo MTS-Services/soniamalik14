@@ -1,14 +1,10 @@
-﻿
-import React, { useEffect, useMemo, useState } from 'react';
+﻿import React, { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import RecruitmentCard from './RecruitmentCard';
 import Pagination from '../../../../components/ui/Pagination';
 import CreateServiceModal from '../../provider/addListing/components/CreateServiceModal';
 import { Plus } from 'lucide-react';
-import {
-  fetchProviderServices,
-  deleteService,
-} from '../../../../features/service/serviceApi';
+import { fetchProviderServices, deleteService } from '../../../../features/service/serviceApi';
 import {
   selectProviderServices,
   selectProviderServicesLoading,
@@ -33,7 +29,8 @@ const Recruitment = () => {
       (Array.isArray(providerServices) ? providerServices : []).map((service) => ({
         ...service,
         image: service.logo || service.image || '',
-        location: service.fullAddress || service.location || service.city || service.addressLine1 || 'N/A',
+        location:
+          service.fullAddress || service.location || service.city || service.addressLine1 || 'N/A',
         days: service.availableDays || 'N/A',
         time: service.timeSlots || 'N/A',
       })),
@@ -63,8 +60,9 @@ const Recruitment = () => {
       <div className="mb-6">
         <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
           <div>
-            <h1 className="text-2xl md:text-3xl font-semibold text-[#0B544E]">Manage your Listings</h1>
-            
+            <h1 className="text-2xl font-semibold text-[#0B544E] md:text-3xl">
+              Manage your Listings
+            </h1>
           </div>
           <div>
             <button
@@ -83,12 +81,7 @@ const Recruitment = () => {
 
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
         {items.slice((page - 1) * perPage, page * perPage).map((it) => (
-          <RecruitmentCard 
-            key={it.id} 
-            item={it} 
-            onEdit={handleEdit} 
-            onDelete={handleDelete} 
-          />
+          <RecruitmentCard key={it.id} item={it} onEdit={handleEdit} onDelete={handleDelete} />
         ))}
       </div>
 
