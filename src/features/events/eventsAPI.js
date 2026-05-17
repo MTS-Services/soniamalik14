@@ -1,7 +1,36 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { GET } from '../../services/httpMethods';
+import { GET, POST } from '../../services/httpMethods';
 import { apiExecutor } from '../../services/apiExecutor';
 import eventAnalyticsData from '../../data/eventAnalyticsData.json';
+import { toast } from 'react-toastify';
+
+const getApiErrorMessage = (error, fallbackMessage) => {
+  const payload = error?.response?.data || error;
+  const fallback = fallbackMessage || error?.message || 'Request failed';
+
+  if (!payload || typeof payload !== 'object') {
+    return fallback;
+  }
+
+  if (Array.isArray(payload?.errors) && payload.errors.length > 0) {
+    const details = payload.errors
+      .map((entry) => {
+        if (typeof entry === 'string') return entry;
+        const field = entry?.path || entry?.field || entry?.param || entry?.name;
+        const message = entry?.msg || entry?.message || entry?.error;
+        if (field && message) return `${field}: ${message}`;
+        return message || field || null;
+      })
+      .filter(Boolean)
+      .join(' | ');
+
+    if (details) {
+      return `${payload?.message || 'Validation error'}: ${details}`;
+    }
+  }
+
+  return payload?.message || fallback;
+};
 
 // Fetch all events - using local data
 export const fetchEvents = createAsyncThunk(
@@ -68,6 +97,22 @@ export const fetchOrganizerEvents = createAsyncThunk(
       return response?.data?.data || response?.data || response || [];
     } catch (error) {
       return rejectWithValue(error?.message || 'Failed to fetch organizer events');
+    }
+  }
+);
+
+export const createOrganizerEvent = createAsyncThunk(
+  'events/createOrganizerEvent',
+  async (eventData, { rejectWithValue, signal }) => {
+    try {
+      const response = await POST('/api/events', eventData, signal);
+      const result = response?.data || response;
+      toast.success(result?.message || 'Event created successfully');
+      return result?.data || result;
+    } catch (error) {
+      const message = getApiErrorMessage(error, 'Failed to create event');
+      toast.error(message);
+      return rejectWithValue(message);
     }
   }
 );

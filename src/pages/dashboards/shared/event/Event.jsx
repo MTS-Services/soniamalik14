@@ -198,6 +198,12 @@ const Event = ({
                 onClose={handleCloseModal}
                 initialData={editingEvent}
                 mode={modalMode}
+                useOrganizerApi={useOrganizerApi}
+                onSuccess={() => {
+                    if (useOrganizerApi) {
+                        dispatch(fetchOrganizerEvents());
+                    }
+                }}
             />
 
             <DeleteConfirmationModal

@@ -1,11 +1,65 @@
 ﻿import React, { useState, useEffect, useMemo } from 'react';
 import { X, Upload } from 'lucide-react';
+import { useDispatch, useSelector } from 'react-redux';
 import Button from './Button';
 import { useEvent } from '../../context/EventContext';
 import { toast } from 'react-toastify';
+import { createOrganizerEvent } from '../../features/events/eventsAPI';
+import { selectAuthUser } from '../../features/auth/authSlice';
+import { selectCreateOrganizerEventLoading } from '../../features/events/eventsSlice';
 
-const EventModal = ({ isOpen, onClose, initialData = null, mode = 'create' }) => {
+const toDateInputValue = (value) => {
+    if (!value) return '';
+    const text = String(value).trim();
+    if (!text) return '';
+    if (/^\d{4}-\d{2}-\d{2}$/.test(text)) return text;
+    const parsed = new Date(text);
+    if (Number.isNaN(parsed.getTime())) return '';
+    const year = parsed.getFullYear();
+    const month = String(parsed.getMonth() + 1).padStart(2, '0');
+    const day = String(parsed.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+};
+
+const toTimeInputValue = (value) => {
+    if (!value) return '';
+    const text = String(value).trim();
+    if (!text) return '';
+    const hhmm = text.match(/^(\d{2}):(\d{2})/);
+    if (hhmm) return `${hhmm[1]}:${hhmm[2]}`;
+    const parsed = new Date(`1970-01-01T${text}`);
+    if (Number.isNaN(parsed.getTime())) return '';
+    const hours = String(parsed.getHours()).padStart(2, '0');
+    const minutes = String(parsed.getMinutes()).padStart(2, '0');
+    return `${hours}:${minutes}`;
+};
+
+const normalizeCostType = (value) => {
+    const text = String(value || '').trim().toLowerCase();
+    return text === 'paid' ? 'paid' : 'free';
+};
+
+const normalizeSkillLevel = (value) => {
+    const text = String(value || '').trim().toLowerCase();
+    if (text.includes('new') || text.includes('beginner')) return 'BEGINNER';
+    if (text.includes('regular') || text.includes('intermediate')) return 'INTERMEDIATE';
+    if (text.includes('coach') || text.includes('advanced')) return 'ADVANCED';
+    if (text.includes('open') || text.includes('all')) return 'ALL_LEVELS';
+    return String(value || '').trim().toUpperCase().replace(/\s+/g, '_') || 'BEGINNER';
+};
+
+const EventModal = ({
+    isOpen,
+    onClose,
+    initialData = null,
+    mode = 'create',
+    useOrganizerApi = false,
+    onSuccess,
+}) => {
+    const dispatch = useDispatch();
     const { createEvent, updateEvent, createLoading, updateLoading } = useEvent();
+    const authUser = useSelector(selectAuthUser);
+    const createOrganizerLoading = useSelector(selectCreateOrganizerEventLoading);
     const [formData, setFormData] = useState({
         eventTitle: '',
         sportType: '',
@@ -39,10 +93,10 @@ const EventModal = ({ isOpen, onClose, initialData = null, mode = 'create' }) =>
                 sportType: initialData.sportType || '',
                 eventType: initialData.eventType || initialData.type || 'TRAINING',
                 description: initialData.description || '',
-                startDate: initialData.startDate || initialData.date || '',
-                endDate: initialData.endDate || '',
-                startTime: initialData.startTime || '',
-                endTime: initialData.endTime || '',
+                startDate: toDateInputValue(initialData.startDate || initialData.date),
+                endDate: toDateInputValue(initialData.endDate),
+                startTime: toTimeInputValue(initialData.startTime),
+                endTime: toTimeInputValue(initialData.endTime),
                 venueName: initialData.venueName || '',
                 city: initialData.city || '',
                 fullAddress: initialData.fullAddress || initialData.location || '',
@@ -50,14 +104,14 @@ const EventModal = ({ isOpen, onClose, initialData = null, mode = 'create' }) =>
                 minAge: initialData.minAge || '18',
                 maxParticipant: initialData.maxParticipants || initialData.maxParticipant || '20',
                 skillLevel: initialData.skillLevel || 'New To Sport',
-                costType: initialData.costType || 'Free',
-                price: initialData.price || '',
+                costType: String(initialData.costType || 'Free').toLowerCase() === 'paid' ? 'Paid' : 'Free',
+                price: initialData.registrationFee || initialData.price || '',
                 responseMethods: Array.isArray(initialData.responseMethods)
                     ? initialData.responseMethods
                     : ['Add booking link'],
-                organizerName: initialData.organizerName || '',
-                organizerPhone: initialData.organizerPhone || '',
-                organizerEmail: initialData.organizerEmail || '',
+                organizerName: initialData.organizerName || authUser?.name || '',
+                organizerPhone: initialData.organizerPhone || authUser?.phone || authUser?.phoneNumber || '',
+                organizerEmail: initialData.organizerEmail || authUser?.email || '',
                 image: initialData.image || null,
             });
         } else if (mode === 'create') {
@@ -81,13 +135,13 @@ const EventModal = ({ isOpen, onClose, initialData = null, mode = 'create' }) =>
                 costType: 'Free',
                 price: '',
                 responseMethods: ['Add booking link'],
-                organizerName: '',
-                organizerPhone: '',
-                organizerEmail: '',
+                organizerName: authUser?.name || '',
+                organizerPhone: authUser?.phone || authUser?.phoneNumber || '',
+                organizerEmail: authUser?.email || '',
                 image: null,
             });
         }
-    }, [initialData, mode, isOpen]);
+    }, [initialData, mode, isOpen, authUser]);
 
     const [errors, setErrors] = useState({});
 
@@ -183,13 +237,28 @@ const EventModal = ({ isOpen, onClose, initialData = null, mode = 'create' }) =>
         payload.append('googleMapLink', formData.googleMapLinks);
         payload.append('minAge', formData.minAge || '18');
         payload.append('maxParticipants', formData.maxParticipant || '20');
-        payload.append('skillLevel', formData.skillLevel);
-        payload.append('costType', formData.costType);
-        payload.append('price', formData.costType === 'Paid' ? formData.price : '0');
-        payload.append('responseMethods', formData.responseMethods.join(', '));
-        payload.append('organizerName', formData.organizerName || 'N/A');
-        payload.append('organizerPhone', formData.organizerPhone || 'N/A');
-        payload.append('organizerEmail', formData.organizerEmail || 'no-reply@example.com');
+        payload.append('skillLevel', normalizeSkillLevel(formData.skillLevel));
+        payload.append('costType', normalizeCostType(formData.costType));
+        payload.append('registrationFee', formData.costType === 'Paid' ? String(formData.price || '').trim() : '0');
+        (formData.responseMethods || []).forEach((method) => {
+            if (String(method || '').trim()) {
+                payload.append('responseMethods', String(method).trim());
+            }
+        });
+
+        const organizerName = formData.organizerName || authUser?.name || authUser?.fullName || 'N/A';
+        const organizerPhone =
+            formData.organizerPhone ||
+            authUser?.phone ||
+            authUser?.phoneNumber ||
+            authUser?.mobile ||
+            authUser?.contactNumber ||
+            'N/A';
+        const organizerEmail = formData.organizerEmail || authUser?.email || 'no-reply@example.com';
+
+        payload.append('organizerName', organizerName);
+        payload.append('organizerPhone', organizerPhone);
+        payload.append('organizerEmail', organizerEmail);
 
         // Debug: Log FormData entries
         console.log('Submitting event with data:', Object.fromEntries(payload.entries()));
@@ -200,17 +269,26 @@ const EventModal = ({ isOpen, onClose, initialData = null, mode = 'create' }) =>
         }
 
         // Call create or update based on mode
-        let result;
-        if (mode === 'edit' && initialData?.id) {
-            result = await updateEvent(initialData.id, payload);
+        let isSuccess = false;
+
+        if (useOrganizerApi && mode === 'create') {
+            const action = await dispatch(createOrganizerEvent(payload));
+            isSuccess = createOrganizerEvent.fulfilled.match(action);
+        } else if (mode === 'edit' && initialData?.id) {
+            const result = await updateEvent(initialData.id, payload);
+            isSuccess = Boolean(result?.success);
         } else {
-            result = await createEvent(payload);
+            const result = await createEvent(payload);
+            isSuccess = Boolean(result?.success);
         }
 
-        if (result.success) {
+        if (isSuccess) {
+            onSuccess?.();
             onClose();
         }
     };
+
+    const isSubmitting = createLoading || updateLoading || createOrganizerLoading;
 
     if (!isOpen) return null;
 
@@ -554,9 +632,9 @@ const EventModal = ({ isOpen, onClose, initialData = null, mode = 'create' }) =>
                             form="event-form"
                             variant="primary"
                             className="rounded-lg px-6 py-2.5 text-sm font-semibold"
-                            disabled={createLoading || updateLoading}
+                            disabled={isSubmitting}
                         >
-                            {createLoading || updateLoading ? 'Submitting...' : mode === 'edit' ? 'Update Event' : 'Submit For Approval'}
+                            {isSubmitting ? 'Submitting...' : mode === 'edit' ? 'Update Event' : 'Submit For Approval'}
                         </Button>
                     </div>
                 </div>

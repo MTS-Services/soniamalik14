@@ -4,6 +4,7 @@ import {
   fetchEventAnalytics,
   fetchProviderEvents,
   fetchOrganizerEvents,
+  createOrganizerEvent,
 } from './eventsAPI';
 
 const initialState = {
@@ -31,6 +32,11 @@ const initialState = {
     error: null,
     loading: false,
   },
+  createOrganizerEvent: {
+    loading: false,
+    success: null,
+    error: null,
+  },
 };
 
 const eventsSlice = createSlice({
@@ -42,6 +48,7 @@ const eventsSlice = createSlice({
       state.analytics.error = null;
       state.providerEvents.error = null;
       state.organizerEvents.error = null;
+      state.createOrganizerEvent.error = null;
     },
     resetEvents: () => initialState,
   },
@@ -119,6 +126,27 @@ const eventsSlice = createSlice({
         state.organizerEvents.loading = false;
         state.organizerEvents.success = false;
         state.organizerEvents.error = action.payload || 'Failed to fetch organizer events';
+      })
+
+      // Create Organizer Event
+      .addCase(createOrganizerEvent.pending, (state) => {
+        state.createOrganizerEvent.loading = true;
+        state.createOrganizerEvent.error = null;
+        state.createOrganizerEvent.success = null;
+      })
+      .addCase(createOrganizerEvent.fulfilled, (state, action) => {
+        state.createOrganizerEvent.loading = false;
+        state.createOrganizerEvent.success = true;
+        state.createOrganizerEvent.error = null;
+        const created = action.payload;
+        if (created && typeof created === 'object') {
+          state.organizerEvents.list = [created, ...(Array.isArray(state.organizerEvents.list) ? state.organizerEvents.list : [])];
+        }
+      })
+      .addCase(createOrganizerEvent.rejected, (state, action) => {
+        state.createOrganizerEvent.loading = false;
+        state.createOrganizerEvent.success = false;
+        state.createOrganizerEvent.error = action.payload || 'Failed to create organizer event';
       });
   },
 });
@@ -141,5 +169,8 @@ export const selectProviderEventsError = (state) => state.events.providerEvents.
 export const selectOrganizerEvents = (state) => state.events.organizerEvents.list;
 export const selectOrganizerEventsLoading = (state) => state.events.organizerEvents.loading;
 export const selectOrganizerEventsError = (state) => state.events.organizerEvents.error;
+
+export const selectCreateOrganizerEventLoading = (state) => state.events.createOrganizerEvent.loading;
+export const selectCreateOrganizerEventError = (state) => state.events.createOrganizerEvent.error;
 
 export default eventsSlice.reducer;
