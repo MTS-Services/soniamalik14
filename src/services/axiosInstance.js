@@ -19,9 +19,6 @@ console.log('[axios] Environment Debug:', {
 const axiosInstance = axios.create({
   baseURL,
   timeout: API_CONFIG.TIMEOUT,
-  headers: {
-    'Content-Type': 'application/json',
-  },
   // allow sending cookies if backend uses cookie-based auth
   withCredentials: true,
 });
@@ -43,9 +40,8 @@ axiosInstance.interceptors.request.use(
       config.headers.Authorization = `Bearer ${token}`;
     }
 
-    // If sending FormData, let axios set Content-Type automatically (with boundary)
     if (config.data instanceof FormData) {
-      delete config.headers['Content-Type'];
+      config.headers.setContentType(undefined);
       console.log('[axios] FormData request:', {
         url: config.url,
         method: config.method,
@@ -53,6 +49,7 @@ axiosInstance.interceptors.request.use(
         headers: config.headers,
       });
     } else if (config.method?.toUpperCase() === 'PUT') {
+      config.headers.setContentType('application/json');
       console.log('[axios] PUT request with JSON:', {
         url: config.url,
         method: config.method,

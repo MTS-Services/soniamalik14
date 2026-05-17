@@ -29,8 +29,6 @@ const sportOptions = [
   'Other',
 ];
 
-const responseOptions = ['Add booking link', 'Allow users to register interest'];
-
 const normalizeSessionType = (value) => {
   const val = String(value || '').trim().toLowerCase();
   if (val === 'in clinic') return 'In Clinic';
@@ -63,10 +61,16 @@ const appendIfPresent = (formData, key, value) => {
   }
 };
 
+const appendArrayValues = (formData, key, values = []) => {
+  values.forEach((value) => {
+    appendIfPresent(formData, key, value);
+  });
+};
+
 const buildInitialState = (initialData) => ({
   providerBusinessName: initialData?.providerName || '',
   contactName: initialData?.contactName || initialData?.providerName || '',
-  logo: initialData?.logo || null,
+  logo: initialData?.logo || initialData?.image || null,
   clinicName: initialData?.clinicName || '',
   address1: initialData?.addressLine1 || initialData?.fullAddress || '',
   townCity: initialData?.city || '',
@@ -141,7 +145,9 @@ const CreateServiceModal = ({
   const { createService, createLoading, updateService, updateLoading } = useService();
   const [formData, setFormData] = useState(() => buildInitialState(initialData));
   const [previewImage, setPreviewImage] = useState(
-    initialData?.logo && typeof initialData.logo === 'string' ? initialData.logo : ''
+    typeof (initialData?.logo || initialData?.image) === 'string'
+      ? initialData?.logo || initialData?.image
+      : ''
   );
 
   const isBusy = createLoading || updateLoading;
@@ -150,7 +156,9 @@ const CreateServiceModal = ({
     if (isOpen) {
       const nextFormData = buildInitialState(initialData);
       const nextPreviewImage =
-        initialData?.logo && typeof initialData.logo === 'string' ? initialData.logo : '';
+        typeof (initialData?.logo || initialData?.image) === 'string'
+          ? initialData?.logo || initialData?.image
+          : '';
 
       queueMicrotask(() => {
         setFormData(nextFormData);
@@ -232,11 +240,13 @@ const CreateServiceModal = ({
     payload.append('fullAddress', fullAddress);
     appendIfPresent(payload, 'googleMapLink', mapLink);
     payload.append('location', String(formData.townCity || '').trim());
-    payload.append(
+    appendArrayValues(
+      payload,
       'sessionTypes',
-      JSON.stringify((formData.sessionTypes || []).map((item) => normalizeSessionType(item)))
+      (formData.sessionTypes || []).map((item) => normalizeSessionType(item))
     );
-    payload.append('sports', JSON.stringify(sportsList));
+    appendArrayValues(payload, 'sports', sportsList);
+    payload.append('whoServiceFor', sportsList.join(', '));
     payload.append(
       'isOnline',
       String((formData.sessionTypes || []).some((item) => String(item).toLowerCase() === 'online video'))
@@ -247,7 +257,6 @@ const CreateServiceModal = ({
     payload.append('bookingLink', String(formData.bookingLink || '').trim());
     // Note: status and isApproved are set by backend, not sent by frontend
     payload.append('category', formData.category || providerType || 'Other');
-    // Note: whoServiceFor may not be a frontend field
     appendIfPresent(payload, 'availableDays', formData.availableDays);
     appendIfPresent(payload, 'timeSlots', formData.timeSlots);
     appendIfPresent(payload, 'price', formData.price);
@@ -263,9 +272,21 @@ const CreateServiceModal = ({
       const payloadFieldsList = [];
       for (const [key, value] of payload.entries()) {
         if (value instanceof File) {
-          payloadDebug[key] = `[File: ${value.name}]`;
+          if (payloadDebug[key] !== undefined) {
+            payloadDebug[key] = Array.isArray(payloadDebug[key])
+              ? [...payloadDebug[key], `[File: ${value.name}]`]
+              : [payloadDebug[key], `[File: ${value.name}]`];
+          } else {
+            payloadDebug[key] = `[File: ${value.name}]`;
+          }
         } else {
-          payloadDebug[key] = value;
+          if (payloadDebug[key] !== undefined) {
+            payloadDebug[key] = Array.isArray(payloadDebug[key])
+              ? [...payloadDebug[key], value]
+              : [payloadDebug[key], value];
+          } else {
+            payloadDebug[key] = value;
+          }
         }
         payloadFieldsList.push(key);
       }
@@ -516,7 +537,7 @@ const CreateServiceModal = ({
           </div>
 
           {/* Section 6: Response & Booking */}
-          <div className="space-y-4 rounded-xl border border-gray-100 bg-white p-5 shadow-sm">
+          {/* <div className="space-y-4 rounded-xl border border-gray-100 bg-white p-5 shadow-sm">
             <label className="text-sm font-medium text-[#242424]">
               How would you like participants to respond?
             </label>
@@ -540,7 +561,7 @@ const CreateServiceModal = ({
                 onChange={(e) => updateField('bookingLink', e.target.value)}
               />
             </div>
-          </div>
+          </div> */}
         </form>
         {/* Sticky Footer */}
         <div className="sticky bottom-0 z-20 flex items-center gap-3 border-t border-gray-100 bg-white px-6 py-4">

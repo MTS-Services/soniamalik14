@@ -17,6 +17,30 @@ export const ServiceProvider = ({ children }) => {
     const [deleteLoading, setDeleteLoading] = useState(false);
     const [error, setError] = useState(null);
 
+    const formatServiceValidationError = useCallback((err, fallbackMessage) => {
+        const responseData = err?.response?.data;
+        const fallback = fallbackMessage || err?.message || 'Request failed';
+
+        if (!Array.isArray(responseData?.errors) || responseData.errors.length === 0) {
+            return fallback;
+        }
+
+        const details = responseData.errors
+            .map((entry) => {
+                if (typeof entry === 'string') return entry;
+
+                const field = entry?.path || entry?.field || entry?.param || entry?.name;
+                const message = entry?.msg || entry?.message || entry?.error;
+
+                if (field && message) return `${field}: ${message}`;
+                return message || field || null;
+            })
+            .filter(Boolean)
+            .join(' | ');
+
+        return details ? `${responseData?.message || 'Validation error'}: ${details}` : fallback;
+    }, []);
+
     // Fetch approved services (public)
     const fetchApprovedServices = useCallback(async () => {
         setLoading(true);
@@ -165,14 +189,14 @@ export const ServiceProvider = ({ children }) => {
 
             return { success: true, service: newService };
         } catch (err) {
-            const message = err?.response?.data?.message || err?.message || 'Failed to create service';
+            const message = formatServiceValidationError(err, 'Failed to create service');
             setError(message);
             toast.error(message);
             return { success: false, message };
         } finally {
             setCreateLoading(false);
         }
-    }, [fetchProviderServices]);
+    }, [fetchProviderServices, formatServiceValidationError]);
 
     // Update service
     const updateService = useCallback(async (serviceId, serviceData) => {
@@ -195,14 +219,14 @@ export const ServiceProvider = ({ children }) => {
 
             return { success: true, service: updatedService };
         } catch (err) {
-            const message = err?.response?.data?.message || err?.message || 'Failed to update service';
+            const message = formatServiceValidationError(err, 'Failed to update service');
             setError(message);
             toast.error(message);
             return { success: false, message };
         } finally {
             setUpdateLoading(false);
         }
-    }, [fetchProviderServices]);
+    }, [fetchProviderServices, formatServiceValidationError]);
 
     // Delete service
     const deleteService = useCallback(async (serviceId) => {

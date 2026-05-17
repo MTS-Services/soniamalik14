@@ -111,8 +111,12 @@ const AddListing = () => {
                   className="flex h-full min-h-88.75 flex-col rounded-lg border border-[#DDE8E8] bg-[#E7F1F180] p-3 shadow-sm cursor-pointer"
                 >
                   <div className="relative mb-3 h-40 overflow-hidden rounded-md bg-[#D9D9D9] ">
-                    {service.image ? (
-                      <img src={service.image} alt={service.title} className="h-full w-full object-cover" />
+                    {service.logo || service.image ? (
+                      <img
+                        src={service.logo || service.image}
+                        alt={service.title}
+                        className="h-full w-full object-cover"
+                      />
                     ) : null}
                     {(service.category || service.tag) && (
                       <span className="absolute left-2 top-2 rounded-full bg-[#E7F1F1] px-2 py-1 text-xs text-[#0F766E]">
