@@ -1,5 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchEvents, fetchEventAnalytics, fetchProviderEvents } from './eventsAPI';
+import {
+  fetchEvents,
+  fetchEventAnalytics,
+  fetchProviderEvents,
+  fetchOrganizerEvents,
+} from './eventsAPI';
 
 const initialState = {
   events: {
@@ -20,6 +25,12 @@ const initialState = {
     error: null,
     loading: false,
   },
+  organizerEvents: {
+    list: [],
+    success: null,
+    error: null,
+    loading: false,
+  },
 };
 
 const eventsSlice = createSlice({
@@ -30,6 +41,7 @@ const eventsSlice = createSlice({
       state.events.error = null;
       state.analytics.error = null;
       state.providerEvents.error = null;
+      state.organizerEvents.error = null;
     },
     resetEvents: () => initialState,
   },
@@ -89,6 +101,24 @@ const eventsSlice = createSlice({
         state.providerEvents.loading = false;
         state.providerEvents.success = false;
         state.providerEvents.error = action.payload || 'Failed to fetch provider events';
+      })
+
+      // Fetch Organizer Own Events
+      .addCase(fetchOrganizerEvents.pending, (state) => {
+        state.organizerEvents.loading = true;
+        state.organizerEvents.error = null;
+        state.organizerEvents.success = null;
+      })
+      .addCase(fetchOrganizerEvents.fulfilled, (state, action) => {
+        state.organizerEvents.loading = false;
+        state.organizerEvents.success = true;
+        state.organizerEvents.error = null;
+        state.organizerEvents.list = action.payload || [];
+      })
+      .addCase(fetchOrganizerEvents.rejected, (state, action) => {
+        state.organizerEvents.loading = false;
+        state.organizerEvents.success = false;
+        state.organizerEvents.error = action.payload || 'Failed to fetch organizer events';
       });
   },
 });
@@ -107,5 +137,9 @@ export const selectAnalyticsError = (state) => state.events.analytics.error;
 export const selectProviderEvents = (state) => state.events.providerEvents.list;
 export const selectProviderEventsLoading = (state) => state.events.providerEvents.loading;
 export const selectProviderEventsError = (state) => state.events.providerEvents.error;
+
+export const selectOrganizerEvents = (state) => state.events.organizerEvents.list;
+export const selectOrganizerEventsLoading = (state) => state.events.organizerEvents.loading;
+export const selectOrganizerEventsError = (state) => state.events.organizerEvents.error;
 
 export default eventsSlice.reducer;

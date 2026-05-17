@@ -44,7 +44,7 @@ export const fetchProviderEvents = createAsyncThunk(
   async (_, { rejectWithValue, signal }) => {
     try {
       const response = await apiExecutor(
-        (signal) => GET('/api/services/provider/my', {}, signal),
+        (signal) => GET('/api/events/my/list', {}, signal),
         rejectWithValue,
         signal
       );
@@ -52,6 +52,22 @@ export const fetchProviderEvents = createAsyncThunk(
       return response?.data?.data || response?.data || response || [];
     } catch (error) {
       return rejectWithValue(error.message || 'Failed to fetch provider events');
+    }
+  }
+);
+
+export const fetchOrganizerEvents = createAsyncThunk(
+  'events/fetchOrganizerEvents',
+  async (_, { rejectWithValue, signal }) => {
+    try {
+      const response = await apiExecutor(
+        (signal) => GET('/api/events/my/list', {}, signal),
+        rejectWithValue,
+        signal
+      );
+      return response?.data?.data || response?.data || response || [];
+    } catch (error) {
+      return rejectWithValue(error?.message || 'Failed to fetch organizer events');
     }
   }
 );

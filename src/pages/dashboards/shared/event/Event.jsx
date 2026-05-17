@@ -1,5 +1,6 @@
 ﻿import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import PageHeader from '../../../../components/ui/PageHeader';
 import EventCard from '../../../../components/ui/EventCard';
 import Pagination from '../../../../components/ui/Pagination';
@@ -7,15 +8,50 @@ import EventModal from '../../../../components/ui/EventModal';
 import DeleteConfirmationModal from '../../../../components/ui/DeleteConfirmationModal';
 import { useEvent } from '../../../../context/EventContext';
 import { Plus } from 'lucide-react';
+import { fetchOrganizerEvents } from '../../../../features/events/eventsAPI';
+import {
+    selectOrganizerEvents,
+    selectOrganizerEventsLoading,
+    selectOrganizerEventsError,
+} from '../../../../features/events/eventsSlice';
 
-const Event = ({ filterComponent: FilterComponent, detailsRoute = '/coach/event' }) => {
-    const { events, loading, error, fetchEvents, deleteEvent } = useEvent();
+const normalizeEventsList = (value) => {
+    if (Array.isArray(value)) return value;
+    if (!value || typeof value !== 'object') return [];
+
+    if (Array.isArray(value.events)) return value.events;
+    if (Array.isArray(value.data)) return value.data;
+    if (Array.isArray(value.rows)) return value.rows;
+    if (Array.isArray(value.items)) return value.items;
+
+    return [];
+};
+
+const Event = ({
+    filterComponent: FilterComponent,
+    detailsRoute = '/coach/event',
+    useOrganizerApi = false,
+}) => {
+    const dispatch = useDispatch();
+    const { events: contextEvents, loading: contextLoading, error: contextError, fetchEvents, deleteEvent } = useEvent();
+    const organizerEvents = useSelector(selectOrganizerEvents);
+    const organizerLoading = useSelector(selectOrganizerEventsLoading);
+    const organizerError = useSelector(selectOrganizerEventsError);
     const [searchParams] = useSearchParams();
+
+    const events = normalizeEventsList(useOrganizerApi ? organizerEvents : contextEvents);
+    const loading = useOrganizerApi ? organizerLoading : contextLoading;
+    const error = useOrganizerApi ? organizerError : contextError;
 
     // Fetch events on component mount
     useEffect(() => {
+        if (useOrganizerApi) {
+            dispatch(fetchOrganizerEvents());
+            return;
+        }
+
         fetchEvents();
-    }, [fetchEvents]);
+    }, [dispatch, fetchEvents, useOrganizerApi]);
 
     const [page, setPage] = useState(1);
     const [filter, setFilter] = useState(() => {
@@ -47,6 +83,9 @@ const Event = ({ filterComponent: FilterComponent, detailsRoute = '/coach/event'
     const confirmDelete = async () => {
         if (eventToDelete) {
             await deleteEvent(eventToDelete.id);
+            if (useOrganizerApi) {
+                dispatch(fetchOrganizerEvents());
+            }
             setEventToDelete(null);
         }
     };
