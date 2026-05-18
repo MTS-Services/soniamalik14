@@ -44,12 +44,30 @@ axiosInstance.interceptors.request.use(
     }
 
     if (config.data instanceof FormData) {
+      const formDataEntries = [];
+      const formDataObject = {};
+
+      for (const [key, value] of config.data.entries()) {
+        const normalizedValue = value instanceof File ? `[File: ${value.name}]` : value;
+        formDataEntries.push([key, normalizedValue]);
+
+        if (formDataObject[key] !== undefined) {
+          formDataObject[key] = Array.isArray(formDataObject[key])
+            ? [...formDataObject[key], normalizedValue]
+            : [formDataObject[key], normalizedValue];
+        } else {
+          formDataObject[key] = normalizedValue;
+        }
+      }
+
       config.headers.setContentType(undefined);
       console.log('[axios] FormData request:', {
         url: config.url,
         method: config.method,
         timeout: config.timeout,
         headers: config.headers,
+        formDataEntries,
+        formDataObject,
       });
     } else if (config.method?.toUpperCase() === 'PUT') {
       config.headers.setContentType('application/json');

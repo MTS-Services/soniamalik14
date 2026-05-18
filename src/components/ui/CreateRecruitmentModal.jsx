@@ -42,7 +42,7 @@ const createInitialForm = () => ({
   contactPerson: '',
   role: 'Coach / Trainer',
   about: '',
-  image: null,
+  logo: null,
   sports: [],
   sessionTypes: [],
   suitableFor: [],
@@ -72,6 +72,26 @@ const appendIfPresent = (formData, key, value) => {
 const appendArrayValues = (formData, key, values = []) => {
   values.forEach((value) => appendIfPresent(formData, key, value));
 };
+
+const appendArrayField = (formData, key, values = []) => {
+  const normalized = values
+    .map((value) => String(value || '').trim())
+    .filter(Boolean);
+
+  if (normalized.length === 0) return;
+
+  // For multipart submissions, some parsers coerce single repeated fields to string.
+  // Sending JSON for single item keeps array intent explicit for backend normalizers.
+  if (normalized.length === 1) {
+    formData.append(key, JSON.stringify(normalized));
+    return;
+  }
+
+  appendArrayValues(formData, key, normalized);
+};
+
+const normalizeArray = (values = []) =>
+  values.map((value) => String(value || '').trim()).filter(Boolean);
 
 const logFormDataDebug = (label, formData) => {
   try {
@@ -164,7 +184,7 @@ const mapInitialDataToForm = (initialData) => {
     contactPerson: initialData?.contactName || '',
     role: initialData?.role || initialData?.providerType || initialData?.category || 'Coach / Trainer',
     about: initialData?.description || initialData?.aboutService || '',
-    image: initialData?.logo || initialData?.image || null,
+    logo: initialData?.logo || initialData?.image || null,
     sports: customSports.length ? [...new Set([...knownSports, 'Other'])] : [...new Set(knownSports)],
     otherSport: customSports.join(', '),
     sessionTypes: toArray(initialData?.sessionType || initialData?.sessionTypes),
@@ -210,11 +230,11 @@ const CreateRecruitmentModal = ({
     });
   }, [isOpen, initialData, mode]);
 
-  const imagePreviewUrl = useMemo(() => {
-    if (!form.image) return '';
-    if (form.image instanceof File) return URL.createObjectURL(form.image);
-    return form.image;
-  }, [form.image]);
+  const logoPreviewUrl = useMemo(() => {
+    if (!form.logo) return '';
+    if (form.logo instanceof File) return URL.createObjectURL(form.logo);
+    return form.logo;
+  }, [form.logo]);
 
   if (!isOpen) return null;
 
@@ -239,6 +259,9 @@ const CreateRecruitmentModal = ({
     const sportsList = (form.sports || [])
       .filter((sport) => sport !== 'Other')
       .concat(String(form.otherSport || '').trim() ? [String(form.otherSport || '').trim()] : []);
+    const normalizedSports = normalizeArray(sportsList);
+    const normalizedSessionTypes = normalizeArray(form.sessionTypes || []);
+    const normalizedSuitableFor = normalizeArray(form.suitableFor || []);
 
     const serviceTitle = String(form.organisationName || '').trim();
     const serviceDescription = String(form.about || '').trim();
@@ -273,40 +296,74 @@ const CreateRecruitmentModal = ({
       return;
     }
 
-    const payload = new FormData();
-    payload.append('title', serviceTitle);
-    payload.append('description', serviceDescription);
-    payload.append('organizationName', serviceTitle);
-    appendIfPresent(payload, 'role', form.role || 'Coach / Trainer');
-    appendIfPresent(payload, 'contactName', form.contactPerson || serviceTitle);
-    appendIfPresent(payload, 'providerPhone', providerPhone);
-    appendIfPresent(payload, 'providerEmail', providerEmail);
-    appendIfPresent(payload, 'clinicName', form.venueName);
-    appendIfPresent(payload, 'city', form.townCity);
-    appendIfPresent(payload, 'postcode', form.postcode);
-    appendIfPresent(payload, 'fullAddress', fullAddress);
-    appendIfPresent(payload, 'location', form.townCity || fullAddress);
-    appendIfPresent(payload, 'googleMapLink', form.googleMapLink);
-    appendArrayValues(payload, 'sessionType', form.sessionTypes || []);
-    appendArrayValues(payload, 'suitableFor', form.suitableFor || []);
-    appendIfPresent(payload, 'womenOnly', String(form.womensOnly === 'YES'));
-    appendArrayValues(payload, 'sports', sportsList);
-    appendIfPresent(payload, 'whoServiceFor', sportsList.join(', '));
-    appendIfPresent(payload, 'sessonDay', sessionDay);
-    appendIfPresent(payload, 'date', dateValue);
-    appendIfPresent(payload, 'timeSlote', timeSlot);
-    appendIfPresent(payload, 'bookingLink', form.bookingLink);
+    let resultAction;
 
-    if (form.image && typeof form.image !== 'string') {
-      payload.append('logo', form.image);
+    if (mode === 'edit' && initialData?.id) {
+      const updatePayload = {
+        organizationName: serviceTitle,
+        role: form.role || 'Coach / Trainer',
+        description: serviceDescription,
+        contactName: form.contactPerson || serviceTitle,
+        providerPhone,
+        providerEmail,
+        clinicName: String(form.venueName || '').trim(),
+        city: String(form.townCity || '').trim(),
+        postcode: String(form.postcode || '').trim(),
+        fullAddress,
+        location: String(form.townCity || '').trim() || fullAddress,
+        googleMapLink: String(form.googleMapLink || '').trim(),
+        sessionType: normalizedSessionTypes,
+        suitableFor: normalizedSuitableFor,
+        womenOnly: form.womensOnly === 'YES',
+        sports: normalizedSports,
+        whoServiceFor: normalizedSports.join(', '),
+        sessonDay: sessionDay,
+        date: dateValue,
+        timeSlote: timeSlot,
+        bookingLink: String(form.bookingLink || '').trim(),
+      };
+
+      Object.keys(updatePayload).forEach((key) => {
+        const value = updatePayload[key];
+        if (value === '' || value === undefined || value === null) {
+          delete updatePayload[key];
+        }
+      });
+
+      console.log('[CreateRecruitmentModal] Service update payload (json):', updatePayload);
+      resultAction = await dispatch(updateService({ id: initialData.id, serviceData: updatePayload }));
+    } else {
+      const payload = new FormData();
+      payload.append('title', serviceTitle);
+      payload.append('description', serviceDescription);
+      payload.append('organizationName', serviceTitle);
+      appendIfPresent(payload, 'role', form.role || 'Coach / Trainer');
+      appendIfPresent(payload, 'contactName', form.contactPerson || serviceTitle);
+      appendIfPresent(payload, 'providerPhone', providerPhone);
+      appendIfPresent(payload, 'providerEmail', providerEmail);
+      appendIfPresent(payload, 'clinicName', form.venueName);
+      appendIfPresent(payload, 'city', form.townCity);
+      appendIfPresent(payload, 'postcode', form.postcode);
+      appendIfPresent(payload, 'fullAddress', fullAddress);
+      appendIfPresent(payload, 'location', form.townCity || fullAddress);
+      appendIfPresent(payload, 'googleMapLink', form.googleMapLink);
+      appendArrayField(payload, 'sessionType', normalizedSessionTypes);
+      appendArrayField(payload, 'suitableFor', normalizedSuitableFor);
+      appendIfPresent(payload, 'womenOnly', String(form.womensOnly === 'YES'));
+      appendArrayField(payload, 'sports', normalizedSports);
+      appendIfPresent(payload, 'whoServiceFor', normalizedSports.join(', '));
+      appendIfPresent(payload, 'sessonDay', sessionDay);
+      appendIfPresent(payload, 'date', dateValue);
+      appendIfPresent(payload, 'timeSlote', timeSlot);
+      appendIfPresent(payload, 'bookingLink', form.bookingLink);
+
+      if (form.logo && typeof form.logo !== 'string') {
+        payload.append('logo', form.logo);
+      }
+
+      logFormDataDebug('[CreateRecruitmentModal] Service payload', payload);
+      resultAction = await dispatch(createService(payload));
     }
-
-    logFormDataDebug('[CreateRecruitmentModal] Service payload', payload);
-
-    const resultAction =
-      mode === 'edit' && initialData?.id
-        ? await dispatch(updateService({ id: initialData.id, serviceData: payload }))
-        : await dispatch(createService(payload));
 
     const isSuccess =
       (mode === 'edit' && updateService.fulfilled.match(resultAction)) ||
@@ -394,12 +451,12 @@ const CreateRecruitmentModal = ({
                   type="file"
                   id="file-upload"
                   className="hidden"
-                  onChange={(e) => handleChange('image', e.target.files[0])}
+                  onChange={(e) => handleChange('logo', e.target.files[0])}
                 />
-                {imagePreviewUrl ? (
+                {logoPreviewUrl ? (
                   <div className="relative h-full w-full">
                     <img
-                      src={imagePreviewUrl}
+                      src={logoPreviewUrl}
                       alt="Preview"
                       className="h-full w-full object-cover"
                     />
