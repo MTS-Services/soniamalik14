@@ -40,7 +40,7 @@ const suitabilityOptions = [
 const createInitialForm = () => ({
   organisationName: '',
   contactPerson: '',
-  role: 'coach_manager',
+  role: 'Coach / Trainer',
   about: '',
   image: null,
   sports: [],
@@ -71,6 +71,35 @@ const appendIfPresent = (formData, key, value) => {
 
 const appendArrayValues = (formData, key, values = []) => {
   values.forEach((value) => appendIfPresent(formData, key, value));
+};
+
+const logFormDataDebug = (label, formData) => {
+  try {
+    const payloadDebug = {};
+    const payloadFields = [];
+
+    for (const [key, value] of formData.entries()) {
+      const normalizedValue = value instanceof File ? `[File: ${value.name}]` : value;
+
+      if (payloadDebug[key] !== undefined) {
+        payloadDebug[key] = Array.isArray(payloadDebug[key])
+          ? [...payloadDebug[key], normalizedValue]
+          : [payloadDebug[key], normalizedValue];
+      } else {
+        payloadDebug[key] = normalizedValue;
+      }
+
+      payloadFields.push(key);
+    }
+
+    console.groupCollapsed(label);
+    console.log('fields:', payloadFields);
+    console.log('data:', payloadDebug);
+    console.log('totalFields:', payloadFields.length);
+    console.groupEnd();
+  } catch (error) {
+    console.error('[CreateRecruitmentModal] Failed to log FormData payload', error);
+  }
 };
 
 const toArray = (value) => {
@@ -127,24 +156,32 @@ const mapInitialDataToForm = (initialData) => {
   const mergedSports = [...sportsFromService, ...sportsFromWhoServiceFor].filter(Boolean);
   const knownSports = mergedSports.filter((sport) => sportOptions.includes(sport) && sport !== 'Other');
   const customSports = mergedSports.filter((sport) => !sportOptions.includes(sport));
+  const womenOnlyValue = initialData?.womenOnly;
 
   return {
     ...createInitialForm(),
-    organisationName: initialData?.providerName || initialData?.title || '',
+    organisationName: initialData?.organizationName || initialData?.providerName || initialData?.title || '',
     contactPerson: initialData?.contactName || '',
-    role: initialData?.providerType || initialData?.category || 'coach_manager',
-    about: initialData?.aboutService || initialData?.description || '',
+    role: initialData?.role || initialData?.providerType || initialData?.category || 'Coach / Trainer',
+    about: initialData?.description || initialData?.aboutService || '',
     image: initialData?.logo || initialData?.image || null,
     sports: customSports.length ? [...new Set([...knownSports, 'Other'])] : [...new Set(knownSports)],
     otherSport: customSports.join(', '),
-    sessionTypes: toArray(initialData?.sessionTypes),
+    sessionTypes: toArray(initialData?.sessionType || initialData?.sessionTypes),
+    suitableFor: toArray(initialData?.suitableFor),
+    womensOnly:
+      typeof womenOnlyValue === 'boolean'
+        ? womenOnlyValue
+          ? 'YES'
+          : 'NO'
+        : String(womenOnlyValue || '').toUpperCase(),
     venueName: initialData?.clinicName || '',
     postcode: initialData?.postcode || '',
     townCity: initialData?.city || '',
     googleMapLink: initialData?.googleMapLink || initialData?.googleMapLinks || '',
-    sessionDays: initialData?.availableDays || '',
-    dateDay: toDateInputValue(initialData?.dateDay),
-    time: toTimeInputValue(initialData?.timeSlots),
+    sessionDays: initialData?.sessonDay || initialData?.availableDays || '',
+    dateDay: toDateInputValue(initialData?.date || initialData?.dateDay),
+    time: toTimeInputValue(initialData?.timeSlote || initialData?.timeSlots),
     bookingLink: initialData?.bookingLink || '',
   };
 };
@@ -213,11 +250,9 @@ const CreateRecruitmentModal = ({
       user?.providerPhone ||
       '';
     const providerEmail = user?.email || user?.providerEmail || '';
-    const availableDays = [form.sessionDays, form.dateDay]
-      .map((item) => String(item || '').trim())
-      .filter(Boolean)
-      .join(' | ');
-    const timeSlots = String(form.time || '').trim();
+    const sessionDay = String(form.sessionDays || '').trim();
+    const dateValue = String(form.dateDay || '').trim();
+    const timeSlot = String(form.time || '').trim();
     const fullAddress = [form.venueName, form.townCity, form.postcode]
       .map((item) => String(item || '').trim())
       .filter(Boolean)
@@ -233,39 +268,40 @@ const CreateRecruitmentModal = ({
       return;
     }
 
-    if (!availableDays || !timeSlots) {
+    if (!sessionDay || !timeSlot) {
       toast.error('Typical session days and time are required.');
       return;
     }
 
     const payload = new FormData();
     payload.append('title', serviceTitle);
-    payload.append('listingHeadline', serviceTitle);
     payload.append('description', serviceDescription);
-    payload.append('aboutService', serviceDescription);
-    payload.append('providerName', serviceTitle);
+    payload.append('organizationName', serviceTitle);
+    appendIfPresent(payload, 'role', form.role || 'Coach / Trainer');
     appendIfPresent(payload, 'contactName', form.contactPerson || serviceTitle);
     appendIfPresent(payload, 'providerPhone', providerPhone);
     appendIfPresent(payload, 'providerEmail', providerEmail);
-    appendIfPresent(payload, 'providerType', form.role || 'Coach / Trainer');
-    payload.append('serviceType', 'COACHING');
     appendIfPresent(payload, 'clinicName', form.venueName);
     appendIfPresent(payload, 'city', form.townCity);
     appendIfPresent(payload, 'postcode', form.postcode);
     appendIfPresent(payload, 'fullAddress', fullAddress);
     appendIfPresent(payload, 'location', form.townCity || fullAddress);
     appendIfPresent(payload, 'googleMapLink', form.googleMapLink);
-    appendArrayValues(payload, 'sessionTypes', form.sessionTypes || []);
+    appendArrayValues(payload, 'sessionType', form.sessionTypes || []);
+    appendArrayValues(payload, 'suitableFor', form.suitableFor || []);
+    appendIfPresent(payload, 'womenOnly', String(form.womensOnly === 'YES'));
     appendArrayValues(payload, 'sports', sportsList);
     appendIfPresent(payload, 'whoServiceFor', sportsList.join(', '));
-    appendIfPresent(payload, 'availableDays', availableDays);
-    appendIfPresent(payload, 'timeSlots', timeSlots);
+    appendIfPresent(payload, 'sessonDay', sessionDay);
+    appendIfPresent(payload, 'date', dateValue);
+    appendIfPresent(payload, 'timeSlote', timeSlot);
     appendIfPresent(payload, 'bookingLink', form.bookingLink);
-    appendIfPresent(payload, 'category', form.role || 'Coach / Trainer');
 
     if (form.image && typeof form.image !== 'string') {
       payload.append('logo', form.image);
     }
+
+    logFormDataDebug('[CreateRecruitmentModal] Service payload', payload);
 
     const resultAction =
       mode === 'edit' && initialData?.id
@@ -279,7 +315,15 @@ const CreateRecruitmentModal = ({
     if (isSuccess) {
       onSuccess?.();
       onClose?.();
+      return;
     }
+
+    console.group('[CreateRecruitmentModal] Service submit failed');
+    console.error('mode:', mode);
+    console.error('rejectedPayload:', resultAction?.payload);
+    console.error('error:', resultAction?.error);
+    console.error('meta:', resultAction?.meta);
+    console.groupEnd();
   };
 
   return (
@@ -331,7 +375,7 @@ const CreateRecruitmentModal = ({
                   value={form.role}
                   onChange={(e) => handleChange('role', e.target.value)}
                   className="w-full rounded-md bg-[#f3f4f6] p-2.5 text-sm text-gray-500 outline-none"
-                  placeholder="coach_manager"
+                  placeholder="Coach / Trainer"
                 />
               </div>
 

@@ -103,6 +103,13 @@ export const createService = createAsyncThunk(
       return result;
     } catch (error) {
       const message = getApiErrorMessage(error, 'Failed to create service');
+      console.error('[service/create] request failed', {
+        url: error?.config?.url,
+        method: error?.config?.method,
+        status: error?.response?.status,
+        response: error?.response?.data,
+        message,
+      });
       toast.error(message);
       return rejectWithValue(message);
     }
@@ -120,6 +127,13 @@ export const updateService = createAsyncThunk(
       return result;
     } catch (error) {
       const message = getApiErrorMessage(error, 'Failed to update service');
+      console.error('[service/update] request failed', {
+        url: error?.config?.url,
+        method: error?.config?.method,
+        status: error?.response?.status,
+        response: error?.response?.data,
+        message,
+      });
       toast.error(message);
       return rejectWithValue(message);
     }
