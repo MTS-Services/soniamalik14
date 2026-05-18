@@ -51,6 +51,7 @@ const createInitialForm = () => ({
   venueName: '',
   postcode: '',
   townCity: '',
+  googleMapLink: '',
   sessionDays: '',
   dateDay: '',
   time: '',
@@ -140,6 +141,7 @@ const mapInitialDataToForm = (initialData) => {
     venueName: initialData?.clinicName || '',
     postcode: initialData?.postcode || '',
     townCity: initialData?.city || '',
+    googleMapLink: initialData?.googleMapLink || initialData?.googleMapLinks || '',
     sessionDays: initialData?.availableDays || '',
     dateDay: toDateInputValue(initialData?.dateDay),
     time: toTimeInputValue(initialData?.timeSlots),
@@ -252,6 +254,7 @@ const CreateRecruitmentModal = ({
     appendIfPresent(payload, 'postcode', form.postcode);
     appendIfPresent(payload, 'fullAddress', fullAddress);
     appendIfPresent(payload, 'location', form.townCity || fullAddress);
+    appendIfPresent(payload, 'googleMapLink', form.googleMapLink);
     appendArrayValues(payload, 'sessionTypes', form.sessionTypes || []);
     appendArrayValues(payload, 'sports', sportsList);
     appendIfPresent(payload, 'whoServiceFor', sportsList.join(', '));
@@ -486,7 +489,7 @@ const CreateRecruitmentModal = ({
 
             <div className="space-y-4 rounded-lg border border-gray-100 bg-white p-5">
               <h3 className="text-lg font-semibold text-gray-800">Location & Timing</h3>
-              <div className="grid grid-cols-3 gap-3">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 <div className="space-y-1">
                   <label className="text-base font-medium text-gray-700">Venue Name</label>
                   <input
@@ -512,6 +515,15 @@ const CreateRecruitmentModal = ({
                     onChange={(e) => handleChange('townCity', e.target.value)}
                     className="w-full rounded bg-[#f3f4f6] p-2 text-sm outline-none"
                     placeholder="e.g london"
+                  />
+                </div>
+                <div className="space-y-1">
+                  <label className="text-base font-medium text-gray-700">Google Map Link</label>
+                  <input
+                    value={form.googleMapLink}
+                    onChange={(e) => handleChange('googleMapLink', e.target.value)}
+                    className="w-full rounded bg-[#f3f4f6] p-2 text-sm outline-none"
+                    placeholder="Paste Google Maps link"
                   />
                 </div>
                 <div className="space-y-1">
