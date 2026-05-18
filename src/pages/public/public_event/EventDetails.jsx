@@ -1,38 +1,83 @@
-﻿import React from 'react';
+﻿import React, { useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft, Heart, Medal, Calendar, Users, MapPin } from 'lucide-react';
 import Container from '../../../components/layout/Container';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchOrganizerEventById } from '../../../features/events/eventsAPI';
 
 const EventDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
  
-  const event = {
-    id,
-    title: "Women's Open Football Training Camp",
-     titleColor: '#0B544E',
-    coach: 'Rising Queens Football Academy', 
-    type: 'Workshops & learning',
-    sport: 'Football',
-    suitableFor: 'New to the sport',
-    womensOnly: 'Yes',
-    location: 'Bashundhara turbo tough',
-    locationFull: '2118 Thornridge Cir. Syracuse, Connecticut 35624',
-    postcode: '35624',
-    town: 'Syracuse',
-    day: 'Saturday',
-    time: '10:00 - 12:00',
-    image: '/images/detaisPage/detailsBanner.png', 
-    avatar: '/images/detaisPage/coachAvatar.png', 
-    mapImage: 'https://i.ibb.co.com/ZRNpWQng/1579279c93526af38385f21a2041e29aeb2f2ae5.png', 
-    about: 'This training camp is designed exclusively for women footballers who want to improve their skills, fitness, and overall match performance. The session will focus on technical drills, tactical awareness, team coordination, and physical conditioning in a supportive and competitive environment.\n\nWhether you are preparing for upcoming matches or looking to sharpen your fundamentals, this camp provides professional guidance and structured training. Players will train under experienced coaches and get valuable feedback to help them grow confidently on the field.',
-  };
+  const dispatch = useDispatch();
+  const apiItem = useSelector((state) => state.events.organizerEventDetails.item);
+  const loading = useSelector((state) => state.events.organizerEventDetails.loading);
+  const error = useSelector((state) => state.events.organizerEventDetails.error);
+
+  useEffect(() => {
+    if (!id) return;
+    dispatch(fetchOrganizerEventById(id));
+  }, [id, dispatch]);
+
+  const data = apiItem;
+  const event = data
+    ? {
+        id: data.id,
+        title: data.title,
+        titleColor: '#0B544E',
+        coach: data.organizerName || data.organizer?.name || '',
+        type: data.eventType || data.eventType,
+        sport: data.sportType || '',
+        suitableFor: Array.isArray(data.suitableFor) ? data.suitableFor.join(', ') : (data.suitableFor || ''),
+        womensOnly: data.womensOnly ?? 'No',
+        location: data.venueName || '',
+        locationFull: data.fullAddress || '',
+        postcode: data.postcode || '',
+        town: data.city || '',
+        day: data.startDate ? new Date(data.startDate).toLocaleDateString(undefined, { weekday: 'long' }) : '',
+        time: data.startTime && data.endTime ? `${data.startTime} - ${data.endTime}` : (data.startTime || ''),
+        image: data.image || '/images/detaisPage/detailsBanner.png',
+        avatar: data.organizer?.avatar || '/images/detaisPage/coachAvatar.png',
+        mapImage: data.googleMapLink || '',
+        about: data.description || data.about || '',
+      }
+    : null;
 
   const handleSendMessage = (e) => {
     e.preventDefault();
     alert('Message sent — demo only');
   };
+
+  if (loading) {
+    return (
+      <div className="bg-[#F8FAFC] min-h-screen pb-16">
+        <Container>
+          <div className="py-8 text-center">Loading event...</div>
+        </Container>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="bg-[#F8FAFC] min-h-screen pb-16">
+        <Container>
+          <div className="py-8 text-center text-red-600">{error}</div>
+        </Container>
+      </div>
+    );
+  }
+
+  if (!event) {
+    return (
+      <div className="bg-[#F8FAFC] min-h-screen pb-16">
+        <Container>
+          <div className="py-8 text-center">Event not found</div>
+        </Container>
+      </div>
+    );
+  }
 
   return (
     <div className="bg-[#F8FAFC] min-h-screen pb-16">
