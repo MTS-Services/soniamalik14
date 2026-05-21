@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Medal, Calendar, Users } from 'lucide-react';
 import { useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 import { POST } from '../../../../services/httpMethods';
 import { getUser } from '../../../../utils/storage';
 
@@ -9,23 +10,20 @@ const SessionOverview = ({ event }) => {
   const currentUser = authUser || getUser();
 
   const [interestStatus, setInterestStatus] = useState('idle'); // idle | loading | success | error
-  const [interestMsg, setInterestMsg] = useState('');
   const [bookingStatus, setBookingStatus] = useState('idle'); // idle | loading | success | error
-  const [bookingMsg, setBookingMsg] = useState('');
 
   if (!event) return null;
 
   const handleRegisterInterest = async () => {
     if (!event.id) return;
     setInterestStatus('loading');
-    setInterestMsg('');
     try {
-      await POST(`/api/events/${event.id}/interest`, {});
+      const response = await POST(`/api/events/${event.id}/interest`, {});
       setInterestStatus('success');
-      setInterestMsg('Interest registered!');
+      toast.success(response?.data?.message || response?.message || 'Interest registered!');
     } catch (e) {
       setInterestStatus('error');
-      setInterestMsg(e?.response?.data?.message || 'Failed to register interest');
+      toast.error(e?.response?.data?.message || 'Failed to register interest');
     }
   };
 
@@ -41,12 +39,11 @@ const SessionOverview = ({ event }) => {
 
     if (!fullName || !email || !phoneNumber) {
       setBookingStatus('error');
-      setBookingMsg('Please login with complete profile info (name, email, phone) to book.');
+      toast.error('Please login with complete profile info (name, email, phone) to book.');
       return;
     }
 
     setBookingStatus('loading');
-    setBookingMsg('');
 
     try {
       const response = await POST(`/api/events/${event.id}/register`, {
@@ -58,10 +55,10 @@ const SessionOverview = ({ event }) => {
 
       const successMessage = response?.data?.message || response?.message || 'Booked successfully!';
       setBookingStatus('success');
-      setBookingMsg(successMessage);
+      toast.success(successMessage);
     } catch (e) {
       setBookingStatus('error');
-      setBookingMsg(e?.response?.data?.message || 'Failed to book your place');
+      toast.error(e?.response?.data?.message || 'Failed to book your place');
     }
   };
 
@@ -130,12 +127,6 @@ const SessionOverview = ({ event }) => {
         >
           {interestStatus === 'loading' ? 'Registering...' : interestStatus === 'success' ? 'Registered' : 'Register Interest'}
         </button>
-        {bookingMsg && (
-          <span className={`ml-2 text-xs ${bookingStatus === 'success' ? 'text-green-700' : 'text-red-600'}`}>{bookingMsg}</span>
-        )}
-        {interestMsg && (
-          <span className={`ml-2 text-xs ${interestStatus === 'success' ? 'text-green-700' : 'text-red-600'}`}>{interestMsg}</span>
-        )}
       </div>
     </div>
   );
