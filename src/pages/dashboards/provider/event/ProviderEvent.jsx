@@ -13,8 +13,12 @@ import {
 } from 'lucide-react';
 import EventModal from '../../../../components/ui/EventModal';
 import Pagination from '../../../../components/ui/Pagination';
-import { fetchProviderEvents } from '../../../../features/events/eventsAPI';
-import { selectProviderEvents, selectProviderEventsLoading } from '../../../../features/events/eventsSlice';
+import { deleteOrganizerEvent, fetchProviderEvents } from '../../../../features/events/eventsAPI';
+import {
+  selectDeleteOrganizerEventLoading,
+  selectProviderEvents,
+  selectProviderEventsLoading,
+} from '../../../../features/events/eventsSlice';
 
 const formatDateLabel = (value) => {
   if (!value) return 'Date not set';
@@ -33,8 +37,8 @@ const ProviderEvent = () => {
 
   const reduxEvents = useSelector(selectProviderEvents);
   const isLoading = useSelector(selectProviderEventsLoading);
+  const isDeleteLoading = useSelector(selectDeleteOrganizerEventLoading);
 
-  const [events, setEvents] = useState([]);
   const [page, setPage] = useState(Number.isInteger(restoredPage) && restoredPage > 0 ? restoredPage : 1);
   const [filter, setFilter] = useState({
     status:
@@ -52,11 +56,7 @@ const ProviderEvent = () => {
     dispatch(fetchProviderEvents());
   }, [dispatch]);
 
-  useEffect(() => {
-    if (reduxEvents) {
-      setEvents(Array.isArray(reduxEvents) ? reduxEvents : []);
-    }
-  }, [reduxEvents]);
+  const events = useMemo(() => (Array.isArray(reduxEvents) ? reduxEvents : []), [reduxEvents]);
 
   const perPage = 9;
   const statusOptions = ['All', 'Approved', 'Pending'];
@@ -90,14 +90,19 @@ const ProviderEvent = () => {
 
   const saveEdit = () => {
     if (!editingEvent) return;
-    setEvents((prev) => prev.map((ev) => (ev.id === editingEvent.id ? { ...editingEvent } : ev)));
     setEditingEvent(null);
   };
 
-  const confirmDelete = () => {
+  const confirmDelete = async () => {
     if (!eventToDelete) return;
-    setEvents((prev) => prev.filter((ev) => ev.id !== eventToDelete.id));
-    setEventToDelete(null);
+
+    const targetId = eventToDelete.id;
+    const action = await dispatch(deleteOrganizerEvent(targetId));
+
+    if (deleteOrganizerEvent.fulfilled.match(action)) {
+      setEventToDelete(null);
+      dispatch(fetchProviderEvents());
+    }
   };
 
   return (
@@ -106,9 +111,7 @@ const ProviderEvent = () => {
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <h1 className="text-2xl font-semibold text-[#1D1D1D] md:text-3xl">Manage Your Events</h1>
-            {/* <p className="mt-1 text-sm text-[#6B7280] md:text-base">
-              Manage your event listings, update details, and track approvals.
-            </p> */}
+          
           </div>
           <button
             type="button"
@@ -175,7 +178,11 @@ const ProviderEvent = () => {
         </div>
       </section>
 
-      {paged.length === 0 ? (
+      {isLoading ? (
+        <div className="rounded-xl bg-white py-20 text-center shadow-sm">
+          <div className="mb-2 text-lg text-gray-500">Loading events...</div>
+        </div>
+      ) : paged.length === 0 ? (
         <div className="rounded-xl bg-white py-20 text-center shadow-sm">
           <div className="mb-2 text-lg text-gray-500">No events found</div>
           <p className="text-base text-gray-400">Try changing the filters or create a new event.</p>
@@ -348,9 +355,10 @@ const ProviderEvent = () => {
               <button
                 type="button"
                 onClick={confirmDelete}
+                disabled={isDeleteLoading}
                 className="flex-1 rounded-lg bg-red-600 py-2 text-base font-medium text-white transition hover:bg-red-700"
               >
-                Delete
+                {isDeleteLoading ? 'Deleting...' : 'Delete'}
               </button>
             </div>
           </div>
