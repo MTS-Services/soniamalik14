@@ -201,7 +201,7 @@ const EventSingleDetails = () => {
           <img
             src={eventData.image || 'https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&w=1600&q=80'}
             alt="Event Banner"
-            className="w-full h-64 md:h-96 object-cover"
+            className="w-full h-64 md:h-96 lg:h-100 xl:h-140 2xl:h-186 object-cover "
           />
           {/* Back Button floating on image */}
           <button
