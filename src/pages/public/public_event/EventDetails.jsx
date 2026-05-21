@@ -121,7 +121,7 @@ const EventDetails = () => {
           {/* Hero Banner Section */}
           <div className="relative mb-16">
             {/* Banner Image */}
-            <div className="w-full h-62.5 md:h-150 rounded-2xl overflow-hidden shadow-sm">
+            <div className="w-full md:h-96 lg:h-100 xl:h-140 2xl:h-186 rounded-2xl overflow-hidden shadow-sm">
               {event.image ? (
                 <img src={event.image} alt={event.title} className="w-full h-full object-cover" />
               ) : (
