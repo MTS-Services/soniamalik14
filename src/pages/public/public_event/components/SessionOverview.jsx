@@ -1,8 +1,27 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Medal, Calendar, Users } from 'lucide-react';
+import { POST } from '../../../../services/httpMethods';
 
 const SessionOverview = ({ event }) => {
+
+  const [interestStatus, setInterestStatus] = useState('idle'); // idle | loading | success | error
+  const [interestMsg, setInterestMsg] = useState('');
+
   if (!event) return null;
+
+  const handleRegisterInterest = async () => {
+    if (!event.id) return;
+    setInterestStatus('loading');
+    setInterestMsg('');
+    try {
+      await POST(`/api/events/${event.id}/interest`, {});
+      setInterestStatus('success');
+      setInterestMsg('Interest registered!');
+    } catch (e) {
+      setInterestStatus('error');
+      setInterestMsg(e?.response?.data?.message || 'Failed to register interest');
+    }
+  };
 
   return (
     <div>
@@ -58,9 +77,16 @@ const SessionOverview = ({ event }) => {
         <button className="rounded-lg bg-[#0F766E] px-4 py-2.5 text-sm font-medium text-white transition-colors hover:bg-[#0D655D]">
           Book Your Place
         </button>
-        <button className="rounded-lg bg-[#0F766E] px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-[#0D655D]">
-          Register Interest
+        <button
+          className={`rounded-lg bg-[#0F766E] px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-[#0D655D] ${interestStatus === 'success' ? 'opacity-60 cursor-not-allowed' : ''}`}
+          onClick={handleRegisterInterest}
+          disabled={interestStatus === 'loading' || interestStatus === 'success'}
+        >
+          {interestStatus === 'loading' ? 'Registering...' : interestStatus === 'success' ? 'Registered' : 'Register Interest'}
         </button>
+        {interestMsg && (
+          <span className={`ml-2 text-xs ${interestStatus === 'success' ? 'text-green-700' : 'text-red-600'}`}>{interestMsg}</span>
+        )}
       </div>
     </div>
   );
