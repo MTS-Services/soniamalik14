@@ -659,18 +659,6 @@ const CreateRecruitmentModal = ({
               </div>
             </div>
 
-            <div className="space-y-4 rounded-lg border border-gray-100 bg-white p-5">
-              <h3 className="text-lg font-semibold text-gray-800">Booking Details</h3>
-              <div className="space-y-1">
-                <label className="text-base font-medium text-gray-700">Booking link</label>
-                <input
-                  value={form.bookingLink}
-                  onChange={(e) => handleChange('bookingLink', e.target.value)}
-                  className="w-full rounded bg-[#f3f4f6] p-2.5 text-sm outline-none"
-                  placeholder="Venue name"
-                />
-              </div>
-            </div>
           </form>
         </div>
 
