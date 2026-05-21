@@ -1,9 +1,12 @@
 ﻿import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import Container from '../../../components/layout/Container';
 import { X, Filter } from 'lucide-react';
+import { useAuth } from '../../../context/AuthContext';
 import EventFilters from './components/EventFilters';
 import EventCard from './components/EventCard';
+import LoginRequiredModal from './components/LoginRequiredModal';
 import Pagination from '../../../components/ui/Pagination';
 import PageHeader from '../../../components/ui/PageHeader';
 import { fetchEvents } from '../../../features/events/eventsAPI';
@@ -41,12 +44,16 @@ const formatEventTypeTag = (value) => {
 
 const EventView = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { isAuthenticated } = useAuth();
   const reduxEvents = useSelector(selectAllEvents);
   const loading = useSelector(selectEventsLoading);
   const error = useSelector(selectEventsError);
 
   const [page, setPage] = useState(1);
   const [showFilters, setShowFilters] = useState(false);
+  const [showLoginModal, setShowLoginModal] = useState(false);
+  const [selectedEventId, setSelectedEventId] = useState(null);
   const [filters, setFilters] = useState({
     city: '',
     eventTypes: [],
@@ -120,6 +127,24 @@ const EventView = () => {
 
   const total = Math.ceil(filtered.length / perPage);
   const paged = filtered.slice((page - 1) * perPage, page * perPage);
+
+  const handleViewDetails = (event) => {
+    if (!event?.id) return;
+
+    if (isAuthenticated) {
+      navigate(`/events/${event.id}`, { state: { event } });
+      return;
+    }
+
+    setSelectedEventId(event.id);
+    setShowLoginModal(true);
+  };
+
+  const handleModalLogin = () => {
+    const targetPath = selectedEventId ? `/events/${selectedEventId}` : '/events';
+    setShowLoginModal(false);
+    navigate('/signin', { state: { from: targetPath } });
+  };
 
   return (
     <div className="bg-[#F8FAFC] py-6 lg:py-10">
@@ -234,7 +259,7 @@ const EventView = () => {
             {!loading && !error && (
               <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:gap-6 xl:grid-cols-3">
                 {paged.map((e) => (
-                  <EventCard key={e.id} event={e} />
+                  <EventCard key={e.id} event={e} onViewDetails={handleViewDetails} />
                 ))}
               </div>
             )}
@@ -251,6 +276,12 @@ const EventView = () => {
             ) : null}
           </div>
         </div>
+
+        <LoginRequiredModal
+          isOpen={showLoginModal}
+          onClose={() => setShowLoginModal(false)}
+          onLogin={handleModalLogin}
+        />
       </Container>
     </div>
   );
