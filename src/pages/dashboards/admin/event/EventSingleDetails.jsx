@@ -12,7 +12,7 @@ import {
   MessageSquare,
   ExternalLink,
   Code,
-  AlertCircle
+  AlertCircle,
 } from 'lucide-react';
 import { GET } from '../../../../services/httpMethods';
 import { ENDPOINT } from '../../../../services/httpEndpoint';
@@ -133,7 +133,8 @@ const EventSingleDetails = () => {
       } catch (err) {
         if (err?.name === 'AbortError' || err?.name === 'CanceledError') return;
 
-        const message = err?.response?.data?.message || err?.message || 'Failed to load event details.';
+        const message =
+          err?.response?.data?.message || err?.message || 'Failed to load event details.';
         if (isCurrentRequest) {
           setError(message);
         }
@@ -153,26 +154,36 @@ const EventSingleDetails = () => {
     };
   }, [id]);
 
-  const normalizedStatus = useMemo(() => String(eventData?.status || '').toUpperCase(), [eventData?.status]);
+  const normalizedStatus = useMemo(
+    () => String(eventData?.status || '').toUpperCase(),
+    [eventData?.status]
+  );
   const isPending = normalizedStatus === 'PENDING' || normalizedStatus === 'PENDING_APPROVAL';
   const isBanned = normalizedStatus === 'BANNED' || normalizedStatus === 'REJECTED';
-  const allowsQuestions = Array.isArray(eventData?.responseMethods) && eventData.responseMethods.includes('Allow users to ask a question');
-  const allowsBooking = Array.isArray(eventData?.responseMethods) && eventData.responseMethods.includes('Add booking link');
-  const allowsRegisterInterest = Array.isArray(eventData?.responseMethods) && eventData.responseMethods.includes('Allow users to register interest');
+  const allowsQuestions =
+    Array.isArray(eventData?.responseMethods) &&
+    eventData.responseMethods.includes('Allow users to ask a question');
+  const allowsBooking =
+    Array.isArray(eventData?.responseMethods) &&
+    eventData.responseMethods.includes('Add booking link');
+  const allowsRegisterInterest =
+    Array.isArray(eventData?.responseMethods) &&
+    eventData.responseMethods.includes('Allow users to register interest');
 
   const dateValue = formatDateRange(eventData?.startDate, eventData?.endDate);
   const timeValue = formatTimeRange(eventData?.startTime, eventData?.endTime);
-  const suitableForValue = Array.isArray(eventData?.suitableFor) && eventData.suitableFor.length > 0
-    ? eventData.suitableFor.join(', ')
-    : 'N/A';
+  const suitableForValue =
+    Array.isArray(eventData?.suitableFor) && eventData.suitableFor.length > 0
+      ? eventData.suitableFor.join(', ')
+      : 'N/A';
   const ageGroupValue = eventData?.minAge ? `${eventData.minAge}+ Years` : 'N/A';
   const mapEmbedUrl = useMemo(() => buildMapEmbedUrl(eventData), [eventData]);
 
   if (isLoading || !hasLoaded) {
     return (
-      <div className="flex-1 overflow-auto bg-[#F8F9FA] relative font-sans min-h-[70vh] flex items-center justify-center p-6 md:p-8">
+      <div className="relative flex min-h-[70vh] flex-1 items-center justify-center overflow-auto bg-[#F8F9FA] p-6 font-sans md:p-8">
         <div className="flex flex-col items-center gap-3">
-          <div className="w-10 h-10 rounded-full border-4 border-[#91C0BC] border-t-btn-primary animate-spin" />
+          <div className="border-t-btn-primary h-10 w-10 animate-spin rounded-full border-4 border-[#91C0BC]" />
           <p className="text-sm font-medium text-gray-600">Loading event details...</p>
         </div>
       </div>
@@ -181,16 +192,16 @@ const EventSingleDetails = () => {
 
   if (error) {
     return (
-      <div className="flex-1 overflow-auto bg-[#F8F9FA] relative font-sans pb-12 p-6 md:p-8">
+      <div className="relative flex-1 overflow-auto bg-[#F8F9FA] p-6 pb-12 font-sans md:p-8">
         <button
           onClick={() => navigate(-1)}
-          className="mb-4 inline-flex items-center gap-2 bg-white px-4 py-2 rounded-lg text-black shadow-sm"
+          className="mb-4 inline-flex items-center gap-2 rounded-lg bg-white px-4 py-2 text-black shadow-sm"
         >
-          <ArrowLeft className="w-4 h-4" />
+          <ArrowLeft className="h-4 w-4" />
           <span className="text-sm font-medium">Back</span>
         </button>
-        <div className="bg-red-50 border border-red-100 rounded-xl p-5">
-          <h3 className="text-xl font-semibold text-red-600 mb-1">Unable to load event</h3>
+        <div className="rounded-xl border border-red-100 bg-red-50 p-5">
+          <h3 className="mb-1 text-xl font-semibold text-red-600">Unable to load event</h3>
           <p className="text-base text-red-500">{error}</p>
         </div>
       </div>
@@ -199,89 +210,97 @@ const EventSingleDetails = () => {
 
   if (!eventData) {
     return (
-      <div className="flex-1 overflow-auto bg-[#F8F9FA] relative font-sans pb-12 p-6 md:p-8">
+      <div className="relative flex-1 overflow-auto bg-[#F8F9FA] p-6 pb-12 font-sans md:p-8">
         <p className="text-base text-gray-600">No event details found.</p>
       </div>
     );
   }
 
   return (
-    <div className="flex-1 overflow-auto bg-[#F8F9FA]  relative font-sans pb-12">
-
+    <div className="relative flex-1 overflow-auto bg-[#F8F9FA] pb-12 font-sans">
       {/* 1. Pending Status Top Banner */}
       {isPending && (
-        <div className="bg-[#789bb4] text-white px-6 py-2.5 flex justify-between items-center shadow-sm">
-          <span className="font-semibold text-sm">Not approved by admin</span>
-          <Code className="w-5 h-5 opacity-70" />
+        <div className="flex items-center justify-between bg-[#789bb4] px-6 py-2.5 text-white shadow-sm">
+          <span className="text-sm font-semibold">Not approved by admin</span>
+          <Code className="h-5 w-5 opacity-70" />
         </div>
       )}
 
-      <div className=" p-4 md:p-8 space-y-6">
-
+      <div className="space-y-6 p-4 md:p-8">
         {/* Hero Image Section */}
-        <div className="relative rounded-xl overflow-hidden shadow-sm">
+        <div className="relative overflow-hidden rounded-xl shadow-sm">
           <img
-            src={eventData.image || 'https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&w=1600&q=80'}
+            src={eventData.image}
             alt="Event Banner"
-            className="w-full h-64 md:h-96 lg:h-100 xl:h-140 2xl:h-186 object-cover "
+            className="h-64 w-full object-cover md:h-96 lg:h-100 xl:h-140 2xl:h-186"
           />
           {/* Back Button floating on image */}
           <button
             onClick={() => navigate(-1)}
-            className="absolute top-4 left-4 flex items-center gap-2 bg-white/80 backdrop-blur-md px-4 py-2 rounded-lg text-black   transition-colors shadow-sm"
+            className="absolute top-4 left-4 flex items-center gap-2 rounded-lg bg-white/80 px-4 py-2 text-black shadow-sm backdrop-blur-md transition-colors"
           >
-            <ArrowLeft className="w-4 h-4" />
+            <ArrowLeft className="h-4 w-4" />
             <span className="text-sm font-medium">Back</span>
           </button>
         </div>
 
         {/* 2. Banned Status Alert Banner */}
         {isBanned && (
-          <div className="bg-red-50/80 border border-red-100 rounded-xl p-5 flex gap-3">
-            <AlertCircle className="w-5 h-5 text-red-500 shrink-0 mt-0.5" />
+          <div className="flex gap-3 rounded-xl border border-red-100 bg-red-50/80 p-5">
+            <AlertCircle className="mt-0.5 h-5 w-5 shrink-0 text-red-500" />
             <div>
-              <h3 className="text-xl font-semibold text-red-600 mb-1">This event was not approved</h3>
+              <h3 className="mb-1 text-xl font-semibold text-red-600">
+                This event was not approved
+              </h3>
               <p className="text-base leading-relaxed text-red-500">
-                {eventData.bannedReason || eventData.rejectionReason || 'Your event could not be published because it did not meet our guidelines.'}
+                {eventData.bannedReason ||
+                  eventData.rejectionReason ||
+                  'Your event could not be published because it did not meet our guidelines.'}
               </p>
             </div>
           </div>
         )}
 
         {/* Main Content Grid */}
-        <div className="grid grid-cols-1 xl:grid-cols-3 gap-8 pt-2">
-
+        <div className="grid grid-cols-1 gap-8 pt-2 xl:grid-cols-3">
           {/* LEFT COLUMN: Details */}
-          <div className="xl:col-span-2 space-y-6">
-
+          <div className="space-y-6 xl:col-span-2">
             {/* Title & Stats */}
             <div>
-              <h1 className="text-2xl md:text-3xl font-semibold text-gray-900 mb-3">
+              <h1 className="mb-3 text-2xl font-semibold text-gray-900 md:text-3xl">
                 {eventData.title || 'Untitled Event'}
               </h1>
-              <div className="flex items-center gap-4 text-base font-medium text-gray-500 mb-6">
-                <span className="flex items-center gap-1.5"><Eye className="w-4 h-4" /> {eventData?.engagement?.views ?? 0}</span>
-                <span className="flex items-center gap-1.5"><TrendingUp className="w-4 h-4" /> {eventData?.engagement?.trend ?? 0}</span>
-                <span className="flex items-center gap-1.5"><MessageSquare className="w-4 h-4" /> {eventData?.engagement?.messages ?? 0}</span>
-                <span className="flex items-center gap-1.5"><ExternalLink className="w-4 h-4" /> {eventData.currentParticipants ?? 0}</span>
+              <div className="mb-6 flex items-center gap-4 text-base font-medium text-gray-500">
+                <span className="flex items-center gap-1.5">
+                  <Eye className="h-4 w-4" /> {eventData?.engagement?.views ?? 0}
+                </span>
+                <span className="flex items-center gap-1.5">
+                  <TrendingUp className="h-4 w-4" /> {eventData?.engagement?.trend ?? 0}
+                </span>
+                <span className="flex items-center gap-1.5">
+                  <MessageSquare className="h-4 w-4" /> {eventData?.engagement?.messages ?? 0}
+                </span>
+                <span className="flex items-center gap-1.5">
+                  <ExternalLink className="h-4 w-4" /> {eventData.currentParticipants ?? 0}
+                </span>
               </div>
             </div>
 
             {/* Sport & Event Type */}
             <div className="space-y-4">
               <div>
-                <h3 className="text-base font-bold text-gray-900 mb-1">Sport</h3>
+                <h3 className="mb-1 text-base font-bold text-gray-900">Sport</h3>
                 <p className="text-base text-gray-600">{eventData.sportType || 'N/A'}</p>
               </div>
               <div>
-                <h3 className="text-base font-bold text-gray-900 mb-1">Event Type</h3>
+                <h3 className="mb-1 text-base font-bold text-gray-900">Event Type</h3>
                 <p className="text-base text-gray-600">{formatReadableText(eventData.eventType)}</p>
               </div>
             </div>
 
             {/* Description */}
-            <div className='max-w-4xl'>
-              <p className="text-base text-gray-700 leading-relaxed whitespace-pre-line">
+            <div className="max-w-4xl">
+              <p className="text-base leading-relaxed whitespace-pre-line text-gray-700">
                 {eventData.description || 'No description added.'}
               </p>
             </div>
@@ -289,11 +308,11 @@ const EventSingleDetails = () => {
             {/* Date & Time */}
             <div className="space-y-3 pt-2">
               <div className="flex items-center gap-3 text-base text-gray-700">
-                <Calendar className="w-5 h-5 text-gray-400" />
+                <Calendar className="h-5 w-5 text-gray-400" />
                 <span>{dateValue}</span>
               </div>
               <div className="flex items-center gap-3 text-base text-gray-700">
-                <Clock className="w-5 h-5 text-gray-400" />
+                <Clock className="h-5 w-5 text-gray-400" />
                 <span>{timeValue}</span>
               </div>
             </div>
@@ -301,70 +320,83 @@ const EventSingleDetails = () => {
             {/* Additional Info */}
             <div className="space-y-4 pt-2">
               <div>
-                <h3 className="text-base font-bold text-gray-900 mb-1">Who is suitable for</h3>
+                <h3 className="mb-1 text-base font-bold text-gray-900">Who is suitable for</h3>
                 <p className="text-base text-gray-600">{suitableForValue}</p>
               </div>
               <div>
-                <h3 className="text-base font-bold text-gray-900 mb-1">Age Group:</h3>
+                <h3 className="mb-1 text-base font-bold text-gray-900">Age Group:</h3>
                 <p className="text-base text-gray-600">{ageGroupValue}</p>
               </div>
               <div>
-                <h3 className="text-base font-bold text-gray-900 mb-1">Sport Type:</h3>
+                <h3 className="mb-1 text-base font-bold text-gray-900">Sport Type:</h3>
                 <p className="text-base text-gray-600">{eventData.sportType || 'N/A'}</p>
               </div>
               <div>
-                <h3 className="text-base font-bold text-gray-900 mb-1">Skill Level:</h3>
-                <p className="text-base text-gray-600">{formatReadableText(eventData.skillLevel)}</p>
+                <h3 className="mb-1 text-base font-bold text-gray-900">Skill Level:</h3>
+                <p className="text-base text-gray-600">
+                  {formatReadableText(eventData.skillLevel)}
+                </p>
               </div>
             </div>
 
             {/* Action Buttons */}
             <div className="flex flex-wrap gap-4 pt-4">
-              <button className="px-6 py-2.5 bg-btn-primary text-white text-base font-semibold rounded-lg hover:bg-teal-800 transition-colors shadow-sm disabled:opacity-50" disabled={!allowsBooking}>
+              <button
+                className="bg-btn-primary rounded-lg px-6 py-2.5 text-base font-semibold text-white shadow-sm transition-colors hover:bg-teal-800 disabled:opacity-50"
+                disabled={!allowsBooking}
+              >
                 Book Now
               </button>
-              <button className="px-6 py-2.5 bg-btn-primary text-white text-base font-semibold rounded-lg hover:bg-teal-800 transition-colors shadow-sm disabled:opacity-50" disabled={!allowsRegisterInterest}>
+              <button
+                className="bg-btn-primary rounded-lg px-6 py-2.5 text-base font-semibold text-white shadow-sm transition-colors hover:bg-teal-800 disabled:opacity-50"
+                disabled={!allowsRegisterInterest}
+              >
                 Register Interest
               </button>
             </div>
 
             {/* Contact Organizer Form */}
-            <div className={`bg-[#E7F1F1] p-4 rounded-lg border border-gray-100 max-w-lg mt-6 ${!allowsQuestions ? 'opacity-60' : ''}`}>
-              <h2 className="text-xl font-bold text-gray-900 mb-4">Contact Organizer</h2>
-              <p className="text-lg text-gray-700 mb-3 font-medium">Ask the organiser a question</p>
+            <div
+              className={`mt-6 max-w-lg rounded-lg border border-gray-100 bg-[#E7F1F1] p-4 ${!allowsQuestions ? 'opacity-60' : ''}`}
+            >
+              <h2 className="mb-4 text-xl font-bold text-gray-900">Contact Organizer</h2>
+              <p className="mb-3 text-lg font-medium text-gray-700">Ask the organiser a question</p>
               <textarea
-                className="w-full h-32 bg-[#B5D5D2]/50 border-none rounded-lg p-3 text-base text-gray-700 placeholder-gray-500 focus:ring-2 focus:ring-btn-primary/20 outline-none resize-none mb-4"
+                className="focus:ring-btn-primary/20 mb-4 h-32 w-full resize-none rounded-lg border-none bg-[#B5D5D2]/50 p-3 text-base text-gray-700 placeholder-gray-500 outline-none focus:ring-2"
                 placeholder="Write your message"
                 disabled={!allowsQuestions}
               ></textarea>
-              <button className="px-6 py-2.5 bg-[#0F766E] text-white text-base font-medium rounded-lg hover:bg-teal-800 transition-colors shadow-sm disabled:opacity-50" disabled={!allowsQuestions}>
+              <button
+                className="rounded-lg bg-[#0F766E] px-6 py-2.5 text-base font-medium text-white shadow-sm transition-colors hover:bg-teal-800 disabled:opacity-50"
+                disabled={!allowsQuestions}
+              >
                 Contact organiser
               </button>
             </div>
-
           </div>
 
           {/* RIGHT COLUMN: Venue Card */}
           <div className="lg:col-span-1 lg:mt-4">
-            <div className="bg-white rounded-xl border border-[#91C0BC] p-6 shadow-sm sticky top-6">
-
+            <div className="sticky top-6 rounded-xl border border-[#91C0BC] bg-white p-6 shadow-sm">
               {/* Venue Details */}
               <div className="mb-4 text-base">
-                <span className="font-semibold text-gray-900 mr-2">Venue:</span>
+                <span className="mr-2 font-semibold text-gray-900">Venue:</span>
                 <span className="text-gray-600">{eventData.venueName || 'N/A'}</span>
               </div>
 
-              <div className="flex items-start gap-2 mb-4">
-                <MapPin className="w-5 h-5 text-gray-400 shrink-0 mt-0.5" />
-                <span className="text-base text-gray-600 leading-snug">{eventData.fullAddress || eventData.city || 'N/A'}</span>
+              <div className="mb-4 flex items-start gap-2">
+                <MapPin className="mt-0.5 h-5 w-5 shrink-0 text-gray-400" />
+                <span className="text-base leading-snug text-gray-600">
+                  {eventData.fullAddress || eventData.city || 'N/A'}
+                </span>
               </div>
 
               {mapEmbedUrl && (
-                <div className="rounded-lg overflow-hidden border border-gray-100 mb-3">
+                <div className="mb-3 overflow-hidden rounded-lg border border-gray-100">
                   <iframe
                     title="Venue Map"
                     src={mapEmbedUrl}
-                    className="w-full h-44"
+                    className="h-44 w-full"
                     loading="lazy"
                     referrerPolicy="no-referrer-when-downgrade"
                   />
@@ -376,23 +408,23 @@ const EventSingleDetails = () => {
                   href={eventData.googleMapLink}
                   target="_blank"
                   rel="noreferrer"
-                  className="inline-flex items-center gap-2 mb-6 text-sm font-medium text-teal-700 hover:text-teal-800"
+                  className="mb-6 inline-flex items-center gap-2 text-sm font-medium text-teal-700 hover:text-teal-800"
                 >
-                  <ExternalLink className="w-4 h-4" />
+                  <ExternalLink className="h-4 w-4" />
                   Open in Google Maps
                 </a>
               )}
 
               {/* Contact Information */}
               <div className="mb-6">
-                <h3 className="text-lg font-semibold text-gray-900 mb-3">Contact Information</h3>
+                <h3 className="mb-3 text-lg font-semibold text-gray-900">Contact Information</h3>
                 <div className="space-y-3">
                   <div className="flex items-center gap-3 text-base text-gray-600">
-                    <Phone className="w-5 h-5 text-gray-400" />
+                    <Phone className="h-5 w-5 text-gray-400" />
                     <span>{eventData.organizerPhone || 'N/A'}</span>
                   </div>
-                  <div className="flex items-center gap-3 text-base text-gray-600 break-all">
-                    <Mail className="w-5 h-5 text-gray-400 shrink-0" />
+                  <div className="flex items-center gap-3 text-base break-all text-gray-600">
+                    <Mail className="h-5 w-5 shrink-0 text-gray-400" />
                     <span>{eventData.organizerEmail || 'N/A'}</span>
                   </div>
                 </div>
@@ -400,20 +432,22 @@ const EventSingleDetails = () => {
 
               {/* Organized By */}
               <div>
-                <h3 className="text-base font-bold text-gray-900 mb-3">Organized By:</h3>
+                <h3 className="mb-3 text-base font-bold text-gray-900">Organized By:</h3>
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-[#111827] flex items-center justify-center shadow-sm">
-                    <span className="text-white text-sm font-bold tracking-wider">
-                      {(eventData.organizerName || eventData?.organizer?.name || 'NA').slice(0, 2).toUpperCase()}
+                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#111827] shadow-sm">
+                    <span className="text-sm font-bold tracking-wider text-white">
+                      {(eventData.organizerName || eventData?.organizer?.name || 'NA')
+                        .slice(0, 2)
+                        .toUpperCase()}
                     </span>
                   </div>
-                  <span className="text-base font-medium text-gray-900">{eventData.organizerName || eventData?.organizer?.name || 'N/A'}</span>
+                  <span className="text-base font-medium text-gray-900">
+                    {eventData.organizerName || eventData?.organizer?.name || 'N/A'}
+                  </span>
                 </div>
               </div>
-
             </div>
           </div>
-
         </div>
       </div>
     </div>
