@@ -102,7 +102,7 @@ const ProviderEventDetails = () => {
         </button>
 
         <div className=" w-full  rounded-xl ">
-          <img src={event.image} alt={event.title} className="h-65 md:h-96 lg:h-100 xl:h-140 2xl:h-186 w-full object-cover" />
+          <img src={event.image} alt={event.title} className="h-65 md:h-96 lg:h-100 xl:h-140 2xl:h-186 w-full object-cover rounded-xl" />
         </div>
 
         <div className="relative -mt-6 ml-3 h-16 w-16 overflow-hidden rounded-full border-4 border-white bg-white shadow-sm md:-mt-8 md:ml-4 md:h-21 md:w-21">
