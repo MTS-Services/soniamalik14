@@ -8,6 +8,8 @@ import { getUser } from '../../../../utils/storage';
 const SessionOverview = ({ event }) => {
   const authUser = useSelector((state) => state.auth?.user);
   const currentUser = authUser || getUser();
+  const normalizedRole = String(currentUser?.role || '').trim().toLowerCase();
+  const isActionAllowed = normalizedRole === 'user';
 
   const [interestStatus, setInterestStatus] = useState('idle'); // idle | loading | success | error
   const [bookingStatus, setBookingStatus] = useState('idle'); // idle | loading | success | error
@@ -114,16 +116,16 @@ const SessionOverview = ({ event }) => {
       {/* Action Buttons */}
       <div className="hidden flex-wrap gap-3 md:flex">
         <button
-          className={`rounded-lg bg-[#0F766E] px-4 py-2.5 text-sm font-medium text-white transition-colors hover:bg-[#0D655D] ${bookingStatus === 'success' ? 'opacity-60 cursor-not-allowed' : ''}`}
+          className={`rounded-lg bg-[#0F766E] px-4 py-2.5 text-sm font-medium text-white transition-colors hover:bg-[#0D655D] ${bookingStatus === 'success' || !isActionAllowed ? 'opacity-60 cursor-not-allowed' : ''}`}
           onClick={handleBookPlace}
-          disabled={bookingStatus === 'loading' || bookingStatus === 'success'}
+          disabled={!isActionAllowed || bookingStatus === 'loading' || bookingStatus === 'success'}
         >
           {bookingStatus === 'loading' ? 'Booking...' : bookingStatus === 'success' ? 'Booked' : 'Book Your Place'}
         </button>
         <button
-          className={`rounded-lg bg-[#0F766E] px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-[#0D655D] ${interestStatus === 'success' ? 'opacity-60 cursor-not-allowed' : ''}`}
+          className={`rounded-lg bg-[#0F766E] px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-[#0D655D] ${interestStatus === 'success' || !isActionAllowed ? 'opacity-60 cursor-not-allowed' : ''}`}
           onClick={handleRegisterInterest}
-          disabled={interestStatus === 'loading' || interestStatus === 'success'}
+          disabled={!isActionAllowed || interestStatus === 'loading' || interestStatus === 'success'}
         >
           {interestStatus === 'loading' ? 'Registering...' : interestStatus === 'success' ? 'Registered' : 'Register Interest'}
         </button>
