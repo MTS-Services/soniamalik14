@@ -64,10 +64,12 @@ const ProviderEvent = () => {
   const filtered = useMemo(() => {
     const q = filter.query.trim().toLowerCase();
     return events.filter((ev) => {
-      const statusMatch = filter.status === 'All' || ev.status === filter.status;
+      const eventStatus = String(ev?.status || '').toLowerCase();
+      const filterStatus = String(filter.status || '').toLowerCase();
+      const statusMatch = filter.status === 'All' || eventStatus === filterStatus;
       const queryMatch =
         !q ||
-        ev.title.toLowerCase().includes(q) ||
+        String(ev?.title || '').toLowerCase().includes(q) ||
         (ev.location || '').toLowerCase().includes(q) ||
         (ev.venue?.name || '').toLowerCase().includes(q);
       return statusMatch && queryMatch;
@@ -252,7 +254,15 @@ const ProviderEvent = () => {
         </>
       )}
 
-      <EventModal isOpen={isCreateOpen} onClose={() => setIsCreateOpen(false)} mode="create" />
+      <EventModal
+        isOpen={isCreateOpen}
+        onClose={() => setIsCreateOpen(false)}
+        mode="create"
+        useOrganizerApi
+        onSuccess={() => {
+          dispatch(fetchProviderEvents());
+        }}
+      />
 
       {editingEvent && (
         <div

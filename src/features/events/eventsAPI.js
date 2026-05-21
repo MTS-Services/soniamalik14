@@ -33,6 +33,21 @@ const getApiErrorMessage = (error, fallbackMessage) => {
   return payload?.message || fallback;
 };
 
+const normalizeEventListPayload = (payload) => {
+  if (Array.isArray(payload)) return payload;
+  if (!payload || typeof payload !== 'object') return [];
+
+  if (Array.isArray(payload.data)) return payload.data;
+  if (Array.isArray(payload.events)) return payload.events;
+  if (Array.isArray(payload.rows)) return payload.rows;
+  if (Array.isArray(payload.items)) return payload.items;
+  if (Array.isArray(payload.data?.events)) return payload.data.events;
+  if (Array.isArray(payload.data?.rows)) return payload.data.rows;
+  if (Array.isArray(payload.data?.items)) return payload.data.items;
+
+  return [];
+};
+
 // Fetch approved public events
 export const fetchEvents = createAsyncThunk(
   'events/fetchAll',
@@ -145,8 +160,7 @@ export const fetchProviderEvents = createAsyncThunk(
         rejectWithValue,
         signal
       );
-      // Ensure we extract data properly. Often it's response.data or response.data.data
-      return response?.data?.data || response?.data || response || [];
+      return normalizeEventListPayload(response);
     } catch (error) {
       return rejectWithValue(error.message || 'Failed to fetch provider events');
     }
