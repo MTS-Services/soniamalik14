@@ -5,6 +5,40 @@ import Container from '../../../components/layout/Container';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchOrganizerEventById } from '../../../features/events/eventsAPI';
 
+const toTitleCase = (value = '') =>
+  String(value)
+    .toLowerCase()
+    .split('_')
+    .filter(Boolean)
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .join(' ');
+
+const getWomenOnlyValue = (item) => {
+  if (typeof item?.womensOnly === 'boolean') return item.womensOnly ? 'Yes' : 'No';
+  if (typeof item?.womensOnly === 'string') return item.womensOnly;
+
+  const description = String(item?.description || '').toLowerCase();
+  const suitableFor = Array.isArray(item?.suitableFor)
+    ? item.suitableFor.map((entry) => String(entry).toLowerCase())
+    : [];
+
+  const womenKeywords = ['women', 'woman', 'womens', 'women only', 'female', 'girls'];
+  const isWomenOnly =
+    womenKeywords.some((keyword) => description.includes(keyword)) ||
+    suitableFor.some((entry) => womenKeywords.some((keyword) => entry.includes(keyword)));
+
+  return isWomenOnly ? 'Yes' : 'No';
+};
+
+const getMapEmbedUrl = (item) => {
+  if (!item) return '';
+
+  const candidate = item.fullAddress || item.venueName || item.city || item.googleMapLink || '';
+  if (!candidate) return '';
+
+  return `https://www.google.com/maps?q=${encodeURIComponent(candidate)}&z=16&output=embed`;
+};
+
 const EventDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -20,17 +54,19 @@ const EventDetails = () => {
     dispatch(fetchOrganizerEventById(id));
   }, [id, dispatch]);
 
-  const data = apiItem;
+  const data = apiItem?.data || apiItem;
   const event = data
     ? {
         id: data.id,
         title: data.title,
         titleColor: '#0B544E',
         coach: data.organizerName || data.organizer?.name || '',
-        type: data.eventType || data.eventType,
+        type: toTitleCase(data.eventType || ''),
         sport: data.sportType || '',
-        suitableFor: Array.isArray(data.suitableFor) ? data.suitableFor.join(', ') : (data.suitableFor || ''),
-        womensOnly: data.womensOnly ?? 'No',
+        suitableFor: Array.isArray(data.suitableFor) && data.suitableFor.length > 0
+          ? data.suitableFor.join(', ')
+          : 'All participants',
+        womensOnly: getWomenOnlyValue(data),
         location: data.venueName || '',
         locationFull: data.fullAddress || '',
         postcode: data.postcode || '',
@@ -39,7 +75,7 @@ const EventDetails = () => {
         time: data.startTime && data.endTime ? `${data.startTime} - ${data.endTime}` : (data.startTime || ''),
         image: data.image || '/images/detaisPage/detailsBanner.png',
         avatar: data.organizer?.avatar || '/images/detaisPage/coachAvatar.png',
-        mapImage: data.googleMapLink || '',
+        mapEmbedUrl: getMapEmbedUrl(data),
         about: data.description || data.about || '',
       }
     : null;
@@ -234,14 +270,20 @@ const EventDetails = () => {
                 
                 {/* Map */}
                 <div className="relative w-full h-44 min-h-44 sm:h-55 rounded-lg overflow-hidden bg-gray-200 shrink-0">
-                  <iframe
-                    src="https://www.google.com/maps?q=23.8127682252437,90.42088993992539&z=16&output=embed"
-                    title="Event location map"
-                    loading="lazy"
-                    referrerPolicy="no-referrer-when-downgrade"
-                    allowFullScreen
-                    className="absolute inset-0 block h-full w-full max-w-full border-0"
-                  />
+                  {event.mapEmbedUrl ? (
+                    <iframe
+                      src={event.mapEmbedUrl}
+                      title="Event location map"
+                      loading="lazy"
+                      referrerPolicy="no-referrer-when-downgrade"
+                      allowFullScreen
+                      className="absolute inset-0 block h-full w-full max-w-full border-0"
+                    />
+                  ) : (
+                    <div className="absolute inset-0 flex items-center justify-center text-sm text-gray-600">
+                      Map not available
+                    </div>
+                  )}
                 </div>
               </div>
 
