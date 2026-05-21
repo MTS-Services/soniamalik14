@@ -1,29 +1,56 @@
-﻿import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams, useLocation, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { ArrowLeft, CalendarDays, MapPin, Target, Trophy, Users } from 'lucide-react';
+import { fetchOrganizerEventById } from '../../../../features/events/eventsAPI';
 import {
-  ArrowLeft,
-  CalendarDays,
-  MapPin,
-  MessageCircle,
-  Target,
-  Trophy,
-  Users,
-} from 'lucide-react';
-import providerEventDummyData from './providerEventDummyData.json';
+  selectOrganizerEventDetails,
+  selectOrganizerEventDetailsError,
+  selectOrganizerEventDetailsLoading,
+} from '../../../../features/events/eventsSlice';
+
+const getMapEmbedUrl = (event) => {
+  const directMapLink = String(event?.googleMapLink || '').trim();
+  const buildEmbed = (query) =>
+    `https://maps.google.com/maps?q=${encodeURIComponent(query)}&t=&z=13&ie=UTF8&iwloc=&output=embed`;
+
+  if (directMapLink) {
+    try {
+      const parsedUrl = new URL(directMapLink);
+      const query = parsedUrl.searchParams.get('q');
+      if (query) return buildEmbed(query);
+    } catch {
+      // If URL parsing fails, treat the value as a plain location query.
+    }
+
+    return buildEmbed(directMapLink);
+  }
+
+  const fallbackQuery = event?.fullAddress || event?.venue?.address || event?.venueName || '';
+  if (!fallbackQuery) return '';
+  return buildEmbed(fallbackQuery);
+};
 
 const ProviderEventDetails = () => {
   const { id } = useParams();
   const { state } = useLocation();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const eventDetails = useSelector(selectOrganizerEventDetails);
+  const eventLoading = useSelector(selectOrganizerEventDetailsLoading);
+  const eventError = useSelector(selectOrganizerEventDetailsError);
 
   const [message, setMessage] = useState('');
   const [bookingSuccess, setBookingSuccess] = useState(false);
   const [messageSuccess, setMessageSuccess] = useState(false);
 
-  const event =
-    state?.item ||
-    providerEventDummyData.find((item) => String(item.id) === String(id)) ||
-    providerEventDummyData[0];
+  useEffect(() => {
+    if (!id) return;
+    dispatch(fetchOrganizerEventById(id));
+  }, [dispatch, id]);
+
+  const event = eventDetails?.data || eventDetails || null;
 
   const handleBack = () => {
     navigate('/provider/event', {
@@ -46,15 +73,33 @@ const ProviderEventDetails = () => {
     window.setTimeout(() => setMessageSuccess(false), 2200);
   };
 
+  if (eventLoading && !event) {
+    return <div className="py-20 text-center text-gray-600">Loading event...</div>;
+  }
+
+  if (eventError && !event) {
+    return <div className="py-20 text-center text-red-600">Error: {eventError}</div>;
+  }
+
+  if (!event) {
+    return <div className="py-20 text-center text-gray-600">Event not found</div>;
+  }
+
+  const mapEmbedUrl = getMapEmbedUrl(event);
+
   const overviewItems = [
     { label: 'Sport', value: event.sportType || 'Football', icon: Trophy },
     { label: 'Event Type', value: event.eventType || 'Training Camp', icon: CalendarDays },
     { label: 'Suitable For', value: event.skillLevel || 'New to the sport', icon: Target },
-    { label: "Women's only", value: 'Yes', icon: Users },
+    {
+      label: "Women's only",
+      value: typeof event.womensOnly === 'boolean' ? (event.womensOnly ? 'Yes' : 'No') : event.womensOnly || 'No',
+      icon: Users,
+    },
   ];
 
   return (
-    <div className="min-h-screen bg-[#f4f6f8] px-4 pt-5 pb-10 md:px-6 lg:px-10">
+    <div className="min-h-screen bg-[#f4f6f8] px-4 pb-10 pt-5 md:px-6 lg:px-10">
       <div className="mx-auto w-full">
         <button
           onClick={handleBack}
@@ -80,7 +125,7 @@ const ProviderEventDetails = () => {
         </div>
 
         <div className="mt-4">
-          <h1 className="text-[28px] leading-tight font-semibold text-[#0C0C0C] md:text-[32px]">
+          <h1 className="text-[28px] font-semibold leading-tight text-[#0C0C0C] md:text-[32px]">
             {event.title}
           </h1>
           <div className="mt-1 flex items-center gap-1 text-[16px] leading-6">
@@ -90,17 +135,15 @@ const ProviderEventDetails = () => {
         </div>
 
         <div className="mt-6 rounded-lg bg-white p-5">
-          <h2 className="text-[20px] leading-8 font-semibold text-black">Event Type</h2>
-          <p className="mt-2 text-[14px] leading-5 whitespace-pre-line text-[#2d2d2d]">
+          <h2 className="text-[20px] font-semibold leading-8 text-black">Event Type</h2>
+          <p className="mt-2 whitespace-pre-line text-[14px] leading-5 text-[#2d2d2d]">
             {event.description}
           </p>
         </div>
 
         <div className="mt-6 grid grid-cols-1 gap-4 lg:grid-cols-3 lg:gap-6">
           <section>
-            <h3 className="mb-3 text-[20px] leading-8 font-semibold text-black">
-              Session Overview
-            </h3>
+            <h3 className="mb-3 text-[20px] font-semibold leading-8 text-black">Session Overview</h3>
             <div className="space-y-3">
               {overviewItems.map((item) => {
                 const Icon = item.icon;
@@ -114,9 +157,7 @@ const ProviderEventDetails = () => {
                         <Icon className="h-5 w-5" />
                       </div>
                       <div>
-                        <p className="text-[16px] leading-6 font-medium text-[#101828]">
-                          {item.label}
-                        </p>
+                        <p className="text-[16px] font-medium leading-6 text-[#101828]">{item.label}</p>
                         <p className="text-[16px] leading-6 text-[#4a5565]">{item.value}</p>
                       </div>
                     </div>
@@ -139,46 +180,49 @@ const ProviderEventDetails = () => {
           </section>
 
           <section className="">
-            <h3 className="mb-3 text-[20px] leading-8 font-semibold text-black">
-              Venue Information
-            </h3>
+            <h3 className="mb-3 text-[20px] font-semibold leading-8 text-black">Venue Information</h3>
             <div className="rounded-xl bg-white p-4 shadow-sm">
               <p className="text-base font-medium text-[#101828]">
-                Venue Name : <span className="text-base">{event.venue?.name} </span>{' '}
+                Venue Name : <span className="text-base">{event.venueName || event.venue?.name || 'N/A'} </span>{' '}
               </p>
               <p className="mb-2 text-[14px] text-[#4a5565]"></p>
 
               <div className="mb-2 flex items-start gap-1 text-[14px] text-[#4a5565]">
                 <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-[#4a5565]" />
-                <span>{event.venue?.address}</span>
+                <span>{event.fullAddress || event.venue?.address || 'N/A'}</span>
               </div>
 
-              <div className="mt-4 mb-2 space-y-2 text-base text-[#101828]">
+              <div className="mb-2 mt-4 space-y-2 text-base text-[#101828]">
                 <p>
                   <span className="font-medium">Session Days:</span> Saturday
                 </p>
                 <p>
-                  <span className="font-medium">Session Time:</span> {event.time}
+                  <span className="font-medium">Session Time:</span>{' '}
+                  {event.startTime && event.endTime ? `${event.startTime} - ${event.endTime}` : event.time || 'N/A'}
                 </p>
               </div>
               <div className="mt-3 h-55 w-full overflow-hidden rounded-lg bg-[#d9d9d9]">
-                <iframe
-                  src={`https://maps.google.com/maps?q=${encodeURIComponent(event.venue?.address || '')}&t=&z=13&ie=UTF8&iwloc=&output=embed`}
-                  width="100%"
-                  height="100%"
-                  style={{ border: 0 }}
-                  loading="lazy"
-                  title="Venue Location"
-                />
+                {mapEmbedUrl ? (
+                  <iframe
+                    src={mapEmbedUrl}
+                    width="100%"
+                    height="100%"
+                    style={{ border: 0 }}
+                    loading="lazy"
+                    title="Venue Location"
+                  />
+                ) : (
+                  <div className="flex h-full items-center justify-center text-sm text-gray-500">
+                    Map not available
+                  </div>
+                )}
               </div>
             </div>
           </section>
 
           <section className="">
-            <h3 className="mb-3 text-[20px] leading-8 font-semibold text-black">
-              Contact Organiser
-            </h3>
-            <div className='bg-secondary rounded-[14px] p-4'>
+            <h3 className="mb-3 text-[20px] font-semibold leading-8 text-black">Contact Organiser</h3>
+            <div className="rounded-[14px] bg-secondary p-4">
               <p className="mb-2 text-lg text-[#4a5565]">Ask the organiser a question</p>
 
               <textarea
@@ -193,7 +237,6 @@ const ProviderEventDetails = () => {
                 onClick={handleSendMessage}
                 className="mt-3 inline-flex items-center gap-2 rounded-md bg-[#0F766E] px-4 py-2 text-base font-medium text-white transition hover:bg-[#0c5e58]"
               >
-                {/* <MessageCircle className="h-4 w-4" /> */}
                 Send message
               </button>
             </div>

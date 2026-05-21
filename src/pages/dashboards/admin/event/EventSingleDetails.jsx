@@ -191,7 +191,7 @@ const EventSingleDetails = () => {
 
   return (
     <div className="relative flex-1 overflow-auto bg-[#F8F9FA] pb-12 font-sans">
-      {isPending && <EventPendingBanner />}
+     
 
       <div className="space-y-6 p-4 md:p-8">
         <EventHeroSection image={eventData.image} onBack={() => navigate(-1)} />
