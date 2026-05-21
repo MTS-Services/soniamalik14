@@ -95,21 +95,30 @@ const EventSingleDetails = () => {
   const { id } = useParams();
   const [eventData, setEventData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [hasLoaded, setHasLoaded] = useState(false);
   const [error, setError] = useState('');
 
   useEffect(() => {
     const controller = new AbortController();
+    let isCurrentRequest = true;
 
     const fetchEventDetails = async () => {
       if (!id) {
-        setError('Event id is missing from the route.');
-        setIsLoading(false);
+        if (isCurrentRequest) {
+          setError('Event id is missing from the route.');
+          setIsLoading(false);
+          setHasLoaded(true);
+        }
         return;
       }
 
       try {
-        setIsLoading(true);
-        setError('');
+        if (isCurrentRequest) {
+          setIsLoading(true);
+          setHasLoaded(false);
+          setError('');
+          setEventData(null);
+        }
 
         const response = await GET(ENDPOINT.EVENTS.DETAIL(id), {}, controller.signal);
         const payload = response?.data?.data || response?.data || response;
@@ -118,20 +127,30 @@ const EventSingleDetails = () => {
           throw new Error('Event details were not returned by the server.');
         }
 
-        setEventData(payload);
+        if (isCurrentRequest) {
+          setEventData(payload);
+        }
       } catch (err) {
         if (err?.name === 'AbortError' || err?.name === 'CanceledError') return;
 
         const message = err?.response?.data?.message || err?.message || 'Failed to load event details.';
-        setError(message);
+        if (isCurrentRequest) {
+          setError(message);
+        }
       } finally {
-        setIsLoading(false);
+        if (isCurrentRequest) {
+          setIsLoading(false);
+          setHasLoaded(true);
+        }
       }
     };
 
     fetchEventDetails();
 
-    return () => controller.abort();
+    return () => {
+      isCurrentRequest = false;
+      controller.abort();
+    };
   }, [id]);
 
   const normalizedStatus = useMemo(() => String(eventData?.status || '').toUpperCase(), [eventData?.status]);
@@ -149,10 +168,13 @@ const EventSingleDetails = () => {
   const ageGroupValue = eventData?.minAge ? `${eventData.minAge}+ Years` : 'N/A';
   const mapEmbedUrl = useMemo(() => buildMapEmbedUrl(eventData), [eventData]);
 
-  if (isLoading) {
+  if (isLoading || !hasLoaded) {
     return (
-      <div className="flex-1 overflow-auto bg-[#F8F9FA] relative font-sans pb-12 p-6 md:p-8">
-        <p className="text-base text-gray-600">Loading event details...</p>
+      <div className="flex-1 overflow-auto bg-[#F8F9FA] relative font-sans min-h-[70vh] flex items-center justify-center p-6 md:p-8">
+        <div className="flex flex-col items-center gap-3">
+          <div className="w-10 h-10 rounded-full border-4 border-[#91C0BC] border-t-btn-primary animate-spin" />
+          <p className="text-sm font-medium text-gray-600">Loading event details...</p>
+        </div>
       </div>
     );
   }
@@ -197,7 +219,7 @@ const EventSingleDetails = () => {
       <div className=" p-4 md:p-8 space-y-6">
 
         {/* Hero Image Section */}
-        <div className="relative rounded-2xl overflow-hidden shadow-sm">
+        <div className="relative rounded-xl overflow-hidden shadow-sm">
           <img
             src={eventData.image || 'https://images.unsplash.com/photo-1579952363873-27f3bade9f55?auto=format&fit=crop&w=1600&q=80'}
             alt="Event Banner"
@@ -227,10 +249,10 @@ const EventSingleDetails = () => {
         )}
 
         {/* Main Content Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 pt-2">
+        <div className="grid grid-cols-1 xl:grid-cols-3 gap-8 pt-2">
 
           {/* LEFT COLUMN: Details */}
-          <div className="lg:col-span-2 space-y-6">
+          <div className="xl:col-span-2 space-y-6">
 
             {/* Title & Stats */}
             <div>
