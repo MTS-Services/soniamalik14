@@ -133,7 +133,7 @@ const ProviderEventDetails = () => {
           </p>
         </div>
 
-        <div className="mt-6 grid grid-cols-1 gap-4 lg:grid-cols-3 lg:gap-6">
+        <div className="mt-6 grid grid-cols-1 gap-4 xl:grid-cols-3 lg:gap-6">
           <SessionOverview event={event} onBookPlace={handleBookPlace} />
           <VenueInformation event={event} mapEmbedUrl={mapEmbedUrl} />
           <ContactOrganiser
