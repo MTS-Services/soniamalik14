@@ -88,11 +88,6 @@ const ProviderEvent = () => {
     setIsCreateOpen(true);
   };
 
-  const saveEdit = () => {
-    if (!editingEvent) return;
-    setEditingEvent(null);
-  };
-
   const confirmDelete = async () => {
     if (!eventToDelete) return;
 
@@ -271,49 +266,17 @@ const ProviderEvent = () => {
         }}
       />
 
-      {editingEvent && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4"
-          onMouseDown={(e) => {
-            if (e.target === e.currentTarget) setEditingEvent(null);
-          }}
-        >
-          <div className="max-h-[85vh] w-full max-w-xl overflow-y-auto rounded-lg bg-white p-5 shadow-xl">
-            <h3 className="mb-4 text-xl font-semibold text-gray-900">Edit Event</h3>
-            <div className="space-y-3">
-              <input
-                value={editingEvent.title}
-                onChange={(e) => setEditingEvent((prev) => ({ ...prev, title: e.target.value }))}
-                className="w-full rounded-md border border-gray-300 px-3 py-2 text-base"
-                placeholder="Event title"
-              />
-              <input
-                value={editingEvent.location}
-                onChange={(e) => setEditingEvent((prev) => ({ ...prev, location: e.target.value }))}
-                className="w-full rounded-md border border-gray-300 px-3 py-2 text-base"
-                placeholder="Location"
-              />
-           
-            </div>
-            <div className="mt-5 flex justify-end gap-3">
-              <button
-                type="button"
-                className="inline-flex items-center justify-center rounded-lg bg-gray-100 px-4 py-2 text-base font-medium text-[#1C1C1C] transition hover:bg-gray-200"
-                onClick={() => setEditingEvent(null)}
-              >
-                Cancel
-              </button>
-              <button
-                type="button"
-                className="inline-flex items-center justify-center rounded-lg bg-btn-primary px-4 py-2 text-base font-medium text-white transition hover:opacity-90"
-                onClick={saveEdit}
-              >
-                Save
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+      <EventModal
+        isOpen={Boolean(editingEvent)}
+        onClose={() => setEditingEvent(null)}
+        initialData={editingEvent}
+        mode="edit"
+        useOrganizerApi
+        onSuccess={() => {
+          setEditingEvent(null);
+          dispatch(fetchProviderEvents());
+        }}
+      />
 
       {eventToDelete && (
         <div
