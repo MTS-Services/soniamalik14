@@ -575,19 +575,6 @@ const EventModal = ({
                             {errors.responseMethods && <p className="text-base text-red-600 mt-1">{errors.responseMethods}</p>}
                         </div>
 
-                        {/* Booking Link */}
-                        <div>
-                            <label className="block text-base font-medium text-gray-700 mb-2">Booking Link</label>
-                            <input
-                                type="text"
-                                placeholder="enter booking link"
-                                value={formData.googleMapLinks}
-                                onChange={(e) => handleChange('googleMapLinks', e.target.value)}
-                                className="w-full rounded-md border border-gray-300 px-3 py-2 text-base focus:outline-none focus:ring-2 focus:ring-btn-primary"
-                            />
-                            {errors.googleMapLinks && <p className="text-base text-red-600 mt-1">{errors.googleMapLinks}</p>}
-                        </div>
-
                         {/* Upload Image */}
                         <div>
                             <label className="relative block h-65 cursor-pointer overflow-hidden rounded-lg border-2 border-dashed border-gray-400 p-10 text-center hover:bg-gray-50">
