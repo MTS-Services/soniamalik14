@@ -1,9 +1,12 @@
 ﻿import React, { useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { ArrowLeft, Heart, Medal, Calendar, Users, MapPin } from 'lucide-react';
+import { ArrowLeft, Heart } from 'lucide-react';
 import Container from '../../../components/layout/Container';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchOrganizerEventById } from '../../../features/events/eventsAPI';
+import SessionOverview from './components/SessionOverview';
+import VenueInformation from './components/VenueInformation';
+import ContactOrganiser from './components/ContactOrganiser';
 
 const toTitleCase = (value = '') =>
   String(value)
@@ -79,11 +82,6 @@ const EventDetails = () => {
         about: data.description || data.about || '',
       }
     : null;
-
-  const handleSendMessage = (e) => {
-    e.preventDefault();
-    alert('Message sent — demo only');
-  };
 
   if (loading) {
     return (
@@ -175,149 +173,14 @@ const EventDetails = () => {
 
           {/* 3-Column Grid for Information */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-            
             {/* Column 1: Session Overview */}
-            <div>
-              <h3 className="text-xl font-semibold text-[#1A1D1F] mb-4">Session Overview</h3>
-              <div className="space-y-3 mb-6">
-                
-                {/* Info Row: Sport */}
-                <div className="flex items-center gap-4 bg-white p-3.5 rounded-lg border border-gray-100 shadow-sm">
-                  <div className="w-10 h-10 rounded-full bg-[#EAF2F1] flex items-center justify-center text-[#147B6B]">
-                    <Medal className="w-5 h-5" />
-                  </div>
-                  <div>
-                    <p className="text-base text-[#101828] font-medium mb-0.5">Sport</p>
-                    <p className="text-base text-[#4A5565]">{event.sport}</p>
-                  </div>
-                </div>
-
-                {/* Info Row: Event Type */}
-                <div className="flex items-center gap-4 bg-white p-3.5 rounded-xl border border-gray-100 shadow-sm">
-                  <div className="w-10 h-10 rounded-full bg-[#EAF2F1] flex items-center justify-center text-[#147B6B]">
-                    <Calendar className="w-5 h-5" />
-                  </div>
-                  <div>
-                    <p className="text-base text-[#101828] font-medium mb-0.5">Event Type</p>
-                    <p className="text-base text-[#4A5565]">{event.type}</p>
-                  </div>
-                </div>
-
-                {/* Info Row: Suitable For */}
-                <div className="flex items-center gap-4 bg-white p-3.5 rounded-xl border border-gray-100 shadow-sm">
-                  <div className="w-10 h-10 rounded-full bg-[#EAF2F1] flex items-center justify-center text-[#147B6B]">
-                    <Users className="w-5 h-5" />
-                  </div>
-                  <div>
-                    <p className="text-base text-[#101828] font-medium mb-0.5">Suitable For</p>
-                    <p className="text-base text-[#4A5565]">{event.suitableFor}</p>
-                  </div>
-                </div>
-
-                {/* Info Row: Women's only */}
-                <div className="flex items-center gap-4 bg-white p-3.5 rounded-xl border border-gray-100 shadow-sm">
-                  <div className="w-10 h-10 rounded-full bg-[#EAF2F1] flex items-center justify-center text-[#147B6B]">
-                    <Users className="w-5 h-5" />
-                  </div>
-                  <div>
-                    <p className="text-base text-[#101828] font-medium mb-0.5">Women's only</p>
-                    <p className="text-base text-[#4A5565]">{event.womensOnly}</p>
-                  </div>
-                </div>
-
-              </div>
-              
-              {/* Action Buttons */}
-              <div className="hidden md:flex flex-wrap gap-3">
-                <button className="bg-[#0F766E] hover:bg-[#0D655D] text-white px-4 py-2.5 rounded-lg text-sm font-medium transition-colors">
-                  Book Your Place
-                </button>
-                <button className="bg-[#0F766E] hover:bg-[#0D655D] text-white px-5 py-2.5 rounded-lg text-sm font-medium transition-colors">
-                  Register Interest
-                </button>
-              </div>
-            </div>
+            <SessionOverview event={event} />
 
             {/* Column 2: Venue Information */}
-            <div>
-              <h3 className="text-xl font-semibold text-[#1A1D1F] mb-4">Venue Information</h3>
-              <div className="overflow-hidden bg-white p-4 rounded-lg shadow-sm border border-gray-100 h-auto md:h-105 flex flex-col">
-                <div className="space-y-4 mb-6 md:flex-1">
-                  
-                  <div className="flex flex-wrap gap-2">
-                    <span className="text-[#1A1D1F] w-28 shrink-0 text-base">Venue Name:</span> 
-                    <span className="text-[#1A1D1F] text-base min-w-0 wrap-break-word">{event.location}</span>
-                  </div>
-
-                  <div className="flex gap-2 items-start min-w-0">
-                    <MapPin className="w-4 h-4 text-gray-500 shrink-0 mt-0.5" />
-                    <span className="text-[#1A1D1F] text-base leading-tight wrap-break-word">
-                      {event.locationFull}
-                    </span>
-                  </div>
-
-                  <div className="flex flex-wrap gap-2">
-                    <span className="text-[#1A1D1F] w-28 shrink-0 text-base">Session Days:</span> 
-                    <span className="text-[#1A1D1F] text-base min-w-0 wrap-break-word">{event.day}</span>
-                  </div>
-                  
-                  <div className="flex flex-wrap gap-2">
-                    <span className="text-[#1A1D1F] w-28 shrink-0 text-base">Session Time:</span> 
-                    <span className="text-[#1A1D1F] text-base min-w-0 wrap-break-word">{event.time}</span>
-                  </div>
-                  
-                </div>
-                
-                {/* Map */}
-                <div className="relative w-full h-44 min-h-44 sm:h-55 rounded-lg overflow-hidden bg-gray-200 shrink-0">
-                  {event.mapEmbedUrl ? (
-                    <iframe
-                      src={event.mapEmbedUrl}
-                      title="Event location map"
-                      loading="lazy"
-                      referrerPolicy="no-referrer-when-downgrade"
-                      allowFullScreen
-                      className="absolute inset-0 block h-full w-full max-w-full border-0"
-                    />
-                  ) : (
-                    <div className="absolute inset-0 flex items-center justify-center text-sm text-gray-600">
-                      Map not available
-                    </div>
-                  )}
-                </div>
-              </div>
-
-              <div className="mt-5 flex flex-col sm:flex-row gap-3 md:hidden">
-                <button className="w-full sm:flex-1 bg-[#0F766E] hover:bg-[#0D655D] text-white px-4 py-2.5 rounded-lg text-sm font-medium transition-colors">
-                  Book Your Place
-                </button>
-                <button className="w-full sm:flex-1 bg-[#0F766E] hover:bg-[#0D655D] text-white px-5 py-2.5 rounded-lg text-sm font-medium transition-colors">
-                  Register Interest
-                </button>
-              </div>
-            </div>
+            <VenueInformation event={event} />
 
             {/* Column 3: Contact Organiser */}
-            <div>
-              <h3 className="text-xl font-semibold text-[#1A1D1F] mb-4">Contact Organiser</h3>
-              <div className="bg-[#E7F1F1] p-4 rounded-lg h-105 flex flex-col">
-                <p className="text-base mb-4 text-[#1A1D1F] ">Ask the organiser a question</p>
-                <form onSubmit={handleSendMessage} className="flex flex-col flex-1">
-                  <textarea 
-                    className="w-full flex-1 bg-[#B5D5D2] rounded-xl p-4 text-base text-[#1A1D1F] placeholder-[#4A5565] border-none focus:ring-1 focus:ring-[#147B6B] resize-none mb-4"
-                    placeholder="Write your message"
-                    required
-                  ></textarea>
-                  <button 
-                    type="submit"
-                    className="bg-[#0F766E] hover:bg-[#0D655D] text-white px-5 py-2.5 rounded-lg text-sm font-medium transition-colors w-fit"
-                  >
-                    Send message
-                  </button>
-                </form>
-              </div>
-            </div>
-
+            <ContactOrganiser event={event} />
           </div>
         </div>
       </Container>
