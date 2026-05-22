@@ -61,6 +61,7 @@ export const ENDPOINT = {
     BOOKINGS: (id) => `/api/services/${id}/bookings`,
     INTERESTS: (id) => `/api/services/${id}/interests`,
     MESSAGES: (id) => `/api/services/${id}/messages`,
+    ADMIN_BY_PROVIDER_ROLE: '/api/services/admin/by-provider-role',
     UPDATE: (id) => `/api/services/${id}`,
     DELETE: (id) => `/api/services/${id}`,
     APPROVE: (id) => `/api/services/${id}/approve`,

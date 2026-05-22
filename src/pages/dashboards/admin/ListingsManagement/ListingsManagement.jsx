@@ -1,10 +1,65 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import HeaderSection from './components/HeaderSection';
 import SearchAndFilters from './components/SearchAndFilters';
 import TableHeader from './components/TableHeader';
 import TableRow from './components/TableRow';
 import EmptyStateRow from './components/EmptyStateRow';
 import Pagination from './components/Pagination';
+import LoadingSpinner from '../../../../components/ui/LoadingSpinner';
+import { GET } from '../../../../services/httpMethods';
+import { ENDPOINT } from '../../../../services/httpEndpoint';
+
+const formatDate = (value) => {
+    if (!value) return 'N/A';
+    const parsed = new Date(value);
+    if (Number.isNaN(parsed.getTime())) return String(value);
+    const day = String(parsed.getDate()).padStart(2, '0');
+    const month = String(parsed.getMonth() + 1).padStart(2, '0');
+    const year = parsed.getFullYear();
+    return `${day}/${month}/${year}`;
+};
+
+const normalizeProviderType = (service) => {
+    const providerRole = String(service?.provider?.role || '').toLowerCase();
+    const providerTypeValues = Array.isArray(service?.providerType)
+        ? service.providerType.map((entry) => String(entry || '').toLowerCase())
+        : [];
+
+    const looksLikeSportProvider =
+        providerRole === 'coach' ||
+        providerTypeValues.some((entry) =>
+            ['coach', 'trainer', 'conditioning', 'football', 'tennis', 'cricket', 'sports'].some((keyword) =>
+                entry.includes(keyword)
+            )
+        );
+
+    return looksLikeSportProvider ? 'Sport Providers' : 'Service Provider';
+};
+
+const normalizeStatus = (service) => {
+    if (service?.bannedAt || service?.bannedReason) return 'Banned';
+    if (service?.isFeatured) return 'Featured';
+
+    const normalized = String(service?.status || '').trim().toLowerCase();
+
+    if (['active', 'approved', 'live'].includes(normalized)) return 'Live';
+    if (['pending_approval', 'pending'].includes(normalized)) return 'Pending';
+    if (['banned', 'blocked', 'rejected'].includes(normalized)) return 'Banned';
+
+    return 'Pending';
+};
+
+const mapServiceToRow = (service) => ({
+    id: service?.id,
+    listing: service?.listingHeadline || service?.organizationName || service?.providerName || 'Untitled Listing',
+    date: formatDate(service?.createdAt || service?.updatedAt),
+    provider: service?.providerName || service?.provider?.name || 'N/A',
+    providerType: normalizeProviderType(service),
+    category: Array.isArray(service?.sports) && service.sports.length > 0 ? service.sports[0] : 'N/A',
+    postcode: service?.postcode || 'N/A',
+    status: normalizeStatus(service),
+    engagement: null,
+});
 
 const ListingsManagement = () => {
     // Filter States
@@ -12,98 +67,43 @@ const ListingsManagement = () => {
     const [searchQuery, setSearchQuery] = useState('');
     const [selectedSport, setSelectedSport] = useState('All Sports');
     const [selectedStatus, setSelectedStatus] = useState('All Status');
+    const [tableData, setTableData] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState('');
 
-    // Expanded Dummy Data with 'providerType' for the Tabs
-    const tableData = [
-        {
-            id: 1,
-            listing: 'Beginner Tennis Sessions',
-            date: '03/03/2025',
-            provider: "Sarah's Tennis Academy",
-            providerType: 'Sport Providers',
-            category: 'Tennis',
-            postcode: 'SW1A 1AA',
-            status: 'Featured',
-            engagement: { views: 1250, trend: 45, messages: 28, shares: 28 }
-        },
-        {
-            id: 2,
-            listing: 'Sports Physiotherapy',
-            date: '03/03/2025',
-            provider: 'Infinity Sports Rehabilitation Center',
-            providerType: 'Service Provider',
-            category: 'Cricket',
-            postcode: 'M1 1AE',
-            status: 'Pending',
-            engagement: null
-        },
-        {
-            id: 3,
-            listing: 'Sports Physiotherapy',
-            date: '03/03/2025',
-            provider: 'Elite Motion Rehab Academy',
-            providerType: 'Service Provider',
-            category: 'Squash',
-            postcode: 'B1 1AA',
-            status: 'Pending',
-            engagement: null
-        },
-        {
-            id: 4,
-            listing: 'Beginner Cricket Sessions',
-            date: '03/03/2025',
-            provider: 'Apex Performance Therapy Center',
-            providerType: 'Service Provider',
-            category: 'Football',
-            postcode: 'L1 8JQ',
-            status: 'Live',
-            engagement: { views: 1250, trend: 45, messages: 28, shares: 28 }
-        },
-        {
-            id: 5,
-            listing: 'Beginner Badminton Sessions',
-            date: '03/03/2025',
-            provider: "Sarah's Tennis Academy",
-            providerType: 'Sport Providers',
-            category: 'Badminton',
-            postcode: 'EH1 1YZ',
-            status: 'Live',
-            engagement: { views: 800, trend: 20, messages: 15, shares: 10 }
-        },
-        {
-            id: 6,
-            listing: 'Beginner Cricket Sessions',
-            date: '03/03/2025',
-            provider: 'Zenith Athletic Therapy School',
-            providerType: 'Service Provider',
-            category: 'Cricket',
-            postcode: 'CF10 1EP',
-            status: 'Banned',
-            engagement: { views: 1250, trend: 45, messages: 28, shares: 28 }
-        },
-        {
-            id: 7,
-            listing: 'Advanced Tennis Coaching',
-            date: '04/03/2025',
-            provider: "Sarah's Tennis Academy",
-            providerType: 'Sport Providers',
-            category: 'Tennis',
-            postcode: 'SW1A 1AB',
-            status: 'Live',
-            engagement: { views: 2100, trend: 60, messages: 50, shares: 110 }
-        },
-        {
-            id: 8,
-            listing: 'Squash Court Rental',
-            date: '04/03/2025',
-            provider: 'City Sports Hub',
-            providerType: 'Sport Providers',
-            category: 'Squash',
-            postcode: 'E1 6AN',
-            status: 'Pending',
-            engagement: null
-        }
-    ];
+    useEffect(() => {
+        let active = true;
+
+        const loadListings = async () => {
+            setLoading(true);
+            setError('');
+
+            try {
+                const response = await GET(ENDPOINT.SERVICES.ADMIN_BY_PROVIDER_ROLE);
+                const payload = response?.data || response;
+                const services = Array.isArray(payload?.data)
+                    ? payload.data
+                    : Array.isArray(payload)
+                        ? payload
+                        : [];
+
+                if (!active) return;
+                setTableData(services.map(mapServiceToRow));
+            } catch (err) {
+                if (!active) return;
+                setError(err?.response?.data?.message || err?.message || 'Failed to load listings');
+                setTableData([]);
+            } finally {
+                if (active) setLoading(false);
+            }
+        };
+
+        loadListings();
+
+        return () => {
+            active = false;
+        };
+    }, []);
 
     // Get unique categories and statuses for the dropdowns
     const uniqueSports = ['All Sports', ...Array.from(new Set(tableData.map(item => item.category)))];
@@ -128,7 +128,25 @@ const ListingsManagement = () => {
 
             return matchesTab && matchesSearch && matchesSport && matchesStatus;
         });
-    }, [activeTab, searchQuery, selectedSport, selectedStatus]);
+    }, [activeTab, searchQuery, selectedSport, selectedStatus, tableData]);
+
+    if (loading) {
+        return (
+            <div className="flex-1 overflow-auto bg-gray-50 dashboardPy dashboardSpaceY">
+                <div className="min-h-[50vh] flex items-center justify-center">
+                    <LoadingSpinner label="" containerClassName="py-0" />
+                </div>
+            </div>
+        );
+    }
+
+    if (error) {
+        return (
+            <div className="flex-1 overflow-auto bg-gray-50 dashboardPy dashboardSpaceY">
+                <div className="p-6 text-center text-red-600">Error: {error}</div>
+            </div>
+        );
+    }
 
     return (
         <div className="flex-1 overflow-auto bg-gray-50 dashboardPy dashboardSpaceY">
