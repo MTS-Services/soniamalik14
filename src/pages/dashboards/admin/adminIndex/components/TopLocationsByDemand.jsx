@@ -1,16 +1,53 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { GET } from '../../../../../services/httpMethods';
+import { ENDPOINT } from '../../../../../services/httpEndpoint';
 
 const TopLocationsByDemand = () => {
-  // Updated the data to match the image precisely
-  const locations = [
-    { name: 'London( East )', value: 4500, width: 65 },
-    { name: 'Manchester', value: 4500, width: 55 },
-    { name: 'Birmingham', value: 4500, width: 60 },
-    { name: 'London (West)', value: 4500, width: 65 },
-    { name: 'Leeds', value: 4500, width: 50 },
-    { name: 'Leeds', value: 4500, width: 62 },
-    { name: 'Leeds', value: 4500, width: 50 },
-  ];
+  const [locations, setLocations] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState('');
+
+  useEffect(() => {
+    const controller = new AbortController();
+
+    const fetchTopLocations = async () => {
+      try {
+        setIsLoading(true);
+        setError('');
+
+        const response = await GET(ENDPOINT.ADMIN.TOP_LOCATIONS, {}, controller.signal);
+        const payload = response?.data?.data || response?.data || response;
+
+        if (!Array.isArray(payload)) {
+          throw new Error('Invalid top locations response');
+        }
+
+        const normalized = payload.map((item) => ({
+          name: item?.name || 'Unknown location',
+          value: Number(item?.value || 0),
+          width: Number(item?.width || 0),
+        }));
+
+        setLocations(normalized);
+      } catch (err) {
+        if (err?.name === 'AbortError' || err?.name === 'CanceledError') {
+          return;
+        }
+
+        const message =
+          err?.response?.data?.message || err?.message || 'Failed to load top locations';
+        setError(message);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchTopLocations();
+
+    return () => {
+      controller.abort();
+    };
+  }, []);
 
   return (
     <div className="rounded-lg bg-white p-6 shadow-sm min-w-0 ">
@@ -20,7 +57,7 @@ const TopLocationsByDemand = () => {
       
       <div className="space-y-4">
         {locations.map((location, index) => (
-          <div key={index} className="flex flex-col gap-1.5">
+          <div key={`${location.name}-${index}`} className="flex flex-col gap-1.5">
             
             {/* Text Row */}
             <div className="flex items-center justify-between text-base text-gray-700">
@@ -32,12 +69,18 @@ const TopLocationsByDemand = () => {
             <div className="h-3 w-full bg-gray-200 rounded-full">
               <div 
                 className="h-full bg-[#137466] rounded-full" 
-                style={{ width: `${location.width}%` }}
+                style={{ width: `${Math.max(0, Math.min(location.width, 100))}%` }}
               ></div>
             </div>
             
           </div>
         ))}
+
+        {isLoading && <p className="text-sm text-gray-500">Loading top locations...</p>}
+        {!isLoading && error && <p className="text-sm text-red-600">{error}</p>}
+        {!isLoading && !error && locations.length === 0 && (
+          <p className="text-sm text-gray-500">No top locations found.</p>
+        )}
       </div>
     </div>
   );
