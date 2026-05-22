@@ -8,6 +8,7 @@ import ServiceProvidersTable from './components/ServiceProvidersTable';
 import TabsSection from './components/TabsSection';
 import PaginationSection from './components/PaginationSection';
 import SuspendModal from './components/SuspendModal';
+import LoadingSpinner from '../../../../components/ui/LoadingSpinner';
 import { toast } from 'react-toastify';
 import {
   fetchAllUsers,
@@ -279,11 +280,7 @@ const Users = () => {
 
   const renderTableContent = () => {
     if (isLoading || suspendedLoading) {
-      return (
-        <div className="flex items-center justify-center py-12">
-          <div className="border-primary h-12 w-12 animate-spin rounded-full border-b-2"></div>
-        </div>
-      );
+      return <LoadingSpinner label="Loading users..." containerClassName="py-12" />;
     }
 
     const isSuspendedView = activeSubTab === 'suspended';

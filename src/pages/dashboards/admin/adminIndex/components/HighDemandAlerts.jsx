@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Info } from 'lucide-react';
 import { GET } from '../../../../../services/httpMethods';
 import { ENDPOINT } from '../../../../../services/httpEndpoint';
+import LoadingSpinner from '../../../../../components/ui/LoadingSpinner';
 
 const HighDemandAlerts = () => {
   const [alerts, setAlerts] = useState([]);
@@ -89,7 +90,13 @@ const HighDemandAlerts = () => {
           </div>
         ))}
 
-        {isLoading && <p className="text-sm text-gray-500">Loading alerts...</p>}
+        {isLoading && (
+          <LoadingSpinner
+            label="Loading alerts..."
+            containerClassName="justify-start py-1"
+            spinnerClassName="h-6 w-6"
+          />
+        )}
         {!isLoading && error && <p className="text-sm text-red-600">{error}</p>}
         {!isLoading && !error && alerts.length === 0 && (
           <div className="rounded-xl border border-dashed border-gray-200 bg-gray-50/70 px-5 py-8 text-center">

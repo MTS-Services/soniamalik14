@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { GET } from '../../../../../services/httpMethods';
 import { ENDPOINT } from '../../../../../services/httpEndpoint';
+import LoadingSpinner from '../../../../../components/ui/LoadingSpinner';
 
 const DemandVsSupply = () => {
   const [sportsData, setSportsData] = useState([]);
@@ -85,7 +86,13 @@ const DemandVsSupply = () => {
           </div>
         ))}
 
-        {isLoading && <p className="text-sm text-gray-500">Loading demand and supply...</p>}
+        {isLoading && (
+          <LoadingSpinner
+            label="Loading demand and supply..."
+            containerClassName="justify-start py-1"
+            spinnerClassName="h-6 w-6"
+          />
+        )}
         {!isLoading && error && <p className="text-sm text-red-600">{error}</p>}
         {!isLoading && !error && sportsData.length === 0 && (
           <p className="text-sm text-gray-500">No demand vs supply data available.</p>

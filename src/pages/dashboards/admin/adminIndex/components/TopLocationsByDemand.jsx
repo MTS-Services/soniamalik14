@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { GET } from '../../../../../services/httpMethods';
 import { ENDPOINT } from '../../../../../services/httpEndpoint';
+import LoadingSpinner from '../../../../../components/ui/LoadingSpinner';
 
 const TopLocationsByDemand = () => {
   const [locations, setLocations] = useState([]);
@@ -76,7 +77,13 @@ const TopLocationsByDemand = () => {
           </div>
         ))}
 
-        {isLoading && <p className="text-sm text-gray-500">Loading top locations...</p>}
+        {isLoading && (
+          <LoadingSpinner
+            label="Loading top locations..."
+            containerClassName="justify-start py-1"
+            spinnerClassName="h-6 w-6"
+          />
+        )}
         {!isLoading && error && <p className="text-sm text-red-600">{error}</p>}
         {!isLoading && !error && locations.length === 0 && (
           <p className="text-sm text-gray-500">No top locations found.</p>

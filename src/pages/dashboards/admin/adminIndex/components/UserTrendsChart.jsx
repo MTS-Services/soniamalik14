@@ -10,6 +10,7 @@ import {
 } from 'recharts';
 import { GET } from '../../../../../services/httpMethods';
 import { ENDPOINT } from '../../../../../services/httpEndpoint';
+import LoadingSpinner from '../../../../../components/ui/LoadingSpinner';
 
 const UserTrendsChart = () => {
   const [period, setPeriod] = useState('year');
@@ -164,7 +165,13 @@ const UserTrendsChart = () => {
         </AreaChart>
       </ResponsiveContainer>
 
-      {isLoading && <p className="mt-3 text-sm text-gray-500">Loading trends...</p>}
+      {isLoading && (
+        <LoadingSpinner
+          label="Loading trends..."
+          containerClassName="mt-2 justify-start py-0"
+          spinnerClassName="h-6 w-6"
+        />
+      )}
       {!isLoading && error && <p className="mt-3 text-sm text-red-600">{error}</p>}
       {!isLoading && !error && chartData.length === 0 && (
         <p className="mt-3 text-sm text-gray-500">No trend data available.</p>

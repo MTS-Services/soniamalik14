@@ -3,6 +3,7 @@ import { Users, TrendingUp, FileText, MessageSquare, UserCog, List, ShieldAlert 
 import StatsCard from './StatsCard';
 import { GET } from '../../../../../services/httpMethods';
 import { ENDPOINT } from '../../../../../services/httpEndpoint';
+import LoadingSpinner from '../../../../../components/ui/LoadingSpinner';
 
 const StatsGrid = () => {
   const [statsData, setStatsData] = useState(null);
@@ -105,7 +106,7 @@ const StatsGrid = () => {
   }, [statsData]);
 
   if (isLoading && !statsData) {
-    return <div className="text-sm text-gray-600">Loading dashboard stats...</div>;
+    return <LoadingSpinner label="Loading dashboard stats..." />;
   }
 
   if (error && !statsData) {
