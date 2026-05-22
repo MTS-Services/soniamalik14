@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import {
     Code,
@@ -9,44 +9,123 @@ import {
     ExternalLink,
     ArrowLeft
 } from 'lucide-react';
+import { GET } from '../../../../services/httpMethods';
+import { ENDPOINT } from '../../../../services/httpEndpoint';
+import LoadingSpinner from '../../../../components/ui/LoadingSpinner';
+
+const normalizeStatus = (service) => {
+    if (service?.bannedAt || service?.bannedReason) return 'Banned';
+    if (service?.isFeatured) return 'Featured';
+
+    const normalized = String(service?.status || '').trim().toLowerCase();
+    if (['active', 'approved', 'live'].includes(normalized)) return 'Live';
+    if (['pending', 'pending_approval'].includes(normalized)) return 'Pending';
+    if (['banned', 'blocked', 'rejected'].includes(normalized)) return 'Banned';
+
+    return 'Pending';
+};
 
 const ServiceProviderListingDetails = () => {
     const navigate = useNavigate();
-    // Defaulting to 1 for the Live view. Change to 2 for Pending, or 6 for Banned.
-    const { id = 1 } = useParams();
+    const { id } = useParams();
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState('');
+    const [service, setService] = useState(null);
 
-    const tableData = [
-        {
-            id: 1, // Live Status (Image 1)
-            listing: "Women's Sports Physio",
-            coach: "John Doe",
-            status: 'Live',
-            engagement: { views: 1250, trend: 45, messages: 28, shares: 28 }
-        },
-        {
-            id: 2, // Pending Status (Image 2)
-            listing: "Women's Sports Physio",
-            coach: "John Doe",
-            status: 'Pending',
-            engagement: null
-        },
-        {
-            id: 6, // Banned Status (Image 3)
-            listing: "Women's Sports Physio",
-            coach: "John Doe",
-            status: 'Banned',
-            engagement: null
+    useEffect(() => {
+        let active = true;
+
+        const loadService = async () => {
+            setLoading(true);
+            setError('');
+
+            try {
+                const response = await GET(ENDPOINT.SERVICES.DETAIL(id));
+                const payload = response?.data || response;
+                const nextService = payload?.data?.service || payload?.service || payload?.data || null;
+
+                if (!active) return;
+                if (!nextService?.id) {
+                    setService(null);
+                    setError('Service not found.');
+                    return;
+                }
+
+                setService(nextService);
+            } catch (err) {
+                if (!active) return;
+                setError(err?.response?.data?.message || err?.message || 'Failed to load service details');
+                setService(null);
+            } finally {
+                if (active) setLoading(false);
+            }
+        };
+
+        if (!id) {
+            setError('Invalid service id.');
+            setLoading(false);
+            return;
         }
-    ];
 
-    const data = useMemo(() => tableData.find(item => item.id === parseInt(id)) || tableData[0], [id]);
+        loadService();
+
+        return () => {
+            active = false;
+        };
+    }, [id]);
+
+    const data = useMemo(() => {
+        if (!service) return null;
+
+        const sports = Array.isArray(service?.sports) ? service.sports : [];
+        const sessionTypes = Array.isArray(service?.sessionTypes) ? service.sessionTypes : [];
+
+        return {
+            id: service?.id,
+            listing: service?.listingHeadline || service?.organizationName || service?.providerName || 'Untitled Listing',
+            coach: service?.contactName || service?.provider?.name || service?.providerName || 'N/A',
+            status: normalizeStatus(service),
+            engagement: null,
+            avatar: service?.provider?.avatar || service?.logo || '',
+            about: service?.aboutService || service?.description || 'No service details available.',
+            clinicName: service?.clinicName || 'N/A',
+            addressLine1: service?.addressLine1 || 'N/A',
+            townCity: service?.city || 'N/A',
+            postcode: service?.postcode || 'N/A',
+            primaryProfession:
+                service?.role ||
+                (Array.isArray(service?.providerType) ? service.providerType.join(', ') : service?.providerType) ||
+                'N/A',
+            sessionTypes: sessionTypes.length > 0 ? sessionTypes.join(', ') : 'N/A',
+            sport: sports.length > 0 ? sports.join(', ') : 'N/A',
+            professionalRegistration: service?.professionalRegistration || 'N/A',
+            insuranceInPlace:
+                typeof service?.insuranceInPlace === 'boolean'
+                    ? service.insuranceInPlace
+                        ? 'Yes'
+                        : 'No'
+                    : 'N/A',
+        };
+    }, [service]);
+
+    if (loading) {
+        return (
+            <div className="flex-1 overflow-auto bg-gray-50 min-h-screen flex items-center justify-center">
+                <LoadingSpinner label="" containerClassName="py-0" />
+            </div>
+        );
+    }
+
+    if (error) {
+        return <div className="flex-1 overflow-auto bg-gray-50 p-8 text-center text-red-600">Error: {error}</div>;
+    }
 
     if (!data) {
         return (
             <div className="flex-1 overflow-auto bg-gray-50 p-8 flex justify-center items-center h-screen">
                 <div className="text-center">
                     <h2 className="text-2xl font-bold text-gray-900">Listing not found</h2>
-                    <button onClick={() => navigate(-1)} className="mt-4 px-4 py-2 bg-[#0f766e] text-white rounded-lg">Go Back</button>
+                    <button onClick={() => navigate(-1)} className="mt-4 px-4 py-2 bg-btn-primary text-white rounded-lg">Go Back</button>
                 </div>
             </div>
         );
@@ -62,7 +141,7 @@ const ServiceProviderListingDetails = () => {
                 {/* Back Button */}
                 <button
                     onClick={() => navigate(-1)}
-                    className="flex items-center gap-2 text-[#0f766e] hover:text-teal-800 font-medium transition-colors w-fit"
+                    className="flex items-center gap-2 text-btn-primary hover:text-teal-800 font-medium transition-colors w-fit"
                 >
                     <ArrowLeft className="w-4 h-4" />
                     <span className="text-base">Back to Listings</span>
@@ -71,9 +150,9 @@ const ServiceProviderListingDetails = () => {
                 {/* Header Section */}
                 <div className="flex items-start gap-5">
                     {/* Avatar */}
-                    <div className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-[#1a1a1a] flex-shrink-0 flex items-center justify-center shadow-sm overflow-hidden">
+                    <div className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-[#1a1a1a] shrink-0 flex items-center justify-center shadow-sm overflow-hidden">
                         <img
-                            src="https://ui-avatars.com/api/?name=W+S&background=1a1a1a&color=b4855d&font-size=0.4"
+                            src={data.avatar || 'https://ui-avatars.com/api/?name=W+S&background=1a1a1a&color=b4855d&font-size=0.4'}
                             alt="Logo"
                             className="w-full h-full object-cover"
                         />
@@ -99,7 +178,7 @@ const ServiceProviderListingDetails = () => {
                 {/* 2. Banned Status Alert Banner */}
                 {data.status === 'Banned' && (
                     <div className="bg-red-50/80 border border-red-100 rounded-xl p-5 flex gap-3">
-                        <AlertCircle className="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" />
+                        <AlertCircle className="w-5 h-5 text-red-500 shrink-0 mt-0.5" />
                         <div>
                             <h3 className="text-base font-semibold text-red-600 mb-1">This event was not approved</h3>
                             <p className="text-xs leading-relaxed text-red-500">
@@ -114,7 +193,7 @@ const ServiceProviderListingDetails = () => {
                 <div className="bg-white rounded-xl shadow-sm p-4 md:p-6 max-w-2xl">
                     <h2 className="text-xl font-bold text-gray-900 mb-3">About This Service</h2>
                     <p className="text-base text-gray-600 leading-relaxed">
-                        This physiotherapy service is designed specifically for women athletes who play sports like cricket, football, futsal and other physical games. It helps prevent injuries, improve performance, and support recovery so players can stay fit and confident.
+                        {data.about}
                     </p>
                 </div>
 
@@ -124,49 +203,49 @@ const ServiceProviderListingDetails = () => {
                         {/* Using Grid to ensure perfect alignment and no text breaking below the label */}
                         <div className="grid grid-cols-1 sm:grid-cols-[220px_1fr] gap-1 sm:gap-4 text-base">
                             <span className="font-semibold text-gray-900">Clinic Name:</span>
-                            <span className="text-gray-700">The wellness Center</span>
+                            <span className="text-gray-700">{data.clinicName}</span>
                         </div>
                         <div className="grid grid-cols-1 sm:grid-cols-[220px_1fr] gap-1 sm:gap-4 text-base">
                             <span className="font-semibold text-gray-900">Address line 1:</span>
-                            <span className="text-gray-700">123 High Street</span>
+                            <span className="text-gray-700">{data.addressLine1}</span>
                         </div>
                         <div className="grid grid-cols-1 sm:grid-cols-[220px_1fr] gap-1 sm:gap-4 text-base">
                             <span className="font-semibold text-gray-900">Town/City:</span>
-                            <span className="text-gray-700">Richmond</span>
+                            <span className="text-gray-700">{data.townCity}</span>
                         </div>
                         <div className="grid grid-cols-1 sm:grid-cols-[220px_1fr] gap-1 sm:gap-4 text-base">
                             <span className="font-semibold text-gray-900">Postcode:</span>
-                            <span className="text-gray-700">TW9 IAB</span>
+                            <span className="text-gray-700">{data.postcode}</span>
                         </div>
                         <div className="grid grid-cols-1 sm:grid-cols-[220px_1fr] gap-1 sm:gap-4 text-base">
                             <span className="font-semibold text-gray-900">Primary Profession:</span>
-                            <span className="text-gray-700">Physiotherapist</span>
+                            <span className="text-gray-700">{data.primaryProfession}</span>
                         </div>
                         <div className="grid grid-cols-1 sm:grid-cols-[220px_1fr] gap-1 sm:gap-4 text-base">
                             <span className="font-semibold text-gray-900">Session Types:</span>
-                            <span className="text-gray-700">In clinic</span>
+                            <span className="text-gray-700">{data.sessionTypes}</span>
                         </div>
                         <div className="grid grid-cols-1 sm:grid-cols-[220px_1fr] gap-1 sm:gap-4 text-base">
                             <span className="font-semibold text-gray-900">Sport:</span>
-                            <span className="text-gray-700">Football</span>
+                            <span className="text-gray-700">{data.sport}</span>
                         </div>
                         <div className="grid grid-cols-1 sm:grid-cols-[220px_1fr] gap-1 sm:gap-4 text-base">
                             <span className="font-semibold text-gray-900">Professional Registration:</span>
-                            <span className="text-gray-700">HCPC Registered, CSP Member</span>
+                            <span className="text-gray-700">{data.professionalRegistration}</span>
                         </div>
                         <div className="grid grid-cols-1 sm:grid-cols-[220px_1fr] gap-1 sm:gap-4 text-base">
                             <span className="font-semibold text-gray-900">Insurance in place:</span>
-                            <span className="text-gray-700">Yes</span>
+                            <span className="text-gray-700">{data.insuranceInPlace}</span>
                         </div>
                     </div>
                 </div>
 
                 {/* Action Buttons */}
                 <div className="flex flex-wrap gap-4">
-                    <button className="px-5 py-2.5 bg-[#0f766e] text-white text-sm md:text-base font-semibold rounded-lg hover:bg-teal-800 transition-colors">
+                    <button className="px-5 py-2.5 bg-btn-primary text-white text-sm md:text-base font-semibold rounded-lg hover:bg-teal-800 transition-colors">
                         Book Your Place
                     </button>
-                    <button className="px-5 py-2.5 bg-[#0f766e] text-white text-sm md:text-base font-semibold rounded-lg hover:bg-teal-800 transition-colors">
+                    <button className="px-5 py-2.5 bg-btn-primary text-white text-sm md:text-base font-semibold rounded-lg hover:bg-teal-800 transition-colors">
                         Register Interest
                     </button>
                 </div>
@@ -177,10 +256,10 @@ const ServiceProviderListingDetails = () => {
                             <div className="bg-[#E7F1F1] p-4 rounded-xl border border-gray-100 max-w-2xl">
                                 <p className="text-base text-gray-900 mb-3 font-medium">Ask the organiser a question</p>
                                 <textarea
-                                    className="w-full h-50 lg:h-100 bg-[#B5D5D2] border-none rounded-lg p-3 text-base text-gray-700 placeholder-gray-500 focus:ring-2 focus:ring-[#0f766e]/20 outline-none resize-none mb-3"
+                                    className="w-full h-50 lg:h-100 bg-[#B5D5D2] border-none rounded-lg p-3 text-base text-gray-700 placeholder-gray-500 focus:ring-2 focus:ring-btn-primary/20 outline-none resize-none mb-3"
                                     placeholder="Write your message"
                                 ></textarea>
-                                <button className="px-5 py-2 bg-[#0f766e] text-white text-base font-medium rounded-lg hover:bg-teal-800 transition-colors">
+                                <button className="px-5 py-2 bg-btn-primary text-white text-base font-medium rounded-lg hover:bg-teal-800 transition-colors">
                                     Send message
                                 </button>
                             </div>
