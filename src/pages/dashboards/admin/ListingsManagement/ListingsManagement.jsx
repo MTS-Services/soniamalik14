@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo, useEffect, useCallback } from 'react';
 import HeaderSection from './components/HeaderSection';
 import SearchAndFilters from './components/SearchAndFilters';
 import TableHeader from './components/TableHeader';
@@ -71,39 +71,39 @@ const ListingsManagement = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
 
+    const loadListings = useCallback(async () => {
+        setLoading(true);
+        setError('');
+
+        try {
+            const response = await GET(ENDPOINT.SERVICES.ADMIN_BY_PROVIDER_ROLE);
+            const payload = response?.data || response;
+            const services = Array.isArray(payload?.data)
+                ? payload.data
+                : Array.isArray(payload)
+                    ? payload
+                    : [];
+
+            setTableData(services.map(mapServiceToRow));
+        } catch (err) {
+            setError(err?.response?.data?.message || err?.message || 'Failed to load listings');
+            setTableData([]);
+        } finally {
+            setLoading(false);
+        }
+    }, []);
+
     useEffect(() => {
         let active = true;
 
-        const loadListings = async () => {
-            setLoading(true);
-            setError('');
-
-            try {
-                const response = await GET(ENDPOINT.SERVICES.ADMIN_BY_PROVIDER_ROLE);
-                const payload = response?.data || response;
-                const services = Array.isArray(payload?.data)
-                    ? payload.data
-                    : Array.isArray(payload)
-                        ? payload
-                        : [];
-
-                if (!active) return;
-                setTableData(services.map(mapServiceToRow));
-            } catch (err) {
-                if (!active) return;
-                setError(err?.response?.data?.message || err?.message || 'Failed to load listings');
-                setTableData([]);
-            } finally {
-                if (active) setLoading(false);
-            }
-        };
-
-        loadListings();
+        if (active) {
+            loadListings();
+        }
 
         return () => {
             active = false;
         };
-    }, []);
+    }, [loadListings]);
 
     // Get unique categories and statuses for the dropdowns
     const uniqueSports = ['All Sports', ...Array.from(new Set(tableData.map(item => item.category)))];
@@ -179,7 +179,7 @@ const ListingsManagement = () => {
                             <tbody className="bg-white divide-y divide-gray-100">
                                 {filteredData.length > 0 ? (
                                     filteredData.map((row) => (
-                                        <TableRow key={row.id} row={row} />
+                                        <TableRow key={row.id} row={row} onActionDone={loadListings} />
                                     ))
                                 ) : (
                                     <EmptyStateRow />

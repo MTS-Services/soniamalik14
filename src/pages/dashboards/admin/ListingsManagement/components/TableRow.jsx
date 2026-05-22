@@ -3,7 +3,7 @@ import StatusBadge from './StatusBadge';
 import EngagementMetrics from './EngagementMetrics';
 import ActionButtons from './ActionButtons';
 
-const TableRow = ({ row }) => {
+const TableRow = ({ row, onActionDone }) => {
     return (
         <tr className="hover:bg-gray-50/50 transition-colors">
             <td className="px-6 py-4 whitespace-nowrap">
@@ -26,7 +26,7 @@ const TableRow = ({ row }) => {
                 <EngagementMetrics engagement={row.engagement} />
             </td>
             <td className="px-6 py-4 whitespace-nowrap text-base">
-                <ActionButtons status={row.status} rowId={row.id} providerType={row.providerType} />
+                <ActionButtons status={row.status} rowId={row.id} providerType={row.providerType} onActionDone={onActionDone} />
             </td>
         </tr>
     );
