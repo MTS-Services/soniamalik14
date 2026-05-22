@@ -13,6 +13,7 @@ import {
   fetchAllUsers,
   fetchSuspendedUsers,
   suspendUser,
+  unsuspendUser,
   selectUsersByRole,
   selectUsersLoading,
   selectSuspendedUsers,
@@ -52,8 +53,35 @@ const Users = () => {
     }
   }, [dispatch, activeTab, activeSubTab, page, limit]);
 
+  const reloadCurrentUsers = async () => {
+    const role =
+      activeTab === 'players' ? 'USER' : activeTab === 'sportProviders' ? 'COACH' : 'PROVIDER';
+
+    if (activeSubTab === 'suspended') {
+      await dispatch(fetchSuspendedUsers({ page, limit, filters: { role } }));
+      return;
+    }
+
+    await dispatch(fetchAllUsers({ page, limit, filters: { role } }));
+  };
+
   // Modal handlers
-  const handleOpenSuspendModal = (userId) => {
+  const handleOpenSuspendModal = async (userId, status) => {
+    const normalizedStatus = String(status || '').toUpperCase();
+
+    if (normalizedStatus === 'SUSPENDED') {
+      try {
+        const response = await dispatch(unsuspendUser({ userId })).unwrap();
+        if (response?.message) {
+          toast.success(response.message);
+        }
+        await reloadCurrentUsers();
+      } catch (error) {
+        console.error('Failed to reinstate user:', error);
+      }
+      return;
+    }
+
     setSelectedUserId(userId);
     setIsSuspendModalOpen(true);
   };
@@ -69,6 +97,7 @@ const Users = () => {
       if (response?.message) {
         toast.success(response.message);
       }
+      await reloadCurrentUsers();
       handleCloseSuspendModal();
     } catch (error) {
       console.error('Failed to suspend user:', error);

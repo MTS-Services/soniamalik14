@@ -1,6 +1,6 @@
 import React from 'react';
 
-const PlayersTable = ({ data, activeSubTab, onSuspend }) => {
+const PlayersTable = ({ data, onSuspend }) => {
     return (
         <div className="overflow-x-auto rounded-lg border border-gray-100">
             <table className="w-full whitespace-nowrap">
@@ -34,7 +34,7 @@ const PlayersTable = ({ data, activeSubTab, onSuspend }) => {
                             <td className="px-4 py-4 text-base text-gray-600">{row.status}</td>
                             <td className="px-4 py-4 text-base">
                                 <button
-                                    onClick={() => onSuspend(row.id)}
+                                    onClick={() => onSuspend(row.id, row.status)}
                                     className="bg-[#E7F1F1] text-black px-3 py-1.5 rounded text-xs font-medium hover:bg-gray-200 transition"
                                 >
                                     {String(row.status || '').toUpperCase() === 'SUSPENDED' ? 'Reinstate' : 'Suspend'}

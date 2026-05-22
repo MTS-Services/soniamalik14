@@ -63,6 +63,19 @@ export const suspendUser = createAsyncThunk(
   }
 );
 
+export const unsuspendUser = createAsyncThunk(
+  'users/unsuspendUser',
+  async ({ userId }, { rejectWithValue, signal }) => {
+    try {
+      const response = await usersAPI.unsuspendUser(userId, signal);
+      const payload = response?.data ?? response;
+      return { userId, ...payload };
+    } catch (error) {
+      return rejectWithValue(getErrorPayload(error, 'Failed to reinstate user'));
+    }
+  }
+);
+
 const usersSlice = createSlice({
   name: 'users',
   initialState,
@@ -119,6 +132,17 @@ const usersSlice = createSlice({
       .addCase(suspendUser.rejected, (state, action) => {
         state.suspend.loading = false;
         state.suspend.error = action.payload?.message || action.error?.message || 'Failed to suspend user';
+      })
+      .addCase(unsuspendUser.pending, (state) => {
+        state.suspend.loading = true;
+        state.suspend.error = null;
+      })
+      .addCase(unsuspendUser.fulfilled, (state) => {
+        state.suspend.loading = false;
+      })
+      .addCase(unsuspendUser.rejected, (state, action) => {
+        state.suspend.loading = false;
+        state.suspend.error = action.payload?.message || action.error?.message || 'Failed to reinstate user';
       });
   },
 });

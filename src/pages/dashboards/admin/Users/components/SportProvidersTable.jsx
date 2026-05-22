@@ -38,10 +38,10 @@ const SportProvidersTable = ({ data, activeSubTab, onSuspend }) => {
                             <td className="px-4 py-4 text-base text-gray-600">{row.avgResponseTime}</td>
                             <td className="px-4 py-4 text-base">
                                 <button
-                                    onClick={() => onSuspend(row.id)}
+                                    onClick={() => onSuspend(row.id, row.status)}
                                     className="bg-[#E7F1F1] text-black px-3 py-1.5 rounded text-xs font-medium hover:bg-gray-200 transition"
                                 >
-                                    {activeSubTab === 'all' ? 'Suspend' : 'Reinstate'}
+                                    {String(row.status || '').toUpperCase() === 'SUSPENDED' ? 'Reinstate' : 'Suspend'}
                                 </button>
                             </td>
                         </tr>
