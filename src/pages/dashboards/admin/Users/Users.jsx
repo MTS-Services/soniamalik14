@@ -121,9 +121,10 @@ const Users = () => {
         contactName: contactName || row?.name || '-',
         email: row?.email || '-',
         postcode: row?.postcode || '-',
-        sport: Array.isArray(row?.sportsOffered) && row.sportsOffered.length
-          ? row.sportsOffered.join(', ')
-          : '-',
+        sport:
+          Array.isArray(row?.sportsOffered) && row.sportsOffered.length
+            ? row.sportsOffered.join(', ')
+            : '-',
         joined: formatDateValue(row?.createdAt),
         listingsCount: row?.listingsCount ?? 0,
         eventsCount: row?.eventsCount ?? 0,
@@ -138,12 +139,17 @@ const Users = () => {
   const mapPlayerRows = (rows = []) => {
     return rows.map((row) => ({
       id: row?.id,
-      name: row?.displayName || row?.name || [row?.firstName, row?.lastName].filter(Boolean).join(' ') || '-',
+      name:
+        row?.displayName ||
+        row?.name ||
+        [row?.firstName, row?.lastName].filter(Boolean).join(' ') ||
+        '-',
       email: row?.email || '-',
       postcode: row?.postcode || '-',
-      sport: Array.isArray(row?.sportsInterests) && row.sportsInterests.length
-        ? row.sportsInterests.join(', ')
-        : '-',
+      sport:
+        Array.isArray(row?.sportsInterests) && row.sportsInterests.length
+          ? row.sportsInterests.join(', ')
+          : '-',
       joined: formatDateValue(row?.createdAt),
       lastLogin: formatDateValue(row?.lastLogin),
       events: row?.eventsCount ?? 0,
@@ -158,9 +164,10 @@ const Users = () => {
       providerName: row?.organizationName || row?.name || '-',
       email: row?.email || '-',
       postcode: row?.postcode || '-',
-      sport: Array.isArray(row?.serviceTypes) && row.serviceTypes.length
-        ? row.serviceTypes.join(', ')
-        : '-',
+      sport:
+        Array.isArray(row?.serviceTypes) && row.serviceTypes.length
+          ? row.serviceTypes.join(', ')
+          : '-',
       joined: formatDateValue(row?.createdAt),
       lastLogin: formatDateValue(row?.lastLogin),
       phone: row?.phone || '-',

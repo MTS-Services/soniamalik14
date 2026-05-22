@@ -70,11 +70,11 @@ const UserTrendsChart = () => {
   }, [chartData]);
 
   return (
-    <div className="rounded-lg md:rounded-2xl bg-white p-4 md:p-6 shadow-sm lg:col-span-2 min-w-0">
-      <div className="mb-4 md:mb-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 sm:gap-0">
-        <h2 className="text-lg md:text-2xl font-semibold text-gray-900">User</h2>
+    <div className="min-w-0 rounded-lg bg-white p-4 shadow-sm md:rounded-2xl md:p-6 lg:col-span-2">
+      <div className="mb-4 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center sm:gap-0 md:mb-6">
+        <h2 className="text-lg font-semibold text-gray-900 md:text-2xl">User</h2>
         <select
-          className="rounded-lg border border-gray-300 px-3 md:px-4 py-2 text-sm text-gray-600 bg-white focus:outline-none focus:ring-2 focus:ring-btn-primary w-full sm:w-auto"
+          className="focus:ring-btn-primary w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-600 focus:ring-2 focus:outline-none sm:w-auto md:px-4"
           value={period}
           onChange={(event) => setPeriod(event.target.value)}
         >
@@ -84,18 +84,18 @@ const UserTrendsChart = () => {
         </select>
       </div>
 
-      <div className="flex flex-col gap-3 md:gap-6 md:flex-row md:flex-wrap md:items-center mb-4 md:mb-6">
+      <div className="mb-4 flex flex-col gap-3 md:mb-6 md:flex-row md:flex-wrap md:items-center md:gap-6">
         <div className="flex items-center gap-2">
-          <div className="h-3 md:h-4 w-3 md:w-4 rounded-full bg-btn-primary"></div>
-          <span className="text-sm md:text-base text-gray-700">Player</span>
+          <div className="bg-btn-primary h-3 w-3 rounded-full md:h-4 md:w-4"></div>
+          <span className="text-sm text-gray-700 md:text-base">Player</span>
         </div>
         <div className="flex items-center gap-2">
-          <div className="h-3 md:h-4 w-3 md:w-4 rounded-full bg-yellow-400"></div>
-          <span className="text-sm md:text-base text-gray-700">Service Provider</span>
+          <div className="h-3 w-3 rounded-full bg-yellow-400 md:h-4 md:w-4"></div>
+          <span className="text-sm text-gray-700 md:text-base">Service Provider</span>
         </div>
         <div className="flex items-center gap-2">
-          <div className="h-3 md:h-4 w-3 md:w-4 rounded-full bg-gray-900"></div>
-          <span className="text-sm md:text-base text-gray-700">Sport Providers</span>
+          <div className="h-3 w-3 rounded-full bg-gray-900 md:h-4 md:w-4"></div>
+          <span className="text-sm text-gray-700 md:text-base">Sport Providers</span>
         </div>
       </div>
 
@@ -134,7 +134,7 @@ const UserTrendsChart = () => {
               backgroundColor: 'white',
               border: '1px solid #E5E7EB',
               borderRadius: '8px',
-              padding: '8px 12px'
+              padding: '8px 12px',
             }}
             formatter={(value) => Number(value).toLocaleString()}
           />
