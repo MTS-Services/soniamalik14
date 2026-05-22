@@ -75,14 +75,9 @@ const appendArrayValues = (formData, key, values = []) => {
 };
 
 const appendArrayField = (formData, key, values = []) => {
-  const normalized = values
-    .map((value) => String(value || '').trim())
-    .filter(Boolean);
+  const normalized = values.map((value) => String(value || '').trim()).filter(Boolean);
 
   if (normalized.length === 0) return;
-
-  // For multipart submissions, some parsers coerce single repeated fields to string.
-  // Sending JSON for single item keeps array intent explicit for backend normalizers.
   if (normalized.length === 1) {
     formData.append(key, JSON.stringify(normalized));
     return;
@@ -136,7 +131,10 @@ const toArray = (value) => {
       // Fall back to comma-separated parsing.
     }
   }
-  return text.split(',').map((item) => item.trim()).filter(Boolean);
+  return text
+    .split(',')
+    .map((item) => item.trim())
+    .filter(Boolean);
 };
 
 const toDateInputValue = (value) => {
@@ -175,7 +173,10 @@ const toTimeRangeInputValue = (value) => {
   const text = String(value || '').trim();
   if (!text) return { timeFrom: '', timeTo: '' };
 
-  const parts = text.split('-').map((part) => part.trim()).filter(Boolean);
+  const parts = text
+    .split('-')
+    .map((part) => part.trim())
+    .filter(Boolean);
   if (parts.length >= 2) {
     return {
       timeFrom: toTimeInputValue(parts[0]),
@@ -191,23 +192,30 @@ const mapInitialDataToForm = (initialData) => {
   const sportsFromService = toArray(initialData?.sports);
   const sportsFromWhoServiceFor = toArray(initialData?.whoServiceFor);
   const mergedSports = [...sportsFromService, ...sportsFromWhoServiceFor].filter(Boolean);
-  const knownSports = mergedSports.filter((sport) => sportOptions.includes(sport) && sport !== 'Other');
+  const knownSports = mergedSports.filter(
+    (sport) => sportOptions.includes(sport) && sport !== 'Other'
+  );
   const customSports = mergedSports.filter((sport) => !sportOptions.includes(sport));
   const womenOnlyValue = initialData?.womenOnly;
   const timeRange = toTimeRangeInputValue(initialData?.timeSlote || initialData?.timeSlots);
 
   return {
     ...createInitialForm(),
-    organisationName: initialData?.organizationName || initialData?.providerName || initialData?.title || '',
+    organisationName:
+      initialData?.organizationName || initialData?.providerName || initialData?.title || '',
     contactPerson: initialData?.contactName || '',
     role:
       initialData?.role ||
-      (Array.isArray(initialData?.providerType) ? initialData.providerType[0] : initialData?.providerType) ||
+      (Array.isArray(initialData?.providerType)
+        ? initialData.providerType[0]
+        : initialData?.providerType) ||
       initialData?.category ||
       'Coach / Trainer',
     about: initialData?.description || initialData?.aboutService || '',
     logo: initialData?.logo || initialData?.image || null,
-    sports: customSports.length ? [...new Set([...knownSports, 'Other'])] : [...new Set(knownSports)],
+    sports: customSports.length
+      ? [...new Set([...knownSports, 'Other'])]
+      : [...new Set(knownSports)],
     otherSport: customSports.join(', '),
     sessionTypes: toArray(initialData?.sessionType || initialData?.sessionTypes),
     suitableFor: toArray(initialData?.suitableFor),
@@ -249,9 +257,7 @@ const CreateRecruitmentModal = ({
   useEffect(() => {
     if (!isOpen) return;
     const nextForm =
-      initialData && mode === 'edit'
-        ? mapInitialDataToForm(initialData)
-        : createInitialForm();
+      initialData && mode === 'edit' ? mapInitialDataToForm(initialData) : createInitialForm();
 
     queueMicrotask(() => {
       setForm(nextForm);
@@ -385,13 +391,18 @@ const CreateRecruitmentModal = ({
         });
 
         updateFormData.append('logo', form.logo);
-        logFormDataDebug('[CreateRecruitmentModal] Service update payload (multipart)', updateFormData);
+        logFormDataDebug(
+          '[CreateRecruitmentModal] Service update payload (multipart)',
+          updateFormData
+        );
         resultAction = await dispatch(
           updateService({ id: initialData.id, serviceData: updateFormData })
         );
       } else {
         console.log('[CreateRecruitmentModal] Service update payload (json):', updatePayload);
-        resultAction = await dispatch(updateService({ id: initialData.id, serviceData: updatePayload }));
+        resultAction = await dispatch(
+          updateService({ id: initialData.id, serviceData: updatePayload })
+        );
       }
     } else {
       const payload = new FormData();
@@ -566,13 +577,13 @@ const CreateRecruitmentModal = ({
                         className={`flex cursor-pointer items-center gap-2 rounded-full border px-4 py-1.5 text-sm transition-all select-none ${
                           isChecked
                             ? 'border-btn-primary bg-btn-primary text-white'
-                            : 'border-transparent bg-[#b8d9d6] text-cardTitle'
+                            : 'text-cardTitle border-transparent bg-[#b8d9d6]'
                         }`}
                       >
                         {/* Default Browser Checkbox */}
                         <input
                           type="checkbox"
-                          className="h-4 w-4 cursor-pointer rounded accent-btn-primary"
+                          className="accent-btn-primary h-4 w-4 cursor-pointer rounded"
                           checked={isChecked}
                           onChange={() => toggleArrayField('sports', sport)}
                         />
@@ -658,7 +669,7 @@ const CreateRecruitmentModal = ({
 
             <div className="space-y-4 rounded-lg border border-gray-100 bg-white p-5">
               <h3 className="text-lg font-semibold text-gray-800">Location & Timing</h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
                 <div className="space-y-1">
                   <label className="text-base font-medium text-gray-700">Venue Name</label>
                   <input
@@ -696,9 +707,7 @@ const CreateRecruitmentModal = ({
                   />
                 </div>
                 <div className="space-y-1">
-                  <label className="text-base font-medium text-gray-700">
-                    Sesson Day
-                  </label>
+                  <label className="text-base font-medium text-gray-700">Sesson Day</label>
                   <input
                     value={form.sessonDay}
                     onChange={(e) => handleChange('sessonDay', e.target.value)}
@@ -735,7 +744,6 @@ const CreateRecruitmentModal = ({
                 </div>
               </div>
             </div>
-
           </form>
         </div>
 
