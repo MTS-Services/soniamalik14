@@ -275,9 +275,7 @@ const AddListingDetails = () => {
               <button className="rounded-md bg-[#0F766E] px-4 py-2 text-base font-semibold text-white hover:bg-[#0d655d]">
                 Book Now
               </button>
-              {/* <button className="rounded-md bg-[#0F766E] px-4 py-2 text-base font-semibold text-white hover:bg-[#0d655d]">
-                Register Interest
-              </button> */}
+        
             </div>
           </section>
 
