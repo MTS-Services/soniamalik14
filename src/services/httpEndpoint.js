@@ -48,6 +48,7 @@ export const ENDPOINT = {
     DEMAND_SUPPLY: '/api/admin/dashboard/demand-supply',
     HIGH_DEMAND_ALERTS: '/api/admin/dashboard/high-demand-alerts',
     TOP_LOCATIONS: '/api/admin/dashboard/top-locations',
+    DASHBOARD_EXPORT: '/api/admin/dashboard/export',
   },
   SERVICES: {
     LIST: '/api/services',
