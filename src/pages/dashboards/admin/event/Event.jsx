@@ -50,6 +50,12 @@ const formatPostcode = (event) => event?.postcode || event?.zipCode || event?.po
 
 const formatEngagement = (event) => event?.engagement || event?.metrics || null;
 
+const resolveIsFeatured = (event) => {
+  if (typeof event?.isFeatured === 'boolean') return event.isFeatured;
+  const statusSource = event?.status || event?.approvalStatus || event?.eventStatus;
+  return String(statusSource || '').trim().toLowerCase() === 'featured';
+};
+
 const Events = () => {
   const dispatch = useDispatch();
   // Filter States
@@ -61,6 +67,12 @@ const Events = () => {
   const eventsData = useSelector(selectAdminEvents);
   const loading = useSelector(selectAdminEventsLoading);
   const error = useSelector(selectAdminEventsError);
+  const errorMessage = useMemo(() => {
+    if (!error) return '';
+    if (typeof error === 'string') return error;
+    if (typeof error === 'object') return error?.message || 'Something went wrong';
+    return String(error);
+  }, [error]);
 
   const renderedEvents = useMemo(() => {
     return normalizeEventsList(eventsData).map((event) => ({
@@ -72,6 +84,7 @@ const Events = () => {
       sport: formatSport(event),
       postcode: formatPostcode(event),
       status: formatStatus(event?.status || event?.approvalStatus || event?.eventStatus),
+      isFeatured: resolveIsFeatured(event),
       engagement: formatEngagement(event),
     }));
   }, [eventsData]);
@@ -96,7 +109,9 @@ const Events = () => {
   const filteredData = useMemo(() => {
     return renderedEvents.filter((event) => {
       // 1. Tab Filter
-      const matchesTab = activeTab === 'All Events' || event.status === activeTab;
+      const matchesTab =
+        activeTab === 'All Events' ||
+        (activeTab === 'Featured' ? event.isFeatured === true : event.status === activeTab);
 
       // 2. Search Filter
       const query = searchQuery.toLowerCase();
@@ -153,7 +168,7 @@ const Events = () => {
             {loading ? (
               <div className="p-6 text-center text-gray-600">Loading events from the backend...</div>
             ) : error ? (
-              <div className="p-6 text-center text-red-600">Error: {error}</div>
+              <div className="p-6 text-center text-red-600">Error: {errorMessage}</div>
             ) : (
               <table className="w-full text-left border-collapse">
                 <EventTableHeader />

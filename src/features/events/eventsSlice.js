@@ -10,6 +10,7 @@ import {
   updateOrganizerEvent,
   deleteOrganizerEvent,
   approveAdminEvent,
+  featureAdminEvent,
   rejectAdminEvent,
 } from './eventsAPI';
 
@@ -153,6 +154,31 @@ const eventsSlice = createSlice({
         state.adminEvents.loading = false;
         state.adminEvents.success = false;
         state.adminEvents.error = action.payload || 'Failed to approve event';
+      });
+
+    builder
+      .addCase(featureAdminEvent.pending, (state) => {
+        state.adminEvents.loading = true;
+        state.adminEvents.error = null;
+        state.adminEvents.success = null;
+      })
+      .addCase(featureAdminEvent.fulfilled, (state, action) => {
+        state.adminEvents.loading = false;
+        state.adminEvents.success = true;
+        state.adminEvents.error = null;
+        const updated = action.payload;
+        if (updated && typeof updated === 'object' && updated.id) {
+          state.adminEvents.list = normalizeEventsList(state.adminEvents.list).map((event) =>
+            String(event?.id) === String(updated.id)
+              ? { ...event, ...updated, isFeatured: updated?.isFeatured ?? true }
+              : event
+          );
+        }
+      })
+      .addCase(featureAdminEvent.rejected, (state, action) => {
+        state.adminEvents.loading = false;
+        state.adminEvents.success = false;
+        state.adminEvents.error = action.payload || 'Failed to feature event';
       });
 
     builder

@@ -4,10 +4,10 @@ import { Eye, Star, Flag, CheckCircle2 } from 'lucide-react';
 import EventBanModal from './EventBanModal';
 import EventConfirmModal from './EventConfirmModal';
 import { useDispatch, useSelector } from 'react-redux';
-import { approveAdminEvent, rejectAdminEvent } from '../../../../../features/events/eventsAPI';
+import { approveAdminEvent, featureAdminEvent, rejectAdminEvent } from '../../../../../features/events/eventsAPI';
 import { selectAdminEventsLoading } from '../../../../../features/events/eventsSlice';
 
-const EventActionButtons = ({ status, rowId }) => {
+const EventActionButtons = ({ status, isFeatured, rowId }) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [isBanModalOpen, setIsBanModalOpen] = useState(false);
@@ -31,6 +31,14 @@ const EventActionButtons = ({ status, rowId }) => {
         dispatch(rejectAdminEvent({ eventId: rowId, reason }));
     };
 
+    const handleFeature = async () => {
+        try {
+            await dispatch(featureAdminEvent(rowId)).unwrap();
+        } catch {
+            // Toast is handled in thunk.
+        }
+    };
+
     return (
         <>
             <div className="flex items-center gap-3">
@@ -42,8 +50,13 @@ const EventActionButtons = ({ status, rowId }) => {
                 >
                     <Eye className="w-4 h-4 md:w-5 md:h-5" />
                 </button>
-                <button className="transition-colors" title="Feature" disabled={!!loadingAction}>
-                    <Star className={`w-4 h-4 md:w-5 md:h-5 ${status === 'Featured' ? 'fill-amber-400 text-amber-400' : 'text-amber-500 hover:fill-amber-100'}`} />
+                <button
+                    onClick={handleFeature}
+                    className="transition-colors"
+                    title="Feature"
+                    disabled={!!loadingAction}
+                >
+                    <Star className={`w-4 h-4 md:w-5 md:h-5 ${isFeatured ? 'fill-amber-400 text-amber-400' : 'text-amber-500 hover:fill-amber-100'}`} />
                 </button>
                 <button
                     onClick={() => setIsBanModalOpen(true)}

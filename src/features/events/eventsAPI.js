@@ -105,6 +105,37 @@ export const approveAdminEvent = createAsyncThunk(
   }
 );
 
+export const featureAdminEvent = createAsyncThunk(
+  'events/featureAdminEvent',
+  async (eventId, { rejectWithValue, signal }) => {
+    try {
+      if (!eventId) {
+        return rejectWithValue('Event id is required');
+      }
+
+      let response;
+      try {
+        response = await PATCH(ENDPOINT.EVENTS.FEATURE(eventId), {}, signal);
+      } catch (error) {
+        const statusCode = error?.response?.status;
+        if (statusCode !== 404) {
+          throw error;
+        }
+
+        response = await PATCH(ENDPOINT.EVENTS.ADMIN_FEATURE(eventId), {}, signal);
+      }
+
+      const result = response?.data || response;
+      toast.success(result?.message || 'Event featured successfully');
+      return result?.data || result || { id: eventId, status: 'Featured' };
+    } catch (error) {
+      const message = getApiErrorMessage(error, 'Failed to feature event');
+      toast.error(message);
+      return rejectWithValue(message);
+    }
+  }
+);
+
 export const rejectAdminEvent = createAsyncThunk(
   'events/rejectAdminEvent',
   async ({ eventId, reason }, { rejectWithValue, signal }) => {

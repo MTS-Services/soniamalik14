@@ -27,7 +27,7 @@ const EventTableRow = ({ row }) => {
                 <EventEngagementMetrics engagement={row.engagement} />
             </td>
             <td className="px-6 py-4 whitespace-nowrap text-base">
-                <EventActionButtons status={row.status} rowId={row.id} />
+                <EventActionButtons status={row.status} isFeatured={row.isFeatured} rowId={row.id} />
             </td>
         </tr>
     );
