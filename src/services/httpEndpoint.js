@@ -42,6 +42,9 @@ export const ENDPOINT = {
     SUSPEND: (userId) => `/api/users/${userId}/suspend`,
     SUSPENDED_LIST: '/api/admin/suspended-users',
   },
+  ADMIN: {
+    DASHBOARD_STATS: '/api/admin/dashboard/stats',
+  },
   SERVICES: {
     LIST: '/api/services',
     APPROVED: '/api/services?isApproved=true',
