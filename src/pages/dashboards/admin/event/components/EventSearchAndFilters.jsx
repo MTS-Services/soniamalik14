@@ -16,12 +16,12 @@ const EventSearchAndFilters = ({
     uniqueSports
 }) => {
     return (
-        <div className="p-6">
+        <div className="p-4 sm:p-6">
             {/* Search and Tabs */}
-            <div className="flex flex-col lg:flex-row gap-6 justify-between items-start lg:items-center border-b border-gray-100 pb-4 mb-6">
+            <div className="flex flex-col gap-5 border-b border-gray-100 pb-4 mb-6">
 
                 {/* Search Bar */}
-                <div className="flex items-center w-full max-w-md bg-gray-50 border border-gray-100 rounded-lg px-4 py-2.5 focus-within:ring-2 focus-within:ring-[#0f766e]/20 transition-all">
+                <div className="flex items-center w-full bg-gray-50 border border-gray-100 rounded-lg px-4 py-2.5 focus-within:ring-2 focus-within:ring-btn-primary/20 transition-all">
                     <Search className="w-5 h-5 text-gray-400 mr-3" />
                     <input
                         type="text"
@@ -33,13 +33,13 @@ const EventSearchAndFilters = ({
                 </div>
 
                 {/* Tabs - Desktop View */}
-                <div className="hidden lg:flex w-full lg:w-auto gap-6 pb-4 border-b border-gray-100">
+                <div className="hidden md:flex w-full gap-4 overflow-x-auto pb-1">
                     {tabs.map((tab) => (
                         <button
                             key={tab}
                             onClick={() => setActiveTab(tab)}
-                            className={`text-base font-medium whitespace-nowrap pb-4 -mb-4 transition-colors ${activeTab === tab
-                                ? 'text-[#0f766e] border-b-2 border-[#0f766e]'
+                            className={`text-base font-medium whitespace-nowrap shrink-0 pb-2 transition-colors ${activeTab === tab
+                                ? 'text-btn-primary border-b-2 border-btn-primary'
                                 : 'text-gray-500 hover:text-gray-900'
                                 }`}
                         >
@@ -49,11 +49,11 @@ const EventSearchAndFilters = ({
                 </div>
 
                 {/* Tabs - Mobile Select View */}
-                <div className="lg:hidden relative w-full">
+                <div className="md:hidden relative w-full">
                     <select
                         value={activeTab}
                         onChange={(e) => setActiveTab(e.target.value)}
-                        className="appearance-none w-full px-4 py-2 pr-10 text-base text-gray-600 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 focus:outline-none focus:border-[#0f766e] cursor-pointer"
+                        className="appearance-none w-full px-4 py-2 pr-10 text-base text-gray-600 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 focus:outline-none focus:border-btn-primary cursor-pointer"
                     >
                         {tabs.map((tab) => (
                             <option key={tab} value={tab}>{tab}</option>
@@ -64,14 +64,14 @@ const EventSearchAndFilters = ({
             </div>
 
             {/* Dropdown & Date Filters */}
-            <div className="flex flex-col sm:flex-row gap-4 w-full sm:flex-nowrap">
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4 w-full">
 
                 {/* Sport Filter Dropdown */}
-                <div className="relative w-full sm:w-auto">
+                <div className="relative w-full">
                     <select
                         value={selectedSport}
                         onChange={(e) => setSelectedSport(e.target.value)}
-                        className="appearance-none w-full sm:w-56 px-4 py-2 pr-10 text-base text-gray-600 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 focus:outline-none focus:border-[#0f766e] cursor-pointer"
+                        className="appearance-none w-full px-4 py-2 pr-10 text-base text-gray-600 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 focus:outline-none focus:border-btn-primary cursor-pointer"
                     >
                         {uniqueSports.map(sport => (
                             <option key={sport} value={sport}>{sport === 'All Sports' ? 'Select sports' : sport}</option>
@@ -81,24 +81,24 @@ const EventSearchAndFilters = ({
                 </div>
 
                 {/* From Date Filter */}
-                <div className="relative w-full sm:w-auto">
+                <div className="relative w-full">
                     <input
                         type="date"
                         value={fromDate}
                         onChange={(e) => setFromDate(e.target.value)}
-                        className="appearance-none w-full sm:w-80 px-4 py-2 text-base text-gray-600 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 focus:outline-none focus:border-[#0f766e] cursor-pointer [&::-webkit-calendar-picker-indicator]:opacity-0 [&::-webkit-calendar-picker-indicator]:absolute [&::-webkit-calendar-picker-indicator]:right-3 [&::-webkit-calendar-picker-indicator]:w-5 [&::-webkit-calendar-picker-indicator]:h-5 [&::-webkit-calendar-picker-indicator]:cursor-pointer pr-10"
+                        className="appearance-none w-full px-4 py-2 text-base text-gray-600 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 focus:outline-none focus:border-btn-primary cursor-pointer [&::-webkit-calendar-picker-indicator]:opacity-0 [&::-webkit-calendar-picker-indicator]:absolute [&::-webkit-calendar-picker-indicator]:right-3 [&::-webkit-calendar-picker-indicator]:w-5 [&::-webkit-calendar-picker-indicator]:h-5 [&::-webkit-calendar-picker-indicator]:cursor-pointer pr-10"
                     />
-                    {!fromDate && <span className="absolute left-4 top-1/2 -translate-y-1/2 text-base text-gray-600 pointer-events-none bg-white pr-2">Form date /yy</span>}
+                    {!fromDate && <span className="absolute left-4 top-1/2 -translate-y-1/2 text-base text-gray-600 pointer-events-none bg-white pr-2">From date /yy</span>}
                     <Calendar className="w-4 h-4 text-gray-400 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" />
                 </div>
 
                 {/* To Date Filter */}
-                <div className="relative w-full sm:w-auto">
+                <div className="relative w-full">
                     <input
                         type="date"
                         value={toDate}
                         onChange={(e) => setToDate(e.target.value)}
-                        className="appearance-none w-full sm:w-80 px-4 py-2 text-base text-gray-600 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 focus:outline-none focus:border-[#0f766e] cursor-pointer [&::-webkit-calendar-picker-indicator]:opacity-0 [&::-webkit-calendar-picker-indicator]:absolute [&::-webkit-calendar-picker-indicator]:right-3 [&::-webkit-calendar-picker-indicator]:w-5 [&::-webkit-calendar-picker-indicator]:h-5 [&::-webkit-calendar-picker-indicator]:cursor-pointer pr-10"
+                        className="appearance-none w-full px-4 py-2 text-base text-gray-600 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 focus:outline-none focus:border-btn-primary cursor-pointer [&::-webkit-calendar-picker-indicator]:opacity-0 [&::-webkit-calendar-picker-indicator]:absolute [&::-webkit-calendar-picker-indicator]:right-3 [&::-webkit-calendar-picker-indicator]:w-5 [&::-webkit-calendar-picker-indicator]:h-5 [&::-webkit-calendar-picker-indicator]:cursor-pointer pr-10"
                     />
                     {!toDate && <span className="absolute left-4 top-1/2 -translate-y-1/2 text-base text-gray-600 pointer-events-none bg-white pr-2">To date /yyyy</span>}
                     <Calendar className="w-4 h-4 text-gray-400 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" />
