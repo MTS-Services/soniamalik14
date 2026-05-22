@@ -8,6 +8,7 @@ import ServiceProvidersTable from './components/ServiceProvidersTable';
 import TabsSection from './components/TabsSection';
 import PaginationSection from './components/PaginationSection';
 import SuspendModal from './components/SuspendModal';
+import { toast } from 'react-toastify';
 import {
     fetchAllUsers,
     fetchSuspendedUsers,
@@ -63,7 +64,10 @@ const Users = () => {
 
     const handleSubmitSuspend = async (userId, reason) => {
         try {
-            await dispatch(suspendUser({ userId, reason })).unwrap();
+            const response = await dispatch(suspendUser({ userId, reason })).unwrap();
+            if (response?.message) {
+                toast.success(response.message);
+            }
             handleCloseSuspendModal();
         } catch (error) {
             console.error('Failed to suspend user:', error);
@@ -79,14 +83,16 @@ const Users = () => {
             );
         }
 
+        const isSuspendedView = activeSubTab === 'suspended';
+
         if (activeTab === 'players') {
-            return <PlayersTable data={playersData || []} activeSubTab={activeSubTab} onSuspend={handleOpenSuspendModal} />;
+            return <PlayersTable data={isSuspendedView ? (suspendedData || []) : (playersData || [])} activeSubTab={activeSubTab} onSuspend={handleOpenSuspendModal} />;
         }
         if (activeTab === 'sportProviders') {
-            return <SportProvidersTable data={sportProvidersData || []} activeSubTab={activeSubTab} onSuspend={handleOpenSuspendModal} />;
+            return <SportProvidersTable data={isSuspendedView ? (suspendedData || []) : (sportProvidersData || [])} activeSubTab={activeSubTab} onSuspend={handleOpenSuspendModal} />;
         }
         if (activeTab === 'serviceProviders') {
-            return <ServiceProvidersTable data={serviceProvidersData || []} activeSubTab={activeSubTab} onSuspend={handleOpenSuspendModal} />;
+            return <ServiceProvidersTable data={isSuspendedView ? (suspendedData || []) : (serviceProvidersData || [])} activeSubTab={activeSubTab} onSuspend={handleOpenSuspendModal} />;
         }
     };
 
