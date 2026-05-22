@@ -32,7 +32,7 @@ const Recruitment = () => {
         location:
           service.fullAddress || service.location || service.city || service.addressLine1 || 'N/A',
         days: service.availableDays || 'N/A',
-        time: service.timeSlots || 'N/A',
+        time: service.timeSlots || service.timeSlote || 'N/A',
       })),
     [providerServices]
   );

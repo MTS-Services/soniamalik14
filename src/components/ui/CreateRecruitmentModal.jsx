@@ -52,9 +52,10 @@ const createInitialForm = () => ({
   postcode: '',
   townCity: '',
   googleMapLink: '',
-  sessionDays: '',
+  sessonDay: '',
   dateDay: '',
-  time: '',
+  timeFrom: '',
+  timeTo: '',
   bookingLink: '',
 });
 
@@ -170,6 +171,22 @@ const toTimeInputValue = (value) => {
   return `${hours}:${minutes}`;
 };
 
+const toTimeRangeInputValue = (value) => {
+  const text = String(value || '').trim();
+  if (!text) return { timeFrom: '', timeTo: '' };
+
+  const parts = text.split('-').map((part) => part.trim()).filter(Boolean);
+  if (parts.length >= 2) {
+    return {
+      timeFrom: toTimeInputValue(parts[0]),
+      timeTo: toTimeInputValue(parts[1]),
+    };
+  }
+
+  const normalized = toTimeInputValue(text);
+  return { timeFrom: normalized, timeTo: '' };
+};
+
 const mapInitialDataToForm = (initialData) => {
   const sportsFromService = toArray(initialData?.sports);
   const sportsFromWhoServiceFor = toArray(initialData?.whoServiceFor);
@@ -177,12 +194,17 @@ const mapInitialDataToForm = (initialData) => {
   const knownSports = mergedSports.filter((sport) => sportOptions.includes(sport) && sport !== 'Other');
   const customSports = mergedSports.filter((sport) => !sportOptions.includes(sport));
   const womenOnlyValue = initialData?.womenOnly;
+  const timeRange = toTimeRangeInputValue(initialData?.timeSlote || initialData?.timeSlots);
 
   return {
     ...createInitialForm(),
     organisationName: initialData?.organizationName || initialData?.providerName || initialData?.title || '',
     contactPerson: initialData?.contactName || '',
-    role: initialData?.role || initialData?.providerType || initialData?.category || 'Coach / Trainer',
+    role:
+      initialData?.role ||
+      (Array.isArray(initialData?.providerType) ? initialData.providerType[0] : initialData?.providerType) ||
+      initialData?.category ||
+      'Coach / Trainer',
     about: initialData?.description || initialData?.aboutService || '',
     logo: initialData?.logo || initialData?.image || null,
     sports: customSports.length ? [...new Set([...knownSports, 'Other'])] : [...new Set(knownSports)],
@@ -199,9 +221,15 @@ const mapInitialDataToForm = (initialData) => {
     postcode: initialData?.postcode || '',
     townCity: initialData?.city || '',
     googleMapLink: initialData?.googleMapLink || initialData?.googleMapLinks || '',
-    sessionDays: initialData?.sessonDay || initialData?.availableDays || '',
+    sessonDay:
+      initialData?.sessonDay ||
+      (Array.isArray(initialData?.availableDays)
+        ? initialData.availableDays.join(', ')
+        : initialData?.availableDays) ||
+      '',
     dateDay: toDateInputValue(initialData?.date || initialData?.dateDay),
-    time: toTimeInputValue(initialData?.timeSlote || initialData?.timeSlots),
+    timeFrom: timeRange.timeFrom,
+    timeTo: timeRange.timeTo,
     bookingLink: initialData?.bookingLink || '',
   };
 };
@@ -273,9 +301,12 @@ const CreateRecruitmentModal = ({
       user?.providerPhone ||
       '';
     const providerEmail = user?.email || user?.providerEmail || '';
-    const sessionDay = String(form.sessionDays || '').trim();
+    const sessionDay = String(form.sessonDay || '').trim();
+    const normalizedAvailableDays = normalizeArray(toArray(form.sessonDay));
     const dateValue = String(form.dateDay || '').trim();
-    const timeSlot = String(form.time || '').trim();
+    const timeFrom = String(form.timeFrom || '').trim();
+    const timeTo = String(form.timeTo || '').trim();
+    const timeSlot = timeFrom && timeTo ? `${timeFrom} - ${timeTo}` : '';
     const fullAddress = [form.venueName, form.townCity, form.postcode]
       .map((item) => String(item || '').trim())
       .filter(Boolean)
@@ -291,8 +322,8 @@ const CreateRecruitmentModal = ({
       return;
     }
 
-    if (!sessionDay || !timeSlot) {
-      toast.error('Typical session days and time are required.');
+    if (!sessionDay || !timeFrom || !timeTo) {
+      toast.error('Sesson day and time range (from/to) are required.');
       return;
     }
 
@@ -300,6 +331,11 @@ const CreateRecruitmentModal = ({
 
     if (mode === 'edit' && initialData?.id) {
       const updatePayload = {
+        listingHeadline: serviceTitle,
+        aboutService: serviceDescription,
+        providerType: [form.role || 'Coach / Trainer'],
+        sessionTypes: normalizedSessionTypes,
+        availableDays: normalizedAvailableDays,
         organizationName: serviceTitle,
         role: form.role || 'Coach / Trainer',
         description: serviceDescription,
@@ -319,21 +355,51 @@ const CreateRecruitmentModal = ({
         whoServiceFor: normalizedSports.join(', '),
         sessonDay: sessionDay,
         date: dateValue,
+        timeFrom,
+        timeTo,
         timeSlote: timeSlot,
         bookingLink: String(form.bookingLink || '').trim(),
       };
 
       Object.keys(updatePayload).forEach((key) => {
         const value = updatePayload[key];
-        if (value === '' || value === undefined || value === null) {
+        if (
+          value === '' ||
+          value === undefined ||
+          value === null ||
+          (Array.isArray(value) && value.length === 0)
+        ) {
           delete updatePayload[key];
         }
       });
 
-      console.log('[CreateRecruitmentModal] Service update payload (json):', updatePayload);
-      resultAction = await dispatch(updateService({ id: initialData.id, serviceData: updatePayload }));
+      if (form.logo && typeof form.logo !== 'string') {
+        const updateFormData = new FormData();
+
+        Object.entries(updatePayload).forEach(([key, value]) => {
+          if (Array.isArray(value)) {
+            appendArrayField(updateFormData, key, value);
+            return;
+          }
+          appendIfPresent(updateFormData, key, value);
+        });
+
+        updateFormData.append('logo', form.logo);
+        logFormDataDebug('[CreateRecruitmentModal] Service update payload (multipart)', updateFormData);
+        resultAction = await dispatch(
+          updateService({ id: initialData.id, serviceData: updateFormData })
+        );
+      } else {
+        console.log('[CreateRecruitmentModal] Service update payload (json):', updatePayload);
+        resultAction = await dispatch(updateService({ id: initialData.id, serviceData: updatePayload }));
+      }
     } else {
       const payload = new FormData();
+      appendIfPresent(payload, 'listingHeadline', serviceTitle);
+      appendIfPresent(payload, 'aboutService', serviceDescription);
+      appendArrayField(payload, 'providerType', [form.role || 'Coach / Trainer']);
+      appendArrayField(payload, 'sessionTypes', normalizedSessionTypes);
+      appendArrayField(payload, 'availableDays', normalizedAvailableDays);
       payload.append('title', serviceTitle);
       payload.append('description', serviceDescription);
       payload.append('organizationName', serviceTitle);
@@ -354,6 +420,8 @@ const CreateRecruitmentModal = ({
       appendIfPresent(payload, 'whoServiceFor', normalizedSports.join(', '));
       appendIfPresent(payload, 'sessonDay', sessionDay);
       appendIfPresent(payload, 'date', dateValue);
+      appendIfPresent(payload, 'timeFrom', timeFrom);
+      appendIfPresent(payload, 'timeTo', timeTo);
       appendIfPresent(payload, 'timeSlote', timeSlot);
       appendIfPresent(payload, 'bookingLink', form.bookingLink);
 
@@ -629,13 +697,13 @@ const CreateRecruitmentModal = ({
                 </div>
                 <div className="space-y-1">
                   <label className="text-base font-medium text-gray-700">
-                    Typical Session Days
+                    Sesson Day
                   </label>
                   <input
-                    value={form.sessionDays}
-                    onChange={(e) => handleChange('sessionDays', e.target.value)}
+                    value={form.sessonDay}
+                    onChange={(e) => handleChange('sessonDay', e.target.value)}
                     className="w-full rounded bg-[#f3f4f6] p-2 text-sm outline-none"
-                    placeholder="e.g mon, sat, tues"
+                    placeholder="e.g Tuesday"
                   />
                 </div>
                 <div className="space-y-1">
@@ -648,11 +716,20 @@ const CreateRecruitmentModal = ({
                   />
                 </div>
                 <div className="space-y-1">
-                  <label className="text-base font-medium text-gray-700">Time</label>
+                  <label className="text-base font-medium text-gray-700">Time From</label>
                   <input
                     type="time"
-                    value={form.time}
-                    onChange={(e) => handleChange('time', e.target.value)}
+                    value={form.timeFrom}
+                    onChange={(e) => handleChange('timeFrom', e.target.value)}
+                    className="w-full rounded bg-[#f3f4f6] p-2 text-sm outline-none"
+                  />
+                </div>
+                <div className="space-y-1">
+                  <label className="text-base font-medium text-gray-700">Time To</label>
+                  <input
+                    type="time"
+                    value={form.timeTo}
+                    onChange={(e) => handleChange('timeTo', e.target.value)}
                     className="w-full rounded bg-[#f3f4f6] p-2 text-sm outline-none"
                   />
                 </div>
