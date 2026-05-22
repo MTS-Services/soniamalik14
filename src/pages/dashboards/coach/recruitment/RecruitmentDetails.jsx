@@ -65,6 +65,7 @@ const RecruitmentDetails = () => {
     const { id } = useParams();
     const { state } = useLocation();
     const [item, setItem] = useState(state?.item || null);
+    const [bookingsData, setBookingsData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
 
@@ -89,11 +90,45 @@ const RecruitmentDetails = () => {
                 }
 
                 setItem(mapServiceToDetailsItem(service));
+
+                try {
+                    const bookingsResponse = await GET(ENDPOINT.SERVICES.BOOKINGS(id));
+                    const bookingsPayload = bookingsResponse?.data || bookingsResponse;
+                    const bookings = bookingsPayload?.data?.bookings || bookingsPayload?.bookings || [];
+
+                    const mappedBookings = (Array.isArray(bookings) ? bookings : []).map((booking, index) => ({
+                        id: booking?.id || `${id}-booking-${index}`,
+                        name:
+                            booking?.name ||
+                            booking?.fullName ||
+                            booking?.participantName ||
+                            booking?.user?.name ||
+                            'N/A',
+                        phone:
+                            booking?.phone ||
+                            booking?.phoneNumber ||
+                            booking?.participantPhone ||
+                            booking?.user?.phone ||
+                            'N/A',
+                        email:
+                            booking?.email ||
+                            booking?.participantEmail ||
+                            booking?.user?.email ||
+                            'N/A',
+                    }));
+
+                    if (!active) return;
+                    setBookingsData(mappedBookings);
+                } catch {
+                    if (!active) return;
+                    setBookingsData([]);
+                }
             } catch (err) {
                 if (!active) return;
                 const message = err?.response?.data?.message || err?.message || 'Failed to load service details';
                 setError(message);
                 setItem(null);
+                setBookingsData([]);
             } finally {
                 if (active) setLoading(false);
             }
@@ -114,17 +149,6 @@ const RecruitmentDetails = () => {
     }, [id]);
 
     const backTarget = state?.from === 'recruitment' ? '/coach/recruitment' : '/coach/recruitment';
-
-    // Mock Data
-    const bookingsData = [
-        { name: 'Marvin McKinney', phone: '(704) 555-0127', email: 'willie.jennings@example.com' },
-        { name: 'Eleanor Pena', phone: '(702) 555-0122', email: 'jessica.hanson@example.com' },
-        { name: 'Jacob Jones', phone: '(302) 555-0107', email: 'alma.lawson@example.com' },
-        { name: 'Annette Black', phone: '(603) 555-0123', email: 'nevaeh.simmons@example.com' },
-        { name: 'Dianne Russell', phone: '(219) 555-0114', email: 'dolores.chambers@example.com' },
-        { name: 'Albert Flores', phone: '(406) 555-0120', email: 'jackson.graham@example.com' },
-        { name: 'Albert Flores', phone: '(406) 555-0120', email: 'jackson.graham@example.com' },
-    ];
 
     const registeredInterestData = [
         { name: 'Marvin McKinney', phone: '(704) 555-0127', email: 'willie.jennings@example.com' },

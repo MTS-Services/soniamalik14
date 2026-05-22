@@ -58,6 +58,7 @@ export const ENDPOINT = {
     PROVIDER_SERVICES: (providerId) => `/api/services?providerId=${providerId}`,
     CREATE: '/api/services',
     DETAIL: (id) => `/api/services/${id}`,
+    BOOKINGS: (id) => `/api/services/${id}/bookings`,
     UPDATE: (id) => `/api/services/${id}`,
     DELETE: (id) => `/api/services/${id}`,
     APPROVE: (id) => `/api/services/${id}/approve`,

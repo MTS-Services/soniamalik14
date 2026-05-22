@@ -2,12 +2,13 @@ import { useState } from "react";
 
 
 export default function BookingsTable({ data }) {
+  const safeData = Array.isArray(data) ? data : [];
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 6;
-  const totalPages = Math.ceil(data.length / itemsPerPage);
+  const totalPages = Math.max(1, Math.ceil(safeData.length / itemsPerPage));
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
+  const currentItems = safeData.slice(indexOfFirstItem, indexOfLastItem);
  
   return (
     <div
@@ -29,33 +30,45 @@ export default function BookingsTable({ data }) {
             </tr>
           </thead>
           <tbody>
-            {currentItems.map((b, i) => (
-              <tr key={i} className="border-b border-gray-200">
-                <td className="px-6 py-5 text-base text-gray-900 font-normal">{b.name}</td>
-                <td className="px-6 py-5 text-base text-gray-700">{b.phone}</td>
-                <td className="px-6 py-5 text-base text-gray-700 break-words">{b.email}</td>
+            {currentItems.length > 0 ? (
+              currentItems.map((b, i) => (
+                <tr key={b?.id || i} className="border-b border-gray-200">
+                  <td className="px-6 py-5 text-base text-gray-900 font-normal">{b.name}</td>
+                  <td className="px-6 py-5 text-base text-gray-700">{b.phone}</td>
+                  <td className="px-6 py-5 text-base text-gray-700 wrap-break-word">{b.email}</td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan={3} className="px-6 py-8 text-center text-base text-gray-500">
+                  No bookings found.
+                </td>
               </tr>
-            ))}
+            )}
           </tbody>
         </table>
       </div>
 
       {/* Cards for mobile, hidden on desktop */}
       <div className="block md:hidden px-4 pb-2">
-        {currentItems.map((b, i) => (
-          <div
-            key={i}
-            className="border border-gray-200 rounded-lg mb-4 bg-gray-50 shadow-sm p-4"
-          >
-            <div className="font-semibold text-teal-600 text-[16px] mb-2">{b.name}</div>
-            <div className="text-base text-gray-700 mb-1">
-              <span className="font-medium">Phone:</span> {b.phone}
+        {currentItems.length > 0 ? (
+          currentItems.map((b, i) => (
+            <div
+              key={b?.id || i}
+              className="border border-gray-200 rounded-lg mb-4 bg-gray-50 shadow-sm p-4"
+            >
+              <div className="font-semibold text-teal-600 text-[16px] mb-2">{b.name}</div>
+              <div className="text-base text-gray-700 mb-1">
+                <span className="font-medium">Phone:</span> {b.phone}
+              </div>
+              <div className="text-base text-gray-700">
+                <span className="font-medium">Email:</span> {b.email}
+              </div>
             </div>
-            <div className="text-base text-gray-700">
-              <span className="font-medium">Email:</span> {b.email}
-            </div>
-          </div>
-        ))}
+          ))
+        ) : (
+          <div className="py-6 text-center text-base text-gray-500">No bookings found.</div>
+        )}
       </div>
 
       {/* Pagination */}
@@ -65,7 +78,7 @@ export default function BookingsTable({ data }) {
         <span
           className="text-base text-teal-700 font-medium text-center md:text-left"
         >
-          Showing {indexOfFirstItem + 1} to {Math.min(indexOfLastItem, data.length)} of {data.length} results
+          Showing {safeData.length === 0 ? 0 : indexOfFirstItem + 1} to {Math.min(indexOfLastItem, safeData.length)} of {safeData.length} results
         </span>
         <div className="flex gap-2 justify-center">
           <button
