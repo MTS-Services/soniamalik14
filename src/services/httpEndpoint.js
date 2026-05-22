@@ -59,6 +59,7 @@ export const ENDPOINT = {
     CREATE: '/api/services',
     DETAIL: (id) => `/api/services/${id}`,
     BOOKINGS: (id) => `/api/services/${id}/bookings`,
+    INTERESTS: (id) => `/api/services/${id}/interests`,
     UPDATE: (id) => `/api/services/${id}`,
     DELETE: (id) => `/api/services/${id}`,
     APPROVE: (id) => `/api/services/${id}/approve`,

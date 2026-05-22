@@ -3,6 +3,7 @@ import { Link, useLocation, useParams } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
 import { GET } from '../../../../services/httpMethods';
 import { ENDPOINT } from '../../../../services/httpEndpoint';
+import LoadingSpinner from '../../../../components/ui/LoadingSpinner';
 
 import HeroBanner from './components/HeroBanner';
 import TitleCoachInfo from './components/TitleCoachInfo';
@@ -66,6 +67,7 @@ const RecruitmentDetails = () => {
     const { state } = useLocation();
     const [item, setItem] = useState(state?.item || null);
     const [bookingsData, setBookingsData] = useState([]);
+    const [interestsData, setInterestsData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
 
@@ -123,12 +125,46 @@ const RecruitmentDetails = () => {
                     if (!active) return;
                     setBookingsData([]);
                 }
+
+                try {
+                    const interestsResponse = await GET(ENDPOINT.SERVICES.INTERESTS(id));
+                    const interestsPayload = interestsResponse?.data || interestsResponse;
+                    const interests = interestsPayload?.data?.interests || interestsPayload?.interests || [];
+
+                    const mappedInterests = (Array.isArray(interests) ? interests : []).map((interest, index) => ({
+                        id: interest?.id || `${id}-interest-${index}`,
+                        name:
+                            interest?.name ||
+                            interest?.fullName ||
+                            interest?.participantName ||
+                            interest?.user?.name ||
+                            'N/A',
+                        phone:
+                            interest?.phone ||
+                            interest?.phoneNumber ||
+                            interest?.participantPhone ||
+                            interest?.user?.phone ||
+                            'N/A',
+                        email:
+                            interest?.email ||
+                            interest?.participantEmail ||
+                            interest?.user?.email ||
+                            'N/A',
+                    }));
+
+                    if (!active) return;
+                    setInterestsData(mappedInterests);
+                } catch {
+                    if (!active) return;
+                    setInterestsData([]);
+                }
             } catch (err) {
                 if (!active) return;
                 const message = err?.response?.data?.message || err?.message || 'Failed to load service details';
                 setError(message);
                 setItem(null);
                 setBookingsData([]);
+                setInterestsData([]);
             } finally {
                 if (active) setLoading(false);
             }
@@ -150,18 +186,18 @@ const RecruitmentDetails = () => {
 
     const backTarget = state?.from === 'recruitment' ? '/coach/recruitment' : '/coach/recruitment';
 
-    const registeredInterestData = [
-        { name: 'Marvin McKinney', phone: '(704) 555-0127', email: 'willie.jennings@example.com' },
-        { name: 'Eleanor Pena', phone: '(702) 555-0122', email: 'jessica.hanson@example.com' },
-        { name: 'Jacob Jones', phone: '(302) 555-0107', email: 'alma.lawson@example.com' },
-    ];
-
     const enquiriesData = [
         { name: 'Devon Lane', phone: '(405) 555-0128', email: 'jackson.graham@example.com', msg: 'Aliquam porta nisl dolor, molestie pellentesque elit...', date: '12 Mar 26' },
         { name: 'Marvin McKinney', phone: '(704) 555-0127', email: 'michael.mitc@example.com', msg: 'In a laoreet purus. Integer turpis quam...', date: '12 Mar 26' },
     ];
 
-    if (loading) return <div className="p-8 font-sans">Loading service details...</div>;
+    if (loading) {
+        return (
+            <div className="min-h-screen flex items-center justify-center">
+                <LoadingSpinner label="" containerClassName="py-0" />
+            </div>
+        );
+    }
     if (error) return <div className="p-8 font-sans text-red-600">Error: {error}</div>;
     if (!item) return <div className="p-8 font-sans">Service not found.</div>;
 
@@ -194,7 +230,7 @@ const RecruitmentDetails = () => {
 
                 {/* Tables Section */}
                 <BookingsTable data={bookingsData} />
-                <RegisteredInterestTable data={registeredInterestData} />
+                <RegisteredInterestTable data={interestsData} />
                 <EnquiriesTable data={enquiriesData} />
 
             </div>
