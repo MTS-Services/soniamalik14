@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import {
   ArrowLeft,
@@ -11,7 +11,9 @@ import {
   ChevronRight,
 } from 'lucide-react';
 import TablePagination from '../../../../components/ui/TablePagination';
-import { addListingDummyData } from './addListingDummyData';
+import LoadingSpinner from '../../../../components/ui/LoadingSpinner';
+import { GET } from '../../../../services/httpMethods';
+import { ENDPOINT } from '../../../../services/httpEndpoint';
 
 const ServiceOverviewItem = ({ icon, label, value }) => (
   <div className="rounded-xl border border-[#DEE6E8] bg-[#F3F5F8] p-4">
@@ -25,25 +27,106 @@ const ServiceOverviewItem = ({ icon, label, value }) => (
   </div>
 );
 
+const mapServiceToViewModel = (service) => {
+  const sports = Array.isArray(service?.sports) ? service.sports : [];
+  const sessionTypes = Array.isArray(service?.sessionTypes) ? service.sessionTypes : [];
+
+  return {
+    id: service?.id,
+    providerName: service?.providerName || service?.provider?.name || 'Provider',
+    organizer: service?.contactName || service?.provider?.name || service?.providerName || 'N/A',
+    category:
+      service?.role ||
+      (Array.isArray(service?.providerType) ? service.providerType.join(', ') : service?.providerType) ||
+      'N/A',
+    about: service?.aboutService || service?.description || 'No service details available.',
+    overview: {
+      clinicName: service?.clinicName || 'N/A',
+      addressLine1: service?.addressLine1 || '',
+      townCity: service?.city || '',
+      postcode: service?.postcode || '',
+      primaryProfession:
+        service?.role ||
+        (Array.isArray(service?.providerType) ? service.providerType.join(', ') : service?.providerType) ||
+        'N/A',
+      sessionType: sessionTypes.length > 0 ? sessionTypes.join(', ') : 'N/A',
+      sport: sports.length > 0 ? sports.join(', ') : 'N/A',
+      professionalRegistration: service?.professionalRegistration || 'N/A',
+      insuranceInPlace:
+        typeof service?.insuranceInPlace === 'boolean'
+          ? service.insuranceInPlace
+            ? 'Yes'
+            : 'No'
+          : service?.insuranceInPlace || 'N/A',
+    },
+    bookings: Array.isArray(service?.bookings) ? service.bookings : [],
+    enquiries: Array.isArray(service?.messages) ? service.messages : [],
+  };
+};
+
 const AddListingDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { state } = useLocation();
+  const [item, setItem] = useState(state?.item || null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
 
-  const routedItem = state?.item;
-  const matchedDummy = addListingDummyData.find((item) => String(item.id) === String(id));
-  const item = routedItem || matchedDummy || addListingDummyData[0];
+  useEffect(() => {
+    let active = true;
+
+    const loadServiceDetails = async () => {
+      setLoading(true);
+      setError('');
+
+      try {
+        const response = await GET(ENDPOINT.SERVICES.DETAIL(id));
+        const payload = response?.data || response;
+        const service = payload?.data?.service || payload?.service || payload?.data || null;
+
+        if (!active) return;
+
+        if (!service?.id) {
+          setItem(null);
+          setError('Service not found.');
+          return;
+        }
+
+        setItem(mapServiceToViewModel(service));
+      } catch (err) {
+        if (!active) return;
+        const message = err?.response?.data?.message || err?.message || 'Failed to load service details';
+        setError(message);
+        setItem(null);
+      } finally {
+        if (active) setLoading(false);
+      }
+    };
+
+    if (!id) {
+      setError('Invalid service id.');
+      setItem(null);
+      setLoading(false);
+      return;
+    }
+
+    loadServiceDetails();
+
+    return () => {
+      active = false;
+    };
+  }, [id]);
 
   const serviceOverview = item?.overview || {
-    clinicName: 'The Wellness Centre',
-    addressLine1: '123 High Street',
-    townCity: 'Richmond',
-    postcode: 'TW9 1AB',
-    primaryProfession: item?.category || 'Physiotherapist',
-    sessionType: 'In Clinic',
-    sport: 'Football',
-    professionalRegistration: 'HCPC Registered, CSP Member',
-    insuranceInPlace: 'Yes',
+    clinicName: 'N/A',
+    addressLine1: '',
+    townCity: '',
+    postcode: '',
+    primaryProfession: item?.category || 'N/A',
+    sessionType: 'N/A',
+    sport: 'N/A',
+    professionalRegistration: 'N/A',
+    insuranceInPlace: 'N/A',
   };
 
   const fullAddress = [serviceOverview.clinicName, serviceOverview.addressLine1, serviceOverview.townCity, serviceOverview.postcode]
@@ -59,8 +142,8 @@ const AddListingDetails = () => {
     .map((part) => part[0]?.toUpperCase() || '')
     .join('');
 
-  const bookings = item?.bookings || addListingDummyData[0].bookings;
-  const enquiries = item?.enquiries || addListingDummyData[0].enquiries;
+  const bookings = useMemo(() => (Array.isArray(item?.bookings) ? item.bookings : []), [item?.bookings]);
+  const enquiries = useMemo(() => (Array.isArray(item?.enquiries) ? item.enquiries : []), [item?.enquiries]);
 
   const [bookingPage, setBookingPage] = useState(1);
   const [enquiryPage, setEnquiryPage] = useState(1);
@@ -69,6 +152,14 @@ const AddListingDetails = () => {
 
   const bookingTotalPages = Math.max(1, Math.ceil(bookings.length / rowsPerPage));
   const enquiryTotalPages = Math.max(1, Math.ceil(enquiries.length / rowsPerPage));
+
+  useEffect(() => {
+    setBookingPage((prev) => Math.min(prev, bookingTotalPages));
+  }, [bookingTotalPages]);
+
+  useEffect(() => {
+    setEnquiryPage((prev) => Math.min(prev, enquiryTotalPages));
+  }, [enquiryTotalPages]);
 
   const paginatedBookings = useMemo(() => {
     const start = (bookingPage - 1) * rowsPerPage;
@@ -79,6 +170,22 @@ const AddListingDetails = () => {
     const start = (enquiryPage - 1) * rowsPerPage;
     return enquiries.slice(start, start + rowsPerPage);
   }, [enquiries, enquiryPage]);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <LoadingSpinner label="" containerClassName="py-0" />
+      </div>
+    );
+  }
+
+  if (error) {
+    return <div className="dashboardPy min-h-screen p-4 text-red-600">Error: {error}</div>;
+  }
+
+  if (!item) {
+    return <div className="dashboardPy min-h-screen p-4">Service not found.</div>;
+  }
 
   return (
     <div className="dashboardPy min-h-screen bg-[#EEF2F3]">
