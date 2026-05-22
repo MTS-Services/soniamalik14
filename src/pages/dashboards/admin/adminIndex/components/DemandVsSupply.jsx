@@ -1,16 +1,53 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { GET } from '../../../../../services/httpMethods';
+import { ENDPOINT } from '../../../../../services/httpEndpoint';
 
 const DemandVsSupply = () => {
-  const sportsData = [
-    { name: 'Football', demand: 90, supply: 40 },
-    { name: 'Cricket', demand: 90, supply: 40 },
-    { name: 'Tennis', demand: 90, supply: 40 },
-    { name: 'Squash', demand: 90, supply: 40 },
-    { name: 'Rugby', demand: 90, supply: 40 },
-    { name: 'Netball', demand: 85, supply: 40 },
-    { name: 'Golf', demand: 85, supply: 70 },
-    { name: 'Running', demand: 40, supply: 90 },
-  ];
+  const [sportsData, setSportsData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState('');
+
+  useEffect(() => {
+    const controller = new AbortController();
+
+    const fetchDemandSupply = async () => {
+      try {
+        setIsLoading(true);
+        setError('');
+
+        const response = await GET(ENDPOINT.ADMIN.DEMAND_SUPPLY, {}, controller.signal);
+        const payload = response?.data?.data || response?.data || response;
+
+        if (!Array.isArray(payload)) {
+          throw new Error('Invalid demand-supply response');
+        }
+
+        const normalized = payload.map((item) => ({
+          name: item?.name || 'Unknown',
+          demand: Number(item?.demand || 0),
+          supply: Number(item?.supply || 0),
+        }));
+
+        setSportsData(normalized);
+      } catch (err) {
+        if (err?.name === 'AbortError' || err?.name === 'CanceledError') {
+          return;
+        }
+
+        const message =
+          err?.response?.data?.message || err?.message || 'Failed to load demand vs supply data';
+        setError(message);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchDemandSupply();
+
+    return () => {
+      controller.abort();
+    };
+  }, []);
 
   return (
     <div className="rounded-lg bg-white p-6 shadow-sm ">
@@ -30,8 +67,8 @@ const DemandVsSupply = () => {
 
       {/* Chart - Added fixed height and vertical scroll */}
       <div className="space-y-4  overflow-y-auto pr-3 custom-scrollbar">
-        {sportsData.map((sport, index) => (
-          <div key={index} className="flex items-center gap-3">
+        {sportsData.map((sport) => (
+          <div key={sport.name} className="flex items-center gap-3">
             <span className="text-base font-medium text-gray-700 w-16">{sport.name}</span>
             
             {/* Bars Container - Changed to flex-col to stack them vertically */}
@@ -47,6 +84,12 @@ const DemandVsSupply = () => {
             </div>
           </div>
         ))}
+
+        {isLoading && <p className="text-sm text-gray-500">Loading demand and supply...</p>}
+        {!isLoading && error && <p className="text-sm text-red-600">{error}</p>}
+        {!isLoading && !error && sportsData.length === 0 && (
+          <p className="text-sm text-gray-500">No demand vs supply data available.</p>
+        )}
       </div>
     </div>
   );
