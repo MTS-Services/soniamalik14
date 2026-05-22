@@ -44,6 +44,7 @@ export const ENDPOINT = {
   },
   ADMIN: {
     DASHBOARD_STATS: '/api/admin/dashboard/stats',
+    USER_TRENDS: '/api/admin/dashboard/user-trends',
   },
   SERVICES: {
     LIST: '/api/services',

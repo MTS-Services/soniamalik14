@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import {
   AreaChart,
   Area,
@@ -8,31 +8,78 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from 'recharts';
+import { GET } from '../../../../../services/httpMethods';
+import { ENDPOINT } from '../../../../../services/httpEndpoint';
 
 const UserTrendsChart = () => {
-  const chartData = [
-    { month: 'Jan', player: 5000, provider: 2000, sport: 8000 },
-    { month: 'Feb', player: 15000, provider: 10000, sport: 12000 },
-    { month: 'Mar', player: 25000, provider: 15000, sport: 15000 },
-    { month: 'Apr', player: 30000, provider: 20000, sport: 18000 },
-    { month: 'May', player: 28000, provider: 25000, sport: 20000 },
-    { month: 'Jun', player: 27000, provider: 32000, sport: 22000 },
-    { month: 'July', player: 33000, provider: 35000, sport: 22000 },
-    { month: 'Aug', player: 48000, provider: 37000, sport: 21000 },
-    { month: 'Sep', player: 50000, provider: 33000, sport: 20000 },
-    { month: 'Oct', player: 40000, provider: 30000, sport: 20000 },
-    { month: 'Nov', player: 28000, provider: 32000, sport: 22000 },
-    { month: 'Dec', player: 20000, provider: 45000, sport: 28000 },
-  ];
+  const [period, setPeriod] = useState('year');
+  const [chartData, setChartData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState('');
+
+  useEffect(() => {
+    const controller = new AbortController();
+
+    const fetchUserTrends = async () => {
+      try {
+        setIsLoading(true);
+        setError('');
+
+        const response = await GET(ENDPOINT.ADMIN.USER_TRENDS, { period }, controller.signal);
+        const payload = response?.data?.data || response?.data || response;
+
+        if (!Array.isArray(payload)) {
+          throw new Error('Invalid user trends response');
+        }
+
+        const normalizedData = payload.map((item) => ({
+          month: item?.month || '',
+          player: Number(item?.player || 0),
+          provider: Number(item?.provider || 0),
+          sport: Number(item?.sport || 0),
+        }));
+
+        setChartData(normalizedData);
+      } catch (err) {
+        if (err?.name === 'AbortError' || err?.name === 'CanceledError') {
+          return;
+        }
+
+        const message =
+          err?.response?.data?.message || err?.message || 'Failed to load user trends';
+        setError(message);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchUserTrends();
+
+    return () => {
+      controller.abort();
+    };
+  }, [period]);
+
+  const maxValue = useMemo(() => {
+    if (!chartData.length) return 10;
+
+    const values = chartData.flatMap((item) => [item.player, item.provider, item.sport]);
+    const max = Math.max(...values, 0);
+    return max + 2;
+  }, [chartData]);
 
   return (
     <div className="rounded-lg md:rounded-2xl bg-white p-4 md:p-6 shadow-sm lg:col-span-2 min-w-0">
       <div className="mb-4 md:mb-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 sm:gap-0">
         <h2 className="text-lg md:text-2xl font-semibold text-gray-900">User</h2>
-        <select className="rounded-lg border border-gray-300 px-3 md:px-4 py-2 text-sm text-gray-600 bg-white focus:outline-none focus:ring-2 focus:ring-btn-primary w-full sm:w-auto">
-          <option>This year</option>
-          <option>Last year</option>
-          <option>Last 6 months</option>
+        <select
+          className="rounded-lg border border-gray-300 px-3 md:px-4 py-2 text-sm text-gray-600 bg-white focus:outline-none focus:ring-2 focus:ring-btn-primary w-full sm:w-auto"
+          value={period}
+          onChange={(event) => setPeriod(event.target.value)}
+        >
+          <option value="year">This year</option>
+          <option value="last-year">Last year</option>
+          <option value="6-months">Last 6 months</option>
         </select>
       </div>
 
@@ -78,9 +125,8 @@ const UserTrendsChart = () => {
             axisLine={false}
             tickLine={false}
             tick={{ fill: '#9CA3AF', fontSize: 12 }}
-            tickFormatter={(value) => `${value / 1000}k`}
-            ticks={[0, 10000, 20000, 30000, 40000, 50000]}
-            domain={[0, 50000]}
+            tickFormatter={(value) => value}
+            domain={[0, maxValue]}
           />
           <Tooltip
             contentStyle={{
@@ -89,7 +135,7 @@ const UserTrendsChart = () => {
               borderRadius: '8px',
               padding: '8px 12px'
             }}
-            formatter={(value) => value.toLocaleString()}
+            formatter={(value) => Number(value).toLocaleString()}
           />
           <Area
             type="monotone"
@@ -117,6 +163,12 @@ const UserTrendsChart = () => {
           />
         </AreaChart>
       </ResponsiveContainer>
+
+      {isLoading && <p className="mt-3 text-sm text-gray-500">Loading trends...</p>}
+      {!isLoading && error && <p className="mt-3 text-sm text-red-600">{error}</p>}
+      {!isLoading && !error && chartData.length === 0 && (
+        <p className="mt-3 text-sm text-gray-500">No trend data available.</p>
+      )}
     </div>
   );
 };
