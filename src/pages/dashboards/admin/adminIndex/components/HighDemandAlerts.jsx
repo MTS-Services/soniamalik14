@@ -92,7 +92,10 @@ const HighDemandAlerts = () => {
         {isLoading && <p className="text-sm text-gray-500">Loading alerts...</p>}
         {!isLoading && error && <p className="text-sm text-red-600">{error}</p>}
         {!isLoading && !error && alerts.length === 0 && (
-          <p className="text-sm text-gray-500">No high demand alerts found.</p>
+          <div className="rounded-xl border border-dashed border-gray-200 bg-gray-50/70 px-5 py-8 text-center">
+            <p className="text-base font-medium text-gray-700">No high demand alerts found.</p>
+            <p className="mt-1 text-sm text-gray-500">Everything looks balanced right now.</p>
+          </div>
         )}
       </div>
     </div>
