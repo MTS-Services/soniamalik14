@@ -51,6 +51,7 @@ const mapServiceToDetailsItem = (service) => ({
     suitableFor: toArray(service?.suitableFor),
     venueName: service?.clinicName || 'N/A',
     location: service?.location || service?.fullAddress || 'N/A',
+    googleMapLink: service?.googleMapLink || '',
     postcode: service?.postcode || 'N/A',
     town: service?.city || 'N/A',
     typicalSessionDays: service?.sessonDay || (Array.isArray(service?.availableDays) ? service.availableDays.join(', ') : service?.availableDays) || 'N/A',

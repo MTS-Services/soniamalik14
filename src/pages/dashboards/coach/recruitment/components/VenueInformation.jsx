@@ -1,6 +1,30 @@
 import React from 'react';
 
+const getMapEmbedUrl = (item) => {
+  const rawLink = String(item?.googleMapLink || '').trim();
+  if (!rawLink) return '';
+
+  try {
+    const url = new URL(rawLink);
+
+    if (url.pathname.includes('/maps/embed')) {
+      return url.toString();
+    }
+
+    const q = url.searchParams.get('q');
+    if (q) {
+      return `https://www.google.com/maps?q=${encodeURIComponent(q)}&output=embed`;
+    }
+
+    return `https://www.google.com/maps?q=${encodeURIComponent(rawLink)}&output=embed`;
+  } catch {
+    return `https://www.google.com/maps?q=${encodeURIComponent(rawLink)}&output=embed`;
+  }
+};
+
 const VenueInformation = ({ item }) => {
+  const mapEmbedUrl = getMapEmbedUrl(item);
+
   return (
     <div>
       <h3 className="mb-4 text-xl font-semibold text-[#1A1D1F]">Venue Information</h3>
@@ -36,7 +60,15 @@ const VenueInformation = ({ item }) => {
 
         {/* Map Placeholder */}
         <div className="h-36 w-full shrink-0 overflow-hidden rounded-lg bg-gray-200">
-          {item.mapImage ? (
+          {mapEmbedUrl ? (
+            <iframe
+              src={mapEmbedUrl}
+              title="Map preview"
+              className="h-full w-full border-0"
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+            />
+          ) : item.mapImage ? (
             <img src={item.mapImage} alt="Map View" className="h-full w-full object-cover" />
           ) : (
             <div className="flex h-full w-full items-center justify-center text-sm text-gray-400">
