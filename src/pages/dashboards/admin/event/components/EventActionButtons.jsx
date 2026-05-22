@@ -13,6 +13,8 @@ const EventActionButtons = ({ status, isFeatured, rowId }) => {
     const [isBanModalOpen, setIsBanModalOpen] = useState(false);
     const [isApproveModalOpen, setIsApproveModalOpen] = useState(false);
     const loadingAction = useSelector(selectAdminEventsLoading);
+    const normalizedStatus = String(status || '').trim().toLowerCase();
+    const canFeature = !['banned', 'rejected', 'blocked'].includes(normalizedStatus);
 
     const handleViewDetails = () => {
         navigate(`/admin/event/${rowId}`);
@@ -50,14 +52,16 @@ const EventActionButtons = ({ status, isFeatured, rowId }) => {
                 >
                     <Eye className="w-4 h-4 md:w-5 md:h-5" />
                 </button>
-                <button
-                    onClick={handleFeature}
-                    className="transition-colors"
-                    title="Feature"
-                    disabled={!!loadingAction}
-                >
-                    <Star className={`w-4 h-4 md:w-5 md:h-5 ${isFeatured ? 'fill-amber-400 text-amber-400' : 'text-amber-500 hover:fill-amber-100'}`} />
-                </button>
+                {canFeature && (
+                    <button
+                        onClick={handleFeature}
+                        className="transition-colors"
+                        title="Feature"
+                        disabled={!!loadingAction}
+                    >
+                        <Star className={`w-4 h-4 md:w-5 md:h-5 ${isFeatured ? 'fill-amber-400 text-amber-400' : 'text-amber-500 hover:fill-amber-100'}`} />
+                    </button>
+                )}
                 <button
                     onClick={() => setIsBanModalOpen(true)}
                     className="transition-colors"
