@@ -60,6 +60,7 @@ export const ENDPOINT = {
     DETAIL: (id) => `/api/services/${id}`,
     BOOKINGS: (id) => `/api/services/${id}/bookings`,
     INTERESTS: (id) => `/api/services/${id}/interests`,
+    MESSAGES: (id) => `/api/services/${id}/messages`,
     UPDATE: (id) => `/api/services/${id}`,
     DELETE: (id) => `/api/services/${id}`,
     APPROVE: (id) => `/api/services/${id}/approve`,

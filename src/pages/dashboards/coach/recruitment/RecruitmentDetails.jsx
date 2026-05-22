@@ -68,6 +68,7 @@ const RecruitmentDetails = () => {
     const [item, setItem] = useState(state?.item || null);
     const [bookingsData, setBookingsData] = useState([]);
     const [interestsData, setInterestsData] = useState([]);
+    const [messagesData, setMessagesData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
 
@@ -158,6 +159,45 @@ const RecruitmentDetails = () => {
                     if (!active) return;
                     setInterestsData([]);
                 }
+
+                try {
+                    const messagesResponse = await GET(ENDPOINT.SERVICES.MESSAGES(id));
+                    const messagesPayload = messagesResponse?.data || messagesResponse;
+                    const messages = messagesPayload?.data?.messages || messagesPayload?.messages || [];
+
+                    const mappedMessages = (Array.isArray(messages) ? messages : []).map((message, index) => ({
+                        id: message?.id || `${id}-message-${index}`,
+                        name:
+                            message?.name ||
+                            message?.fullName ||
+                            message?.senderName ||
+                            message?.user?.name ||
+                            'N/A',
+                        phone:
+                            message?.phone ||
+                            message?.phoneNumber ||
+                            message?.senderPhone ||
+                            message?.user?.phone ||
+                            'N/A',
+                        email:
+                            message?.email ||
+                            message?.senderEmail ||
+                            message?.user?.email ||
+                            'N/A',
+                        msg:
+                            message?.msg ||
+                            message?.message ||
+                            message?.content ||
+                            'N/A',
+                        date: message?.date || message?.createdAt || message?.updatedAt || 'N/A',
+                    }));
+
+                    if (!active) return;
+                    setMessagesData(mappedMessages);
+                } catch {
+                    if (!active) return;
+                    setMessagesData([]);
+                }
             } catch (err) {
                 if (!active) return;
                 const message = err?.response?.data?.message || err?.message || 'Failed to load service details';
@@ -165,6 +205,7 @@ const RecruitmentDetails = () => {
                 setItem(null);
                 setBookingsData([]);
                 setInterestsData([]);
+                setMessagesData([]);
             } finally {
                 if (active) setLoading(false);
             }
@@ -185,11 +226,6 @@ const RecruitmentDetails = () => {
     }, [id]);
 
     const backTarget = state?.from === 'recruitment' ? '/coach/recruitment' : '/coach/recruitment';
-
-    const enquiriesData = [
-        { name: 'Devon Lane', phone: '(405) 555-0128', email: 'jackson.graham@example.com', msg: 'Aliquam porta nisl dolor, molestie pellentesque elit...', date: '12 Mar 26' },
-        { name: 'Marvin McKinney', phone: '(704) 555-0127', email: 'michael.mitc@example.com', msg: 'In a laoreet purus. Integer turpis quam...', date: '12 Mar 26' },
-    ];
 
     if (loading) {
         return (
@@ -231,7 +267,7 @@ const RecruitmentDetails = () => {
                 {/* Tables Section */}
                 <BookingsTable data={bookingsData} />
                 <RegisteredInterestTable data={interestsData} />
-                <EnquiriesTable data={enquiriesData} />
+                <EnquiriesTable data={messagesData} />
 
             </div>
         </div>
