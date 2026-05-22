@@ -75,6 +75,53 @@ const Users = () => {
     }
   };
 
+  const formatDateValue = (value) => {
+    if (!value) return '-';
+    const date = new Date(value);
+    if (Number.isNaN(date.getTime())) return '-';
+    return date.toLocaleDateString();
+  };
+
+  const mapSportProviderRows = (rows = []) => {
+    return rows.map((row) => {
+      const contactName = [row?.firstName, row?.lastName].filter(Boolean).join(' ').trim();
+      return {
+        id: row?.id,
+        businessName: row?.organizationName || row?.name || '-',
+        contactName: contactName || row?.name || '-',
+        email: row?.email || '-',
+        postcode: row?.postcode || '-',
+        sport: Array.isArray(row?.sportsOffered) && row.sportsOffered.length
+          ? row.sportsOffered.join(', ')
+          : '-',
+        joined: formatDateValue(row?.createdAt),
+        listingsCount: row?.listingsCount ?? 0,
+        eventsCount: row?.eventsCount ?? 0,
+        interestReceived: row?.interestReceived ?? 0,
+        externalLinkClicks: row?.externalLinkClicks ?? 0,
+        avgResponseTime: row?.avgResponseTime || '-',
+        status: row?.status || '-',
+      };
+    });
+  };
+
+  const mapServiceProviderRows = (rows = []) => {
+    return rows.map((row) => ({
+      id: row?.id,
+      providerName: row?.organizationName || row?.name || '-',
+      email: row?.email || '-',
+      postcode: row?.postcode || '-',
+      sport: Array.isArray(row?.serviceTypes) && row.serviceTypes.length
+        ? row.serviceTypes.join(', ')
+        : '-',
+      joined: formatDateValue(row?.createdAt),
+      lastLogin: formatDateValue(row?.lastLogin),
+      phone: row?.phone || '-',
+      organization: row?.organizationName || row?.name || '-',
+      status: row?.status || '-',
+    }));
+  };
+
   const escapeCsvValue = (value) => {
     const normalized = value === null || value === undefined ? '' : String(value);
     const escaped = normalized.replace(/"/g, '""');
@@ -83,10 +130,18 @@ const Users = () => {
 
   const getCurrentTableData = () => {
     const isSuspendedView = activeSubTab === 'suspended';
-    if (isSuspendedView) return suspendedData || [];
     if (activeTab === 'players') return playersData || [];
-    if (activeTab === 'sportProviders') return sportProvidersData || [];
-    if (activeTab === 'serviceProviders') return serviceProvidersData || [];
+    if (activeTab === 'sportProviders') {
+      return isSuspendedView
+        ? mapSportProviderRows(suspendedData || [])
+        : mapSportProviderRows(sportProvidersData || []);
+    }
+    if (activeTab === 'serviceProviders') {
+      return isSuspendedView
+        ? mapServiceProviderRows(suspendedData || [])
+        : mapServiceProviderRows(serviceProvidersData || []);
+    }
+    if (isSuspendedView) return suspendedData || [];
     return [];
   };
 
@@ -193,18 +248,24 @@ const Users = () => {
       );
     }
     if (activeTab === 'sportProviders') {
+      const sportRows = isSuspendedView
+        ? mapSportProviderRows(suspendedData || [])
+        : mapSportProviderRows(sportProvidersData || []);
       return (
         <SportProvidersTable
-          data={isSuspendedView ? suspendedData || [] : sportProvidersData || []}
+          data={sportRows}
           activeSubTab={activeSubTab}
           onSuspend={handleOpenSuspendModal}
         />
       );
     }
     if (activeTab === 'serviceProviders') {
+      const serviceRows = isSuspendedView
+        ? mapServiceProviderRows(suspendedData || [])
+        : mapServiceProviderRows(serviceProvidersData || []);
       return (
         <ServiceProvidersTable
-          data={isSuspendedView ? suspendedData || [] : serviceProvidersData || []}
+          data={serviceRows}
           activeSubTab={activeSubTab}
           onSuspend={handleOpenSuspendModal}
         />
