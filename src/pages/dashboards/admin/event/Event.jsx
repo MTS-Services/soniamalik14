@@ -58,12 +58,14 @@ const resolveIsFeatured = (event) => {
 
 const Events = () => {
   const dispatch = useDispatch();
+  const ITEMS_PER_PAGE = 10;
   // Filter States
   const [activeTab, setActiveTab] = useState('All Events');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedSport, setSelectedSport] = useState('All Sports');
   const [fromDate, setFromDate] = useState('');
   const [toDate, setToDate] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
   const eventsData = useSelector(selectAdminEvents);
   const loading = useSelector(selectAdminEventsLoading);
   const error = useSelector(selectAdminEventsError);
@@ -137,6 +139,40 @@ const Events = () => {
     });
   }, [activeTab, searchQuery, selectedSport, fromDate, toDate, renderedEvents]);
 
+  const totalResults = filteredData.length;
+  const totalPages = Math.max(1, Math.ceil(totalResults / ITEMS_PER_PAGE));
+  const safeCurrentPage = Math.min(currentPage, totalPages);
+
+  const handleTabChange = (value) => {
+    setCurrentPage(1);
+    setActiveTab(value);
+  };
+
+  const handleSearchChange = (value) => {
+    setCurrentPage(1);
+    setSearchQuery(value);
+  };
+
+  const handleSportChange = (value) => {
+    setCurrentPage(1);
+    setSelectedSport(value);
+  };
+
+  const handleFromDateChange = (value) => {
+    setCurrentPage(1);
+    setFromDate(value);
+  };
+
+  const handleToDateChange = (value) => {
+    setCurrentPage(1);
+    setToDate(value);
+  };
+
+  const paginatedData = useMemo(() => {
+    const startIndex = (safeCurrentPage - 1) * ITEMS_PER_PAGE;
+    return filteredData.slice(startIndex, startIndex + ITEMS_PER_PAGE);
+  }, [filteredData, safeCurrentPage]);
+
   return (
     <div className="flex-1 overflow-auto bg-gray-50 dashboardPy dashboardSpaceY">
       <div className="">
@@ -150,15 +186,15 @@ const Events = () => {
           {/* Search and Filters */}
           <EventSearchAndFilters
             activeTab={activeTab}
-            setActiveTab={setActiveTab}
+            setActiveTab={handleTabChange}
             searchQuery={searchQuery}
-            setSearchQuery={setSearchQuery}
+            setSearchQuery={handleSearchChange}
             selectedSport={selectedSport}
-            setSelectedSport={setSelectedSport}
+            setSelectedSport={handleSportChange}
             fromDate={fromDate}
-            setFromDate={setFromDate}
+            setFromDate={handleFromDateChange}
             toDate={toDate}
-            setToDate={setToDate}
+            setToDate={handleToDateChange}
             tabs={tabs}
             uniqueSports={uniqueSports}
           />
@@ -173,8 +209,8 @@ const Events = () => {
               <table className="w-full text-left border-collapse">
                 <EventTableHeader />
                 <tbody className="bg-white divide-y divide-gray-100">
-                  {filteredData.length > 0 ? (
-                    filteredData.map((row) => (
+                  {paginatedData.length > 0 ? (
+                    paginatedData.map((row) => (
                       <EventTableRow key={row.id} row={row} />
                     ))
                   ) : (
@@ -186,7 +222,14 @@ const Events = () => {
           </div>
 
           {/* Pagination */}
-          <EventPagination filteredDataLength={filteredData.length} />
+          <EventPagination
+            currentPage={safeCurrentPage}
+            totalPages={totalPages}
+            pageSize={ITEMS_PER_PAGE}
+            totalResults={totalResults}
+            onPrev={() => setCurrentPage((prev) => Math.max(1, Math.min(prev, totalPages) - 1))}
+            onNext={() => setCurrentPage((prev) => Math.min(totalPages, Math.min(prev, totalPages) + 1))}
+          />
 
         </div>
       </div>
