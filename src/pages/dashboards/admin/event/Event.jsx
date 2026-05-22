@@ -7,7 +7,11 @@ import EventTableRow from './components/EventTableRow';
 import EventEmptyState from './components/EventEmptyState';
 import EventPagination from './components/EventPagination';
 import { fetchAdminEvents } from '../../../../features/events/eventsAPI';
-import { selectAdminEvents, selectAdminEventsError, selectAdminEventsLoading } from '../../../../features/events/eventsSlice';
+import {
+  selectAdminEvents,
+  selectAdminEventsError,
+  selectAdminEventsLoading,
+} from '../../../../features/events/eventsSlice';
 
 const normalizeEventsList = (value) => {
   if (Array.isArray(value)) return value;
@@ -27,7 +31,9 @@ const formatDate = (value) => {
 };
 
 const formatStatus = (value) => {
-  const normalized = String(value || '').trim().toLowerCase();
+  const normalized = String(value || '')
+    .trim()
+    .toLowerCase();
 
   if (['approved', 'live', 'active'].includes(normalized)) return 'Live';
   if (['pending', 'pending_approval', 'awaiting'].includes(normalized)) return 'Pending';
@@ -39,21 +45,35 @@ const formatStatus = (value) => {
 };
 
 const formatProviderName = (event) =>
-  event?.provider || event?.organizer?.name || event?.organizerName || event?.providerName || 'Provider not set';
+  event?.provider ||
+  event?.organizer?.name ||
+  event?.organizerName ||
+  event?.providerName ||
+  'Provider not set';
 
 const formatProviderSub = (event) =>
-  event?.providerSub || event?.organizer?.subtitle || event?.providerSubtitle || event?.organizerName || '';
+  event?.providerSub ||
+  event?.organizer?.subtitle ||
+  event?.providerSubtitle ||
+  event?.organizerName ||
+  '';
 
-const formatSport = (event) => event?.sport || event?.sportType || event?.category || 'Sport not set';
+const formatSport = (event) =>
+  event?.sport || event?.sportType || event?.category || 'Sport not set';
 
-const formatPostcode = (event) => event?.postcode || event?.zipCode || event?.postalCode || event?.venue?.postcode || 'N/A';
+const formatPostcode = (event) =>
+  event?.postcode || event?.zipCode || event?.postalCode || event?.venue?.postcode || 'N/A';
 
 const formatEngagement = (event) => event?.engagement || event?.metrics || null;
 
 const resolveIsFeatured = (event) => {
   if (typeof event?.isFeatured === 'boolean') return event.isFeatured;
   const statusSource = event?.status || event?.approvalStatus || event?.eventStatus;
-  return String(statusSource || '').trim().toLowerCase() === 'featured';
+  return (
+    String(statusSource || '')
+      .trim()
+      .toLowerCase() === 'featured'
+  );
 };
 
 const Events = () => {
@@ -98,7 +118,10 @@ const Events = () => {
   const tabs = ['All Events', 'Pending', 'Featured', 'Live', 'Past', 'Banned'];
 
   // Get unique sports for the dropdown
-  const uniqueSports = ['All Sports', ...Array.from(new Set(renderedEvents.map((item) => item.sport).filter(Boolean)))];
+  const uniqueSports = [
+    'All Sports',
+    ...Array.from(new Set(renderedEvents.map((item) => item.sport).filter(Boolean))),
+  ];
 
   // Helper function to parse "DD/MM/YYYY" to a comparable Date object
   const parseDate = (dateString) => {
@@ -174,15 +197,13 @@ const Events = () => {
   }, [filteredData, safeCurrentPage]);
 
   return (
-    <div className="flex-1 overflow-auto bg-gray-50 dashboardPy dashboardSpaceY">
+    <div className="dashboardPy dashboardSpaceY flex-1 overflow-auto bg-gray-50">
       <div className="">
-
         {/* Header Section */}
         <EventHeaderSection />
 
         {/* Main Content Area */}
-        <div className="bg-white rounded-xl shadow-sm border border-gray-100">
-
+        <div className="rounded-xl border border-gray-100 bg-white shadow-sm">
           {/* Search and Filters */}
           <EventSearchAndFilters
             activeTab={activeTab}
@@ -202,17 +223,17 @@ const Events = () => {
           {/* Table Area */}
           <div className="overflow-x-auto">
             {loading ? (
-              <div className="p-6 text-center text-gray-600">Loading events from the backend...</div>
+              <div className="p-6 text-center text-gray-600">
+                Loading events from the backend...
+              </div>
             ) : error ? (
               <div className="p-6 text-center text-red-600">Error: {errorMessage}</div>
             ) : (
-              <table className="w-full text-left border-collapse">
+              <table className="w-full border-collapse text-left">
                 <EventTableHeader />
-                <tbody className="bg-white divide-y divide-gray-100">
+                <tbody className="divide-y divide-gray-100 bg-white">
                   {paginatedData.length > 0 ? (
-                    paginatedData.map((row) => (
-                      <EventTableRow key={row.id} row={row} />
-                    ))
+                    paginatedData.map((row) => <EventTableRow key={row.id} row={row} />)
                   ) : (
                     <EventEmptyState />
                   )}
@@ -228,9 +249,10 @@ const Events = () => {
             pageSize={ITEMS_PER_PAGE}
             totalResults={totalResults}
             onPrev={() => setCurrentPage((prev) => Math.max(1, Math.min(prev, totalPages) - 1))}
-            onNext={() => setCurrentPage((prev) => Math.min(totalPages, Math.min(prev, totalPages) + 1))}
+            onNext={() =>
+              setCurrentPage((prev) => Math.min(totalPages, Math.min(prev, totalPages) + 1))
+            }
           />
-
         </div>
       </div>
     </div>
