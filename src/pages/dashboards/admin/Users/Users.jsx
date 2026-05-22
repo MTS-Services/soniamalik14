@@ -105,6 +105,23 @@ const Users = () => {
     });
   };
 
+  const mapPlayerRows = (rows = []) => {
+    return rows.map((row) => ({
+      id: row?.id,
+      name: row?.displayName || row?.name || [row?.firstName, row?.lastName].filter(Boolean).join(' ') || '-',
+      email: row?.email || '-',
+      postcode: row?.postcode || '-',
+      sport: Array.isArray(row?.sportsInterests) && row.sportsInterests.length
+        ? row.sportsInterests.join(', ')
+        : '-',
+      joined: formatDateValue(row?.createdAt),
+      lastLogin: formatDateValue(row?.lastLogin),
+      events: row?.eventsCount ?? 0,
+      interest: row?.interestCount ?? 0,
+      status: row?.status || '-',
+    }));
+  };
+
   const mapServiceProviderRows = (rows = []) => {
     return rows.map((row) => ({
       id: row?.id,
@@ -130,7 +147,11 @@ const Users = () => {
 
   const getCurrentTableData = () => {
     const isSuspendedView = activeSubTab === 'suspended';
-    if (activeTab === 'players') return playersData || [];
+    if (activeTab === 'players') {
+      return isSuspendedView
+        ? mapPlayerRows(suspendedData || [])
+        : mapPlayerRows(playersData || []);
+    }
     if (activeTab === 'sportProviders') {
       return isSuspendedView
         ? mapSportProviderRows(suspendedData || [])
@@ -239,9 +260,12 @@ const Users = () => {
     const isSuspendedView = activeSubTab === 'suspended';
 
     if (activeTab === 'players') {
+      const playerRows = isSuspendedView
+        ? mapPlayerRows(suspendedData || [])
+        : mapPlayerRows(playersData || []);
       return (
         <PlayersTable
-          data={isSuspendedView ? suspendedData || [] : playersData || []}
+          data={playerRows}
           activeSubTab={activeSubTab}
           onSuspend={handleOpenSuspendModal}
         />

@@ -37,7 +37,7 @@ const PlayersTable = ({ data, activeSubTab, onSuspend }) => {
                                     onClick={() => onSuspend(row.id)}
                                     className="bg-[#E7F1F1] text-black px-3 py-1.5 rounded text-xs font-medium hover:bg-gray-200 transition"
                                 >
-                                    {activeSubTab === 'all' ? 'Suspend' : 'Reinstate'}
+                                    {String(row.status || '').toUpperCase() === 'SUSPENDED' ? 'Reinstate' : 'Suspend'}
                                 </button>
                             </td>
                         </tr>
