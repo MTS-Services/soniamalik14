@@ -1,7 +1,7 @@
 import React from 'react';
 import { Medal, Calendar, Users } from 'lucide-react';
 
-const SessionOverview = ({ item }) => {
+const SessionOverview = ({ item, disableActions = false }) => {
     return (
         <div>
             <h3 className="text-xl font-semibold text-[#1A1D1F] mb-4">Session Overview</h3>
@@ -55,10 +55,18 @@ const SessionOverview = ({ item }) => {
 
             {/* Action Buttons */}
             <div className="flex flex-wrap gap-3">
-                <button className="bg-[#0F766E] hover:bg-[#0D655D] text-white px-4 py-2.5 rounded-lg text-sm font-medium transition-colors">
+                <button
+                    type="button"
+                    disabled={disableActions}
+                    className="bg-[#0F766E] hover:bg-[#0D655D] disabled:bg-gray-300 disabled:text-gray-500 disabled:cursor-not-allowed text-white px-4 py-2.5 rounded-lg text-sm font-medium transition-colors"
+                >
                     Book Your Place
                 </button>
-                <button className="bg-[#0F766E] hover:bg-[#0D655D] text-white px-5 py-2.5 rounded-lg text-sm font-medium transition-colors">
+                <button
+                    type="button"
+                    disabled={disableActions}
+                    className="bg-[#0F766E] hover:bg-[#0D655D] disabled:bg-gray-300 disabled:text-gray-500 disabled:cursor-not-allowed text-white px-5 py-2.5 rounded-lg text-sm font-medium transition-colors"
+                >
                     Register Interest
                 </button>
             </div>
